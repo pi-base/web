@@ -32,12 +32,14 @@ async function fromRepo(root = '.'): Promise<Version | undefined> {
 
   const head = refName(contents)
 
-  const { stdout } = await promisify(execFile)('git', ['rev-parse', 'HEAD'], {
-    cwd: root,
-  })
-  return {
-    ref: head,
-    sha: stdout.trim(),
+  if (head) {
+    const { stdout } = await promisify(execFile)('git', ['rev-parse', 'HEAD'], {
+      cwd: root,
+    })
+    return {
+      ref: head,
+      sha: stdout.trim(),
+    }
   }
 }
 
