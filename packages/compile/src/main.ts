@@ -1,20 +1,9 @@
 import * as core from '@actions/core'
 import * as fs from 'fs'
 import * as process from 'process'
+import * as B from '@pi-base/core/lib/Bundle'
 
-import * as Bundle from './Bundle'
-import { property, parse, space, theorem, trait } from './parse'
-
-export async function load(
-  repo: string
-): Promise<Bundle.Bundle | Bundle.BuildError> {
-  const properties = await parse(`${repo}/properties/*.md`, property)
-  const spaces = await parse(`${repo}/spaces/**/README.md`, space)
-  const theorems = await parse(`${repo}/theorems/*.md`, theorem)
-  const traits = await parse(`${repo}/spaces/**/properties/*.md`, trait)
-
-  return Bundle.build(properties, spaces, theorems, traits)
-}
+import load from './load'
 
 async function run(): Promise<void> {
   const repo: string = process.env['GITHUB_WORKSPACE'] || '.'
@@ -22,8 +11,25 @@ async function run(): Promise<void> {
 
   core.debug(`Compiling repo=${repo} to out=${outpath}`)
 
-  const bundle = await load(repo)
-  fs.writeFileSync(outpath, JSON.stringify(bundle.asJSON(), null, 2))
+  const { bundle, errors } = await load(repo)
+
+  if (errors) {
+    errors.forEach((messages, path) => {
+      messages.forEach(message => {
+        core.error(`file=${path}::${message}`)
+      })
+    })
+  }
+
+  if (errors || !bundle) {
+    core.setFailed('Compilation finished with errors')
+    return
+  }
+
+  fs.writeFileSync(outpath, JSON.stringify(B.serialize(bundle)))
 }
 
-run().catch(err => core.setFailed(err.message))
+run().catch(err => {
+  core.setFailed(err.message)
+  core.error(err.message)
+})

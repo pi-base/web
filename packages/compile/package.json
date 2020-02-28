@@ -1,15 +1,16 @@
 {
-  "name": "compile",
-  "version": "1.0.0",
+  "name": "@pi-base/compile",
+  "version": "1.1.0",
   "private": true,
   "description": "Compile data into a JSON bundle",
   "main": "lib/main.js",
+  "bin": "lib/watch.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "pack": "ncc build",
+    "pack": "ncc build src/main.ts src/watch.ts",
     "test": "jest"
   },
   "repository": {
@@ -19,16 +20,23 @@
   "keywords": [
     "actions",
     "node",
-    "setup"
+    "topology"
   ],
   "author": "James Dabbs",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
+    "@pi-base/core": "0.0.1",
+    "chalk": "^4.0.0",
+    "chokidar": "^3.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "glob": "^7.1.6",
     "yaml-front-matter": "^4.1.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.23",
     "@types/node": "^13.7.6",
@@ -41,6 +49,7 @@
     "jest-circus": "^24.9.0",
     "js-yaml": "^3.13.1",
     "prettier": "^1.19.1",
+    "theredoc": "^1.0.0",
     "ts-jest": "^24.2.0",
     "typescript": "^3.6.4"
   }
