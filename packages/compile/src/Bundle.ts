@@ -1,5 +1,5 @@
-type RefKind = {doi: string} | {wikipedia: string} | {mr: string}
-export type Ref = {name: string} & RefKind
+type RefKind = { doi: string } | { wikipedia: string } | { mr: string }
+export type Ref = { name: string } & RefKind
 
 type Record = {
   uid: string
@@ -18,11 +18,13 @@ export type Space = Record & {
   name: string
   slug: string | undefined
   aliases: string[]
+  ambiguous_construction: boolean
 }
 
 export type Theorem = Record & {
   if_: any
   then: any
+  converse: string[]
 }
 
 export type Trait = Record & {
@@ -41,6 +43,10 @@ export function build(
   theorems: Theorem[],
   traits: Trait[]
 ): Bundle | BuildError {
+  // TODO
+  // * traits reference existing spaces and properties
+  // * theorem formulae reference existing properties
+  // * (property | space | trait | theorems) have unique uids
   return new Bundle(properties, spaces, theorems, traits)
 }
 
@@ -75,6 +81,6 @@ export class Bundle {
 }
 
 function serializeTheorem(theorem: Theorem) {
-  const {if_, ...rest} = theorem
-  return {if: if_, ...rest}
+  const { if_, ...rest } = theorem
+  return { if: if_, ...rest }
 }

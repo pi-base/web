@@ -3,13 +3,14 @@ import glob from 'glob'
 import * as fs from 'fs'
 import * as yaml from 'yaml-front-matter'
 
-import {Property, Ref, Space, Theorem, Trait} from './Bundle'
+import { Property, Ref, Space, Theorem, Trait } from './Bundle'
 
 const checkRest = (rest: any[]) => {
   if (Object.keys(rest).length === 0) {
     return
   }
 
+  // TODO: these should fail the build
   core.warning(`Found unexpected fields in source: ${JSON.stringify(rest)}`)
 }
 
@@ -45,11 +46,12 @@ export const property = (raw: string): Property | null => {
 export const space = (raw: string): Space | null => {
   const {
     uid,
+    counterexamples_id,
     name,
     aliases,
     slug,
     refs,
-    counterexamples_id,
+    ambiguous_construction,
     __content,
     ...rest
   } = yaml.loadFront(raw)
@@ -63,7 +65,8 @@ export const space = (raw: string): Space | null => {
     aliases,
     slug,
     refs: parseRefs(refs),
-    description: __content // TODO: proof of topology section
+    description: __content, // TODO: proof of topology section
+    ambiguous_construction
   }
 }
 
@@ -73,6 +76,7 @@ export const theorem = (raw: string): Theorem | null => {
     counterexamples_id,
     refs,
     then,
+    converse,
     __content,
     ...rest
   } = yaml.loadFront(raw)
@@ -87,6 +91,7 @@ export const theorem = (raw: string): Theorem | null => {
     counterexamples_id,
     if_,
     then,
+    converse,
     refs: parseRefs(refs),
     description: __content
   }
