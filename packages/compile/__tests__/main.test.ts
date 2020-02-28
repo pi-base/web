@@ -8,12 +8,12 @@ test('test runs', () => {
   const repo = path.join(__dirname, 'repo')
   const out = path.join(__dirname, 'repo', 'out.json')
 
-  fs.unlinkSync(out)
+  if (fs.existsSync(out)) { fs.unlinkSync(out) }
 
-  process.env['INPUT_REPO'] = repo
+  process.env['GITHUB_WORKSPACE'] = repo
   process.env['INPUT_OUT'] = out
 
-  console.log(cp.execSync(`node ${main}`, {env: process.env}).toString())
+  console.log(cp.execSync(`node ${main}`, { env: process.env }).toString())
 
   const bundle = JSON.parse(fs.readFileSync(out).toString())
 

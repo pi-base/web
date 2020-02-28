@@ -1,8 +1,9 @@
 import * as core from '@actions/core'
 import * as fs from 'fs'
+import * as process from 'process'
 
 import * as Bundle from './Bundle'
-import {property, parse, space, theorem, trait} from './parse'
+import { property, parse, space, theorem, trait } from './parse'
 
 export async function load(
   repo: string
@@ -16,10 +17,10 @@ export async function load(
 }
 
 async function run(): Promise<void> {
-  const repo: string = core.getInput('repo')
+  const repo: string = process.env['GITHUB_WORKSPACE'] || '.'
   const outpath: string = core.getInput('out')
 
-  core.debug(`Compiling ${repo} to ${outpath}`)
+  core.debug(`Compiling repo=${repo} to out=${outpath}`)
 
   const bundle = await load(repo)
   fs.writeFileSync(outpath, JSON.stringify(bundle.asJSON(), null, 2))
