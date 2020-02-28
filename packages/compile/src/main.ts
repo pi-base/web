@@ -1,19 +1,28 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
+import * as fs from 'fs'
 
-async function run(): Promise<void> {
-  try {
-    const ms: string = core.getInput('milliseconds')
-    core.debug(`Waiting ${ms} milliseconds ...`)
+import * as Bundle from './Bundle'
+import {property, parse, space, theorem, trait} from './parse'
 
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+export async function load(
+  repo: string
+): Promise<Bundle.Bundle | Bundle.BuildError> {
+  const properties = await parse(`${repo}/properties/*.md`, property)
+  const spaces = await parse(`${repo}/spaces/**/README.md`, space)
+  const theorems = await parse(`${repo}/theorems/*.md`, theorem)
+  const traits = await parse(`${repo}/spaces/**/properties/*.md`, trait)
 
-    core.setOutput('time', new Date().toTimeString())
-  } catch (error) {
-    core.setFailed(error.message)
-  }
+  return Bundle.build(properties, spaces, theorems, traits)
 }
 
-run()
+async function run(): Promise<void> {
+  const repo: string = core.getInput('repo')
+  const outpath: string = core.getInput('out')
+
+  core.debug(`Compiling ${repo} to ${outpath}`)
+
+  const bundle = await load(repo)
+  fs.writeFileSync(outpath, JSON.stringify(bundle.asJSON(), null, 2))
+}
+
+run().catch(err => core.setFailed(err.message))

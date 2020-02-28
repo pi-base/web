@@ -1,10 +1,11 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Compile
+description: Build a viewer bundle from data in the repository
+author: James Dabbs
 inputs:
-  myInput:              # change this
-    description: 'input description here'
-    default: 'default value if applicable'
+  repo:
+    description: Path to the cloned repository
+  out:
+    description: Path to write the bundle to
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'lib/main.js'
