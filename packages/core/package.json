@@ -1,0 +1,40 @@
+{
+  "name": "@pi-base/core",
+  "version": "0.0.1",
+  "description": "Shared pi-base data models",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write **/*.ts",
+    "format-check": "prettier --check **/*.ts",
+    "lint": "eslint src/**/*.ts",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pi-base/core.git"
+  },
+  "keywords": [
+    "node",
+    "topology"
+  ],
+  "author": "James Dabbs",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^13.7.6",
+    "@typescript-eslint/parser": "^2.8.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-github": "^2.0.0",
+    "eslint-plugin-jest": "^22.21.0",
+    "jest": "^24.9.0",
+    "jest-circus": "^24.9.0",
+    "js-yaml": "^3.13.1",
+    "pegjs": "^0.10.0",
+    "pegjs-loader": "^0.5.6",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.6.4"
+  }
+}
