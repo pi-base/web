@@ -6,8 +6,7 @@ module.exports = {
   testMatch: ['**/*.test.ts'],
   testRunner: 'jest-circus/runner',
   transform: {
-    '^.+\\.ts$': 'ts-jest',
-    '^.+\\.pegjs$': '<rootDir>/config/jest/pegTransform.js',
+    '^.+\\.ts$': 'ts-jest'
   },
   verbose: true
 }

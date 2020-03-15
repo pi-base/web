@@ -4,9 +4,10 @@
   "description": "Shared pi-base data models",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "peg && tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
+    "peg": "pegjs --plugin ts-pegjs --output src/Formula/Grammar.ts src/Formula/Grammar.pegjs",
     "lint": "eslint src/**/*.ts",
     "test": "jest"
   },
@@ -35,6 +36,7 @@
     "pegjs-loader": "^0.5.6",
     "prettier": "^1.19.1",
     "ts-jest": "^24.2.0",
+    "ts-pegjs": "^0.2.6",
     "typescript": "^3.6.4"
   }
 }

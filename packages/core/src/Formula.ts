@@ -1,6 +1,5 @@
+import { parse as _parse } from './Formula/Grammar'
 import { union } from './Util'
-
-const Parser = require('./formula.pegjs')
 
 export interface Atom<P> {
   kind: 'atom'
@@ -124,8 +123,8 @@ export function parse(q?: string): Formula<string> | undefined {
 
   let parsed
   try {
-    parsed = Parser.parse(q)
-  } catch (e) {
+    parsed = _parse(q)
+  } catch {
     if (q && q.startsWith('(')) {
       return
     } else {

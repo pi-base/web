@@ -3,11 +3,11 @@ Formula "formula" = And / Or / Atom
 _ "whitespace" = [ \t\n\r]*
 
 And = _ "(" _ head:Formula tail:(_ Conjunction _ Formula)+ _ ")" _ {
-  return { and: [head].concat(tail.map(item => item[3])) }
+  return { and: [head].concat(tail.map((item: any[]) => item[3])) }
 }
 
 Or = _ "(" _ head:Formula tail:(_ Disjunction _ Formula)+ _ ")" _ {
-  return { or: [head].concat(tail.map(item => item[3])) }
+  return { or: [head].concat(tail.map((item: any[]) => item[3])) }
 }
 
 Atom = mod:Modifier? _ prop:Property {
