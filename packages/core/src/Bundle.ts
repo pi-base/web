@@ -3,17 +3,19 @@ import { Space } from './Space'
 import { Theorem } from './Theorem'
 import { Trait } from './Trait'
 
+type Id = string
+
 export type Version = {
   ref: string
   sha: string
 }
 
-export class Bundle {
-  _properties: Property[]
-  _spaces: Space[]
-  _traits: Trait[]
-  _theorems: Theorem[]
-  _version: Version
+export default class Bundle {
+  properties: Map<Id, Property>
+  spaces: Map<Id, Space>
+  traits: Trait[]
+  theorems: Theorem[]
+  version: Version
 
   constructor(
     properties: Property[],
@@ -22,10 +24,18 @@ export class Bundle {
     traits: Trait[],
     version: Version
   ) {
-    this._properties = properties
-    this._spaces = spaces
-    this._traits = traits
-    this._theorems = theorems
-    this._version = version
+    this.properties = new Map(properties.map((property: Property) => [property.uid, property]))
+    this.spaces = new Map(spaces.map((space: Space) => [space.uid, space]))
+    this.traits = traits
+    this.theorems = theorems
+    this.version = version
+  }
+
+  property(id: Id) {
+    return this.properties.get(id)
+  }
+
+  space(id: Id) {
+    return this.spaces.get(id)
   }
 }

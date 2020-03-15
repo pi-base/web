@@ -1,5 +1,5 @@
-import { and, atom, or } from './Formula'
-import { Prover, prove } from './Logic'
+import { and, atom, or } from '../Formula'
+import Prover, { prove } from './Prover'
 
 const theorems = [
   {
@@ -33,11 +33,11 @@ const theorems = [
 describe('Prover', () => {
   describe('apply', () => {
     it('applies direct implications', () => {
-      const prover = new Prover(
+      const prover = Prover.build(
         [],
-        new Map([
+        [
           ['P', true]
-        ])
+        ]
       )
 
       prover.apply(theorems[0])
@@ -51,12 +51,12 @@ describe('Prover', () => {
     })
 
     it('finds direct contradictions', () => {
-      const prover = new Prover(
+      const prover = Prover.build(
         [],
-        new Map([
+        [
           ['P', true],
           ['Q', false],
-        ])
+        ]
       )
 
       const contradiction = prover.apply(theorems[0])!
@@ -66,11 +66,11 @@ describe('Prover', () => {
     })
 
     it('cannot force a partial OR', () => {
-      const prover = new Prover(
+      const prover = Prover.build(
         [],
-        new Map([
+        [
           ['A', true]
-        ])
+        ]
       )
 
       const result = prover.apply({
@@ -85,12 +85,12 @@ describe('Prover', () => {
     })
 
     it('can force an OR where part is known', () => {
-      const prover = new Prover(
+      const prover = Prover.build(
         [],
-        new Map([
+        [
           ['A', true],
           ['C', false]
-        ])
+        ]
       )
 
       const result = prover.apply({
@@ -108,13 +108,13 @@ describe('Prover', () => {
     })
 
     it('cannot force an OR where all parts are known false', () => {
-      const prover = new Prover(
+      const prover = Prover.build(
         [],
-        new Map([
+        [
           ['A', true],
           ['B', false],
           ['C', false]
-        ])
+        ]
       )
 
       const result = prover.apply({
@@ -130,7 +130,7 @@ describe('Prover', () => {
     })
 
     it('records assumptions as given', () => {
-      const prover = new Prover([], new Map([['A', true]]))
+      const prover = Prover.build([], [['A', true]])
 
       expect(prover.proof('A')).toEqual('given')
     })
@@ -139,12 +139,12 @@ describe('Prover', () => {
   describe('force', () => {
     describe('OR', () => {
       it('finds a contradiction', () => {
-        const prover = new Prover(
+        const prover = Prover.build(
           [],
-          new Map([
+          [
             ['A', false],
             ['B', false]
-          ])
+          ]
         )
 
         const result = prover.force('1', or(atom('A'), atom('B')), new Set())
@@ -156,11 +156,11 @@ describe('Prover', () => {
       })
 
       it('can fail', () => {
-        const prover = new Prover(
+        const prover = Prover.build(
           [],
-          new Map([
+          [
             ['B', false]
-          ])
+          ]
         )
 
         const result = prover.force(
@@ -183,13 +183,13 @@ describe('Prover', () => {
 
   describe('run', () => {
     describe('chained proofs', () => {
-      const prover = new Prover(
+      const prover = Prover.build(
         theorems,
-        new Map([
+        [
           ['P', true],
           ['S', false],
           ['X', true]
-        ])
+        ]
       )
 
       const result = prover.run()

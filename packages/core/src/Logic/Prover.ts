@@ -1,65 +1,24 @@
-import * as F from './Formula'
-import { union } from './Util'
+import * as F from '../Formula'
+import { union } from '../Util'
 
-type Id = string
+import ImplicationIndex from './ImplicationIndex'
+import Queue from './Queue'
+import { Evidence, Formula, Id, Implication, Proof } from './Types'
 
-type Evidence = {
-  theorem: Id,
-  properties: Id[]
-} | 'given'
-
-type Formula = F.Formula<Id>
-
-interface Implication {
-  uid: string
-  when: Formula
-  then: Formula
-}
-
-interface Proof {
-  theorems: Id[]
-  properties: Id[]
-}
-
-class Queue {
-  private index: Map<Id, Set<Implication>>
-  private queue: Set<Implication>
-
-  constructor(implications: Implication[]) {
-    this.index = new Map()
-    this.queue = new Set(implications)
-
-    implications.forEach((i: Implication) => {
-      union(
-        F.properties(i.when),
-        F.properties(i.then)
-      ).forEach((id: Id) => {
-        if (!this.index.has(id)) { this.index.set(id, new Set()) }
-        this.index.get(id)!.add(i)
-      })
-    })
-  }
-
-  mark(property: Id) {
-    const implications = this.index.get(property) || []
-    implications.forEach((i: Implication) => this.queue.add(i))
-  }
-
-  shift(): Implication | undefined {
-    // TODO: this.queue.values().next().value ?
-    const item = Array.from(this.queue)[0]
-    if (item) { this.queue.delete(item) }
-    return item
-  }
-}
-
-export class Prover {
+export default class Prover {
   traits: Map<Id, boolean>
 
   private proofs: Map<Id, Evidence>
   private queue: Queue
 
-  constructor(implications: Implication[], traits: Map<Id, boolean>) {
+  static build(implications: Implication[], traits: [string, boolean][]) {
+    return new Prover(
+      new ImplicationIndex(implications),
+      new Map(traits)
+    )
+  }
+
+  constructor(implications: ImplicationIndex, traits: Map<Id, boolean> = new Map()) {
     this.traits = traits
 
     this.proofs = new Map()
@@ -115,7 +74,7 @@ export class Prover {
     let property
     while (property = queue.shift()) {
       const proof = this.proofs.get(property)
-      if (proof === 'given') {
+      if (proof === 'given' || (proof && proof.theorem === 'given')) {
         assumptions.add(property)
       } else if (proof) {
         theoremByProperty.set(property, proof.theorem)
@@ -186,12 +145,12 @@ export class Prover {
         }
         return acc
       },
-      { falses: [], unknown: undefined }
+      { falses: Array<Formula>(), unknown: undefined }
     )
 
     if (!result) return
 
-    const falseProps = union(...result.falses.map(F.properties))
+    const falseProps = union<Id>(...result.falses.map(F.properties))
 
     if (result.falses.length === formula.subs.length) {
       return this.contradiction(theorem, falseProps)
@@ -203,7 +162,7 @@ export class Prover {
 
 export function prove(theorems: Implication[], when: Formula, then: Formula): Id[] | 'tautology' | undefined {
   let proof
-  const prover = new Prover(theorems, new Map())
+  const prover = new Prover(new ImplicationIndex(theorems))
 
   proof = prover.force(
     'given',

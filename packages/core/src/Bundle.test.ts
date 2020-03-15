@@ -1,4 +1,4 @@
-import { Bundle } from './Bundle'
+import Bundle from './Bundle'
 
 describe('Bundle', () => {
   const version = {
