@@ -1,9 +1,38 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from 'react'
+import { mount } from 'enzyme'
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+import { bundle } from '@pi-base/core'
+
+import { fetch, updateWrapper } from './__test__'
+
+import App from './App'
+
+import Nav from './components/Nav'
+import Main from './components/Main'
+
+describe('App', () => {
+  it('renders correctly', async () => {
+    fetch.mockOnce(
+      JSON.stringify(
+        {
+          spaces: [],
+          properties: [],
+          traits: [],
+          theorems: [],
+          version: {
+            ref: "test",
+            sha: "HEAD"
+          }
+        }
+      )
+    )
+
+    const component = mount(<App />)
+    await updateWrapper(component)
+
+    expect(component.find(Nav)).toHaveLength(1)
+    expect(component.find(Main)).toHaveLength(1)
+
+    expect(component).toMatchSnapshot()
+  })
+})
