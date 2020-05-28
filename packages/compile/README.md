@@ -20,7 +20,8 @@ In the directory containing your data files, run one of
 Actions can be published on a releases branch using `ncc`
 
     git checkout releases/v1
-    yarn pack
+    git merge master
+    yarn release
     git add -f dist/index.js
     git commit
     git push

@@ -10,7 +10,7 @@
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
-    "pack": "ncc build src/main.ts src/watch.ts",
+    "release": "ncc build src/main.ts && git add -f dist/index.js",
     "test": "jest"
   },
   "repository": {
