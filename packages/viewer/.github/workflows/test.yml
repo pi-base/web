@@ -70,3 +70,25 @@ jobs:
         args: releases finalize ${{ github.sha }}
       env:
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+    - name: Notify Slack
+      run: |
+        curl -X POST \
+          -H 'Content-type: application/json' \
+          -H 'Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}' \
+          --data '{
+            "channel": "activity",
+            "icon_emoji": ":female_scientist:",
+            "attachments": [
+              {
+          	    "mrkdwn_in": ["text"],
+                "text": "New release for *${{ github.repository }}*",
+          		  "color": "good",
+          		  "fields": [
+                  { "title": "Message", "value": "${{ github.event.head_commit.message }}"},
+          		    { "title": "Author", "value": "${{ github.actor }}" },
+          		    { "title": "Version", "value": "${{ github.sha }}" }
+                ]
+              }
+            ]
+          }' \
+          https://slack.com/api/chat.postMessage
