@@ -63,7 +63,7 @@ export default function useSearch<Search, Fragment>({
     () => produce((state: State<Search, Fragment>, action: Action) => {
       switch (action.action) {
         case 'search':
-          runSearch(state, action.q || state.query, parse)
+          runSearch(state, action.q === undefined ? state.query : action.q, parse)
           if (state.fragment && action.suggest) {
             state.suggestions = findSuggestions(state.fragment) || []
           }
