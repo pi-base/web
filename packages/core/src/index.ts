@@ -1,6 +1,7 @@
 export { Bundle } from './Bundle'
 export { Formula } from './Formula'
 export { Id } from './Id'
+export { default as ImplicationIndex } from './Logic/ImplicationIndex'
 export { default as Parser } from './Parser'
 export { Property } from './Property'
 export { default as Prover, disprove } from './Logic/Prover'
@@ -10,8 +11,8 @@ export { Theorem } from './Theorem'
 export { Trait } from './Trait'
 export { Version } from './Bundle'
 
-export * as bundle from './Bundle'
-export * as formula from './Formula'
+import * as bundle_ from './Bundle'
+import * as formula_ from './Formula'
 
-import ImplicationIndex from './Logic/ImplicationIndex'
-export { ImplicationIndex }
+export const bundle = bundle_
+export const formula = formula_
