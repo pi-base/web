@@ -6,7 +6,7 @@ import load, { rootDirectories, validate } from './load'
 const repo = path.join(__dirname, '__tests__', 'repo')
 
 describe('load', () => {
-  test('builds a bundle', async () => {
+  it('builds a bundle', async () => {
     const { bundle, errors } = await load(path.join(repo, 'valid'))
 
     expect(errors).toBeUndefined()
@@ -17,7 +17,7 @@ describe('load', () => {
     expect(bundle!.version.ref).not.toBeUndefined()
   })
 
-  test('validates', async () => {
+  it('validates', async () => {
     const { errors = new Map() } = await load(path.join(repo, 'invalid'))
 
     expect(errors.get('theorems/T000001.md')).toContain(
@@ -27,7 +27,7 @@ describe('load', () => {
 })
 
 describe('rootDirectories', () => {
-  test('produces a list', () => {
+  it('produces a list', () => {
     expect(rootDirectories(__dirname).length).toBeGreaterThanOrEqual(3)
   })
 })
@@ -35,7 +35,7 @@ describe('rootDirectories', () => {
 describe('validate', () => {
   const version = { ref: 'test', sha: 'HEAD' }
 
-  test('handles property validation failures', () => {
+  it('handles property validation failures', () => {
     const { errors } = validate({
       properties: [{
         path: 'properties/1.md',
@@ -54,7 +54,7 @@ describe('validate', () => {
     ]))
   })
 
-  test('handles theorem reference errors', () => {
+  it('handles theorem reference errors', () => {
     const { errors } = validate({
       properties: [{
         path: 'properties/P1.md',
@@ -87,7 +87,7 @@ describe('validate', () => {
     ]))
   })
 
-  test('handles trait reference errors', () => {
+  it('handles trait reference errors', () => {
     const { errors } = validate({
       traits: [{
         path: 'spaces/S1/properties/P1.md',

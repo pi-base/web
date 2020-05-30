@@ -26,7 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
-    "@pi-base/core": "0.0.1",
+    "@pi-base/core": "^0.0.3",
     "chalk": "^4.0.0",
     "chokidar": "^3.4.0",
     "cors": "^2.8.5",

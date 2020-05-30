@@ -36,7 +36,7 @@ function cleanup() {
 beforeEach(cleanup)
 afterAll(cleanup)
 
-test('builds a bundle', () => {
+it('builds a bundle', () => {
   run('valid')
 
   const bundle = JSON.parse(fs.readFileSync(out).toString())
@@ -47,7 +47,7 @@ test('builds a bundle', () => {
   expect(bundle.traits.length).toEqual(3)
 })
 
-test('writes error messages for invalid bundles', () => {
+it('writes error messages for invalid bundles', () => {
   const { output, error } = run('invalid')
 
   expect(error).toEqual(true)
