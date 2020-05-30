@@ -1,5 +1,30 @@
 ![build-test](https://github.com/pi-base/viewer/workflows/build-test/badge.svg)
 
+**We're wrapping up work on a rewrite. "Write a better README" is on the punch list. Stay tuned.**
+
 # π-Base
 
-We're wrapping up work on a rewrite. "Write a better README" is on the punch list. Stay tuned.
+The main production instance of the π-Base is available at ....
+
+## Architecture
+
+The site is powered by a few different projects, all under  [github.com/pi-base](https://github.com/pi-base).
+
+* [core](https://github.com/pi-base/core) - typescript package containing the shared data model (spaces, properties, formulae, &c.). Available on [NPM](https://www.npmjs.com/package/@pi-base/core).
+* [compiler](https://github.com/pi-base/compiler) - typescript package using `@pi-base/core` to compile a repository of markdown files into a JSON bundle for the viewer to view. Used in a Github action in the `data` repo. Also available on [NPM](https://www.npmjs.com/package/@pi-base/compiler).
+* [data](https://github.com/pi-base/data) - repo containing all actual mathematical content. Once a PR here has been approved and merged, it triggers a compiler run, which pushes the compiled bundle to S3 for the public viewer to fetch.
+* [viewer](https://github.com/pi-base/viewer) - this package. Fetches and presents the compiled bundle.
+
+## Development
+
+Clone the repo and run
+
+```bash
+$ yarn install
+$ yarn start
+```
+
+## Deployment
+
+Deployment is automatic on a successful push to `master`. See `.github/actions` and `package.json` for details.
+
