@@ -21,6 +21,7 @@ jobs:
       run: yarn build
       env:
         REACT_APP_BUNDLE_HOST: https://pi-base-bundles.s3.us-east-2.amazonaws.com
+        REACT_APP_RELEASE: ${{ github.sha }}
     - name: Upload Build
       uses: actions/upload-artifact@v1
       with:

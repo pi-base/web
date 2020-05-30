@@ -47,7 +47,9 @@ export function inMemory() {
 }
 
 export function sentry(dsn: string) {
-  Sentry.init({ dsn })
+  const release = `pi-base@${process.env.REACT_APP_RELEASE || 'dev'}`
+
+  Sentry.init({ dsn, release })
 
   return {
     error(e: any, meta: Object = {}) {
