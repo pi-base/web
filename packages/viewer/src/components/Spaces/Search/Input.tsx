@@ -63,6 +63,10 @@ export default function SearchInput<Search, Fragment>({
   const onChange = useCallback(handleChange(dispatch), [dispatch])
   const onKeyDown = useCallback(handleKeyDown(dispatch), [dispatch])
 
+  if (query === 'error') {
+    throw new Error('Forcing an error from in a component')
+  }
+
   return (
     <>
       <InputGroup>
