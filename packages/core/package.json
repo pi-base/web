@@ -1,6 +1,6 @@
 {
   "name": "@pi-base/core",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Shared pi-base data models",
   "main": "lib/index.js",
   "scripts": {
