@@ -1,8 +1,18 @@
 import Fuse from 'fuse.js'
 import { createSelector } from 'reselect'
 
-import { Id, ImplicationIndex, Property, Prover, Space, Theorem, Trait, disprove } from '@pi-base/core'
-import { formula as F } from '@pi-base/core'
+import {
+  disprove,
+  formula as F,
+  Formula,
+  Id,
+  ImplicationIndex,
+  Property,
+  Prover,
+  Space,
+  Theorem,
+  Trait,
+} from '@pi-base/core'
 
 export type Proof = {
   properties: Id[]
@@ -10,7 +20,7 @@ export type Proof = {
 }
 
 export type Search
-  = { kind: 'formula', formula: F.Formula<Property> }
+  = { kind: 'formula', formula: Formula<Property> }
   | { kind: 'text', text: string }
 
 export type SearchResults
@@ -148,7 +158,7 @@ export const searchSpaces = (store: Store, term: string) => {
   return searchIndex(spaceIndex(store), term)
 }
 
-export function spacesMatching(store: Store, formula: F.Formula<Id>, collection?: Space[]): SearchResults {
+export function spacesMatching(store: Store, formula: Formula<Id>, collection?: Space[]): SearchResults {
   if (!collection) { collection = spaces(store) }
 
   const results = collection.filter((space: Space) => {

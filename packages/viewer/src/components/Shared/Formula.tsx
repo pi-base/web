@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { formula as F } from '@pi-base/core'
+import { Formula, formula } from '@pi-base/core'
 
 import { Property, Store, useStore } from '../../models'
 import paths from '../../paths'
@@ -18,7 +18,7 @@ function intersperse(list: JSX.Element[], sep: string) {
 
 function render<P>(
   element: (p: P) => JSX.Element,
-  formula: F.Formula<P>
+  formula: Formula<P>
 ): JSX.Element {
   switch (formula.kind) {
     case 'and':
@@ -66,7 +66,7 @@ export function Display({
   value,
   link = "none"
 }: {
-  value: F.Formula<Property>
+  value: Formula<Property>
   link?: "property" | "none"
 }) {
   const format = link === "property"
@@ -80,11 +80,11 @@ export default function ({
   value,
   link = "none"
 }: {
-  value: F.Formula<string>
+  value: Formula<string>
   link?: "property" | "none"
 }) {
   const store = useStore()
-  const resolved = F.mapProperty((id: string) => Store.property(store, id)!, value)
+  const resolved = formula.mapProperty((id: string) => Store.property(store, id)!, value)
 
   return (<Display value={resolved} link={link} />)
 }

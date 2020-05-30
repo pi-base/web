@@ -2,10 +2,11 @@ import * as P from '@pi-base/core'
 import store from './Store'
 import { Proof, Search as search } from './Store/state'
 
-export const Store = store // TODO: use this consistently
+// TODO: use this import consistently, rather than reaching into models/Store/...
+export const Store = store
 export const useStore = Store.useStore
 
-export type Formula = P.formula.Formula<Property>
+export type Formula = P.Formula<Property>
 export type Property = P.Property
 export type Search = search
 export type Space = P.Space

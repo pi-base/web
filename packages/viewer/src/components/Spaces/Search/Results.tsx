@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
 
-import { formula as F } from '@pi-base/core'
+import { Formula, formula as F } from '@pi-base/core'
 
-import { Display as Formula } from '../../Shared/Formula'
+import { Display } from '../../Shared/Formula'
 import Hints from './Hints'
 import { Property, Search, Space, Theorem } from '../../../models'
 import { SearchResults } from '../../../models/Store/state'
@@ -14,7 +14,7 @@ function ByFormula({
   formula,
   results
 }: {
-  formula: F.Formula<Property>
+  formula: Formula<Property>
   results: SearchResults
 }) {
   if (results.kind === 'contradiction') {
@@ -28,13 +28,13 @@ function Contradiction({
   formula,
   contradiction
 }: {
-  formula: F.Formula<Property>
+  formula: Formula<Property>
   contradiction: Theorem[] | 'tautology'
 }) {
   if (contradiction === 'tautology') {
     return (
       <h5>
-        <Formula value={formula} link="property" />
+        <Display value={formula} link="property" />
         {' '}
         is a contradiction
       </h5>
@@ -43,7 +43,7 @@ function Contradiction({
     return (
       <>
         <h5>
-          <Formula value={formula} link="property" />
+          <Display value={formula} link="property" />
           {' '}
           is impossible by
         </h5>
@@ -57,7 +57,7 @@ function Matches({
   formula,
   spaces
 }: {
-  formula: F.Formula<Property>
+  formula: Formula<Property>
   spaces: Space[]
 }) {
   const Title = useCallback(
@@ -66,7 +66,7 @@ function Matches({
         <>
           Spaces ⊢
           {' '}
-          <Formula value={formula} link="property" />
+          <Display value={formula} link="property" />
         </>
       )
     },

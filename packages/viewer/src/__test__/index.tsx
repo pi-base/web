@@ -5,7 +5,8 @@ import { mount as enzymeMount } from 'enzyme'
 
 import { Formula, formula } from '@pi-base/core'
 import { MemoryRouter as Router, Route } from 'react-router'
-import { Property, Space, Store, Theorem } from '../models'
+import { Property, Space, Theorem } from '../models'
+import { Store } from '../models/Store'
 import * as Context from '../models/Store/context'
 
 export const act = testUtils.act
