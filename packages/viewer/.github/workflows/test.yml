@@ -45,3 +45,12 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Create a Sentry.io release
+      uses: tclindner/sentry-releases-action@v1.1.1
+      with:
+        tagName: ${{ github.sha }}
+        environment: production
+      env:
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_ORG: james-dabbs
+        SENTRY_PROJECT: pi-base
