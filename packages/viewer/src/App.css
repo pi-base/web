@@ -11,10 +11,15 @@
   padding-top: 1em;
 }
 
-.status-bar {
-  position: absolute;
-  bottom: 0;
-  height: 100px;
-  width: 100px;
-  background-color: red;
+.home-jumbotron {
+  margin-top:-20px;
+  background-color: #222;
+  background-image: url('/peanocurve.svg');
+  background-repeat: repeat;
+  color: #fff;
+}
+
+.navbar-light {
+  background-image: url('/peanocurvelight.svg');
+  background-repeat: repeat;
 }

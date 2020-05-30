@@ -268,11 +268,11 @@ exports[`App renders correctly 1`] = `
                   }
                 >
                   <Jumbotron
-                    className="wide"
+                    className="wide home-jumbotron"
                     fluid={false}
                   >
                     <div
-                      className="wide jumbotron"
+                      className="wide home-jumbotron jumbotron"
                     >
                       <div
                         className="container"

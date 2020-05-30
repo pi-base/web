@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 export default function Home() {
   return (
     <>
-      <Jumbotron className="wide">
+      <Jumbotron className="wide home-jumbotron">
         <div className="container">
           <h1>π-Base</h1>
           <p>a community database of topological counterexamples</p>
