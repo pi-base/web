@@ -4,7 +4,7 @@
 
 # π-Base
 
-The main production instance of the π-Base is available at ....
+The development instance of the π-Base is available at [https://d28ipz1eb3u4z4.cloudfront.net/](https://d28ipz1eb3u4z4.cloudfront.net/) (for now).
 
 ## Architecture
 
