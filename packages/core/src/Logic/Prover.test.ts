@@ -223,6 +223,10 @@ describe('Prover', () => {
           properties: ['X', 'S', 'P']
         })
       })
+
+      it('records its derivations', () => {
+        expect(prover.derivations().proofs?.map(({ property }) => property)).toEqual(['Q', 'R', 'T', 'Y'])
+      })
     })
   })
 })

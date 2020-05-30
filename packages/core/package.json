@@ -4,7 +4,7 @@
   "description": "Shared pi-base data models",
   "main": "lib/index.js",
   "scripts": {
-    "build": "peg && tsc",
+    "build": "yarn run peg && tsc",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "peg": "pegjs --plugin ts-pegjs --output src/Formula/Grammar.ts src/Formula/Grammar.pegjs",
@@ -19,9 +19,16 @@
     "node",
     "topology"
   ],
+  "files": [
+    "lib"
+  ],
   "author": "James Dabbs",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "remark": "^11.0.2",
+    "remark-rehype": "^6.0.0",
+    "unist-util-visit": "^2.0.2"
+  },
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^13.7.6",

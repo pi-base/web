@@ -53,6 +53,21 @@ export default class Prover {
     }
   }
 
+  derivations() {
+    const contradiction = this.run()
+    if (contradiction) { return { contradiction } }
+
+    const proofs: { property: string, value: boolean, proof: Proof }[] = []
+    this.traits.forEach((value: boolean, property: string) => {
+      const proof = this.proof(property)
+      if (!proof || proof === 'given') { return }
+
+      proofs.push({ property, value, proof })
+    })
+
+    return { proofs }
+  }
+
   proof(property: Id) {
     const proof = this.proofs.get(property)
     switch (proof) {
@@ -70,14 +85,19 @@ export default class Prover {
     let theoremByProperty = new Map<Id, Id>()
     let assumptions = new Set<Id>()
     let queue = Array.from(properties)
+    let expanded = new Set<Id>()
 
     let property
     while (property = queue.shift()) {
+      if (expanded.has(property)) { continue }
+
       const proof = this.proofs.get(property)
       if (proof === 'given' || (proof && proof.theorem === 'given')) {
+        expanded.add(property)
         assumptions.add(property)
       } else if (proof) {
         theoremByProperty.set(property, proof.theorem)
+        expanded.add(property)
         queue = queue.concat(proof.properties)
       }
     }
@@ -160,22 +180,22 @@ export default class Prover {
   }
 }
 
-export function prove(theorems: Implication[], when: Formula, then: Formula): Id[] | 'tautology' | undefined {
+export function disprove(implications: ImplicationIndex, formula: Formula): Id[] | 'tautology' | undefined {
   let proof
-  const prover = new Prover(new ImplicationIndex(theorems))
+  const prover = new Prover(implications)
 
-  proof = prover.force(
-    'given',
-    F.and(
-      when,
-      F.negate(then)
-    ),
-    new Set()
-  )
+  proof = prover.force('given', formula, new Set())
   if (proof) { return formatProof(proof) }
 
   proof = prover.run()
   if (proof) { return formatProof(proof) }
+}
+
+export function prove(theorems: Implication[], when: Formula, then: Formula): Id[] | 'tautology' | undefined {
+  return disprove(
+    new ImplicationIndex(theorems),
+    F.and(when, F.negate(then))
+  )
 }
 
 const formatProof = (proof: Proof) => {

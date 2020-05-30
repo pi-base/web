@@ -1,4 +1,4 @@
-import Bundle from '../Bundle'
+import { Bundle } from '../Bundle'
 import { atom } from '../Formula'
 import { Space } from '../Space'
 import { Trait } from '../Trait'
@@ -17,7 +17,7 @@ export default class Universe {
   private implications: ImplicationIndex
 
   static fromBundle(bundle: Bundle): Universe {
-    const u = new Universe(new Map(), new ImplicationIndex(bundle.theorems))
+    const u = new Universe(new Map(), new ImplicationIndex(Array.from(bundle.theorems.values())))
 
     bundle.traits.forEach((value: Trait) => {
       u.prover(value.space).force(

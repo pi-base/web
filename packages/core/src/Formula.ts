@@ -82,6 +82,10 @@ export function mapProperty<P, Q>(func: (p: P) => Q, formula: Formula<P>): Formu
   return map<P, Q>(mapAtom, formula)
 }
 
+export function compact<P>(f: Formula<P | undefined>): Formula<P> | undefined {
+  return properties(f).has(undefined) ? undefined : f as Formula<P>
+}
+
 export function evaluate<T>(f: Formula<T>, traits: Map<T, boolean>): boolean | undefined {
   let result: boolean | undefined
 
