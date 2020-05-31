@@ -42,6 +42,7 @@ export type Store = {
     ref: string
     sha: string
   }
+  etag: string
   checked: Set<Id>
 }
 
@@ -51,7 +52,8 @@ export const initial: Store = {
   theorems: new Map(),
   traits: new Map(),
   version: { ref: 'master', sha: 'HEAD' },
-  checked: new Set()
+  checked: new Set(),
+  etag: ''
 }
 
 type TraitId = { space: Id, property: Id }

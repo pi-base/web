@@ -106,7 +106,8 @@ export const defaultStore: Store = {
     ref: 'test',
     sha: 'HEAD'
   },
-  checked: new Set()
+  checked: new Set(),
+  etag: ''
 }
 
 export function Wrapper({

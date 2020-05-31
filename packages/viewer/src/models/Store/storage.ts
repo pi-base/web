@@ -14,7 +14,8 @@ function loadFromStorage(storage = localStorage): Store | undefined {
     const parsed = JSON.parse(raw)
     return {
       ...bundle.deserialize(parsed),
-      checked: new Set(parsed.checked || [])
+      checked: new Set(parsed.checked || []),
+      etag: parsed.etag || ''
     }
   } catch (e) {
     console.error(e) // TODO: send to Sentry
@@ -26,7 +27,11 @@ export function save(
   store: Store,
   storage = localStorage
 ) {
-  const serialized = { ...bundle.serialize(store), checked: Array.from(store.checked) }
+  const serialized = {
+    ...bundle.serialize(store),
+    checked: Array.from(store.checked),
+    etag: store.etag
+  }
   storage.setItem(storageKey, JSON.stringify(serialized))
 }
 
@@ -35,11 +40,15 @@ async function loadFromRemote(
     branch: string
     host?: string
   }
-) {
-  const b = await bundle.fetch(opts)
+): Promise<Store | undefined> {
+  const response = await bundle.fetch(opts)
+  if (!response) { return }
+
+  const { bundle: result, etag } = response
   return {
-    ...b,
-    checked: new Set<Id>()
+    ...result,
+    checked: new Set<Id>(),
+    etag
   }
 }
 
@@ -47,10 +56,17 @@ export async function load(
   branch: string,
   storage = localStorage
 ): Promise<Store | undefined> {
-  let fetched = loadFromStorage(storage)
-  if (!fetched) {
-    fetched = await loadFromRemote({ branch, host: defaultHost })
-    if (fetched) { save(fetched, storage) }
+  let loaded = loadFromStorage(storage)
+  const opts: { branch: string, host: string, etag?: string } = { branch, host: defaultHost }
+  if (loaded?.etag) { opts.etag = loaded.etag }
+
+  const fetched = await loadFromRemote(opts)
+  if (fetched) {
+    save(fetched, storage)
+    return fetched
+  } else if (loaded) {
+    return loaded
+  } else {
+    // TODO: handle error
   }
-  return fetched
 }
