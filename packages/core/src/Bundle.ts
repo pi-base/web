@@ -50,17 +50,25 @@ export function deserialize(serialized: Serialized): Bundle {
 type FetchOpts = {
   branch: string
   host?: string
+  etag?: string
 }
 
 export function bundleUrl({ branch, host = defaultHost }: FetchOpts) {
   return `${host}/refs/heads/${branch}.json`
 }
 
-export async function fetch(opts: FetchOpts) {
-  const response = await window.fetch(bundleUrl(opts))
+export async function fetch(opts: FetchOpts): Promise<{ bundle: Bundle, etag: string } | undefined> {
+  const headers = new Headers()
+  if (opts.etag) { headers.append('If-None-Match', opts.etag) }
+  const response = await window.fetch(bundleUrl(opts), { method: 'GET', headers })
+  if (response.status === 304) { return }
+
   const json = await response.json()
   // TODO: validate returned data
-  return deserialize(json)
+  return {
+    bundle: deserialize(json),
+    etag: response.headers.get('etag') || ''
+  }
 }
 
 function indexBy<K, V>(collection: V[], key: (value: V) => K): Map<K, V> {
