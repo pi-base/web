@@ -2,8 +2,10 @@ import Fuse from 'fuse.js'
 import { createSelector } from 'reselect'
 
 import {
+  bundle as B,
   disprove,
   formula as F,
+  Bundle,
   Formula,
   Id,
   ImplicationIndex,
@@ -34,24 +36,21 @@ export type Status
   | { state: 'ready' }
 
 export type Store = {
-  properties: Map<Id, Property>
-  spaces: Map<Id, Space>
-  theorems: Map<Id, Theorem>
+  bundle: Bundle
   traits: Map<Id, Trait & { proof?: Proof }> // TODO: union type?
-  version: {
-    ref: string
-    sha: string
-  }
   etag: string
   checked: Set<Id>
 }
 
 export const initial: Store = {
-  properties: new Map(),
-  spaces: new Map(),
-  theorems: new Map(),
+  bundle: B.deserialize({
+    properties: [],
+    spaces: [],
+    traits: [],
+    theorems: [],
+    version: { ref: 'master', sha: 'HEAD' }
+  }),
   traits: new Map(),
-  version: { ref: 'master', sha: 'HEAD' },
   checked: new Set(),
   etag: ''
 }
@@ -59,24 +58,24 @@ export const initial: Store = {
 type TraitId = { space: Id, property: Id }
 export const traitId = ({ space, property }: TraitId) => `${space}|${property}`
 
-export const property = (store: Store, id: Id) => store.properties.get(id) || null
-export const space = (store: Store, id: Id) => store.spaces.get(id) || null
-export const theorem = (store: Store, id: Id) => store.theorems.get(id) || null
+export const property = (store: Store, id: Id) => store.bundle.properties.get(id) || null
+export const space = (store: Store, id: Id) => store.bundle.spaces.get(id) || null
+export const theorem = (store: Store, id: Id) => store.bundle.theorems.get(id) || null
 export const trait = (store: Store, id: TraitId) => store.traits.get(traitId(id)) || null
 
 export const properties = createSelector(
-  (store: Store) => store.properties,
-  properties => Array.from(properties.values())
+  (store: Store) => store.bundle,
+  bundle => Array.from(bundle.properties.values())
 )
 
 export const spaces = createSelector(
-  (store: Store) => store.spaces,
-  spaces => Array.from(spaces.values())
+  (store: Store) => store.bundle,
+  bundle => Array.from(bundle.spaces.values())
 )
 
 export const theorems = createSelector(
-  (store: Store) => store.theorems,
-  theorems => Array.from(theorems.values())
+  (store: Store) => store.bundle,
+  bundle => Array.from(bundle.theorems.values())
 )
 
 export const theoremIndex = createSelector(
@@ -103,7 +102,7 @@ export const spaceIndex = createSelector(spaces, index)
 
 function spaceTraitMap(store: Store, space: Space) {
   const traits = new Map<Id, boolean>()
-  store.properties.forEach((property: Property) => {
+  properties(store).forEach((property: Property) => {
     const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
     if (trait) { traits.set(property.uid, trait.value) }
   })
@@ -123,7 +122,7 @@ export const theoremsWithProperty = (store: Store, property: Property) =>
 
 export const traitsForProperty = (store: Store, property: Property) => {
   const acc = new Map<Id, { space: Space, trait: Trait }>()
-  store.spaces.forEach((space: Space) => {
+  spaces(store).forEach((space: Space) => {
     const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
     if (trait) { acc.set(space.uid, { space, trait }) }
   })
@@ -132,7 +131,7 @@ export const traitsForProperty = (store: Store, property: Property) => {
 
 export const traitsForSpace = (store: Store, space: Space) => {
   const acc = new Map<Id, { property: Property, trait: Trait }>()
-  store.properties.forEach((property: Property) => {
+  properties(store).forEach((property: Property) => {
     const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
     if (trait) { acc.set(property.uid, { property, trait }) }
   })
@@ -223,4 +222,12 @@ export function check(store: Store, space: Space) {
     // TODO: handle result.contradiction
     console.log(result)
   }
+}
+
+export function uncheckedSpaces(store: Store) {
+  return spaces(store).filter(space => !store.checked.has(space.uid))
+}
+
+export function loaded(store: Store) {
+  return store !== initial
 }

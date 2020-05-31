@@ -6,6 +6,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 import { useStore } from '../../hooks'
 import * as paths from '../../paths'
 import { useErrorHandler } from '../../errors'
+import { loaded } from '../../models/Store'
 
 export default function NotFound() {
   const store = useStore()
@@ -13,9 +14,8 @@ export default function NotFound() {
   const history = useHistory()
   const location = useLocation()
 
-  const loaded = store.spaces.size > 0
-
   let redirect: string | null = null
+  const isLoaded = loaded(store)
 
   const match = matchPath<{ id: string }>(location.pathname, { path: "/theorems/:id" })
   if (match && match.params.id.startsWith('I')) {
@@ -24,16 +24,16 @@ export default function NotFound() {
 
   useEffect(
     () => {
-      if (loaded) {
+      if (isLoaded) {
         error(new Error('Not Found'), { location, redirect })
 
         if (redirect) { history.push(redirect) }
       }
     },
-    [error, location, history, redirect, loaded]
+    [error, location, history, redirect, isLoaded]
   )
 
-  if (!loaded) {
+  if (!isLoaded) {
     return (
       <>
         <Spinner animation="border" role="status" />

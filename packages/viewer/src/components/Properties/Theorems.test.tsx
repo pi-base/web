@@ -8,7 +8,7 @@ import List from '../Theorems/SummaryList'
 describe('List', () => {
   it('renders rows for each property', () => {
     const component = mount(
-      <Theorems property={store.properties.get('P1')} />
+      <Theorems property={store.bundle.properties.get('P1')!} />
     )
 
     const theorems = component.find(List).prop('theorems')

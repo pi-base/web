@@ -3,6 +3,7 @@ import {
   Status as status,
   Store as store,
   initial,
+  loaded,
   properties,
   property,
   propertyIndex,
@@ -28,6 +29,7 @@ export type Store = store
 
 export {
   initial,
+  loaded,
   properties,
   property,
   propertyIndex,
@@ -51,6 +53,7 @@ export {
 export default {
   Provider,
   initial,
+  loaded,
   properties,
   property,
   propertyIndex,

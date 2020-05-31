@@ -65,7 +65,7 @@ async function boot(
 
   dispatch({ action: 'loaded', value: loaded })
 
-  const toCheck = Array.from(loaded.spaces.values()).filter(space => !loaded.checked.has(space.uid))
+  const toCheck = S.uncheckedSpaces(loaded)
   dispatch({ action: 'checking', count: toCheck.length })
 
   for (let i = 0; i < toCheck.length; i++) {

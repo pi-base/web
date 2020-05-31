@@ -12,10 +12,12 @@ function loadFromStorage(storage = localStorage): Store | undefined {
 
   try {
     const parsed = JSON.parse(raw)
+    const deserialized = bundle.deserialize(JSON.parse(raw))
     return {
-      ...bundle.deserialize(parsed),
+      bundle: bundle.deserialize(parsed),
       checked: new Set(parsed.checked || []),
-      etag: parsed.etag || ''
+      etag: parsed.etag || '',
+      ...deserialized
     }
   } catch (e) {
     console.error(e) // TODO: send to Sentry
@@ -28,7 +30,7 @@ export function save(
   storage = localStorage
 ) {
   const serialized = {
-    ...bundle.serialize(store),
+    bundle: bundle.serialize(store.bundle),
     checked: Array.from(store.checked),
     etag: store.etag
   }
@@ -46,6 +48,7 @@ async function loadFromRemote(
 
   const { bundle: result, etag } = response
   return {
+    bundle: result,
     ...result,
     checked: new Set<Id>(),
     etag

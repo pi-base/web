@@ -3,7 +3,7 @@ import testUtils from 'react-dom/test-utils'
 import jestFetchMock from 'jest-fetch-mock'
 import { mount as enzymeMount } from 'enzyme'
 
-import { Formula, formula } from '@pi-base/core'
+import { Formula, bundle, formula } from '@pi-base/core'
 import { MemoryRouter as Router, Route } from 'react-router'
 import { Property, Space, Theorem } from '../models'
 import { Store } from '../models/Store'
@@ -85,27 +85,30 @@ function index<T extends { uid: string }>(
 }
 
 export const defaultStore: Store = {
-  spaces: index(
-    space({ uid: 'S1' }),
-    space({ uid: 'S2' }),
-  ),
-  properties: index(
-    property({ uid: 'P1' }),
-    property({ uid: 'P2' }),
-    property({ uid: 'P3' }),
-  ),
+  bundle: bundle.deserialize({
+    spaces: [
+      space({ uid: 'S1' }),
+      space({ uid: 'S2' }),
+    ],
+    properties: [
+      property({ uid: 'P1' }),
+      property({ uid: 'P2' }),
+      property({ uid: 'P3' }),
+    ],
+    traits: [],
+    theorems: [
+      theorem({
+        uid: 'T1',
+        when: formula.atom('P1'),
+        then: formula.atom('P2')
+      })
+    ],
+    version: {
+      ref: 'test',
+      sha: 'HEAD'
+    },
+  }),
   traits: new Map(),
-  theorems: index(
-    theorem({
-      uid: 'T1',
-      when: formula.atom('P1'),
-      then: formula.atom('P2')
-    })
-  ),
-  version: {
-    ref: 'test',
-    sha: 'HEAD'
-  },
   checked: new Set(),
   etag: ''
 }
