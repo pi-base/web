@@ -26,7 +26,11 @@ export function boot({
 
   const app = express()
 
-  app.use(cors())
+  app.use(
+    cors({
+      exposedHeaders: ['ETag']
+    })
+  )
 
   app.use((req: Request, _, next: NextFunction) => {
     log(`${chalk.cyan(req.method)} ${req.originalUrl}`)
@@ -35,6 +39,7 @@ export function boot({
 
   app.get('/refs/heads/:branch', (_, res: Response) => {
     // n.b. we're not currently verifying params.branch matches
+    res.setHeader('ETag', state.bundle ? state.bundle.version.sha : 'unknown')
     res.json(state.bundle && bundle.serialize(state.bundle))
   })
 
