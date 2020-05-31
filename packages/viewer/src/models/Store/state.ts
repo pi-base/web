@@ -37,9 +37,9 @@ export type Status
 
 export type Store = {
   bundle: Bundle
-  traits: Map<Id, Trait & { proof?: Proof }> // TODO: union type?
   etag: string
   checked: Set<Id>
+  proofs: Map<Id, Proof>
 }
 
 export const initial: Store = {
@@ -50,9 +50,9 @@ export const initial: Store = {
     theorems: [],
     version: { ref: 'master', sha: 'HEAD' }
   }),
-  traits: new Map(),
   checked: new Set(),
-  etag: ''
+  etag: '',
+  proofs: new Map()
 }
 
 type TraitId = { space: Id, property: Id }
@@ -61,7 +61,15 @@ export const traitId = ({ space, property }: TraitId) => `${space}|${property}`
 export const property = (store: Store, id: Id) => store.bundle.properties.get(id) || null
 export const space = (store: Store, id: Id) => store.bundle.spaces.get(id) || null
 export const theorem = (store: Store, id: Id) => store.bundle.theorems.get(id) || null
-export const trait = (store: Store, id: TraitId) => store.traits.get(traitId(id)) || null
+export const trait = (store: Store, id: TraitId) => {
+  const uid = traitId(id)
+  const trait = store.bundle.traits.get(uid) || null
+  if (trait) {
+    return { ...trait, proof: store.proofs.get(uid) }
+  } else {
+    return null
+  }
+}
 
 export const properties = createSelector(
   (store: Store) => store.bundle,
@@ -103,7 +111,7 @@ export const spaceIndex = createSelector(spaces, index)
 function spaceTraitMap(store: Store, space: Space) {
   const traits = new Map<Id, boolean>()
   properties(store).forEach((property: Property) => {
-    const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
+    const trait = store.bundle.traits.get(traitId({ space: space.uid, property: property.uid }))
     if (trait) { traits.set(property.uid, trait.value) }
   })
   return traits
@@ -123,8 +131,8 @@ export const theoremsWithProperty = (store: Store, property: Property) =>
 export const traitsForProperty = (store: Store, property: Property) => {
   const acc = new Map<Id, { space: Space, trait: Trait }>()
   spaces(store).forEach((space: Space) => {
-    const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
-    if (trait) { acc.set(space.uid, { space, trait }) }
+    const t = trait(store, { space: space.uid, property: property.uid })
+    if (t) { acc.set(space.uid, { space, trait: t }) }
   })
   return acc
 }
@@ -132,8 +140,8 @@ export const traitsForProperty = (store: Store, property: Property) => {
 export const traitsForSpace = (store: Store, space: Space) => {
   const acc = new Map<Id, { property: Property, trait: Trait }>()
   properties(store).forEach((property: Property) => {
-    const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
-    if (trait) { acc.set(property.uid, { property, trait }) }
+    const t = trait(store, { space: space.uid, property: property.uid })
+    if (t) { acc.set(property.uid, { property, trait: t }) }
   })
   return acc
 }
@@ -196,7 +204,7 @@ export function check(store: Store, space: Space) {
 
   const lookup = new Map()
   properties(store).forEach((property: Property) => {
-    const trait = store.traits.get(traitId({ space: space.uid, property: property.uid }))
+    const trait = store.bundle.traits.get(traitId({ space: space.uid, property: property.uid }))
     if (trait) { lookup.set(property.uid, trait.value) }
   })
 
@@ -207,16 +215,16 @@ export function check(store: Store, space: Space) {
   if (result.proofs) {
     result.proofs.forEach(({ property, value, proof }) => {
       const uid = traitId({ space: space.uid, property })
-      store.traits.set(uid, {
+      store.bundle.traits.set(uid, {
         uid,
         space: space.uid,
         property,
         value,
         counterexamples_id: undefined,
         description: '',
-        refs: [],
-        proof: proof
+        refs: []
       })
+      store.proofs.set(uid, proof)
     })
   } else {
     // TODO: handle result.contradiction

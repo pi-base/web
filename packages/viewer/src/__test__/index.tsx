@@ -76,14 +76,6 @@ export async function updateWrapper(wrapper: any, amount = 0) {
   })
 }
 
-function index<T extends { uid: string }>(
-  ...collection: T[]
-) {
-  return new Map(collection.map(item =>
-    [item.uid, item]
-  ))
-}
-
 export const defaultStore: Store = {
   bundle: bundle.deserialize({
     spaces: [
@@ -108,9 +100,9 @@ export const defaultStore: Store = {
       sha: 'HEAD'
     },
   }),
-  traits: new Map(),
   checked: new Set(),
-  etag: ''
+  etag: '',
+  proofs: new Map()
 }
 
 export function Wrapper({
