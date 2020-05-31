@@ -91,7 +91,8 @@ export const defaultStore: Store = {
   ),
   properties: index(
     property({ uid: 'P1' }),
-    property({ uid: 'P2' })
+    property({ uid: 'P2' }),
+    property({ uid: 'P3' }),
   ),
   traits: new Map(),
   theorems: index(

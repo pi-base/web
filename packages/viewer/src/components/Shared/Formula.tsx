@@ -10,7 +10,7 @@ import { Title } from './Display'
 function intersperse(list: JSX.Element[], sep: string) {
   const result: JSX.Element[] = []
   for (let i = 0; i < list.length; i++) {
-    result[2 * i] = list[i]
+    result[2 * i] = <React.Fragment key={2 * i}>{list[i]}</React.Fragment>
     result[2 * i - 1] = <span key={2 * i - 1}>{` ${sep} `}</span>
   }
   return result
@@ -52,13 +52,10 @@ function render<P>(
         </>
       )
     case 'atom':
-      if (formula.value === false) {
-        return (
-          <>¬{element(formula.property)}</>
-        )
-      } else {
-        return element(formula.property)
-      }
+      const prefix = formula.value === false ? '¬' : ''
+      return (
+        <>{prefix}{element(formula.property)}</>
+      )
   }
 }
 
@@ -72,8 +69,9 @@ export function Display({
   const format = link === "property"
     ? (p: Property) => <Link key={p.uid} to={paths.property(p)}><Title body={p.name}></Title></Link>
     : (p: Property) => <Title key={p.uid} body={p.name} />
+  const i = 0
 
-  return (<>{render(format, value)}</>)
+  return (<React.Fragment key={i}>{render(format, value)}</React.Fragment>)
 }
 
 export default function ({
