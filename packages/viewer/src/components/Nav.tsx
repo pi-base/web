@@ -3,8 +3,10 @@ import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
+const showDevLink = process.env.NODE_ENV === 'development' || window.location.host.startsWith('dev.')
+
 export default React.memo(
-  function Navigation(props: any) {
+  function Navigation() {
     return (
       <Navbar bg="light">
         <Container>
@@ -17,6 +19,10 @@ export default React.memo(
               <Link className="nav-link" to="/spaces">Spaces</Link>
               <Link className="nav-link" to="/properties">Properties</Link>
               <Link className="nav-link" to="/theorems">Theorems</Link>
+            </Nav>
+            <Nav className="ml-auto">
+              {showDevLink && <Link className="nav-link" to="/_dev">Dev</Link>}
+              <Link className="nav-link" to="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md">Contribute</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

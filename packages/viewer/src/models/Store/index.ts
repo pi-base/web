@@ -29,6 +29,7 @@ export type Store = store
 
 export {
   initial,
+  fetching,
   loaded,
   properties,
   property,
@@ -47,7 +48,8 @@ export {
   theoremsWithProperty,
   trait,
   traitsForProperty,
-  traitsForSpace
+  traitsForSpace,
+  uncheckedSpaces
 } from './state'
 
 export default {

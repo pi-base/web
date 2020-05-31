@@ -191,6 +191,41 @@ exports[`App renders correctly 1`] = `
                             </div>
                           </ForwardRef>
                         </Nav>
+                        <Nav
+                          className="ml-auto"
+                          fill={false}
+                          justify={false}
+                        >
+                          <ForwardRef
+                            as="div"
+                            className="ml-auto navbar-nav"
+                            onSelect={[Function]}
+                          >
+                            <div
+                              className="ml-auto navbar-nav"
+                              onKeyDown={[Function]}
+                            >
+                              <Link
+                                className="nav-link"
+                                to="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                              >
+                                <LinkAnchor
+                                  className="nav-link"
+                                  href="/https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                                  navigate={[Function]}
+                                >
+                                  <a
+                                    className="nav-link"
+                                    href="/https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                                    onClick={[Function]}
+                                  >
+                                    Contribute
+                                  </a>
+                                </LinkAnchor>
+                              </Link>
+                            </div>
+                          </ForwardRef>
+                        </Nav>
                       </div>
                     </Transition>
                   </Collapse>
@@ -200,7 +235,9 @@ exports[`App renders correctly 1`] = `
           </nav>
         </Navbar>
       </Memo(Navigation)>
-      <Memo(Main)>
+      <Memo(Main)
+        dispatch={[Function]}
+      >
         <Container
           fluid={false}
         >

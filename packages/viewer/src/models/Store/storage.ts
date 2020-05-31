@@ -1,24 +1,56 @@
-import { Id, bundle } from '@pi-base/core'
+import { Id, SerializedBundle, bundle } from '@pi-base/core'
 
-import { Store } from './state'
+import { Proof, Store } from './state'
 
 const storageKey = 'pibase.bundle'
 
-const defaultHost = process.env.REACT_APP_BUNDLE_HOST || 'http://localhost:3141'
+type Serialized = {
+  bundle: SerializedBundle,
+  etag: string | null
+  remote: {
+    branch: string
+    host: string
+    state: Store['remote']['state']
+    fetched: string
+  }
+  checked: Id[]
+  proofs: [Id, Proof][]
+}
 
-function loadFromStorage(storage = localStorage): Store | undefined {
+function serialize(store: Store): Serialized {
+  return {
+    bundle: bundle.serialize(store.bundle),
+    etag: store.etag,
+    remote: {
+      ...store.remote,
+      fetched: store.remote.fetched.toString()
+    },
+    checked: Array.from(store.checked),
+    proofs: Array.from(store.proofs.entries())
+  }
+}
+
+function deserialize(serialized: Serialized): Store {
+  return {
+    bundle: bundle.deserialize(serialized.bundle || {}),
+    etag: serialized.etag || null,
+    remote: {
+      ...serialized.remote,
+      fetched: new Date(serialized.remote.fetched)
+    },
+    checked: new Set(serialized.checked || []),
+    proofs: new Map(serialized.proofs || [])
+  }
+}
+
+export function loadFromStorage(storage = localStorage): Store | undefined {
   const raw = storage.getItem(storageKey)
   if (!raw) { return }
 
   try {
-    const parsed = JSON.parse(raw)
-    return {
-      bundle: bundle.deserialize(parsed),
-      checked: new Set(parsed.checked || []),
-      etag: parsed.etag || '',
-      proofs: new Map(parsed.proofs)
-    }
+    return deserialize(JSON.parse(raw))
   } catch (e) {
+    localStorage.removeItem(storageKey)
     console.error(e) // TODO: send to Sentry
     return
   }
@@ -28,49 +60,42 @@ export function save(
   store: Store,
   storage = localStorage
 ) {
-  const serialized = {
-    bundle: bundle.serialize(store.bundle),
-    checked: Array.from(store.checked),
-    etag: store.etag,
-    proofs: Array.from(store.proofs.values())
-  }
-  storage.setItem(storageKey, JSON.stringify(serialized))
+  storage.setItem(storageKey, JSON.stringify(serialize(store)))
 }
 
-async function loadFromRemote(
-  opts: {
-    branch: string
-    host?: string
-  }
-): Promise<Store | undefined> {
-  const response = await bundle.fetch(opts)
-  if (!response) { return }
-
-  const { bundle: result, etag } = response
-  return {
-    bundle: result,
-    ...result,
-    checked: new Set<Id>(),
-    etag,
-    proofs: new Map()
-  }
+type FetchOpts = {
+  branch: string
+  host: string
+  etag?: string
 }
 
-export async function load(
-  branch: string,
-  storage = localStorage
+export async function sync(
+  store: Store | undefined,
+  { branch, host }: FetchOpts
 ): Promise<Store | undefined> {
-  let loaded = loadFromStorage(storage)
-  const opts: { branch: string, host: string, etag?: string } = { branch, host: defaultHost }
-  if (loaded?.etag) { opts.etag = loaded.etag }
+  const fetched = await bundle.fetch({
+    branch,
+    host,
+    etag: store?.etag || undefined
+  })
 
-  const fetched = await loadFromRemote(opts)
   if (fetched) {
-    save(fetched, storage)
-    return fetched
-  } else if (loaded) {
-    return loaded
-  } else {
-    // TODO: handle error
+    return {
+      bundle: fetched.bundle,
+      etag: fetched.etag,
+      remote: {
+        branch,
+        host,
+        state: 'done',
+        fetched: new Date()
+      },
+      checked: new Set(),
+      proofs: new Map()
+    }
+  } else if (store) {
+    return {
+      ...store,
+      remote: { ...store.remote, branch, host, fetched: new Date() }
+    }
   }
 }

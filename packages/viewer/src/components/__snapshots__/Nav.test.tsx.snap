@@ -52,6 +52,16 @@ exports[`Nav renders correctly 1`] = `
           Theorems
         </a>
       </div>
+      <div
+        class="ml-auto navbar-nav"
+      >
+        <a
+          class="nav-link"
+          href="/https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+        >
+          Contribute
+        </a>
+      </div>
     </div>
   </div>
 </nav>

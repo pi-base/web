@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 
 import {
   bundle as B,
+  defaultHost as bundleDefaultHost,
   disprove,
   formula as F,
   Bundle,
@@ -37,10 +38,19 @@ export type Status
 
 export type Store = {
   bundle: Bundle
-  etag: string
+  etag: string | null
+  remote: {
+    branch: string
+    host: string
+    state: 'fetching' | 'done' | 'error'
+    fetched: Date
+  }
+  // Proof checking
   checked: Set<Id>
   proofs: Map<Id, Proof>
 }
+
+export const defaultHost = process.env.REACT_APP_BUNDLE_HOST || bundleDefaultHost
 
 export const initial: Store = {
   bundle: B.deserialize({
@@ -50,13 +60,19 @@ export const initial: Store = {
     theorems: [],
     version: { ref: 'master', sha: 'HEAD' }
   }),
+  etag: null,
+  remote: {
+    branch: 'master',
+    host: defaultHost,
+    state: 'fetching',
+    fetched: new Date()
+  },
   checked: new Set(),
-  etag: '',
   proofs: new Map()
 }
 
 type TraitId = { space: Id, property: Id }
-export const traitId = ({ space, property }: TraitId) => `${space}|${property}`
+export const traitId = ({ space, property }: TraitId) => `${space}|${property}` // TODO: push down to core/bundle
 
 export const property = (store: Store, id: Id) => store.bundle.properties.get(id) || null
 export const space = (store: Store, id: Id) => store.bundle.spaces.get(id) || null
@@ -238,4 +254,8 @@ export function uncheckedSpaces(store: Store) {
 
 export function loaded(store: Store) {
   return store !== initial
+}
+
+export function fetching(store: Store) {
+  return store.remote.state === 'fetching'
 }

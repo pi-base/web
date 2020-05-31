@@ -100,8 +100,14 @@ export const defaultStore: Store = {
       sha: 'HEAD'
     },
   }),
+  etag: null,
+  remote: {
+    branch: 'test',
+    host: 'https://example.com',
+    state: 'done',
+    fetched: new Date()
+  },
   checked: new Set(),
-  etag: '',
   proofs: new Map()
 }
 
