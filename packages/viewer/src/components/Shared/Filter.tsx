@@ -12,7 +12,7 @@ const defaultWeights: Fuse.FuseOptionKeyObject[] = [
 ]
 
 const defaultFuseOptions: Fuse.IFuseOptions<any> = {
-  caseSensitive: false,
+  isCaseSensitive: false,
   shouldSort: true,
   threshold: 0.4
 }
