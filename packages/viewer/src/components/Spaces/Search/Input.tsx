@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useRef } from 'react'
 import { InputGroup, Form } from 'react-bootstrap'
 import { FaSearch } from 'react-icons/fa'
 
@@ -8,7 +8,7 @@ import useSearch, { Action, ParseResult as PR } from './Input/useSearch'
 export type ParseResult<Search, Fragment> = PR<Search, Fragment>
 
 function handleKeyDown(dispatch: React.Dispatch<Action>) {
-  return function (event: React.KeyboardEvent<HTMLInputElement>) {
+  return function onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     switch (event.keyCode) {
       case 38: // up
         return dispatch({ action: 'select_prev' })
@@ -21,12 +21,6 @@ function handleKeyDown(dispatch: React.Dispatch<Action>) {
       case 40:
         return dispatch({ action: 'select_next' })
     }
-  }
-}
-
-function handleChange(dispatch: React.Dispatch<Action>) {
-  return function (event: React.ChangeEvent<HTMLInputElement>) {
-    dispatch({ action: 'search', q: event.target.value, suggest: true })
   }
 }
 
@@ -46,21 +40,29 @@ export default function SearchInput<Search, Fragment>({
   setQ: (q: string) => void
 }) {
   const [
-    { query, search, selected, suggestions },
+    { search, selected, suggestions },
     dispatch
   ] = useSearch<Search, Fragment>({
     findSuggestions,
     parse,
-    query: q,
     replaceFragment
   })
 
+  const qRef = useRef('')
+  const searchRef = useRef<Search | null>(null)
+
+  if (qRef.current !== q) {
+    qRef.current = q
+    dispatch({ action: 'search', q })
+  }
+
   // TODO: need to either properly cast Immutable<Search> to Search or
   // update everything else to reflect that we have an Immutable<Search>
-  useEffect(() => onSearch(search as Search | null), [onSearch, search])
-  useEffect(() => setQ(query), [query, setQ])
+  if (search && searchRef.current !== search) {
+    searchRef.current = search as Search
+    onSearch(search as Search)
+  }
 
-  const onChange = useCallback(handleChange(dispatch), [dispatch])
   const onKeyDown = useCallback(handleKeyDown(dispatch), [dispatch])
 
   return (
@@ -74,9 +76,9 @@ export default function SearchInput<Search, Fragment>({
         <Form.Control
           placeholder="'compact + ~metrizable' or 'plank'"
           autoComplete="off"
-          value={query}
+          value={q}
           onKeyDown={onKeyDown}
-          onChange={onChange}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQ(e.target.value)}
         />
       </InputGroup>
       {suggestions &&
