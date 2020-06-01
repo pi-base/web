@@ -4,7 +4,7 @@ import { Space } from './Space'
 import { Theorem } from './Theorem'
 import { Trait } from './Trait'
 
-const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
+export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 
 export type Version = {
   ref: string
