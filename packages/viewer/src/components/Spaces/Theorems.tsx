@@ -17,10 +17,12 @@ export default function Theorems({ space }: { space: Space }) {
   if (theorems.length > 0) {
     return (
       <>
-        <Inline body={space.name} />
-        {' is a counterexample to the converse of '}
-        {theorems.length}
-        {' theorems:'}
+        <p>
+          <Inline body={space.name} />
+          {' is a counterexample to the converse of '}
+          {theorems.length}
+          {' theorems:'}
+        </p>
         <SummaryList theorems={theorems} />
       </>
     )
