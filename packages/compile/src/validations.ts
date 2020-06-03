@@ -1,6 +1,6 @@
 import * as yaml from 'yaml-front-matter'
 
-import { Bundle, Property } from '@pi-base/core'
+import { Bundle, Property, check } from '@pi-base/core'
 import * as Formula from '@pi-base/core/lib/Formula'
 
 import { File } from './fs'
@@ -280,6 +280,21 @@ export function bundle(bundle: Bundle): Result<Bundle> {
       }
     })
 
-    return bundle
+    let result = bundle
+
+    for (const space of result.spaces.values()) {
+      const key = paths.space(space.uid)
+      const checked = check(bundle, space)
+      switch (checked.kind) {
+        case 'bundle':
+          result = checked.bundle
+          break
+        case 'contradiction':
+          error(`properties=${checked.contradiction.properties} contradict theorems=${checked.contradiction.theorems}`, key)
+          break
+      }
+    }
+
+    return result
   })
 }

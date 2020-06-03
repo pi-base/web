@@ -299,10 +299,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@pi-base/core@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@pi-base/core/-/core-0.0.4.tgz#8acf94e858143f9b7026fd21e3e8b4735547401b"
-  integrity sha512-LbmNgLJ1u6B0gEpfF36vXgBeN5Vjae9D84hqJCyzEyFITAZ6J4RqZs+aM01owtw8rYmXM0I7omxPEjSfppQgJA==
+"@pi-base/core@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@pi-base/core/-/core-0.0.6.tgz#8e157a6edc8cb00fa20c54650d6d8289843e068f"
+  integrity sha512-umX8yma131Cc64rJVAXLBT+iWaNmukVa4FpDD+U+nvk9+ggFH6hxFtusK6sqRj/5/+lc/LAOKvhymkIXtJtnng==
   dependencies:
     remark "^11.0.2"
     remark-rehype "^6.0.0"
