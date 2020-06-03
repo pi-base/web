@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer } from 'react'
+import React, { useRef, useReducer } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import './App.css'
@@ -6,7 +6,7 @@ import './App.css'
 import { boot, save } from './actions'
 import * as Error from './errors'
 import { useChange } from './hooks'
-import { Reducer, reducer, initial } from './reducers'
+import { Dispatch, Reducer, reducer, initial } from './reducers'
 import { status } from './models/Store/state'
 import { Provider } from './models/Store/context'
 import Nav from './components/Nav'
@@ -17,17 +17,21 @@ import { debounce } from './util'
 const debouncedSave = debounce(save)
 
 export default function App({
-  errorHandler = Error.log()
+  errorHandler = Error.log(),
+  startup = boot
 }: {
   errorHandler?: Error.Handler
+  startup?: (dispatch: Dispatch, errorHandler: Error.Handler) => Promise<void>
 }) {
   const [store, dispatch] = useReducer<Reducer>(reducer, initial)
 
   useChange(store, debouncedSave)
-  useMemo(
-    () => boot(dispatch, errorHandler),
-    [dispatch, errorHandler]
-  )
+
+  const booted = useRef(false)
+  if (!booted.current) {
+    booted.current = true
+    startup(dispatch, errorHandler)
+  }
 
   return (
     <Error.Provider value={errorHandler}>

@@ -47,18 +47,18 @@ async function pause(): Promise<void> {
   })
 }
 
-async function check({
+export async function check({
   dispatch,
   store
 }: {
   dispatch: React.Dispatch<Action>
   store: Store
 }) {
-  const toCheck = uncheckedSpaces(store)
-  dispatch({ action: 'check.started', count: toCheck.length })
+  const spaces = uncheckedSpaces(store)
+  dispatch({ action: 'check.started', count: spaces.length })
 
-  for (let i = 0; i < toCheck.length; i++) {
-    dispatch({ action: 'check', space: toCheck[i] })
+  for (const space of spaces) {
+    dispatch({ action: 'check', space })
     await pause()
   }
 

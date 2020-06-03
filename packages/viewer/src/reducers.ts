@@ -8,6 +8,7 @@ import * as S from './models/Store/state'
 
 export { initial } from './models/Store/state'
 
+export type Dispatch = React.Dispatch<Action>
 export type Reducer = React.Reducer<Store, Action>
 
 export const reducer: Reducer = produce((state: Store, action: Action) => {

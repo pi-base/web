@@ -1,7 +1,8 @@
-import React, { useCallback, useRef } from 'react'
+import React, { useCallback } from 'react'
 import { InputGroup, Form } from 'react-bootstrap'
 import { FaSearch } from 'react-icons/fa'
 
+import { useChange } from '../../../hooks'
 import Suggestions from './Input/Suggestions'
 import useSearch, { Action, ParseResult as PR } from './Input/useSearch'
 
@@ -48,18 +49,8 @@ export default function SearchInput<Search, Fragment>({
     replaceFragment
   })
 
-  const qRef = useRef('')
-  const searchRef = useRef<Search | null>(null)
-
-  if (qRef.current !== q) {
-    qRef.current = q
-    dispatch({ action: 'search', q })
-  }
-
-  if (search && searchRef.current !== search) {
-    searchRef.current = search as Search
-    onSearch(search as Search)
-  }
+  useChange(q, () => dispatch({ action: 'search', q }))
+  useChange(search, () => onSearch(search as Search))
 
   const onKeyDown = useCallback(handleKeyDown(dispatch), [dispatch])
 

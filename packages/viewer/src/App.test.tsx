@@ -1,33 +1,22 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { bundle } from '@pi-base/core'
+import { act, defaultStore, updateWrapper } from './__test__'
 
-import { fetch, updateWrapper } from './__test__'
+import { Dispatch, check } from './actions'
 
 import App from './App'
 
 import Nav from './components/Nav'
 import Main from './components/Main'
 
+async function startup(dispatch: Dispatch) {
+  dispatch({ action: 'loaded', value: defaultStore })
+}
+
 describe('App', () => {
   it('renders correctly', async () => {
-    fetch.mockOnce(
-      JSON.stringify(
-        {
-          spaces: [],
-          properties: [],
-          traits: [],
-          theorems: [],
-          version: {
-            ref: "test",
-            sha: "HEAD"
-          }
-        }
-      )
-    )
-
-    const component = mount(<App />)
+    const component = mount(<App startup={startup} />)
     await updateWrapper(component)
 
     expect(component.find(Nav)).toHaveLength(1)
