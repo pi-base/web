@@ -3,49 +3,28 @@ import React from 'react'
 import produce from 'immer'
 
 import { Action } from './actions'
-import { Status, Store } from './models/Store/state'
+import { Store } from './models/Store/state'
 import * as S from './models/Store/state'
 
-type State = {
-  status: Status
-  store: Store
-}
+export { initial } from './models/Store/state'
 
-// TODO: push status up to store, and just use Store instead of State
-export const initial: State = {
-  store: S.initial,
-  status: { state: 'fetching' }
-}
+export type Reducer = React.Reducer<Store, Action>
 
-export type Reducer = React.Reducer<State, Action>
-
-export const reducer: Reducer = produce((state: State, action: Action) => {
+export const reducer: Reducer = produce((state: Store, action: Action) => {
   switch (action.action) {
     case 'loaded':
-      Object.assign(state.store, action.value)
-      return
-    case 'checking':
-      state.status = { state: 'checking', complete: 0, total: action.count }
+      Object.assign(state, action.value)
       return
     case 'check':
-      if (state.status.state === 'checking') {
-        state.status.complete = state.status.complete + 1
-      }
-      S.check(state.store, action.space)
+      S.check(state, action.space)
       return
-    case 'ready':
-      state.status = { state: 'ready' }
+    case 'fetch.started':
+      state.remote.branch = action.branch
+      state.remote.host = action.host
+      state.remote.state = 'fetching'
       return
-    case 'fetching':
-      state.store.remote.branch = action.branch
-      state.store.remote.host = action.host
-      state.store.remote.state = 'fetching'
-      state.store.remote.state = 'fetching'
-      state.status = { state: 'fetching' }
-      return
-    case 'fetchError':
-      // TODO
-      state.store.remote.state = 'error'
+    case 'fetch.error':
+      state.remote.state = 'error'
       return
   }
 })

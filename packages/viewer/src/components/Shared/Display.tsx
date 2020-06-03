@@ -1,4 +1,4 @@
-/// <reference path="Description.d.ts"/>
+/// <reference path="Display.d.ts"/>
 import React, { useMemo } from 'react'
 import rehype2react from 'rehype-react'
 
@@ -16,7 +16,6 @@ function gather(nodes: any[], to: number) {
 
     if (node.type === 'text') {
       if (node.value.length + length >= to) {
-        // TODO: break at word boundaries
         const fragment = node.value.slice(0, to - length - node.value.length) + '...'
         acc.push({ ...node, value: fragment })
         return acc
@@ -25,7 +24,6 @@ function gather(nodes: any[], to: number) {
         length = length + node.value.length + 1
       }
     } else {
-      // TODO: better estimate of length for these tokens. Should we use the raw TeX?
       if (length + 3 >= to) {
         acc.push(node)
         acc.push({ type: 'text', value: '...' })

@@ -2,11 +2,9 @@ import React, { useState } from 'react'
 import { Button, Col, Form, Row, Spinner, Table } from 'react-bootstrap'
 import Moment from 'react-moment'
 
-import { Action, refresh } from '../actions'
+import { Dispatch, refresh } from '../actions'
 import { useStore } from '../models'
 import { Store, fetching } from '../models/Store'
-
-type Dispatch = React.Dispatch<Action>
 
 function reset() {
   localStorage.clear()
@@ -89,8 +87,8 @@ function Data({ store }: { store: Store }) {
           <td>{store.checked.size}</td>
         </tr>
         <tr>
-          <th>Proofs</th>
-          <td>{store.proofs.size}</td>
+          <th>Traits</th>
+          <td>{store.bundle.traits.size}</td>
         </tr>
         <tr>
           <td />
@@ -114,7 +112,7 @@ function Data({ store }: { store: Store }) {
   )
 }
 
-export default function Dev({ dispatch }: { dispatch: React.Dispatch<any> }) { // TODO
+export default function Dev({ dispatch }: { dispatch: Dispatch }) {
   const store = useStore()
 
   return (

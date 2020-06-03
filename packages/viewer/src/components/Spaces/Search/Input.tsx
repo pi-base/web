@@ -56,8 +56,6 @@ export default function SearchInput<Search, Fragment>({
     dispatch({ action: 'search', q })
   }
 
-  // TODO: need to either properly cast Immutable<Search> to Search or
-  // update everything else to reflect that we have an Immutable<Search>
   if (search && searchRef.current !== search) {
     searchRef.current = search as Search
     onSearch(search as Search)

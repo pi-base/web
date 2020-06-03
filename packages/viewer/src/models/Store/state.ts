@@ -3,18 +3,20 @@ import { createSelector } from 'reselect'
 
 import {
   bundle as B,
+  check as checkBundle,
   defaultHost as bundleDefaultHost,
   disprove,
   formula as F,
+  traitId,
   Bundle,
   Formula,
   Id,
   ImplicationIndex,
   Property,
-  Prover,
   Space,
   Theorem,
   Trait,
+  TraitId
 } from '@pi-base/core'
 
 export type Proof = {
@@ -31,8 +33,8 @@ export type SearchResults
   | { kind: 'contradiction', contradiction: Theorem[] | 'tautology' }
 
 export type Status
-  = { state: 'fetching' }
-  | { state: 'loading' }
+  = { state: 'loading' }
+  | { state: 'fetching' }
   | { state: 'checking', complete: number, total: number }
   | { state: 'ready' }
 
@@ -45,9 +47,23 @@ export type Store = {
     state: 'fetching' | 'done' | 'error'
     fetched: Date
   }
-  // Proof checking
   checked: Set<Id>
-  proofs: Map<Id, Proof>
+}
+
+export function status(store: Store): Status {
+  if (!loaded(store)) {
+    return { state: 'loading' }
+  } else if (fetching(store)) {
+    return { state: 'fetching' }
+  } else if (store.bundle.spaces.size > store.checked.size) {
+    return {
+      state: 'checking',
+      complete: store.checked.size,
+      total: store.bundle.spaces.size
+    }
+  } else {
+    return { state: 'ready' }
+  }
 }
 
 export const defaultHost = process.env.REACT_APP_BUNDLE_HOST || bundleDefaultHost
@@ -67,24 +83,15 @@ export const initial: Store = {
     state: 'fetching',
     fetched: new Date()
   },
-  checked: new Set(),
-  proofs: new Map()
+  checked: new Set()
 }
-
-type TraitId = { space: Id, property: Id }
-export const traitId = ({ space, property }: TraitId) => `${space}|${property}` // TODO: push down to core/bundle
 
 export const property = (store: Store, id: Id) => store.bundle.properties.get(id) || null
 export const space = (store: Store, id: Id) => store.bundle.spaces.get(id) || null
 export const theorem = (store: Store, id: Id) => store.bundle.theorems.get(id) || null
 export const trait = (store: Store, id: TraitId) => {
   const uid = traitId(id)
-  const trait = store.bundle.traits.get(uid) || null
-  if (trait) {
-    return { ...trait, proof: store.proofs.get(uid) }
-  } else {
-    return null
-  }
+  return store.bundle.traits.get(uid) || null
 }
 
 export const properties = createSelector(
@@ -218,33 +225,17 @@ export function search(store: Store, search: Search): SearchResults {
 export function check(store: Store, space: Space) {
   if (store.checked.has(space.uid)) { return }
 
-  const lookup = new Map()
-  properties(store).forEach((property: Property) => {
-    const trait = store.bundle.traits.get(traitId({ space: space.uid, property: property.uid }))
-    if (trait) { lookup.set(property.uid, trait.value) }
-  })
+  const result = checkBundle(
+    store.bundle,
+    space,
+    theoremIndex(store)
+  )
 
-  const prover = new Prover(theoremIndex(store), lookup)
-  const result = prover.derivations()
-
-  store.checked.add(space.uid)
-  if (result.proofs) {
-    result.proofs.forEach(({ property, value, proof }) => {
-      const uid = traitId({ space: space.uid, property })
-      store.bundle.traits.set(uid, {
-        uid,
-        space: space.uid,
-        property,
-        value,
-        counterexamples_id: undefined,
-        description: '',
-        refs: []
-      })
-      store.proofs.set(uid, proof)
-    })
-  } else {
-    // TODO: handle result.contradiction
-    console.log(result)
+  switch (result.kind) {
+    case 'bundle':
+      store.bundle = result.bundle
+      store.checked.add(space.uid)
+      return
   }
 }
 

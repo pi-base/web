@@ -21,7 +21,7 @@ export default React.memo(
               <Link className="nav-link" to="/theorems">Theorems</Link>
             </Nav>
             <Nav className="ml-auto">
-              {showDevLink && <Link className="nav-link" to="/_dev">Dev</Link>}
+              {showDevLink && <Link className="nav-link" to="/dev">Dev</Link>}
               <Link className="nav-link" to="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md">Contribute</Link>
             </Nav>
           </Navbar.Collapse>

@@ -35,7 +35,6 @@ function NotFound() {
   )
 }
 
-
 export default function Converse({ theorem }: { theorem: Theorem }) {
   const store = useStore()
 
@@ -63,9 +62,8 @@ export default function Converse({ theorem }: { theorem: Theorem }) {
         properties={properties}
       />
     )
-  } else if (results.kind === 'contradiction') {
-    // TODO
-    return (<p>Contradiction</p>)
+  } else if (results.kind === 'contradiction' && results.contradiction !== 'tautology') {
+    return (<Holds theorems={results.contradiction} />)
   } else {
     return (
       <NotFound />

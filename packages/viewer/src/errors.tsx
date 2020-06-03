@@ -4,7 +4,7 @@ import * as Sentry from '@sentry/browser'
 export type Level = 'info' | 'error'
 
 export interface Handler {
-  error: (error: any, meta: Object) => void
+  error: (error: any, meta?: Object) => void
 }
 
 const noOp: Handler = {

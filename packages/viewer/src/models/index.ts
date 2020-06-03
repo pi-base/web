@@ -2,7 +2,6 @@ import * as P from '@pi-base/core'
 import store from './Store'
 import { Proof, Search as search } from './Store/state'
 
-// TODO: use this import consistently, rather than reaching into models/Store/...
 export const Store = store
 export const useStore = Store.useStore
 

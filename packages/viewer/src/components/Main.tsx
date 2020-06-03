@@ -10,8 +10,10 @@ import Spaces from './Spaces'
 import Theorems from './Theorems'
 import Traits from './Traits'
 
+import { Dispatch } from '../actions'
+
 export default React.memo(
-  function Main({ dispatch }: { dispatch: React.Dispatch<any> }) { // TODO
+  function Main({ dispatch }: { dispatch: Dispatch }) {
     return (
       <Container>
         <Switch>
@@ -19,7 +21,7 @@ export default React.memo(
           <Route path="/spaces" component={Spaces} />
           <Route path="/properties" component={Properties} />
           <Route path="/theorems" component={Theorems} />
-          <Route path="/_dev">
+          <Route path="/dev">
             <Dev dispatch={dispatch} />
           </Route>
           <Route path="/" exact component={Home} />

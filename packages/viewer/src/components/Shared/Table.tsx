@@ -43,7 +43,7 @@ function Table<T>({
 }
 
 interface HeaderProps<T> extends React.ComponentProps<'th'> {
-  sort?: string // TODO: keyof T
+  sort?: keyof T
 }
 
 function Header<T>({ sort, children, ...rest }: HeaderProps<T>) {
@@ -54,7 +54,7 @@ function Header<T>({ sort, children, ...rest }: HeaderProps<T>) {
   if (sort) {
     props = {
       ...props,
-      onClick: () => toggleSort(sort)
+      onClick: () => toggleSort(sort.toString())
     }
   }
 

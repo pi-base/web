@@ -1,29 +1,35 @@
 import React from 'react'
 
+import { bundle } from '@pi-base/core'
 import { Space } from './models'
+import * as Error from './errors'
 import { Store, uncheckedSpaces } from './models/Store'
 import * as storage from './models/Store/storage'
 import { defaultHost } from './models/Store/state'
 
 export { save } from './models/Store/storage'
 
-// TODO:
-// * clean these up
-// * make sure reducer implementation is consistent
-// * test reducer and actions directly
 export type Action
-  = { action: 'loadError' } // TODO: handle this
-  | { action: 'loaded', value: Store }
-  | { action: 'checking', count: number }
+  = { action: 'loaded', value: Store }
+  | { action: 'check.started', count: number }
   | { action: 'check', space: Space }
-  | { action: 'ready' }
-  | { action: 'fetching', branch: string, host: string }
-  | { action: 'fetchError', error: Error }
+  | { action: 'check.done' }
+  | { action: 'fetch.started', branch: string, host: string }
+  | { action: 'fetch.error', error: Error }
+
+export type Dispatch = React.Dispatch<Action>
 
 export async function boot(
-  dispatch: React.Dispatch<Action>
+  dispatch: React.Dispatch<Action>,
+  errorHandler: Error.Handler
 ) {
-  const loaded = storage.loadFromStorage()
+  let loaded
+  try {
+    loaded = storage.loadFromStorage()
+  } catch (e) {
+    errorHandler.error(e)
+  }
+
   if (loaded) {
     dispatch({ action: 'loaded', value: loaded })
   }
@@ -49,14 +55,14 @@ async function check({
   store: Store
 }) {
   const toCheck = uncheckedSpaces(store)
-  dispatch({ action: 'checking', count: toCheck.length })
+  dispatch({ action: 'check.started', count: toCheck.length })
 
   for (let i = 0; i < toCheck.length; i++) {
     dispatch({ action: 'check', space: toCheck[i] })
     await pause()
   }
 
-  dispatch({ action: 'ready' })
+  dispatch({ action: 'check.done' })
 }
 
 export async function refresh(
@@ -72,15 +78,51 @@ export async function refresh(
     store: Store | undefined
   }
 ) {
-  dispatch({ action: 'fetching', branch, host })
+  dispatch({ action: 'fetch.started', branch, host })
 
   try {
-    const next = await storage.sync(store, { branch, host })
+    const next = await sync(store, { branch, host })
     if (!next) { return } // Bundle was unchanged
 
     dispatch({ action: 'loaded', value: next })
     check({ store: next, dispatch })
   } catch (error) {
-    dispatch({ action: 'fetchError', error })
+    dispatch({ action: 'fetch.error', error })
+  }
+}
+
+type FetchOpts = {
+  branch: string
+  host: string
+  etag?: string
+}
+
+async function sync(
+  store: Store | undefined,
+  { branch, host }: FetchOpts
+): Promise<Store | undefined> {
+  const fetched = await bundle.fetch({
+    branch,
+    host,
+    etag: store?.etag || undefined
+  })
+
+  if (fetched) {
+    return {
+      bundle: fetched.bundle,
+      etag: fetched.etag,
+      remote: {
+        branch,
+        host,
+        state: 'done',
+        fetched: new Date()
+      },
+      checked: new Set()
+    }
+  } else if (store) {
+    return {
+      ...store,
+      remote: { ...store.remote, branch, host, fetched: new Date() }
+    }
   }
 }

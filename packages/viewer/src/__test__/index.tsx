@@ -3,56 +3,16 @@ import testUtils from 'react-dom/test-utils'
 import jestFetchMock from 'jest-fetch-mock'
 import { mount as enzymeMount } from 'enzyme'
 
-import { Formula, bundle, formula } from '@pi-base/core'
+import { bundle, formula } from '@pi-base/core'
 import { MemoryRouter as Router, Route } from 'react-router'
-import { Property, Space, Theorem } from '../models'
 import { Store } from '../models/Store'
 import * as Context from '../models/Store/context'
 
+import { property, space, theorem } from '@pi-base/core/lib/testUtils'
+export { property, space, trait, theorem } from '@pi-base/core/lib/testUtils'
+
 export const act = testUtils.act
 export const fetch = jestFetchMock
-
-// TODO: push these down to @pi-base/core
-export function property({ uid, ...opts }: { uid: string } & Partial<Property>): Property {
-  return {
-    uid,
-    counterexamples_id: undefined,
-    name: uid,
-    description: uid,
-    aliases: [],
-    refs: [],
-    ...opts
-  }
-}
-
-export function space({ uid, ...opts }: { uid: string } & Partial<Space>): Space {
-  return {
-    uid,
-    counterexamples_id: undefined,
-    name: uid,
-    description: uid,
-    aliases: [],
-    refs: [],
-    ambiguous_construction: false,
-    ...opts
-  }
-}
-
-export function theorem({ uid, when, then, ...opts }: {
-  uid: string
-  when: Formula<string>
-  then: Formula<string>
-} & Partial<Theorem>): Theorem {
-  return {
-    uid,
-    counterexamples_id: undefined,
-    description: uid,
-    refs: [],
-    when,
-    then,
-    ...opts
-  }
-}
 
 export function wrap(component: JSX.Element) {
   return <Wrapper>{component}</Wrapper>
@@ -107,8 +67,7 @@ export const defaultStore: Store = {
     state: 'done',
     fetched: new Date()
   },
-  checked: new Set(),
-  proofs: new Map()
+  checked: new Set()
 }
 
 export function Wrapper({
