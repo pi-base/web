@@ -1,3 +1,7 @@
 declare module 'remark-rehype' {
-  export = any // TODO
+  import { Plugin } from 'unified'
+
+  const remarkRehype: Plugin
+
+  export default remarkRehype
 }

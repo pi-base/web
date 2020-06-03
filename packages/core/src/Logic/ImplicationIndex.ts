@@ -3,9 +3,9 @@ import { union } from '../Util'
 
 import { Id, Implication } from './Types'
 
-export default class ImplicationIndex {
-  all: Implication[]
-  private byProperty: Map<Id, Set<Implication>>
+export default class ImplicationIndex<T extends Implication>{
+  all: T[]
+  private byProperty: Map<Id, Set<T>>
 
   static properties(implication: Implication) {
     return union(
@@ -14,11 +14,11 @@ export default class ImplicationIndex {
     )
   }
 
-  constructor(implications: Implication[]) {
+  constructor(implications: T[]) {
     this.all = implications
     this.byProperty = new Map()
 
-    implications.forEach((i: Implication) => {
+    implications.forEach((i: T) => {
       ImplicationIndex.properties(i).forEach((id: Id) => {
         if (!this.byProperty.has(id)) { this.byProperty.set(id, new Set()) }
         this.byProperty.get(id)!.add(i)
@@ -27,6 +27,6 @@ export default class ImplicationIndex {
   }
 
   withProperty(id: Id) {
-    return this.byProperty.get(id) || []
+    return this.byProperty.get(id) || new Set<T>()
   }
 }

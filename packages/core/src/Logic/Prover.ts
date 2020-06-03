@@ -5,11 +5,11 @@ import ImplicationIndex from './ImplicationIndex'
 import Queue from './Queue'
 import { Evidence, Formula, Id, Implication, Proof } from './Types'
 
-export default class Prover {
+export default class Prover<T extends Implication> {
   traits: Map<Id, boolean>
 
   private proofs: Map<Id, Evidence>
-  private queue: Queue
+  private queue: Queue<T>
 
   static build(implications: Implication[], traits: [string, boolean][]) {
     return new Prover(
@@ -18,7 +18,7 @@ export default class Prover {
     )
   }
 
-  constructor(implications: ImplicationIndex, traits: Map<Id, boolean> = new Map()) {
+  constructor(implications: ImplicationIndex<T>, traits: Map<Id, boolean> = new Map()) {
     this.traits = traits
 
     this.proofs = new Map()
@@ -180,7 +180,7 @@ export default class Prover {
   }
 }
 
-export function disprove(implications: ImplicationIndex, formula: Formula): Id[] | 'tautology' | undefined {
+export function disprove<T extends Implication>(implications: ImplicationIndex<T>, formula: Formula): Id[] | 'tautology' | undefined {
   let proof
   const prover = new Prover(implications)
 

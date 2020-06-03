@@ -1,17 +1,17 @@
 import { Id, Implication } from './Types'
 import ImplicationIndex from './ImplicationIndex'
 
-export default class Queue {
-  private index: ImplicationIndex
-  private queue: Set<Implication>
+export default class Queue<T extends Implication> {
+  private index: ImplicationIndex<T>
+  private queue: Set<T>
 
-  constructor(index: ImplicationIndex) {
+  constructor(index: ImplicationIndex<T>) {
     this.index = index
     this.queue = new Set(index.all)
   }
 
   mark(property: Id) {
-    this.index.withProperty(property).forEach((i: Implication) => this.queue.add(i))
+    this.index.withProperty(property).forEach(i => this.queue.add(i))
   }
 
   shift(): Implication | undefined {

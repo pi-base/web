@@ -15,7 +15,4 @@ export interface Implication {
   then: Formula
 }
 
-export type Proof = {
-  theorems: Id[]
-  properties: Id[]
-}
+export { Proof } from '../Trait'

@@ -2,6 +2,7 @@ import { Bundle } from '../Bundle'
 import { atom } from '../Formula'
 import { Space } from '../Space'
 import { Trait } from '../Trait'
+import { Implication } from './Types'
 
 import ImplicationIndex from './ImplicationIndex'
 import Prover from './Prover'
@@ -13,8 +14,8 @@ type TraitId = {
 }
 
 export default class Universe {
-  private provers: Map<Id, Prover>
-  private implications: ImplicationIndex
+  private provers: Map<Id, Prover<Implication>>
+  private implications: ImplicationIndex<Implication>
 
   static fromBundle(bundle: Bundle): Universe {
     const u = new Universe(new Map(), new ImplicationIndex(Array.from(bundle.theorems.values())))
@@ -31,7 +32,7 @@ export default class Universe {
     return u
   }
 
-  constructor(provers: Map<Id, Prover>, implications: ImplicationIndex) {
+  constructor(provers: Map<Id, Prover<Implication>>, implications: ImplicationIndex<Implication>) {
     this.provers = provers
     this.implications = implications
   }
@@ -48,7 +49,7 @@ export default class Universe {
     return this.prover(space.uid).run()
   }
 
-  protected prover(space: Id): Prover {
+  protected prover(space: Id): Prover<Implication> {
     if (!this.provers.has(space)) {
       this.provers.set(space, new Prover(this.implications))
     }

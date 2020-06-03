@@ -1,6 +1,6 @@
-export { Bundle, Serialized as SerializedBundle, defaultHost } from './Bundle'
+export { Bundle, Serialized as SerializedBundle, check, defaultHost } from './Bundle'
 export { Formula } from './Formula'
-export { Id } from './Id'
+export { Id, TraitId, traitId } from './Id'
 export { default as ImplicationIndex } from './Logic/ImplicationIndex'
 export { default as Parser } from './Parser'
 export { Property } from './Property'

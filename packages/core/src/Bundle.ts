@@ -2,7 +2,8 @@ import { Id, traitId } from './Id'
 import { Property } from './Property'
 import { Space } from './Space'
 import { Theorem } from './Theorem'
-import { Trait } from './Trait'
+import { Trait, Proof } from './Trait'
+import { ImplicationIndex, Prover } from './Logic'
 
 export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 
@@ -64,7 +65,7 @@ export async function fetch(opts: FetchOpts): Promise<{ bundle: Bundle, etag: st
   if (response.status === 304) { return }
 
   const json = await response.json()
-  // TODO: validate returned data
+
   return {
     bundle: deserialize(json),
     etag: response.headers.get('etag') || ''
@@ -73,4 +74,60 @@ export async function fetch(opts: FetchOpts): Promise<{ bundle: Bundle, etag: st
 
 function indexBy<K, V>(collection: V[], key: (value: V) => K): Map<K, V> {
   return new Map(collection.map((value: V) => [key(value), value]))
+}
+
+type CheckResult
+  = { kind: 'bundle', bundle: Bundle }
+  | { kind: 'contradiction', contradiction: Proof }
+
+export function check(
+  bundle: Bundle,
+  space: Space,
+  implications?: ImplicationIndex<Theorem>
+): CheckResult {
+  if (!implications) {
+    implications = new ImplicationIndex(Array.from(bundle.theorems.values()))
+  }
+
+  const traitMap = new Map<Id, boolean>()
+  bundle.properties.forEach((_, property) => {
+    const trait = bundle.traits.get(traitId({ space: space.uid, property }))
+    if (!trait) { return }
+
+    traitMap.set(property, trait.value)
+  })
+
+  const prover = new Prover(implications, traitMap)
+  const contradiction = prover.run()
+  if (contradiction) { return { kind: 'contradiction', contradiction } }
+
+  const { proofs = [] } = prover.derivations()
+
+  const newTraits: Map<Id, Trait> = new Map()
+
+  proofs.forEach(({ property, value, proof }) => {
+    const uid = traitId({ space: space.uid, property })
+    const trait = {
+      uid,
+      counterexamples_id: undefined,
+      space: space.uid,
+      property,
+      value,
+      proof,
+      description: '',
+      refs: []
+    }
+    newTraits.set(uid, trait)
+  })
+
+  return {
+    kind: 'bundle',
+    bundle: {
+      ...bundle,
+      traits: new Map([
+        ...Array.from(bundle.traits.entries()),
+        ...Array.from(newTraits.entries())
+      ])
+    }
+  }
 }

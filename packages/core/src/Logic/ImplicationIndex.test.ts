@@ -23,6 +23,6 @@ describe('ImplicationIndex', () => {
   })
 
   it('can fail to find', () => {
-    expect(index.withProperty('Z')).toEqual([])
+    expect(index.withProperty('Z')).toEqual(new Set())
   })
 })
