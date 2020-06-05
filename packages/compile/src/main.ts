@@ -5,6 +5,10 @@ import * as B from '@pi-base/core/lib/Bundle'
 
 import load from './load'
 
+function error(file: string, message: string) {
+  console.log(`::error file=${file}::${message}`)
+}
+
 async function run(): Promise<void> {
   const repo: string = process.env['GITHUB_WORKSPACE'] || '.'
   const outpath: string = core.getInput('out')
@@ -16,7 +20,7 @@ async function run(): Promise<void> {
   if (errors) {
     errors.forEach((messages, path) => {
       messages.forEach(message => {
-        core.error(`file=${path}::${message}`)
+        error(path, message)
       })
     })
   }
