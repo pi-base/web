@@ -1,9 +1,9 @@
-import {Id, traitId} from './Id'
-import {Property} from './Property'
-import {Space} from './Space'
-import {Theorem} from './Theorem'
-import {Trait, Proof} from './Trait'
-import {ImplicationIndex, Prover} from './Logic'
+import { Id, traitId } from './Id'
+import { Property } from './Property'
+import { Space } from './Space'
+import { Theorem } from './Theorem'
+import { Trait, Proof } from './Trait'
+import { ImplicationIndex, Prover } from './Logic'
 
 export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 
@@ -54,18 +54,18 @@ type FetchOpts = {
   etag?: string
 }
 
-export function bundleUrl({branch, host = defaultHost}: FetchOpts) {
+export function bundleUrl({ branch, host = defaultHost }: FetchOpts) {
   return `${host}/refs/heads/${branch}.json`
 }
 
 export async function fetch(
   opts: FetchOpts
-): Promise<{bundle: Bundle; etag: string} | undefined> {
+): Promise<{ bundle: Bundle; etag: string } | undefined> {
   const headers = new Headers()
   if (opts.etag) {
     headers.append('If-None-Match', opts.etag)
   }
-  const response = await window.fetch(bundleUrl(opts), {method: 'GET', headers})
+  const response = await window.fetch(bundleUrl(opts), { method: 'GET', headers })
   if (response.status === 304) {
     return
   }
@@ -73,7 +73,7 @@ export async function fetch(
   const json = await response.json()
   const deserialized = deserialize(json)
 
-  if (serialize(deserialized) !== json) {
+  if (JSON.stringify(serialize(deserialized)) != JSON.stringify(json)) {
     throw new Error('Data serialization failure')
   }
 
@@ -88,8 +88,8 @@ function indexBy<K, V>(collection: V[], key: (value: V) => K): Map<K, V> {
 }
 
 type CheckResult =
-  | {kind: 'bundle'; bundle: Bundle}
-  | {kind: 'contradiction'; contradiction: Proof}
+  | { kind: 'bundle'; bundle: Bundle }
+  | { kind: 'contradiction'; contradiction: Proof }
 
 export function check(
   bundle: Bundle,
@@ -102,7 +102,7 @@ export function check(
 
   const traitMap = new Map<Id, boolean>()
   bundle.properties.forEach((_, property) => {
-    const trait = bundle.traits.get(traitId({space: space.uid, property}))
+    const trait = bundle.traits.get(traitId({ space: space.uid, property }))
     if (!trait) {
       return
     }
@@ -113,15 +113,15 @@ export function check(
   const prover = new Prover(implications, traitMap)
   const contradiction = prover.run()
   if (contradiction) {
-    return {kind: 'contradiction', contradiction}
+    return { kind: 'contradiction', contradiction }
   }
 
-  const {proofs = []} = prover.derivations()
+  const { proofs = [] } = prover.derivations()
 
   const newTraits: Map<Id, Trait> = new Map()
 
-  proofs.forEach(({property, value, proof}) => {
-    const uid = traitId({space: space.uid, property})
+  proofs.forEach(({ property, value, proof }) => {
+    const uid = traitId({ space: space.uid, property })
     const trait = {
       uid,
       counterexamples_id: undefined,
