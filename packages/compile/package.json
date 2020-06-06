@@ -24,6 +24,10 @@
   ],
   "author": "James Dabbs",
   "license": "MIT",
+  "files": [
+    "lib",
+    "src"
+  ],
   "dependencies": {
     "@actions/core": "^1.2.0",
     "@pi-base/core": "^0.0.8",
