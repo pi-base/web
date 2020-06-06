@@ -14,6 +14,8 @@ function run(dir: string): { output: string, error: boolean } {
       `node ${main}`,
       {
         env: {
+          'GITHUB_REF': 'refs/heads/test',
+          'GITHUB_SHA': 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
           'GITHUB_WORKSPACE': path.join(repo, dir),
           'INPUT_OUT': out
         }
@@ -52,5 +54,5 @@ it('writes error messages for invalid bundles', () => {
 
   expect(error).toEqual(true)
   expect(fs.existsSync(out)).toEqual(false)
-  expect(output).toContain('::error::file=theorems/T000001.md::if references unknown property=P100016')
+  expect(output).toContain('::error file=theorems/T000001.md::if references unknown property=P100016')
 })

@@ -1,19 +1,23 @@
 name: "build-test"
-on: # rebuild any PRs and main branch changes
+on:
   pull_request:
   push:
-    branches:
-      - master
-      - 'releases/*'
 
 jobs:
-  build: # make sure build/ci work properly
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - run: |
-        yarn install
-  test: # make sure the action works on a clean machine without building
+    - name: Cached install
+      uses: bahmutov/npm-install@v1.1.0
+    - name: Test
+      run: yarn build && yarn test --coverage
+    - name: Report coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  build: # ensure the action runs without error
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1

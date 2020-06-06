@@ -1,6 +1,6 @@
 {
   "name": "@pi-base/compile",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Compile data into a JSON bundle",
   "main": "lib/main.js",
   "bin": "lib/watch.js",
@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.2.0",
-    "@pi-base/core": "^0.0.6",
+    "@pi-base/core": "^0.0.8",
     "chalk": "^4.0.0",
     "chokidar": "^3.4.0",
     "cors": "^2.8.5",
