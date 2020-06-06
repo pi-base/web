@@ -11,9 +11,16 @@ import Theorems from './Theorems'
 import Traits from './Traits'
 
 import { Dispatch } from '../actions'
+import { Handler } from '../errors'
 
 export default React.memo(
-  function Main({ dispatch }: { dispatch: Dispatch }) {
+  function Main({
+    dispatch,
+    handler
+  }: {
+    dispatch: Dispatch
+    handler: Handler
+  }) {
     return (
       <Container>
         <Switch>
@@ -22,7 +29,7 @@ export default React.memo(
           <Route path="/properties" component={Properties} />
           <Route path="/theorems" component={Theorems} />
           <Route path="/dev">
-            <Dev dispatch={dispatch} />
+            <Dev dispatch={dispatch} handler={handler} />
           </Route>
           <Route path="/" exact component={Home} />
           <Route component={NotFound} />

@@ -43,7 +43,7 @@ function deserialize(serialized: Serialized): Store {
   }
 }
 
-export function loadFromStorage(storage = localStorage): Store | undefined {
+export function load(storage = localStorage): Store | undefined {
   const raw = storage.getItem(storageKey)
   if (!raw) { return }
 

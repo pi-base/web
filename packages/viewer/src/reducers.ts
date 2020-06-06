@@ -25,6 +25,10 @@ export const reducer: Reducer = produce((state: Store, action: Action) => {
 
     case 'fetch.error':
       state.error = action.error.message
+    // fallthrough
+    case 'fetch.done':
+      state.remote.state = 'done'
+      state.remote.fetched = new Date()
       return
 
     case 'check':
@@ -42,6 +46,5 @@ export const reducer: Reducer = produce((state: Store, action: Action) => {
           state.checked.add(action.space.uid)
           return
       }
-      return
   }
 })

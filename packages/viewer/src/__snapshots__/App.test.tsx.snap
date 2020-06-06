@@ -40,122 +40,126 @@ exports[`App renders correctly 1`] = `
           complete={0}
           total={2}
         >
-          <Toast
-            animation={true}
-            autohide={false}
-            delay={3000}
-            show={true}
-            style={
-              Object {
-                "bottom": "20px",
-                "left": "20px",
-                "position": "absolute",
-              }
-            }
-            transition={
-              Object {
-                "$$typeof": Symbol(react.forward_ref),
-                "defaultProps": Object {
-                  "appear": false,
-                  "in": false,
-                  "mountOnEnter": false,
-                  "timeout": 300,
-                  "unmountOnExit": false,
-                },
-                "displayName": "Fade",
-                "render": [Function],
-              }
-            }
+          <Notice
+            title="Checking Theorems"
           >
-            <Fade
-              appear={false}
-              in={true}
-              mountOnEnter={false}
-              timeout={300}
-              unmountOnExit={true}
+            <Toast
+              animation={true}
+              autohide={false}
+              delay={3000}
+              show={true}
+              style={
+                Object {
+                  "bottom": "20px",
+                  "left": "20px",
+                  "position": "absolute",
+                }
+              }
+              transition={
+                Object {
+                  "$$typeof": Symbol(react.forward_ref),
+                  "defaultProps": Object {
+                    "appear": false,
+                    "in": false,
+                    "mountOnEnter": false,
+                    "timeout": 300,
+                    "unmountOnExit": false,
+                  },
+                  "displayName": "Fade",
+                  "render": [Function],
+                }
+              }
             >
-              <Transition
-                addEndListener={[Function]}
+              <Fade
                 appear={false}
-                enter={true}
-                exit={true}
                 in={true}
                 mountOnEnter={false}
-                onEnter={[Function]}
-                onEntered={[Function]}
-                onEntering={[Function]}
-                onExit={[Function]}
-                onExited={[Function]}
-                onExiting={[Function]}
                 timeout={300}
                 unmountOnExit={true}
               >
-                <div
-                  aria-atomic="true"
-                  aria-live="assertive"
-                  className="fade toast show"
-                  role="alert"
-                  style={
-                    Object {
-                      "bottom": "20px",
-                      "left": "20px",
-                      "position": "absolute",
-                    }
-                  }
+                <Transition
+                  addEndListener={[Function]}
+                  appear={false}
+                  enter={true}
+                  exit={true}
+                  in={true}
+                  mountOnEnter={false}
+                  onEnter={[Function]}
+                  onEntered={[Function]}
+                  onEntering={[Function]}
+                  onExit={[Function]}
+                  onExited={[Function]}
+                  onExiting={[Function]}
+                  timeout={300}
+                  unmountOnExit={true}
                 >
-                  <ToastHeader
-                    closeButton={false}
-                    closeLabel="Close"
+                  <div
+                    aria-atomic="true"
+                    aria-live="assertive"
+                    className="fade toast show"
+                    role="alert"
+                    style={
+                      Object {
+                        "bottom": "20px",
+                        "left": "20px",
+                        "position": "absolute",
+                      }
+                    }
                   >
-                    <div
-                      className="toast-header"
+                    <ToastHeader
+                      closeButton={false}
+                      closeLabel="Close"
                     >
-                      Checking Theorems
-                    </div>
-                  </ToastHeader>
-                  <ToastBody>
-                    <div
-                      className="toast-body"
-                    >
-                      <ProgressBar
-                        animated={true}
-                        isChild={false}
-                        label="0 / 2"
-                        max={2}
-                        min={0}
-                        now={0}
-                        srOnly={true}
-                        striped={false}
+                      <div
+                        className="toast-header"
                       >
-                        <div
-                          className="progress"
+                        Checking Theorems
+                      </div>
+                    </ToastHeader>
+                    <ToastBody>
+                      <div
+                        className="toast-body"
+                      >
+                        <ProgressBar
+                          animated={true}
+                          isChild={false}
+                          label="0 / 2"
+                          max={2}
+                          min={0}
+                          now={0}
+                          srOnly={true}
+                          striped={false}
                         >
                           <div
-                            aria-valuemax={2}
-                            aria-valuemin={0}
-                            aria-valuenow={0}
-                            className="progress-bar progress-bar-animated progress-bar-striped"
-                            role="progressbar"
-                            style={
-                              Object {
-                                "width": "0%",
-                              }
-                            }
+                            className="progress"
                           >
-                            <span
-                              className="sr-only"
+                            <div
+                              aria-valuemax={2}
+                              aria-valuemin={0}
+                              aria-valuenow={0}
+                              className="progress-bar progress-bar-animated progress-bar-striped"
+                              role="progressbar"
+                              style={
+                                Object {
+                                  "width": "0%",
+                                }
+                              }
                             >
-                              0 / 2
-                            </span>
+                              <span
+                                className="sr-only"
+                              >
+                                0 / 2
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </ProgressBar>
-                    </div>
-                  </ToastBody>
-                </div>
-              </Transition>
-            </Fade>
-          </Toast>
+                        </ProgressBar>
+                      </div>
+                    </ToastBody>
+                  </div>
+                </Transition>
+              </Fade>
+            </Toast>
+          </Notice>
         </Checking>
       </StatusBar>
       <Memo(Navigation)>
@@ -363,6 +367,11 @@ exports[`App renders correctly 1`] = `
       </Memo(Navigation)>
       <Memo(Main)
         dispatch={[Function]}
+        handler={
+          Object {
+            "error": [Function],
+          }
+        }
       >
         <Container
           fluid={false}

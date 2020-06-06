@@ -1,14 +1,16 @@
 import React from 'react'
-import { ProgressBar, Toast } from 'react-bootstrap'
+import { Button, ProgressBar, Toast } from 'react-bootstrap'
 
+import { hardReset } from '../actions'
+import * as paths from '../paths'
 import { Status } from '../models/Store'
 
-function Checking({
-  complete,
-  total
+function Notice({
+  title,
+  children
 }: {
-  complete: number
-  total: number
+  title: string
+  children: React.ReactNode[] | React.ReactNode
 }) {
   return (
     <Toast
@@ -21,18 +23,57 @@ function Checking({
       <Toast.Header
         closeButton={false}
       >
-        Checking Theorems
+        {title}
       </Toast.Header>
       <Toast.Body>
-        <ProgressBar
-          animated
-          now={complete}
-          max={total}
-          label={`${complete} / ${total}`}
-          srOnly
-        />
+        {children}
       </Toast.Body>
     </Toast>
+  )
+}
+
+function Checking({
+  complete,
+  total
+}: {
+  complete: number
+  total: number
+}) {
+  return (
+    <Notice
+      title="Checking Theorems"
+    >
+      <ProgressBar
+        animated
+        now={complete}
+        max={total}
+        label={`${complete} / ${total}`}
+        srOnly
+      />
+    </Notice>
+  )
+}
+
+function Error({ error }: { error: string | null }) {
+  const issueUrl = paths.viewerIssues({
+    title: error || 'Viewer failing to load',
+    body: 'If possible, add any extra information that could help to troubleshoot the issue.'
+  })
+
+  return (
+    <Notice
+      title="Failed to Load"
+    >
+      <p>An error has prevented the viewer from loading.</p>
+      {error && <p><code>{error}</code></p>}
+      <p>If this error persists, you can help by <a href={issueUrl}>reporting it</a>.</p>
+      <Button
+        onClick={hardReset}
+        variant="outline-danger"
+      >
+        Reset
+      </Button>
+    </Notice>
   )
 }
 
@@ -41,9 +82,12 @@ export default function StatusBar({
 }: {
   status: Status
 }) {
-  if (status.state === 'checking') {
-    return (<Checking complete={status.complete} total={status.total} />)
-  } else {
-    return null
+  switch (status.state) {
+    case 'checking':
+      return (<Checking complete={status.complete} total={status.total} />)
+    case 'error':
+      return (<Error error={status.message} />)
+    default:
+      return null
   }
 }

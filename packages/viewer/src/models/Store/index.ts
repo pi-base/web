@@ -29,7 +29,6 @@ export type Store = store
 
 export {
   initial,
-  fetching,
   loaded,
   properties,
   property,

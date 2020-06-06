@@ -39,7 +39,7 @@ export default function App({
         <Provider value={store}>
           <StatusBar status={status(store)} />
           <Nav />
-          <Main dispatch={dispatch} />
+          <Main dispatch={dispatch} handler={errorHandler} />
         </Provider >
       </Router>
     </Error.Provider>

@@ -11,8 +11,6 @@ describe('reducer', () => {
 
   describe('loaded', () => {
     it('replaces the store', () => {
-      expect(status(initial)).toEqual({ state: 'loading' })
-
       const next = reduce(initial, { action: 'loaded', value: defaultStore })
 
       expect(next).toEqual(defaultStore)
@@ -36,7 +34,7 @@ describe('reducer', () => {
         { action: 'fetch.error', error: new Error('Not found') }
       )
 
-      expect(status(next)).toEqual({ state: 'error', message: 'Not found' })
+      expect(status(next).state).not.toEqual('fetching')
     })
   })
 

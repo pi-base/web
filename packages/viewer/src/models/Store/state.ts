@@ -32,10 +32,9 @@ export type SearchResults
   | { kind: 'contradiction', contradiction: Theorem[] | 'tautology' }
 
 export type Status
-  = { state: 'loading' }
-  | { state: 'fetching' }
+  = { state: 'fetching' }
   | { state: 'checking', complete: number, total: number }
-  | { state: 'error', message: string }
+  | { state: 'error', message: string | null }
   | { state: 'ready' }
 
 export type Store = {
@@ -52,11 +51,7 @@ export type Store = {
 }
 
 export function status(store: Store): Status {
-  if (!loaded(store)) {
-    return { state: 'loading' }
-  } else if (store.error) {
-    return { state: 'error', message: store.error }
-  } else if (fetching(store)) {
+  if (fetching(store)) {
     return { state: 'fetching' }
   } else if (checking(store)) {
     return {
@@ -64,6 +59,8 @@ export function status(store: Store): Status {
       complete: store.checked.size,
       total: store.bundle.spaces.size
     }
+  } else if (!loaded(store)) {
+    return { state: 'error', message: store.error }
   } else {
     return { state: 'ready' }
   }
@@ -231,13 +228,13 @@ export function uncheckedSpaces(store: Store) {
 }
 
 export function loaded(store: Store) {
-  return store !== initial
+  return store.bundle !== initial.bundle
 }
 
 function checking(store: Store) {
   return store.bundle.spaces.size > store.checked.size
 }
 
-export function fetching(store: Store) {
+function fetching(store: Store) {
   return store.remote.state === 'fetching'
 }

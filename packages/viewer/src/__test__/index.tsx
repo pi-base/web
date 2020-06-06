@@ -3,7 +3,7 @@ import testUtils from 'react-dom/test-utils'
 import jestFetchMock from 'jest-fetch-mock'
 import { mount as enzymeMount } from 'enzyme'
 
-import { bundle, formula } from '@pi-base/core'
+import { Bundle, bundle, formula } from '@pi-base/core'
 import { MemoryRouter as Router, Route } from 'react-router'
 import { Store } from '../models/Store'
 import * as Context from '../models/Store/context'
@@ -114,4 +114,12 @@ export function mountedAt(component: React.ReactElement<{}>, pathname: string, p
 
 export function mount(component: React.ReactElement<{}>, props: any = {}) {
   return mountedAt(component, '/', props)
+}
+
+export function mockBundleFetch(b: Bundle) {
+  fetchMock.once(
+    JSON.stringify(
+      bundle.serialize(b)
+    )
+  )
 }

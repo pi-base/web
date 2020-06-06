@@ -2,44 +2,39 @@ import React, { useState } from 'react'
 import { Button, Col, Form, Row, Spinner, Table } from 'react-bootstrap'
 import Moment from 'react-moment'
 
-import { Dispatch, refresh } from '../actions'
+import { Dispatch, hardReset, refresh } from '../actions'
+import { Handler } from '../errors'
 import { useStore } from '../models'
-import { Store, fetching } from '../models/Store'
-
-function reset() {
-  localStorage.clear()
-  window.location.reload()
-}
+import { Store, status } from '../models/Store'
 
 function Fetch({
   store,
-  dispatch
+  dispatch,
+  handler
 }: {
   store: Store,
   dispatch: Dispatch
+  handler: Handler
 }) {
   const [branch, setBranch] = useState(store.remote.branch)
   const [host, setHost] = useState(store.remote.host)
 
   async function save() {
-    return refresh({ branch, dispatch, host, store })
+    return refresh({ branch, dispatch, host, store, handler })
   }
+
+  const fetching = status(store).state === 'fetching'
 
   return (
     <Table>
       <tbody>
-        <tr>
-          <th>ETag</th>
-          <td>
-            <code>{store.etag}</code>
-          </td>
-        </tr>
         <tr>
           <th>Host</th>
           <td>
             <Form.Control
               value={host}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setHost(e.target.value)}
+              onBlur={save}
             />
           </td>
         </tr>
@@ -49,11 +44,18 @@ function Fetch({
             <Form.Control
               value={branch}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBranch(e.target.value)}
+              onBlur={save}
             />
           </td>
         </tr>
         <tr>
-          <th>Fetched</th>
+          <th>ETag</th>
+          <td>
+            <code>{store.etag}</code>
+          </td>
+        </tr>
+        <tr>
+          <th>Synced</th>
           <td>
             <Moment fromNow ago>{store.remote.fetched}</Moment>
             {' '}
@@ -66,9 +68,9 @@ function Fetch({
             <Button
               onClick={save}
               variant="outline-dark"
-              disabled={fetching(store)}
+              disabled={fetching}
             >
-              {fetching(store) && <Spinner animation="border" role="status" size="sm" as="span" />}
+              {fetching && <Spinner animation="border" role="status" size="sm" as="span" />}
               Refresh
             </Button>
           </td>
@@ -100,7 +102,7 @@ function Data({ store }: { store: Store }) {
               Log Store
           </Button>
             <Button
-              onClick={reset}
+              onClick={hardReset}
               variant="outline-danger"
             >
               Reset
@@ -112,13 +114,19 @@ function Data({ store }: { store: Store }) {
   )
 }
 
-export default function Dev({ dispatch }: { dispatch: Dispatch }) {
+export default function Dev({
+  dispatch,
+  handler
+}: {
+  dispatch: Dispatch
+  handler: Handler
+}) {
   const store = useStore()
 
   return (
     <Row>
       <Col>
-        <Fetch store={store} dispatch={dispatch} />
+        <Fetch store={store} dispatch={dispatch} handler={handler} />
       </Col>
       <Col>
         <Data store={store} />
