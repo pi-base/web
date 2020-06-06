@@ -1,4 +1,5 @@
-![build-test](https://github.com/pi-base/viewer/workflows/build-test/badge.svg)
+[![build-test](https://github.com/pi-base/viewer/workflows/build-test/badge.svg)](https://github.com/pi-base/viewer/actions?query=branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/pi-base/viewer/badge.svg?branch=master)](https://coveralls.io/github/pi-base/viewer?branch=master)
 
 **We're wrapping up work on a rewrite. "Write a better README" is on the punch list. Stay tuned.**
 

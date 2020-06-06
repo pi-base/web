@@ -10,7 +10,12 @@ jobs:
     - name: Cached install
       uses: bahmutov/npm-install@v1.1.0
     - name: Test
-      run: yarn test
+      run: yarn test --coverage
+    - name: Report coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -22,11 +27,12 @@ jobs:
       env:
         REACT_APP_BUNDLE_HOST: https://pi-base-bundles.s3.us-east-2.amazonaws.com
         REACT_APP_RELEASE: ${{ github.sha }}
-    - name: Upload Build
+    - name: Upload build
       uses: actions/upload-artifact@v1
       with:
         name: build
         path: build
+
   release:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
