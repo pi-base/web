@@ -1,5 +1,5 @@
-import { parse as _parse } from './Formula/Grammar'
-import { union } from './Util'
+import {parse as _parse} from './Formula/Grammar'
+import {union} from './Util'
 
 export interface Atom<P> {
   kind: 'atom'
@@ -20,15 +20,15 @@ export interface Or<P> {
 export type Formula<P> = And<P> | Or<P> | Atom<P>
 
 export function and<P>(...subs: Formula<P>[]): And<P> {
-  return { kind: 'and', subs: subs }
+  return {kind: 'and', subs: subs}
 }
 
 export function or<P>(...subs: Formula<P>[]): Or<P> {
-  return { kind: 'or', subs: subs }
+  return {kind: 'or', subs: subs}
 }
 
 export function atom<P>(p: P, v: boolean = true): Atom<P> {
-  return { kind: 'atom', property: p, value: v }
+  return {kind: 'atom', property: p, value: v}
 }
 
 export function properties<P>(f: Formula<P>): Set<P> {
@@ -63,7 +63,10 @@ export function negate<P>(formula: Formula<P>): Formula<P> {
   }
 }
 
-export function map<P, Q>(func: (p: Atom<P>) => Atom<Q>, formula: Formula<P>): Formula<Q> {
+export function map<P, Q>(
+  func: (p: Atom<P>) => Atom<Q>,
+  formula: Formula<P>
+): Formula<Q> {
   switch (formula.kind) {
     case 'atom':
       return func(formula)
@@ -75,18 +78,24 @@ export function map<P, Q>(func: (p: Atom<P>) => Atom<Q>, formula: Formula<P>): F
   }
 }
 
-export function mapProperty<P, Q>(func: (p: P) => Q, formula: Formula<P>): Formula<Q> {
+export function mapProperty<P, Q>(
+  func: (p: P) => Q,
+  formula: Formula<P>
+): Formula<Q> {
   function mapAtom(a: Atom<P>): Atom<Q> {
-    return { ...a, property: func(a.property) }
+    return {...a, property: func(a.property)}
   }
   return map<P, Q>(mapAtom, formula)
 }
 
 export function compact<P>(f: Formula<P | undefined>): Formula<P> | undefined {
-  return properties(f).has(undefined) ? undefined : f as Formula<P>
+  return properties(f).has(undefined) ? undefined : (f as Formula<P>)
 }
 
-export function evaluate<T>(f: Formula<T>, traits: Map<T, boolean>): boolean | undefined {
+export function evaluate<T>(
+  f: Formula<T>,
+  traits: Map<T, boolean>
+): boolean | undefined {
   let result: boolean | undefined
 
   switch (f.kind) {
@@ -98,11 +107,15 @@ export function evaluate<T>(f: Formula<T>, traits: Map<T, boolean>): boolean | u
     case 'and':
       result = true // by default
       f.subs.forEach(sub => {
-        if (result === false) { return }
+        if (result === false) {
+          return
+        }
         const sv = evaluate(sub!, traits)
-        if (sv === false) { // definitely false
+        if (sv === false) {
+          // definitely false
           result = false
-        } else if (result && sv === undefined) { // maybe false
+        } else if (result && sv === undefined) {
+          // maybe false
           result = undefined
         }
       })
@@ -110,11 +123,15 @@ export function evaluate<T>(f: Formula<T>, traits: Map<T, boolean>): boolean | u
     case 'or':
       result = false
       f.subs.forEach(sub => {
-        if (result === true) { return }
+        if (result === true) {
+          return
+        }
         const sv = evaluate(sub!, traits)
-        if (sv === true) { // definitely true
+        if (sv === true) {
+          // definitely true
           result = true
-        } else if (result === false && sv === undefined) { // maybe true
+        } else if (result === false && sv === undefined) {
+          // maybe true
           result = undefined
         }
       })
@@ -123,7 +140,9 @@ export function evaluate<T>(f: Formula<T>, traits: Map<T, boolean>): boolean | u
 }
 
 export function parse(q?: string): Formula<string> | undefined {
-  if (!q) { return }
+  if (!q) {
+    return
+  }
 
   let parsed
   try {
@@ -155,10 +174,10 @@ export function fromJSON(json: any): Formula<string> {
 export function toJSON(f: Formula<string>): object {
   switch (f.kind) {
     case 'atom':
-      return { [f.property]: f.value }
+      return {[f.property]: f.value}
     case 'and':
-      return { and: f.subs.map(toJSON) }
+      return {and: f.subs.map(toJSON)}
     case 'or':
-      return { or: f.subs.map(toJSON) }
+      return {or: f.subs.map(toJSON)}
   }
 }

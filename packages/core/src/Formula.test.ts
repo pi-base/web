@@ -1,12 +1,21 @@
 import * as F from './Formula'
-import { Formula, and, atom, evaluate, fromJSON, negate, or, parse, properties, render, toJSON } from './Formula'
+import {
+  Formula,
+  and,
+  atom,
+  evaluate,
+  fromJSON,
+  negate,
+  or,
+  parse,
+  properties,
+  render,
+  toJSON
+} from './Formula'
 
 const compound: Formula<string> = and(
   atom('compact', true),
-  or(
-    atom('connected', true),
-    atom('separable', false)
-  ),
+  or(atom('connected', true), atom('separable', false)),
   atom('first countable', false)
 )
 
@@ -29,7 +38,9 @@ describe('Formula', () => {
     it('builds a set of properties', () => {
       const props = properties(compound)
 
-      expect(props).toEqual(new Set(['compact', 'connected', 'separable', 'first countable']))
+      expect(props).toEqual(
+        new Set(['compact', 'connected', 'separable', 'first countable'])
+      )
     })
   })
 
@@ -39,20 +50,21 @@ describe('Formula', () => {
     })
 
     it('can render to string', () => {
-      expect(render_(compound)).
-        toEqual('(compact ∧ (connected ∨ ¬separable) ∧ ¬first countable)')
+      expect(render_(compound)).toEqual(
+        '(compact ∧ (connected ∨ ¬separable) ∧ ¬first countable)'
+      )
     })
   })
 
   describe('negate', () => {
     it('can negate an atom', () => {
-      expect(negate(atom('P', true))).
-        toEqual(atom('P', false))
+      expect(negate(atom('P', true))).toEqual(atom('P', false))
     })
 
     it('can negate a compound formula', () => {
-      expect(render_(negate(compound))).
-        toEqual('(¬compact ∨ (¬connected ∧ separable) ∨ first countable)')
+      expect(render_(negate(compound))).toEqual(
+        '(¬compact ∨ (¬connected ∧ separable) ∨ first countable)'
+      )
     })
   })
 
@@ -63,20 +75,15 @@ describe('Formula', () => {
         compound
       )
 
-      expect(render_(result)).
-        toEqual('(¬co ∧ (¬co ∨ se) ∧ fi)')
+      expect(render_(result)).toEqual('(¬co ∧ (¬co ∨ se) ∧ fi)')
     })
   })
 
   describe('mapProperty', () => {
     it('only maps over properties', () => {
-      const result = F.mapProperty(
-        property => property.slice(0, 2),
-        compound
-      )
+      const result = F.mapProperty(property => property.slice(0, 2), compound)
 
-      expect(render_(result)).
-        toEqual('(co ∧ (co ∨ ¬se) ∧ ¬fi)')
+      expect(render_(result)).toEqual('(co ∧ (co ∨ ¬se) ∧ ¬fi)')
     })
   })
 
@@ -119,39 +126,24 @@ describe('parsing', () => {
   })
 
   it('handles whitespace', () => {
-    expect(
-      parse('   \t   Second Countable \n ')
-    ).toEqual(
+    expect(parse('   \t   Second Countable \n ')).toEqual(
       atom('Second Countable', true)
     )
   })
 
   it('can negate properties', () => {
-    expect(
-      parse('not compact')
-    ).toEqual(
-      atom('compact', false)
-    )
+    expect(parse('not compact')).toEqual(atom('compact', false))
   })
 
   it('inserts parens', () => {
-    expect(
-      parse('compact + connected + ~t_2')
-    ).toEqual(
-      and(
-        atom('compact', true),
-        atom('connected', true),
-        atom('t_2', false)
-      )
+    expect(parse('compact + connected + ~t_2')).toEqual(
+      and(atom('compact', true), atom('connected', true), atom('t_2', false))
     )
   })
 
   it('allows parens', () => {
     expect(F.parse('(foo + bar)')).toEqual(
-      F.and(
-        F.atom('foo', true),
-        F.atom('bar', true)
-      )
+      F.and(F.atom('foo', true), F.atom('bar', true))
     )
   })
 
@@ -165,10 +157,7 @@ describe('parsing', () => {
     ).toEqual(
       and(
         atom('compact', true),
-        or(
-          atom('connected', true),
-          atom('second countable', false)
-        ),
+        or(atom('connected', true), atom('second countable', false)),
         atom('first countable', false)
       )
     )
@@ -181,13 +170,11 @@ describe('parsing', () => {
 })
 
 describe('serialization', () => {
-  [
-    atom('A', false),
-    or(atom('B', true), atom('C', false)),
-    compound
-  ].forEach(formula => {
-    it(`roundtrips ${render_(formula)}`, () => {
-      expect(fromJSON(toJSON(formula))).toEqual(formula)
-    })
-  })
+  ;[atom('A', false), or(atom('B', true), atom('C', false)), compound].forEach(
+    formula => {
+      it(`roundtrips ${render_(formula)}`, () => {
+        expect(fromJSON(toJSON(formula))).toEqual(formula)
+      })
+    }
+  )
 })

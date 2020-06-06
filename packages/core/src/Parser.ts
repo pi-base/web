@@ -8,17 +8,23 @@ import visit from 'unist-util-visit'
 // * https://using-remark.gatsbyjs.org/custom-components/
 const delimitedParser = (type: string, start: string, stop: string) => {
   function parser(eat: Function, value: string, silent: boolean) {
-    if (!value.startsWith(start)) { return }
+    if (!value.startsWith(start)) {
+      return
+    }
 
     const stopPosition = value.indexOf(stop, start.length)
-    if (stopPosition === -1) { return }
+    if (stopPosition === -1) {
+      return
+    }
 
-    if (silent) { return true }
+    if (silent) {
+      return true
+    }
 
     const tag = value.slice(0, stopPosition + stop.length)
     const inner = tag.slice(start.length, stopPosition)
 
-    return eat(tag)({ type, [type]: inner })
+    return eat(tag)({type, [type]: inner})
   }
 
   parser.locator = (value: string, from: number) => value.indexOf(start, from)
@@ -30,8 +36,16 @@ function pibase(this: any) {
   const parser = this.Parser.prototype
 
   parser.inlineTokenizers.citation = delimitedParser('citation', '{{', '}}')
-  parser.inlineTokenizers.inlineMathDollars = delimitedParser('inlineMath', '$', '$')
-  parser.inlineTokenizers.inlineMathParens = delimitedParser('inlineMath', '\\(', '\\)')
+  parser.inlineTokenizers.inlineMathDollars = delimitedParser(
+    'inlineMath',
+    '$',
+    '$'
+  )
+  parser.inlineTokenizers.inlineMathParens = delimitedParser(
+    'inlineMath',
+    '\\(',
+    '\\)'
+  )
 
   // It is important that the \(...\) tokenizer appears before the escape tokenizer
   //   but we might want to defer the others to later in the chain
@@ -67,6 +81,6 @@ function pibase(this: any) {
 }
 
 export default () =>
-  remark().
-    use(pibase).
-    use(remark2rehype)
+  remark()
+    .use(pibase)
+    .use(remark2rehype)

@@ -1,5 +1,5 @@
-import { Id } from './Id'
-import { Record } from './Record'
+import {Id} from './Id'
+import {Record} from './Record'
 
 export type Proof = {
   theorems: Id[]
