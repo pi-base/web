@@ -117,7 +117,8 @@ async function sync(
         state: 'done',
         fetched: new Date()
       },
-      checked: new Set()
+      checked: new Set(),
+      error: null
     }
   } else if (store) {
     return {

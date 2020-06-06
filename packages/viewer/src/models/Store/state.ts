@@ -3,7 +3,6 @@ import { createSelector } from 'reselect'
 
 import {
   bundle as B,
-  check as checkBundle,
   defaultHost as bundleDefaultHost,
   disprove,
   formula as F,
@@ -36,6 +35,7 @@ export type Status
   = { state: 'loading' }
   | { state: 'fetching' }
   | { state: 'checking', complete: number, total: number }
+  | { state: 'error', message: string }
   | { state: 'ready' }
 
 export type Store = {
@@ -44,18 +44,21 @@ export type Store = {
   remote: {
     branch: string
     host: string
-    state: 'fetching' | 'done' | 'error'
+    state: 'fetching' | 'done'
     fetched: Date
   }
   checked: Set<Id>
+  error: string | null
 }
 
 export function status(store: Store): Status {
   if (!loaded(store)) {
     return { state: 'loading' }
+  } else if (store.error) {
+    return { state: 'error', message: store.error }
   } else if (fetching(store)) {
     return { state: 'fetching' }
-  } else if (store.bundle.spaces.size > store.checked.size) {
+  } else if (checking(store)) {
     return {
       state: 'checking',
       complete: store.checked.size,
@@ -83,7 +86,8 @@ export const initial: Store = {
     state: 'fetching',
     fetched: new Date()
   },
-  checked: new Set()
+  checked: new Set(),
+  error: null
 }
 
 export const property = (store: Store, id: Id) => store.bundle.properties.get(id) || null
@@ -222,29 +226,16 @@ export function search(store: Store, search: Search): SearchResults {
   }
 }
 
-export function check(store: Store, space: Space) {
-  if (store.checked.has(space.uid)) { return }
-
-  const result = checkBundle(
-    store.bundle,
-    space,
-    theoremIndex(store)
-  )
-
-  switch (result.kind) {
-    case 'bundle':
-      store.bundle = result.bundle
-      store.checked.add(space.uid)
-      return
-  }
-}
-
 export function uncheckedSpaces(store: Store) {
   return spaces(store).filter(space => !store.checked.has(space.uid))
 }
 
 export function loaded(store: Store) {
   return store !== initial
+}
+
+function checking(store: Store) {
+  return store.bundle.spaces.size > store.checked.size
 }
 
 export function fetching(store: Store) {

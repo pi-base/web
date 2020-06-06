@@ -67,7 +67,8 @@ export const defaultStore: Store = {
     state: 'done',
     fetched: new Date()
   },
-  checked: new Set()
+  checked: new Set(),
+  error: null
 }
 
 export function Wrapper({

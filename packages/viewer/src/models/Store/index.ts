@@ -42,6 +42,7 @@ export {
   spaceIndex,
   spacesMatching,
   spaces,
+  status,
   theorem,
   theorems,
   theoremsWithCounterexample,

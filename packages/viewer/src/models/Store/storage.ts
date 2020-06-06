@@ -14,6 +14,7 @@ type Serialized = {
     fetched: string
   }
   checked: Id[]
+  error: string | null
 }
 
 function serialize(store: Store): Serialized {
@@ -24,7 +25,8 @@ function serialize(store: Store): Serialized {
       ...store.remote,
       fetched: store.remote.fetched.toString()
     },
-    checked: Array.from(store.checked)
+    checked: Array.from(store.checked),
+    error: store.error
   }
 }
 
@@ -36,7 +38,8 @@ function deserialize(serialized: Serialized): Store {
       ...serialized.remote,
       fetched: new Date(serialized.remote.fetched)
     },
-    checked: new Set(serialized.checked || [])
+    checked: new Set(serialized.checked || []),
+    error: serialized.error || null
   }
 }
 
