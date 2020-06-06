@@ -65,9 +65,14 @@ export async function fetch(opts: FetchOpts): Promise<{ bundle: Bundle, etag: st
   if (response.status === 304) { return }
 
   const json = await response.json()
+  const deserialized = deserialize(json)
+
+  if (serialize(deserialized) !== json) {
+    throw new Error('Data serialization failure')
+  }
 
   return {
-    bundle: deserialize(json),
+    bundle: deserialized,
     etag: response.headers.get('etag') || ''
   }
 }

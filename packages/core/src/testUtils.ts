@@ -1,4 +1,5 @@
 import { Formula, Property, Space, Theorem, Trait } from './index'
+export { and, atom, or } from './Formula'
 
 export function property({ uid, ...opts }: { uid: string } & Partial<Property>): Property {
   return {

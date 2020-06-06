@@ -1,0 +1,17 @@
+name: test
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cached install
+      uses: bahmutov/npm-install@v1.1.0
+    - name: Test
+      run: yarn test --coverage
+    - name: Report coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
