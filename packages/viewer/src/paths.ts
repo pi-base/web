@@ -32,8 +32,13 @@ export function viewerIssues({
   return `${viewerRepo}/issues/new?title=${title}&body=${body}`
 }
 
+export function contributingGuide() {
+  return `${dataRepo}/blob/master/CONTRIBUTING.md`
+}
+
 export default {
   contributeExample,
+  contributingGuide,
   property,
   space,
   theorem,

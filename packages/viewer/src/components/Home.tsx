@@ -1,6 +1,7 @@
 import React from 'react'
 import { Jumbotron } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import paths from '../paths'
 
 export default function Home() {
   return (
@@ -17,7 +18,7 @@ export default function Home() {
 
       <h2>Contributing</h2>
       <p>
-        The π-Base relies on volunteers like yourself to submit new spaces, properties, and theorems. More information may be found on our <a href="https://github.com/pi-base/contributing">Contributing</a> page.
+        The π-Base relies on volunteers like yourself to submit new spaces, properties, and theorems. More information may be found on our <a href={paths.contributingGuide()}>Contributing</a> page.
       </p>
       <p>
         π-Base’s <a href="https://github.com/pi-base/data">data</a> and <a href="https://github.com/pi-base/viewer">source code</a> are available on GitHub. Code contributions are welcomed as well!

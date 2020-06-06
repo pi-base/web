@@ -518,7 +518,7 @@ exports[`App renders correctly 1`] = `
                   <p>
                     The π-Base relies on volunteers like yourself to submit new spaces, properties, and theorems. More information may be found on our 
                     <a
-                      href="https://github.com/pi-base/contributing"
+                      href="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
                     >
                       Contributing
                     </a>
