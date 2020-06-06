@@ -1,7 +1,9 @@
 import { useCallback, useMemo } from 'react'
 import { useHistory } from 'react-router'
 
-export default function useQueryParam(key: string): [string, (value: string) => void] {
+export default function useQueryParam(
+  key: string
+): [string, (value: string) => void] {
   const history = useHistory()
 
   const set = useCallback(
@@ -16,20 +18,16 @@ export default function useQueryParam(key: string): [string, (value: string) => 
 
       history.push({
         pathname: history.location.pathname,
-        search: '?' + query.toString()
+        search: '?' + query.toString(),
       })
     },
     [history, key]
   )
 
-
-  const value = useMemo(
-    () => {
-      const query = new URLSearchParams(history.location.search)
-      return query.get(key) || ''
-    },
-    [history.location.search, key]
-  )
+  const value = useMemo(() => {
+    const query = new URLSearchParams(history.location.search)
+    return query.get(key) || ''
+  }, [history.location.search, key])
 
   return [value, set]
 }

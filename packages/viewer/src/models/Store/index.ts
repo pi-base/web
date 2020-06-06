@@ -21,7 +21,7 @@ import {
   theoremsWithProperty,
   trait,
   traitsForProperty,
-  traitsForSpace
+  traitsForSpace,
 } from './state'
 
 export type Status = status
@@ -49,7 +49,7 @@ export {
   trait,
   traitsForProperty,
   traitsForSpace,
-  uncheckedSpaces
+  uncheckedSpaces,
 } from './state'
 
 export default {
@@ -74,5 +74,5 @@ export default {
   trait,
   traitsForProperty,
   traitsForSpace,
-  useStore
+  useStore,
 }

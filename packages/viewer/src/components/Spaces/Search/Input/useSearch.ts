@@ -14,10 +14,10 @@ type State<Search, Fragment> = {
   suggestions: string[]
 }
 
-export type Action
-  = { action: 'apply_suggestion' }
+export type Action =
+  | { action: 'apply_suggestion' }
   | { action: 'run_search' }
-  | { action: 'search', q: string }
+  | { action: 'search'; q: string }
   | { action: 'select_next' }
   | { action: 'select_prev' }
 
@@ -36,27 +36,39 @@ function runSearch<Search, Fragment>(
   }
 
   const { search, fragment } = parse(query)
-  if (search) { state.search = search }
+  if (search) {
+    state.search = search
+  }
   state.fragment = fragment || null
 }
 
 function wrap(current: number | null, delta: number, limit: number) {
-  if (limit === 0) { return 0 }
-  if (current === null) { return delta > 0 ? 0 : limit - 1 }
+  if (limit === 0) {
+    return 0
+  }
+  if (current === null) {
+    return delta > 0 ? 0 : limit - 1
+  }
 
-  let next = current + delta % limit
-  if (next < 0) { next = next + limit }
+  let next = current + (delta % limit)
+  if (next < 0) {
+    next = next + limit
+  }
   return next
 }
 
 function buildReducer<Search, Fragment>({
   findSuggestions,
   parse,
-  replaceFragment
+  replaceFragment,
 }: {
   findSuggestions: (fragment: Fragment) => string[]
   parse: (q: string) => ParseResult<Search, Fragment>
-  replaceFragment: (query: string, fragment: Fragment, replacement: string) => string
+  replaceFragment: (
+    query: string,
+    fragment: Fragment,
+    replacement: string
+  ) => string
 }) {
   return produce((state: State<Search, Fragment>, action: Action) => {
     switch (action.action) {
@@ -76,11 +88,15 @@ function buildReducer<Search, Fragment>({
         state.selected = wrap(state.selected, -1, state.suggestions.length)
         return
       case 'apply_suggestion':
-        if (!state.fragment) { return }
+        if (!state.fragment) {
+          return
+        }
 
         const selected = state.selected || 0
         const suggestion = state.suggestions[selected]
-        if (!suggestion) { return }
+        if (!suggestion) {
+          return
+        }
 
         runSearch(
           state,
@@ -96,25 +112,26 @@ function buildReducer<Search, Fragment>({
 export default function useSearch<Search, Fragment>({
   findSuggestions,
   parse,
-  replaceFragment
+  replaceFragment,
 }: {
   findSuggestions: (fragment: Fragment) => string[]
   parse: (q: string) => ParseResult<Search, Fragment>
-  replaceFragment: (query: string, fragment: Fragment, replacement: string) => string
+  replaceFragment: (
+    query: string,
+    fragment: Fragment,
+    replacement: string
+  ) => string
 }) {
   const reducer = useMemo(
     () => buildReducer({ findSuggestions, parse, replaceFragment }),
     [findSuggestions, parse, replaceFragment]
   )
 
-  return useReducer(
-    reducer,
-    {
-      fragment: null,
-      query: '',
-      search: null,
-      selected: null,
-      suggestions: []
-    }
-  )
+  return useReducer(reducer, {
+    fragment: null,
+    query: '',
+    search: null,
+    selected: null,
+    suggestions: [],
+  })
 }

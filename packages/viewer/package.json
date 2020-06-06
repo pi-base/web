@@ -33,6 +33,16 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -62,8 +72,11 @@
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
+    "husky": "^4.2.5",
     "jest-enzyme": "^7.1.2",
     "jest-fetch-mock": "^3.0.3",
+    "lint-staged": "^10.2.9",
+    "prettier": "2.0.5",
     "react-test-renderer": "^16.13.1"
   },
   "jest": {

@@ -5,7 +5,7 @@ import { Store } from './state'
 const storageKey = 'pibase.bundle'
 
 type Serialized = {
-  bundle: SerializedBundle,
+  bundle: SerializedBundle
   etag: string | null
   remote: {
     branch: string
@@ -23,10 +23,10 @@ function serialize(store: Store): Serialized {
     etag: store.etag,
     remote: {
       ...store.remote,
-      fetched: store.remote.fetched.toString()
+      fetched: store.remote.fetched.toString(),
     },
     checked: Array.from(store.checked),
-    error: store.error
+    error: store.error,
   }
 }
 
@@ -36,16 +36,18 @@ function deserialize(serialized: Serialized): Store {
     etag: serialized.etag || null,
     remote: {
       ...serialized.remote,
-      fetched: new Date(serialized.remote.fetched)
+      fetched: new Date(serialized.remote.fetched),
     },
     checked: new Set(serialized.checked || []),
-    error: serialized.error || null
+    error: serialized.error || null,
   }
 }
 
 export function load(storage = localStorage): Store | undefined {
   const raw = storage.getItem(storageKey)
-  if (!raw) { return }
+  if (!raw) {
+    return
+  }
 
   try {
     return deserialize(JSON.parse(raw))
@@ -55,9 +57,6 @@ export function load(storage = localStorage): Store | undefined {
   }
 }
 
-export function save(
-  store: Store,
-  storage = localStorage
-) {
+export function save(store: Store, storage = localStorage) {
   storage.setItem(storageKey, JSON.stringify(serialize(store)))
 }

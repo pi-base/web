@@ -10,12 +10,15 @@ function parse(search: string): ParseResult<string, string> {
   const parts = search.split(',')
   return {
     fragment: parts[parts.length - 1],
-    search
+    search,
   }
 }
 
 function replaceFragment(query: string, fragment: string, replacement: string) {
-  return query.split(',').map(part => part.trim() === fragment.trim() ? replacement : part).join(', ')
+  return query
+    .split(',')
+    .map((part) => (part.trim() === fragment.trim() ? replacement : part))
+    .join(', ')
 }
 
 it('searches', () => {
@@ -24,23 +27,21 @@ it('searches', () => {
       query: '',
       findSuggestions,
       parse,
-      replaceFragment
+      replaceFragment,
     })
   )
 
   let [state, dispatch] = result.current
 
   // Type and see a suggestion
-  act(() =>
-    dispatch({ action: 'search', q: 'a,b', suggest: true })
-  )
+  act(() => dispatch({ action: 'search', q: 'a,b', suggest: true }))
 
   expect(result.current[0]).toEqual({
     fragment: 'b',
     query: 'a,b',
     search: 'a,b',
     selected: null,
-    suggestions: ['Alpha', 'Bravo', 'Charlie']
+    suggestions: ['Alpha', 'Bravo', 'Charlie'],
   })
 
   // Select and apply a suggestion
@@ -66,4 +67,3 @@ it('searches', () => {
   expect(state.query).toEqual('')
   expect(state.suggestions).toEqual([])
 })
-

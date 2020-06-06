@@ -15,7 +15,7 @@ import {
   Space,
   Theorem,
   Trait,
-  TraitId
+  TraitId,
 } from '@pi-base/core'
 
 export type Proof = {
@@ -23,18 +23,18 @@ export type Proof = {
   theorems: Id[]
 }
 
-export type Search
-  = { kind: 'formula', formula: Formula<Property> }
-  | { kind: 'text', text: string }
+export type Search =
+  | { kind: 'formula'; formula: Formula<Property> }
+  | { kind: 'text'; text: string }
 
-export type SearchResults
-  = { kind: 'spaces', spaces: Space[] }
-  | { kind: 'contradiction', contradiction: Theorem[] | 'tautology' }
+export type SearchResults =
+  | { kind: 'spaces'; spaces: Space[] }
+  | { kind: 'contradiction'; contradiction: Theorem[] | 'tautology' }
 
-export type Status
-  = { state: 'fetching' }
-  | { state: 'checking', complete: number, total: number }
-  | { state: 'error', message: string | null }
+export type Status =
+  | { state: 'fetching' }
+  | { state: 'checking'; complete: number; total: number }
+  | { state: 'error'; message: string | null }
   | { state: 'ready' }
 
 export type Store = {
@@ -57,7 +57,7 @@ export function status(store: Store): Status {
     return {
       state: 'checking',
       complete: store.checked.size,
-      total: store.bundle.spaces.size
+      total: store.bundle.spaces.size,
     }
   } else if (!loaded(store)) {
     return { state: 'error', message: store.error }
@@ -66,7 +66,8 @@ export function status(store: Store): Status {
   }
 }
 
-export const defaultHost = process.env.REACT_APP_BUNDLE_HOST || bundleDefaultHost
+export const defaultHost =
+  process.env.REACT_APP_BUNDLE_HOST || bundleDefaultHost
 
 export const initial: Store = {
   bundle: B.deserialize({
@@ -74,22 +75,25 @@ export const initial: Store = {
     spaces: [],
     traits: [],
     theorems: [],
-    version: { ref: 'master', sha: 'HEAD' }
+    version: { ref: 'master', sha: 'HEAD' },
   }),
   etag: null,
   remote: {
     branch: 'master',
     host: defaultHost,
     state: 'fetching',
-    fetched: new Date()
+    fetched: new Date(),
   },
   checked: new Set(),
-  error: null
+  error: null,
 }
 
-export const property = (store: Store, id: Id) => store.bundle.properties.get(id) || null
-export const space = (store: Store, id: Id) => store.bundle.spaces.get(id) || null
-export const theorem = (store: Store, id: Id) => store.bundle.theorems.get(id) || null
+export const property = (store: Store, id: Id) =>
+  store.bundle.properties.get(id) || null
+export const space = (store: Store, id: Id) =>
+  store.bundle.spaces.get(id) || null
+export const theorem = (store: Store, id: Id) =>
+  store.bundle.theorems.get(id) || null
 export const trait = (store: Store, id: TraitId) => {
   const uid = traitId(id)
   return store.bundle.traits.get(uid) || null
@@ -97,27 +101,26 @@ export const trait = (store: Store, id: TraitId) => {
 
 export const properties = createSelector(
   (store: Store) => store.bundle,
-  bundle => Array.from(bundle.properties.values())
+  (bundle) => Array.from(bundle.properties.values())
 )
 
 export const spaces = createSelector(
   (store: Store) => store.bundle,
-  bundle => Array.from(bundle.spaces.values())
+  (bundle) => Array.from(bundle.spaces.values())
 )
 
 export const theorems = createSelector(
   (store: Store) => store.bundle,
-  bundle => Array.from(bundle.theorems.values())
+  (bundle) => Array.from(bundle.theorems.values())
 )
 
 export const theoremIndex = createSelector(
   theorems,
-  implications => new ImplicationIndex(implications)
+  (implications) => new ImplicationIndex(implications)
 )
 
-const index = <T>(collection: T[]) => new Fuse(
-  collection,
-  {
+const index = <T>(collection: T[]) =>
+  new Fuse(collection, {
     caseSensitive: false,
     shouldSort: true,
     keys: [
@@ -125,9 +128,8 @@ const index = <T>(collection: T[]) => new Fuse(
       { name: 'aliases', weight: 0.5 },
       { name: 'description', weight: 0.2 },
     ],
-    threshold: 0.4
-  }
-)
+    threshold: 0.4,
+  })
 
 export const propertyIndex = createSelector(properties, index)
 export const spaceIndex = createSelector(spaces, index)
@@ -135,8 +137,12 @@ export const spaceIndex = createSelector(spaces, index)
 function spaceTraitMap(store: Store, space: Space) {
   const traits = new Map<Id, boolean>()
   properties(store).forEach((property: Property) => {
-    const trait = store.bundle.traits.get(traitId({ space: space.uid, property: property.uid }))
-    if (trait) { traits.set(property.uid, trait.value) }
+    const trait = store.bundle.traits.get(
+      traitId({ space: space.uid, property: property.uid })
+    )
+    if (trait) {
+      traits.set(property.uid, trait.value)
+    }
   })
   return traits
 }
@@ -144,8 +150,10 @@ function spaceTraitMap(store: Store, space: Space) {
 export function theoremsWithCounterexample(store: Store, space: Space) {
   const traits = spaceTraitMap(store, space)
 
-  return theorems(store).filter((theorem: Theorem) =>
-    F.evaluate(theorem.when, traits) === false && F.evaluate(theorem.then, traits) === true
+  return theorems(store).filter(
+    (theorem: Theorem) =>
+      F.evaluate(theorem.when, traits) === false &&
+      F.evaluate(theorem.then, traits) === true
   )
 }
 
@@ -153,19 +161,23 @@ export const theoremsWithProperty = (store: Store, property: Property) =>
   Array.from(theoremIndex(store).withProperty(property.uid)) as Theorem[] // TODO: make index generic
 
 export const traitsForProperty = (store: Store, property: Property) => {
-  const acc = new Map<Id, { space: Space, trait: Trait }>()
+  const acc = new Map<Id, { space: Space; trait: Trait }>()
   spaces(store).forEach((space: Space) => {
     const t = trait(store, { space: space.uid, property: property.uid })
-    if (t) { acc.set(space.uid, { space, trait: t }) }
+    if (t) {
+      acc.set(space.uid, { space, trait: t })
+    }
   })
   return acc
 }
 
 export const traitsForSpace = (store: Store, space: Space) => {
-  const acc = new Map<Id, { property: Property, trait: Trait }>()
+  const acc = new Map<Id, { property: Property; trait: Trait }>()
   properties(store).forEach((property: Property) => {
     const t = trait(store, { space: space.uid, property: property.uid })
-    if (t) { acc.set(property.uid, { property, trait: t }) }
+    if (t) {
+      acc.set(property.uid, { property, trait: t })
+    }
   })
   return acc
 }
@@ -174,32 +186,41 @@ export function resolveProperty(store: Store, term: string) {
   return searchProperties(store, term)[0]
 }
 
-function searchIndex<T, O>(
-  index: Fuse<T, O>,
-  term: string
-) {
-  return index.search(term).map(r => r.item)
+function searchIndex<T, O>(index: Fuse<T, O>, term: string) {
+  return index.search(term).map((r) => r.item)
 }
 
 export const searchProperties = (store: Store, term: string) => {
-  if (!term) { return properties(store) }
+  if (!term) {
+    return properties(store)
+  }
   return searchIndex(propertyIndex(store), term)
 }
 
 export const searchSpaces = (store: Store, term: string) => {
-  if (!term) { return spaces(store) }
+  if (!term) {
+    return spaces(store)
+  }
   return searchIndex(spaceIndex(store), term)
 }
 
-export function spacesMatching(store: Store, formula: Formula<Id>, collection?: Space[]): SearchResults {
-  if (!collection) { collection = spaces(store) }
+export function spacesMatching(
+  store: Store,
+  formula: Formula<Id>,
+  collection?: Space[]
+): SearchResults {
+  if (!collection) {
+    collection = spaces(store)
+  }
 
   const results = collection.filter((space: Space) => {
     const traits = spaceTraitMap(store, space)
     return F.evaluate(formula, traits)
   })
 
-  if (results.length > 0) { return { kind: 'spaces', spaces: results } }
+  if (results.length > 0) {
+    return { kind: 'spaces', spaces: results }
+  }
 
   const contradiction = disprove(theoremIndex(store), formula)
   if (contradiction === 'tautology') {
@@ -207,7 +228,7 @@ export function spacesMatching(store: Store, formula: Formula<Id>, collection?: 
   } else if (contradiction) {
     return {
       kind: 'contradiction',
-      contradiction: contradiction.map(id => theorem(store, id)!)
+      contradiction: contradiction.map((id) => theorem(store, id)!),
     }
   } else {
     return { kind: 'spaces', spaces: [] }
@@ -217,14 +238,18 @@ export function spacesMatching(store: Store, formula: Formula<Id>, collection?: 
 export function search(store: Store, search: Search): SearchResults {
   switch (search.kind) {
     case 'formula':
-      return spacesMatching(store, F.mapProperty(p => p.uid, search.formula), spaces(store))
+      return spacesMatching(
+        store,
+        F.mapProperty((p) => p.uid, search.formula),
+        spaces(store)
+      )
     case 'text':
       return { kind: 'spaces', spaces: searchSpaces(store, search.text) }
   }
 }
 
 export function uncheckedSpaces(store: Store) {
-  return spaces(store).filter(space => !store.checked.has(space.uid))
+  return spaces(store).filter((space) => !store.checked.has(space.uid))
 }
 
 export function loaded(store: Store) {

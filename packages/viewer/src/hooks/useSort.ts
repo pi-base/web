@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 
 function compare(direction: 'asc' | 'desc' | null, a: any, b: any) {
-  if (a === b) { return 0 }
+  if (a === b) {
+    return 0
+  }
 
   return (direction === 'asc' ? 1 : -1) * (a > b ? 1 : -1)
 }
@@ -26,19 +28,18 @@ export default function useSort<T>(items: T[]) {
     setSorted(items)
   }, [items])
 
-  useEffect(
-    () => {
-      if (!field || !direction) {
-        setSorted(items)
-      } else {
-        setSorted(items.sort((a: T, b: T) => compare(direction, a[field], b[field])))
-      }
-    },
-    [direction, field, items]
-  )
+  useEffect(() => {
+    if (!field || !direction) {
+      setSorted(items)
+    } else {
+      setSorted(
+        items.sort((a: T, b: T) => compare(direction, a[field], b[field]))
+      )
+    }
+  }, [direction, field, items])
 
   return {
     sort,
-    sorted
+    sorted,
   }
 }
