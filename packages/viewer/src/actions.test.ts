@@ -1,8 +1,7 @@
 import { Action, boot, refresh } from './actions'
 
-import { bundle } from '@pi-base/core'
 import { inMemory } from './errors'
-import { defaultStore, mockBundleFetch } from './__test__'
+import { defaultStore, fetch, mockBundleFetch } from './__test__'
 
 describe('actions', () => {
   const errors = inMemory()
@@ -52,7 +51,8 @@ describe('actions', () => {
         branch,
         dispatch,
         host,
-        store: undefined
+        store: undefined,
+        handler: errors
       })
 
       expect(dispatched.map(e => e.action)).toEqual([
@@ -67,7 +67,7 @@ describe('actions', () => {
     })
 
     it('skips re-loading if the remote has the same version', async () => {
-      fetchMock.once(async _ => ({
+      fetch.once(async () => ({
         status: 304,
         body: ''
       }))
@@ -76,7 +76,8 @@ describe('actions', () => {
         branch,
         dispatch,
         host,
-        store: defaultStore
+        store: defaultStore,
+        handler: errors
       })
 
       expect(dispatched.map(e => e.action)).toEqual([

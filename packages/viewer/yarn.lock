@@ -1358,10 +1358,10 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@pi-base/core@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@pi-base/core/-/core-0.0.6.tgz#8e157a6edc8cb00fa20c54650d6d8289843e068f"
-  integrity sha512-umX8yma131Cc64rJVAXLBT+iWaNmukVa4FpDD+U+nvk9+ggFH6hxFtusK6sqRj/5/+lc/LAOKvhymkIXtJtnng==
+"@pi-base/core@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@pi-base/core/-/core-0.0.8.tgz#45e86612c2f486b7bd558010b80d58fed341a7ea"
+  integrity sha512-0loRz0O0HErxafcesvr3Sy8Zwj5E2xgzNM14lCuRz6AUj2Acac3NdYJwutt6mIr+Qp4cE2ADDh2+yVUpSIU88w==
   dependencies:
     remark "^11.0.2"
     remark-rehype "^6.0.0"
