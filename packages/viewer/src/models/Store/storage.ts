@@ -17,20 +17,20 @@ type Serialized = {
   error: string | null
 }
 
-function serialize(store: Store): Serialized {
+export function serialize(store: Store): Serialized {
   return {
     bundle: bundle.serialize(store.bundle),
     etag: store.etag,
     remote: {
       ...store.remote,
-      fetched: store.remote.fetched.toString(),
+      fetched: store.remote.fetched.toJSON(),
     },
     checked: Array.from(store.checked),
     error: store.error,
   }
 }
 
-function deserialize(serialized: Serialized): Store {
+export function deserialize(serialized: Serialized): Store {
   return {
     bundle: bundle.deserialize(serialized.bundle || {}),
     etag: serialized.etag || null,
