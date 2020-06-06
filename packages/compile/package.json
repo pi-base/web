@@ -1,6 +1,6 @@
 {
   "name": "@pi-base/compile",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Compile data into a JSON bundle",
   "main": "lib/main.js",
   "bin": "lib/watch.js",
