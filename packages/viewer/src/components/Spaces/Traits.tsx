@@ -4,7 +4,7 @@ import { FaCheck } from 'react-icons/fa'
 
 import Filter, { useFilter } from '../Shared/Filter'
 import { Property, Space, Trait, useStore } from '../../models'
-import Store from '../../models/Store'
+import { traitsForSpace } from '../../models/Store'
 import paths from '../../paths'
 import Table from '../Shared/Table'
 import { Title as Inline } from '../Shared/Display'
@@ -58,7 +58,7 @@ export default function Traits({
   filter?: boolean
 }) {
   const store = useStore()
-  const allTraits = Store.traitsForSpace(store, space)
+  const allTraits = traitsForSpace(store, space)
   const traits = Array.from(traitsWithProperties(allTraits, properties).values())
 
   const {

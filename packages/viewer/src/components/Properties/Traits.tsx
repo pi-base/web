@@ -4,7 +4,7 @@ import { FaCheck } from 'react-icons/fa'
 
 import Filter, { useFilter } from '../Shared/Filter'
 import { Property, Space, Trait, useStore } from '../../models'
-import Store from '../../models/Store'
+import { traitsForProperty } from '../../models/Store'
 import paths from '../../paths'
 import { Title as Inline } from '../Shared/Display'
 import Table from '../Shared/Table'
@@ -36,7 +36,7 @@ const Row = ({ item: { space, trait } }: { item: { space: Space, trait: Trait } 
 
 export default function Spaces({ property }: { property: Property }) {
   const store = useStore()
-  const traits = Array.from(Store.traitsForProperty(store, property).values())
+  const traits = Array.from(traitsForProperty(store, property).values())
 
   const {
     filtered,

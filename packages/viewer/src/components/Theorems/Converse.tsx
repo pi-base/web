@@ -4,6 +4,7 @@ import { formula as F } from '@pi-base/core'
 
 import paths from '../../paths'
 import { Property, Space, Store, Theorem, useStore } from '../../models'
+import { spacesMatching } from '../../models/Store'
 import SummaryList from './SummaryList'
 import Table from '../Traits/Table'
 
@@ -53,7 +54,7 @@ export default function Converse({ theorem }: { theorem: Theorem }) {
     (id: string) => Store.property(store, id)!
   )
 
-  const results = Store.spacesMatching(store, condition)
+  const results = spacesMatching(store, condition)
 
   if (results.kind === 'spaces' && results.spaces.length > 0) {
     return (

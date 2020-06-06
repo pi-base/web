@@ -1,16 +1,16 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 
-import { Space, Store, useStore } from '../../models'
-import { Proof } from '../../models/Store/state'
+import { Space, useStore } from '../../models'
+import { Proof, default as S } from '../../models/Store'
 import Theorems from '../Theorems/SummaryList'
 import Traits from '../Spaces/Traits'
 
 export default function ({ space, proof }: { space: Space, proof: Proof }) {
   const store = useStore()
 
-  const theorems = proof.theorems.map((id: string) => Store.theorem(store, id)!)
-  const properties = proof.properties.map((id: string) => Store.property(store, id)!)
+  const theorems = proof.theorems.map((id: string) => S.theorem(store, id)!)
+  const properties = proof.properties.map((id: string) => S.property(store, id)!)
 
   return (
     <>

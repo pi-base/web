@@ -4,9 +4,7 @@ import produce from 'immer'
 import { check } from '@pi-base/core'
 
 import { Action } from './actions'
-import { Store, theoremIndex } from './models/Store/state'
-
-import { initial as initialStore } from './models/Store/state'
+import { Store, initial as initialStore, theoremIndex } from './models/Store'
 
 export const initial = initialStore
 

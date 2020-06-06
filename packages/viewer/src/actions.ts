@@ -4,10 +4,10 @@ import { bundle } from '@pi-base/core'
 import { Space } from './models'
 import { Handler } from './errors'
 import { Store, uncheckedSpaces } from './models/Store'
-import { load } from './models/Store/storage'
-import { defaultHost } from './models/Store/state'
+import { load } from './models/Store'
+import { defaultHost } from './models/Store'
 
-export { save } from './models/Store/storage'
+export { save } from './models/Store'
 
 export type Action
   = { action: 'loaded', value: Store }

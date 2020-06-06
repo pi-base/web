@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, ProgressBar, Toast } from 'react-bootstrap'
 
 import { hardReset } from '../actions'
-import * as paths from '../paths'
+import paths from '../paths'
 import { Status } from '../models/Store'
 
 function Notice({

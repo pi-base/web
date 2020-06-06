@@ -3,8 +3,8 @@ import { Jumbotron, Spinner } from 'react-bootstrap'
 import { matchPath } from 'react-router'
 import { useHistory, useLocation } from 'react-router-dom'
 
-import { useStore } from '../../hooks'
-import * as paths from '../../paths'
+import { useStore } from '../../models'
+import paths from '../../paths'
 import { useErrorHandler } from '../../errors'
 import { loaded } from '../../models/Store'
 

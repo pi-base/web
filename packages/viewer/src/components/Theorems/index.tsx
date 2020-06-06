@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router'
 
-import { Store as S, useStore } from '../../models'
-import { Store } from '../../models/Store/state'
+import { useStore } from '../../models'
+import { Store, default as S } from '../../models/Store'
 import Detail from './Detail'
 import List from './List'
 import Name from './Name'

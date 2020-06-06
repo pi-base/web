@@ -3,7 +3,7 @@ import { Route } from 'react-router'
 
 import { useParams } from 'react-router-dom'
 import { useStore } from '../../models'
-import { Store } from '../../models/Store/state'
+import { Store } from '../../models/Store'
 import NotFound from './NotFound'
 
 function Lookup<P, V>({
@@ -11,7 +11,7 @@ function Lookup<P, V>({
   lookup
 }: {
   Component: any
-  lookup: (store: Store, params: any) => V | undefined
+  lookup: (store: Store, params: P) => V | undefined
 }) {
   const store = useStore()
   const props = lookup(store, useParams())

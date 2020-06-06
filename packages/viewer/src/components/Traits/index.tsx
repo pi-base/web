@@ -1,8 +1,7 @@
 import React from 'react'
 
 import Trait from './Detail'
-import { Store as S } from '../../models'
-import { Store } from '../../models/Store/state'
+import { Store, default as S } from '../../models/Store'
 import RouteLookup from '../Shared/RouteLookup'
 
 const findTrait = (store: Store, { spaceId, propertyId }: { spaceId: string, propertyId: string }) => {

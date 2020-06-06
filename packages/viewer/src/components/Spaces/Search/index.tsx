@@ -4,8 +4,8 @@ import { Col, Row } from 'react-bootstrap'
 import { formula as F } from '@pi-base/core'
 
 import { useQueryParam } from '../../../hooks'
-import { Search, Store as S, useStore } from '../../../models'
-import { SearchResults } from '../../../models/Store/state'
+import { Search, useStore } from '../../../models'
+import { SearchResults, resolveProperty, search as searchStore, searchProperties } from '../../../models/Store'
 import { Store } from '../../../models/Store'
 import Input, { ParseResult } from './Input'
 import Results from './Results'
@@ -47,7 +47,7 @@ function parser(store: Store) {
     const parsed = F.parse(fragment === '' ? prefix : q)
     if (!parsed) { return textSearch }
 
-    const resolved = F.mapProperty((p: string) => S.resolveProperty(store, p), parsed)
+    const resolved = F.mapProperty((p: string) => resolveProperty(store, p), parsed)
     const formula = F.compact(resolved)
     if (!formula) { return textSearch }
 
@@ -60,7 +60,7 @@ function parser(store: Store) {
 
 function suggester(store: Store) {
   return function findSuggestions(fragment: string) {
-    return S.searchProperties(store, fragment).slice(0, 10).map(p => p.name)
+    return searchProperties(store, fragment).slice(0, 10).map(p => p.name)
   }
 }
 
@@ -89,7 +89,7 @@ export default React.memo(
       }
     )
 
-    const results = search ? S.search(store, search) : initialResults
+    const results = search ? searchStore(store, search) : initialResults
 
     return (
       <Row>

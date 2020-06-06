@@ -1,49 +1,40 @@
-import { Provider, useStore } from './context'
 import {
+  Proof as proof,
+  Search as search,
+  SearchResults as searchResults,
   Status as status,
   Store as store,
-  initial,
-  loaded,
   properties,
   property,
-  propertyIndex,
-  resolveProperty,
-  search,
-  searchProperties,
-  searchSpaces,
   space,
-  spaceIndex,
-  spacesMatching,
   spaces,
   theorem,
   theorems,
-  theoremsWithCounterexample,
-  theoremsWithProperty,
   trait,
-  traitsForProperty,
-  traitsForSpace,
 } from './state'
 
+// It seems like there should be an easier way to re-export a type from a submodule ...
+export type Proof = proof
+export type Search = search
+export type SearchResults = searchResults
 export type Status = status
 export type Store = store
 
 export {
+  Provider,
+  useStore,
+} from './context'
+
+export {
+  defaultHost,
   initial,
   loaded,
-  properties,
-  property,
-  propertyIndex,
   resolveProperty,
   search,
   searchProperties,
-  searchSpaces,
-  space,
-  spaceIndex,
   spacesMatching,
-  spaces,
   status,
-  theorem,
-  theorems,
+  theoremIndex,
   theoremsWithCounterexample,
   theoremsWithProperty,
   trait,
@@ -52,27 +43,19 @@ export {
   uncheckedSpaces,
 } from './state'
 
+export {
+  load,
+  save,
+} from './storage'
+
+// These selectors often conflict with local variables.
+// This export provides an easy way to import them namespaced.
 export default {
-  Provider,
-  initial,
-  loaded,
   properties,
   property,
-  propertyIndex,
-  resolveProperty,
-  search,
-  searchProperties,
-  searchSpaces,
   space,
   spaces,
-  spaceIndex,
-  spacesMatching,
   theorem,
   theorems,
-  theoremsWithCounterexample,
-  theoremsWithProperty,
   trait,
-  traitsForProperty,
-  traitsForSpace,
-  useStore,
 }
