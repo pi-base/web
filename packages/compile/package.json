@@ -1,6 +1,6 @@
 {
   "name": "@pi-base/compile",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Compile data into a JSON bundle",
   "main": "lib/main.js",
   "bin": "lib/watch.js",
@@ -9,6 +9,7 @@
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
+    "prepublish": "yarn build",
     "release": "ncc build src/main.ts && git add -f dist/index.js",
     "test": "jest"
   },
