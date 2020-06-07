@@ -3,7 +3,7 @@
 
 # π-Base
 
-The development instance of the π-Base is available at [topology-dev.pi-base.org](https://topology-dev.pi-base.org).
+The development instance of the π-Base is available at [topology-development.pi-base.org](https://topology-development.pi-base.org).
 
 ## Architecture
 
