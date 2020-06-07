@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { mount } from 'enzyme'
 
-import Input, { DOWN, ENTER, TAB, UP } from './FormulaInput'
+import Input, { DOWN, ENTER, RIGHT, UP } from './FormulaInput'
 
 function getSuggestions() {
   return [
@@ -43,7 +43,7 @@ describe('FormulaInput', () => {
     wrapper.
       find('input').
       simulate('keydown', { keyCode: DOWN }).
-      simulate('keydown', { keyCode: TAB })
+      simulate('keydown', { keyCode: RIGHT })
 
     expect(wrapper.find('input').prop('value')).toEqual('Alpha')
     expect(wrapper).toMatchSnapshot()

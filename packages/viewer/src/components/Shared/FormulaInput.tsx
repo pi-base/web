@@ -4,7 +4,6 @@ import { Form } from 'react-bootstrap'
 import Suggestions from './FormulaInput/Suggestions'
 import { replaceEnd } from '../../util'
 
-export const TAB = 9
 export const ENTER = 13
 export const UP = 38
 export const RIGHT = 39
@@ -87,7 +86,6 @@ export default function FormulaInput({
           return setSelected(wrap(selected, -1, suggestions?.length))
         case DOWN:
           return setSelected(wrap(selected, 1, suggestions?.length))
-        case TAB:
         case ENTER:
           event.preventDefault()
         // fall through

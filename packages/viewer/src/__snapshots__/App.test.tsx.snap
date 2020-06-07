@@ -27,77 +27,61 @@ exports[`App renders correctly 1`] = `
         }
       }
     >
-      <StatusBar
-        status={
-          Object {
-            "complete": 0,
-            "state": "checking",
-            "total": 2,
-          }
-        }
+      <QueryParamProvider
+        ReactRouterRoute={[Function]}
       >
-        <Checking
-          complete={0}
-          total={2}
-        >
-          <Notice
-            title="Checking Theorems"
-          >
-            <Toast
-              animation={true}
-              autohide={false}
-              delay={3000}
-              show={true}
-              style={
-                Object {
-                  "bottom": "20px",
-                  "left": "20px",
-                  "position": "absolute",
-                }
+        <Route>
+          <LocationProvider
+            history={
+              Object {
+                "action": "POP",
+                "block": [Function],
+                "createHref": [Function],
+                "go": [Function],
+                "goBack": [Function],
+                "goForward": [Function],
+                "length": 1,
+                "listen": [Function],
+                "location": Object {
+                  "hash": "",
+                  "pathname": "/",
+                  "search": "",
+                  "state": undefined,
+                },
+                "push": [Function],
+                "replace": [Function],
               }
-              transition={
+            }
+            location={
+              Object {
+                "hash": "",
+                "pathname": "/",
+                "search": "",
+                "state": undefined,
+              }
+            }
+          >
+            <StatusBar
+              status={
                 Object {
-                  "$$typeof": Symbol(react.forward_ref),
-                  "defaultProps": Object {
-                    "appear": false,
-                    "in": false,
-                    "mountOnEnter": false,
-                    "timeout": 300,
-                    "unmountOnExit": false,
-                  },
-                  "displayName": "Fade",
-                  "render": [Function],
+                  "complete": 0,
+                  "state": "checking",
+                  "total": 2,
                 }
               }
             >
-              <Fade
-                appear={false}
-                in={true}
-                mountOnEnter={false}
-                timeout={300}
-                unmountOnExit={true}
+              <Checking
+                complete={0}
+                total={2}
               >
-                <Transition
-                  addEndListener={[Function]}
-                  appear={false}
-                  enter={true}
-                  exit={true}
-                  in={true}
-                  mountOnEnter={false}
-                  onEnter={[Function]}
-                  onEntered={[Function]}
-                  onEntering={[Function]}
-                  onExit={[Function]}
-                  onExited={[Function]}
-                  onExiting={[Function]}
-                  timeout={300}
-                  unmountOnExit={true}
+                <Notice
+                  title="Checking Theorems"
                 >
-                  <div
-                    aria-atomic="true"
-                    aria-live="assertive"
-                    className="fade toast show"
-                    role="alert"
+                  <Toast
+                    animation={true}
+                    autohide={false}
+                    delay={3000}
+                    show={true}
                     style={
                       Object {
                         "bottom": "20px",
@@ -105,518 +89,559 @@ exports[`App renders correctly 1`] = `
                         "position": "absolute",
                       }
                     }
+                    transition={
+                      Object {
+                        "$$typeof": Symbol(react.forward_ref),
+                        "defaultProps": Object {
+                          "appear": false,
+                          "in": false,
+                          "mountOnEnter": false,
+                          "timeout": 300,
+                          "unmountOnExit": false,
+                        },
+                        "displayName": "Fade",
+                        "render": [Function],
+                      }
+                    }
                   >
-                    <ToastHeader
-                      closeButton={false}
-                      closeLabel="Close"
-                    >
-                      <div
-                        className="toast-header"
-                      >
-                        Checking Theorems
-                      </div>
-                    </ToastHeader>
-                    <ToastBody>
-                      <div
-                        className="toast-body"
-                      >
-                        <ProgressBar
-                          animated={true}
-                          isChild={false}
-                          label="0 / 2"
-                          max={2}
-                          min={0}
-                          now={0}
-                          srOnly={true}
-                          striped={false}
-                        >
-                          <div
-                            className="progress"
-                          >
-                            <div
-                              aria-valuemax={2}
-                              aria-valuemin={0}
-                              aria-valuenow={0}
-                              className="progress-bar progress-bar-animated progress-bar-striped"
-                              role="progressbar"
-                              style={
-                                Object {
-                                  "width": "0%",
-                                }
-                              }
-                            >
-                              <span
-                                className="sr-only"
-                              >
-                                0 / 2
-                              </span>
-                            </div>
-                          </div>
-                        </ProgressBar>
-                      </div>
-                    </ToastBody>
-                  </div>
-                </Transition>
-              </Fade>
-            </Toast>
-          </Notice>
-        </Checking>
-      </StatusBar>
-      <Memo(Navigation)>
-        <Navbar
-          bg="light"
-          collapseOnSelect={false}
-          expand={true}
-          variant="light"
-        >
-          <nav
-            className="navbar navbar-expand navbar-light bg-light"
-          >
-            <Container
-              fluid={false}
-            >
-              <div
-                className="container"
-              >
-                <NavbarBrand>
-                  <span
-                    className="navbar-brand"
-                  >
-                    <Link
-                      to="/"
-                    >
-                      <LinkAnchor
-                        href="/"
-                        navigate={[Function]}
-                      >
-                        <a
-                          href="/"
-                          onClick={[Function]}
-                        >
-                          π-Base
-                        </a>
-                      </LinkAnchor>
-                    </Link>
-                  </span>
-                </NavbarBrand>
-                <NavbarToggle
-                  aria-controls="navbar-nav"
-                  label="Toggle navigation"
-                >
-                  <button
-                    aria-controls="navbar-nav"
-                    aria-label="Toggle navigation"
-                    className="navbar-toggler collapsed"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    <span
-                      className="navbar-toggler-icon"
-                    />
-                  </button>
-                </NavbarToggle>
-                <NavbarCollapse
-                  id="navbar-nav"
-                >
-                  <Collapse
-                    appear={false}
-                    dimension="height"
-                    getDimensionValue={[Function]}
-                    id="navbar-nav"
-                    in={false}
-                    mountOnEnter={false}
-                    timeout={300}
-                    unmountOnExit={false}
-                  >
-                    <Transition
-                      addEndListener={[Function]}
+                    <Fade
                       appear={false}
-                      aria-expanded={null}
-                      enter={true}
-                      exit={true}
-                      id="navbar-nav"
-                      in={false}
+                      in={true}
                       mountOnEnter={false}
-                      onEnter={[Function]}
-                      onEntered={[Function]}
-                      onEntering={[Function]}
-                      onExit={[Function]}
-                      onExited={[Function]}
-                      onExiting={[Function]}
                       timeout={300}
-                      unmountOnExit={false}
+                      unmountOnExit={true}
                     >
-                      <div
-                        aria-expanded={null}
-                        className="navbar-collapse collapse"
-                        id="navbar-nav"
+                      <Transition
+                        addEndListener={[Function]}
+                        appear={false}
+                        enter={true}
+                        exit={true}
+                        in={true}
+                        mountOnEnter={false}
+                        onEnter={[Function]}
+                        onEntered={[Function]}
+                        onEntering={[Function]}
+                        onExit={[Function]}
+                        onExited={[Function]}
+                        onExiting={[Function]}
+                        timeout={300}
+                        unmountOnExit={true}
                       >
-                        <Nav
-                          fill={false}
-                          justify={false}
+                        <div
+                          aria-atomic="true"
+                          aria-live="assertive"
+                          className="fade toast show"
+                          role="alert"
+                          style={
+                            Object {
+                              "bottom": "20px",
+                              "left": "20px",
+                              "position": "absolute",
+                            }
+                          }
                         >
-                          <ForwardRef
-                            as="div"
-                            className="navbar-nav"
-                            onSelect={[Function]}
+                          <ToastHeader
+                            closeButton={false}
+                            closeLabel="Close"
                           >
                             <div
-                              className="navbar-nav"
-                              onKeyDown={[Function]}
+                              className="toast-header"
                             >
-                              <Link
-                                className="nav-link"
-                                to="/spaces"
-                              >
-                                <LinkAnchor
-                                  className="nav-link"
-                                  href="/spaces"
-                                  navigate={[Function]}
-                                >
-                                  <a
-                                    className="nav-link"
-                                    href="/spaces"
-                                    onClick={[Function]}
-                                  >
-                                    Spaces
-                                  </a>
-                                </LinkAnchor>
-                              </Link>
-                              <Link
-                                className="nav-link"
-                                to="/properties"
-                              >
-                                <LinkAnchor
-                                  className="nav-link"
-                                  href="/properties"
-                                  navigate={[Function]}
-                                >
-                                  <a
-                                    className="nav-link"
-                                    href="/properties"
-                                    onClick={[Function]}
-                                  >
-                                    Properties
-                                  </a>
-                                </LinkAnchor>
-                              </Link>
-                              <Link
-                                className="nav-link"
-                                to="/theorems"
-                              >
-                                <LinkAnchor
-                                  className="nav-link"
-                                  href="/theorems"
-                                  navigate={[Function]}
-                                >
-                                  <a
-                                    className="nav-link"
-                                    href="/theorems"
-                                    onClick={[Function]}
-                                  >
-                                    Theorems
-                                  </a>
-                                </LinkAnchor>
-                              </Link>
+                              Checking Theorems
                             </div>
-                          </ForwardRef>
-                        </Nav>
-                        <Nav
-                          className="ml-auto"
-                          fill={false}
-                          justify={false}
-                        >
-                          <ForwardRef
-                            as="div"
-                            className="ml-auto navbar-nav"
-                            onSelect={[Function]}
-                          >
+                          </ToastHeader>
+                          <ToastBody>
                             <div
-                              className="ml-auto navbar-nav"
-                              onKeyDown={[Function]}
+                              className="toast-body"
                             >
-                              <Link
-                                className="nav-link"
-                                to="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                              <ProgressBar
+                                animated={true}
+                                isChild={false}
+                                label="0 / 2"
+                                max={2}
+                                min={0}
+                                now={0}
+                                srOnly={true}
+                                striped={false}
                               >
-                                <LinkAnchor
-                                  className="nav-link"
-                                  href="/https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
-                                  navigate={[Function]}
+                                <div
+                                  className="progress"
                                 >
-                                  <a
-                                    className="nav-link"
-                                    href="/https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
-                                    onClick={[Function]}
+                                  <div
+                                    aria-valuemax={2}
+                                    aria-valuemin={0}
+                                    aria-valuenow={0}
+                                    className="progress-bar progress-bar-animated progress-bar-striped"
+                                    role="progressbar"
+                                    style={
+                                      Object {
+                                        "width": "0%",
+                                      }
+                                    }
                                   >
-                                    Contribute
-                                  </a>
-                                </LinkAnchor>
-                              </Link>
+                                    <span
+                                      className="sr-only"
+                                    >
+                                      0 / 2
+                                    </span>
+                                  </div>
+                                </div>
+                              </ProgressBar>
                             </div>
-                          </ForwardRef>
-                        </Nav>
-                      </div>
-                    </Transition>
-                  </Collapse>
-                </NavbarCollapse>
-              </div>
-            </Container>
-          </nav>
-        </Navbar>
-      </Memo(Navigation)>
-      <Memo(Main)
-        dispatch={[Function]}
-        handler={
-          Object {
-            "error": [Function],
-          }
-        }
-      >
-        <Container
-          fluid={false}
-        >
-          <div
-            className="container"
-          >
-            <Switch>
-              <Route
-                component={[Function]}
-                computedMatch={
-                  Object {
-                    "isExact": true,
-                    "params": Object {},
-                    "path": "/",
-                    "url": "/",
-                  }
-                }
-                exact={true}
-                location={
-                  Object {
-                    "hash": "",
-                    "pathname": "/",
-                    "search": "",
-                    "state": undefined,
-                  }
-                }
-                path="/"
+                          </ToastBody>
+                        </div>
+                      </Transition>
+                    </Fade>
+                  </Toast>
+                </Notice>
+              </Checking>
+            </StatusBar>
+            <Memo(Navigation)>
+              <Navbar
+                bg="light"
+                collapseOnSelect={false}
+                expand={true}
+                variant="light"
               >
-                <Home
-                  history={
-                    Object {
-                      "action": "POP",
-                      "block": [Function],
-                      "createHref": [Function],
-                      "go": [Function],
-                      "goBack": [Function],
-                      "goForward": [Function],
-                      "length": 1,
-                      "listen": [Function],
-                      "location": Object {
-                        "hash": "",
-                        "pathname": "/",
-                        "search": "",
-                        "state": undefined,
-                      },
-                      "push": [Function],
-                      "replace": [Function],
-                    }
-                  }
-                  location={
-                    Object {
-                      "hash": "",
-                      "pathname": "/",
-                      "search": "",
-                      "state": undefined,
-                    }
-                  }
-                  match={
-                    Object {
-                      "isExact": true,
-                      "params": Object {},
-                      "path": "/",
-                      "url": "/",
-                    }
-                  }
+                <nav
+                  className="navbar navbar-expand navbar-light bg-light"
                 >
-                  <Jumbotron
-                    className="wide home-jumbotron"
+                  <Container
                     fluid={false}
                   >
                     <div
-                      className="wide home-jumbotron jumbotron"
+                      className="container"
                     >
-                      <div
-                        className="container"
+                      <NavbarBrand>
+                        <span
+                          className="navbar-brand"
+                        >
+                          <Link
+                            to="/"
+                          >
+                            <LinkAnchor
+                              href="/"
+                              navigate={[Function]}
+                            >
+                              <a
+                                href="/"
+                                onClick={[Function]}
+                              >
+                                π-Base
+                              </a>
+                            </LinkAnchor>
+                          </Link>
+                        </span>
+                      </NavbarBrand>
+                      <NavbarToggle
+                        aria-controls="navbar-nav"
+                        label="Toggle navigation"
                       >
-                        <h1>
-                          π-Base
-                        </h1>
-                        <p>
-                          a community database of topological counterexamples
-                        </p>
-                        <p>
-                          ➜ Search by propery, such as 
-                          <Link
-                            to="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
+                        <button
+                          aria-controls="navbar-nav"
+                          aria-label="Toggle navigation"
+                          className="navbar-toggler collapsed"
+                          onClick={[Function]}
+                          type="button"
+                        >
+                          <span
+                            className="navbar-toggler-icon"
+                          />
+                        </button>
+                      </NavbarToggle>
+                      <NavbarCollapse
+                        id="navbar-nav"
+                      >
+                        <Collapse
+                          appear={false}
+                          dimension="height"
+                          getDimensionValue={[Function]}
+                          id="navbar-nav"
+                          in={false}
+                          mountOnEnter={false}
+                          timeout={300}
+                          unmountOnExit={false}
+                        >
+                          <Transition
+                            addEndListener={[Function]}
+                            appear={false}
+                            aria-expanded={null}
+                            enter={true}
+                            exit={true}
+                            id="navbar-nav"
+                            in={false}
+                            mountOnEnter={false}
+                            onEnter={[Function]}
+                            onEntered={[Function]}
+                            onEntering={[Function]}
+                            onExit={[Function]}
+                            onExited={[Function]}
+                            onExiting={[Function]}
+                            timeout={300}
+                            unmountOnExit={false}
                           >
-                            <LinkAnchor
-                              href="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
-                              navigate={[Function]}
+                            <div
+                              aria-expanded={null}
+                              className="navbar-collapse collapse"
+                              id="navbar-nav"
                             >
-                              <a
-                                href="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
-                                onClick={[Function]}
+                              <Nav
+                                fill={false}
+                                justify={false}
                               >
-                                non-metric continua
-                              </a>
-                            </LinkAnchor>
-                          </Link>
-                        </p>
-                        <p>
-                          ➜ Find spaces by name, such as 
-                          <Link
-                            to="/spaces?q=compactification"
-                          >
-                            <LinkAnchor
-                              href="/spaces?q=compactification"
-                              navigate={[Function]}
-                            >
-                              <a
-                                href="/spaces?q=compactification"
-                                onClick={[Function]}
+                                <ForwardRef
+                                  as="div"
+                                  className="navbar-nav"
+                                  onSelect={[Function]}
+                                >
+                                  <div
+                                    className="navbar-nav"
+                                    onKeyDown={[Function]}
+                                  >
+                                    <Link
+                                      className="nav-link"
+                                      to="/spaces"
+                                    >
+                                      <LinkAnchor
+                                        className="nav-link"
+                                        href="/spaces"
+                                        navigate={[Function]}
+                                      >
+                                        <a
+                                          className="nav-link"
+                                          href="/spaces"
+                                          onClick={[Function]}
+                                        >
+                                          Spaces
+                                        </a>
+                                      </LinkAnchor>
+                                    </Link>
+                                    <Link
+                                      className="nav-link"
+                                      to="/properties"
+                                    >
+                                      <LinkAnchor
+                                        className="nav-link"
+                                        href="/properties"
+                                        navigate={[Function]}
+                                      >
+                                        <a
+                                          className="nav-link"
+                                          href="/properties"
+                                          onClick={[Function]}
+                                        >
+                                          Properties
+                                        </a>
+                                      </LinkAnchor>
+                                    </Link>
+                                    <Link
+                                      className="nav-link"
+                                      to="/theorems"
+                                    >
+                                      <LinkAnchor
+                                        className="nav-link"
+                                        href="/theorems"
+                                        navigate={[Function]}
+                                      >
+                                        <a
+                                          className="nav-link"
+                                          href="/theorems"
+                                          onClick={[Function]}
+                                        >
+                                          Theorems
+                                        </a>
+                                      </LinkAnchor>
+                                    </Link>
+                                  </div>
+                                </ForwardRef>
+                              </Nav>
+                              <Nav
+                                className="ml-auto"
+                                fill={false}
+                                justify={false}
                               >
-                                compactifications
-                              </a>
-                            </LinkAnchor>
-                          </Link>
-                        </p>
-                        <p>
-                          ➜ View counterexamples to the converse of a theorem, such as 
-                          <Link
-                            to="/theorems/T000112"
-                          >
-                            <LinkAnchor
-                              href="/theorems/T000112"
-                              navigate={[Function]}
-                            >
-                              <a
-                                href="/theorems/T000112"
-                                onClick={[Function]}
-                              >
-                                T₅ ⇒ T₄
-                              </a>
-                            </LinkAnchor>
-                          </Link>
-                        </p>
-                      </div>
+                                <ForwardRef
+                                  as="div"
+                                  className="ml-auto navbar-nav"
+                                  onSelect={[Function]}
+                                >
+                                  <div
+                                    className="ml-auto navbar-nav"
+                                    onKeyDown={[Function]}
+                                  >
+                                    <a
+                                      className="nav-link"
+                                      href="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                                    >
+                                      Contribute
+                                    </a>
+                                  </div>
+                                </ForwardRef>
+                              </Nav>
+                            </div>
+                          </Transition>
+                        </Collapse>
+                      </NavbarCollapse>
                     </div>
-                  </Jumbotron>
-                  <h2>
-                    Contributing
-                  </h2>
-                  <p>
-                    The π-Base relies on volunteers like yourself to submit new spaces, properties, and theorems. More information may be found on our 
-                    <a
-                      href="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                  </Container>
+                </nav>
+              </Navbar>
+            </Memo(Navigation)>
+            <Memo(Main)
+              dispatch={[Function]}
+              handler={
+                Object {
+                  "error": [Function],
+                }
+              }
+            >
+              <Container
+                fluid={false}
+              >
+                <div
+                  className="container"
+                >
+                  <Switch>
+                    <Route
+                      component={[Function]}
+                      computedMatch={
+                        Object {
+                          "isExact": true,
+                          "params": Object {},
+                          "path": "/",
+                          "url": "/",
+                        }
+                      }
+                      exact={true}
+                      location={
+                        Object {
+                          "hash": "",
+                          "pathname": "/",
+                          "search": "",
+                          "state": undefined,
+                        }
+                      }
+                      path="/"
                     >
-                      Contributing
-                    </a>
-                     page.
-                  </p>
-                  <p>
-                    π-Base’s 
-                    <a
-                      href="https://github.com/pi-base/data"
-                    >
-                      data
-                    </a>
-                     and 
-                    <a
-                      href="https://github.com/pi-base/viewer"
-                    >
-                      source code
-                    </a>
-                     are available on GitHub. Code contributions are welcomed as well!
-                  </p>
-                  <h2>
-                    About Us
-                  </h2>
-                  <p>
-                    The π-Base was founded in 2014 by 
-                    <a
-                      href="https://github.com/jamesdabbs"
-                    >
-                      James Dabbs
-                    </a>
-                    , who continues to maintain the project and serve as its main developer.
-                  </p>
-                  <p>
-                    <a
-                      href="https://github.com/stevenclontz"
-                    >
-                      Steven Clontz
-                    </a>
-                     joined the project in 2017, serving as its lead mathematical editor.
-                  </p>
-                  <h2>
-                     Acknowledgements
-                  </h2>
-                  <p>
-                     Many people have contributed to this project, and all contributions are appreciated, but a few individuals deserve special recognition:
-                  </p>
-                  <ul>
-                    <li>
-                      <a
-                        href="http://www.montevallo.edu/staff-bio/scott-varagona/"
+                      <Home
+                        history={
+                          Object {
+                            "action": "POP",
+                            "block": [Function],
+                            "createHref": [Function],
+                            "go": [Function],
+                            "goBack": [Function],
+                            "goForward": [Function],
+                            "length": 1,
+                            "listen": [Function],
+                            "location": Object {
+                              "hash": "",
+                              "pathname": "/",
+                              "search": "",
+                              "state": undefined,
+                            },
+                            "push": [Function],
+                            "replace": [Function],
+                          }
+                        }
+                        location={
+                          Object {
+                            "hash": "",
+                            "pathname": "/",
+                            "search": "",
+                            "state": undefined,
+                          }
+                        }
+                        match={
+                          Object {
+                            "isExact": true,
+                            "params": Object {},
+                            "path": "/",
+                            "url": "/",
+                          }
+                        }
                       >
-                        Scott Varagona
-                      </a>
-                       for his heroic work entering data into the database
-                    </li>
-                    <li>
-                      Our graduate advisor, 
-                      <a
-                        href="http://www.auburn.edu/~gruengf/"
-                      >
-                        Gary Gruenhage
-                      </a>
-                       for all his support and guidance
-                    </li>
-                    <li>
-                      <a
-                        href="http://austinmohr.com/home/"
-                      >
-                        Austin Mohr
-                      </a>
-                       for his work using the π-Base as a pedagogical tool, and all his invaluable feedback
-                    </li>
-                    <li>
-                      The 
-                      <a
-                        href="https://www.southalabama.edu/"
-                      >
-                        University of South Alabama
-                      </a>
-                       
-                       Faculty Development Program for providing funding to host the π-Base server.
-                    </li>
-                    <li>
-                      Steen and Seebach for writing 
-                      <a
-                        href="http://www.amazon.com/Counterexamples-Topology-Dover-Books-Mathematics/dp/048668735X"
-                      >
-                        Counterexamples in Topology
-                      </a>
-                       in the first place and inspiring this project.
-                    </li>
-                  </ul>
-                </Home>
-              </Route>
-            </Switch>
-          </div>
-        </Container>
-      </Memo(Main)>
+                        <Jumbotron
+                          className="wide home-jumbotron"
+                          fluid={false}
+                        >
+                          <div
+                            className="wide home-jumbotron jumbotron"
+                          >
+                            <div
+                              className="container"
+                            >
+                              <h1>
+                                π-Base
+                              </h1>
+                              <p>
+                                a community database of topological counterexamples
+                              </p>
+                              <p>
+                                ➜ Search by propery, such as 
+                                <Link
+                                  to="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
+                                >
+                                  <LinkAnchor
+                                    href="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
+                                    navigate={[Function]}
+                                  >
+                                    <a
+                                      href="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
+                                      onClick={[Function]}
+                                    >
+                                      non-metric continua
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </p>
+                              <p>
+                                ➜ Find spaces by name, such as 
+                                <Link
+                                  to="/spaces?text=compactification"
+                                >
+                                  <LinkAnchor
+                                    href="/spaces?text=compactification"
+                                    navigate={[Function]}
+                                  >
+                                    <a
+                                      href="/spaces?text=compactification"
+                                      onClick={[Function]}
+                                    >
+                                      compactifications
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </p>
+                              <p>
+                                ➜ View counterexamples to the converse of a theorem, such as 
+                                <Link
+                                  to="/theorems/T000112"
+                                >
+                                  <LinkAnchor
+                                    href="/theorems/T000112"
+                                    navigate={[Function]}
+                                  >
+                                    <a
+                                      href="/theorems/T000112"
+                                      onClick={[Function]}
+                                    >
+                                      T₅ ⇒ T₄
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </p>
+                            </div>
+                          </div>
+                        </Jumbotron>
+                        <h2>
+                          Contributing
+                        </h2>
+                        <p>
+                          The π-Base relies on volunteers like yourself to submit new spaces, properties, and theorems. More information may be found on our 
+                          <a
+                            href="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+                          >
+                            Contributing
+                          </a>
+                           page.
+                        </p>
+                        <p>
+                          π-Base’s 
+                          <a
+                            href="https://github.com/pi-base/data"
+                          >
+                            data
+                          </a>
+                           and 
+                          <a
+                            href="https://github.com/pi-base/viewer"
+                          >
+                            source code
+                          </a>
+                           are available on GitHub. Code contributions are welcomed as well!
+                        </p>
+                        <h2>
+                          About Us
+                        </h2>
+                        <p>
+                          The π-Base was founded in 2014 by 
+                          <a
+                            href="https://github.com/jamesdabbs"
+                          >
+                            James Dabbs
+                          </a>
+                          , who continues to maintain the project and serve as its main developer.
+                        </p>
+                        <p>
+                          <a
+                            href="https://github.com/stevenclontz"
+                          >
+                            Steven Clontz
+                          </a>
+                           joined the project in 2017, serving as its lead mathematical editor.
+                        </p>
+                        <h2>
+                           Acknowledgements
+                        </h2>
+                        <p>
+                           Many people have contributed to this project, and all contributions are appreciated, but a few individuals deserve special recognition:
+                        </p>
+                        <ul>
+                          <li>
+                            <a
+                              href="http://www.montevallo.edu/staff-bio/scott-varagona/"
+                            >
+                              Scott Varagona
+                            </a>
+                             for his heroic work entering data into the database
+                          </li>
+                          <li>
+                            Our graduate advisor, 
+                            <a
+                              href="http://www.auburn.edu/~gruengf/"
+                            >
+                              Gary Gruenhage
+                            </a>
+                             for all his support and guidance
+                          </li>
+                          <li>
+                            <a
+                              href="http://austinmohr.com/home/"
+                            >
+                              Austin Mohr
+                            </a>
+                             for his work using the π-Base as a pedagogical tool, and all his invaluable feedback
+                          </li>
+                          <li>
+                            The 
+                            <a
+                              href="https://www.southalabama.edu/"
+                            >
+                              University of South Alabama
+                            </a>
+                             
+                             Faculty Development Program for providing funding to host the π-Base server.
+                          </li>
+                          <li>
+                            Steen and Seebach for writing 
+                            <a
+                              href="http://www.amazon.com/Counterexamples-Topology-Dover-Books-Mathematics/dp/048668735X"
+                            >
+                              Counterexamples in Topology
+                            </a>
+                             in the first place and inspiring this project.
+                          </li>
+                        </ul>
+                      </Home>
+                    </Route>
+                  </Switch>
+                </div>
+              </Container>
+            </Memo(Main)>
+          </LocationProvider>
+        </Route>
+      </QueryParamProvider>
     </Router>
   </BrowserRouter>
 </App>

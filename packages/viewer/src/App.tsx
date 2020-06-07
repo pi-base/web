@@ -1,5 +1,6 @@
 import React, { useRef, useReducer } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { QueryParamProvider } from 'use-query-params'
 
 import './App.css'
 
@@ -35,11 +36,13 @@ export default function App({
   return (
     <Error.Provider value={errorHandler}>
       <Router>
-        <Provider value={store}>
-          <StatusBar status={status(store)} />
-          <Nav />
-          <Main dispatch={dispatch} handler={errorHandler} />
-        </Provider >
+        <QueryParamProvider ReactRouterRoute={Route}>
+          <Provider value={store}>
+            <StatusBar status={status(store)} />
+            <Nav />
+            <Main dispatch={dispatch} handler={errorHandler} />
+          </Provider >
+        </QueryParamProvider>
       </Router>
     </Error.Provider>
   )

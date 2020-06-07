@@ -2,8 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { FormControl, InputGroup } from 'react-bootstrap'
 import { FaSearch } from 'react-icons/fa'
 import Fuse from 'fuse.js'
-
-import { useQueryParam } from '../../hooks'
+import { StringParam, useQueryParam } from 'use-query-params'
 
 const defaultWeights: Fuse.FuseOptionKeyObject[] = [
   { name: 'name', weight: 0.7 },
@@ -51,10 +50,10 @@ export default function Filter({
   queryParam?: string
   onChange: (filter: string) => void
 }) {
-  const [value, setValue] = useQueryParam(queryParam)
+  const [value, setValue] = useQueryParam(queryParam, StringParam)
 
   useEffect(
-    () => onChange(value),
+    () => onChange(value || ''),
     [onChange, value]
   )
 
@@ -67,7 +66,7 @@ export default function Filter({
       </InputGroup.Prepend>
       <FormControl
         placeholder="Filter"
-        value={value}
+        value={value || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
       />
     </InputGroup>

@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
+import { StringParam, useQueryParam } from 'use-query-params'
 
 import { formula as F } from '@pi-base/core'
 
-import { useQueryParam } from '../../../hooks'
 import { Formula, Search, useStore } from '../../../models'
 import { resolveProperty, searchProperties } from '../../../models/Store'
 import { Store } from '../../../models/Store'
@@ -21,11 +21,11 @@ function parse(store: Store, q: string): Formula | null {
 
 export default React.memo(
   function SpaceSearch() {
-    const [q, setQ] = useQueryParam('q')
-    const [text, setText] = useQueryParam('text')
+    const [q, setQ] = useQueryParam('q', StringParam)
+    const [text, setText] = useQueryParam('text', StringParam)
 
     const store = useStore()
-    const parsed = parse(store, q)
+    const parsed = parse(store, q || '')
 
     const formulaRef = useRef<Formula | null>(null)
     useEffect(() => {
@@ -36,7 +36,7 @@ export default React.memo(
 
     const formula = q ? parsed || formulaRef.current : null
 
-    const search: Search = { formula, text }
+    const search: Search = { formula, text: text || '' }
 
     const getSuggestions = useCallback(
       (text: string) => searchProperties(store, text).slice(0, 10).map(p => p.name),
@@ -50,7 +50,7 @@ export default React.memo(
             <Form.Label>Filter by Text</Form.Label>
             <Form.Control
               name="text"
-              value={text}
+              value={text || ''}
               onChange={e => setText(e.target.value)}
               placeholder="e.g. plank"
             />
@@ -59,7 +59,7 @@ export default React.memo(
             <Form.Label>Filter by Formula</Form.Label>
             <FormulaInput
               name="q"
-              value={q}
+              value={q || ''}
               onChange={setQ}
               placeholder="e.g. compact + ~metrizable"
               getSuggestions={getSuggestions}
