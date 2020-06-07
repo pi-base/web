@@ -15,3 +15,12 @@ export function debounce<T>(f: (t: T) => void, wait = 1000) {
     }, wait)
   }
 }
+
+export function replaceEnd(haystack: string, needle: string, replacement: string): string {
+  const n = haystack.lastIndexOf(needle)
+  if (n >= 0) {
+    return haystack.substring(0, n) + replacement
+  } else {
+    return haystack
+  }
+}

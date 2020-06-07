@@ -1,113 +1,76 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import { Col, Row } from 'react-bootstrap'
+import React, { useCallback, useEffect, useRef } from 'react'
+import { Col, Form, Row } from 'react-bootstrap'
 
 import { formula as F } from '@pi-base/core'
 
 import { useQueryParam } from '../../../hooks'
-import { Search, useStore } from '../../../models'
-import { SearchResults, resolveProperty, search as searchStore, searchProperties } from '../../../models/Store'
+import { Formula, Search, useStore } from '../../../models'
+import { resolveProperty, searchProperties } from '../../../models/Store'
 import { Store } from '../../../models/Store'
-import Input, { ParseResult } from './Input'
+import FormulaInput from '../../Shared/FormulaInput'
 import Results from './Results'
 
-const separators = new Set(['~', '+', '&', '|', '(', ')', '!', '?'])
+function parse(store: Store, q: string): Formula | null {
+  const parsed = F.parse(q)
+  if (!parsed) { return null }
 
-function getFragment(str: string): [string, string] {
-  if (!str) { return ['', ''] }
-
-  for (let i = str.length; i > 0; i--) {
-    if (separators.has(str[i])) {
-      return [str.slice(0, i).trim(), str.slice(i + 1).trim()]
-    }
-  }
-
-  return [str.trim(), '']
-}
-
-function escapeRegExp(str: string) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-}
-
-function replaceFragment(q: string, frag: string, expanded: string) {
-  if (q === '') { return '' }
-  if (frag === '') { return q }
-
-  const rexp = new RegExp(escapeRegExp(frag) + '$')
-  return q.replace(rexp, expanded)
-}
-
-function parser(store: Store) {
-  return function parse(q: string): ParseResult<Search, string> {
-    const [prefix, fragment] = getFragment(q)
-    const textSearch: ParseResult<Search, string> =
-      q === ''
-        ? { fragment }
-        : { fragment, search: { kind: 'text', text: q } }
-
-    const parsed = F.parse(fragment === '' ? prefix : q)
-    if (!parsed) { return textSearch }
-
-    const resolved = F.mapProperty((p: string) => resolveProperty(store, p), parsed)
-    const formula = F.compact(resolved)
-    if (!formula) { return textSearch }
-
-    return {
-      fragment,
-      search: { kind: 'formula', formula }
-    }
-  }
-}
-
-function suggester(store: Store) {
-  return function findSuggestions(fragment: string) {
-    return searchProperties(store, fragment).slice(0, 10).map(p => p.name)
-  }
-}
-
-const initialResults: SearchResults = {
-  kind: 'spaces',
-  spaces: []
+  const resolved = F.mapProperty((p: string) => resolveProperty(store, p), parsed)
+  const formula = F.compact(resolved)
+  return formula || null
 }
 
 export default React.memo(
   function SpaceSearch() {
-    const store = useStore()
     const [q, setQ] = useQueryParam('q')
-    const [search, setSearch] = useState<Search | null>(null)
-
-    const parse = useMemo(() => parser(store), [store])
-    const findSuggestions = useMemo(() => suggester(store), [store])
-
-    // For legacy compatibility, allow reading ?text= as ?q=
     const [text, setText] = useQueryParam('text')
-    useEffect(
-      () => {
-        if (text && !q) {
-          setQ(text)
-          setText('')
-        }
-      }
-    )
 
-    const results = search ? searchStore(store, search) : initialResults
+    const store = useStore()
+    const parsed = parse(store, q)
+
+    const formulaRef = useRef<Formula | null>(null)
+    useEffect(() => {
+      if (parsed || !q) {
+        formulaRef.current = parsed
+      }
+    }, [parsed, q])
+
+    const formula = q ? parsed || formulaRef.current : null
+
+    const search: Search = { formula, text }
+
+    const getSuggestions = useCallback(
+      (text: string) => searchProperties(store, text).slice(0, 10).map(p => p.name),
+      [store]
+    )
 
     return (
       <Row>
         <Col xs="4">
-          <Input
-            findSuggestions={findSuggestions}
-            parse={parse}
-            q={q}
-            replaceFragment={replaceFragment}
-            setQ={setQ}
-            onSearch={setSearch}
-          />
+          <Form.Group>
+            <Form.Label>Filter by Text</Form.Label>
+            <Form.Control
+              name="text"
+              value={text}
+              onChange={e => setText(e.target.value)}
+              placeholder="e.g. plank"
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Filter by Formula</Form.Label>
+            <FormulaInput
+              name="q"
+              value={q}
+              onChange={setQ}
+              placeholder="e.g. compact + ~metrizable"
+              getSuggestions={getSuggestions}
+            />
+          </Form.Group>
         </Col>
         <Col xs="8">
           <Results
             search={search}
             setSearch={setQ}
-            results={results}
+            store={store}
           />
         </Col>
       </Row>

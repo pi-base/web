@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormulaInput suggests when the user starts typing 1`] = `
+<Component>
+  <FormulaInput
+    getSuggestions={[Function]}
+    onChange={[Function]}
+    value=""
+  >
+    <FormControl
+      autoComplete="off"
+      name="formula"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder=""
+      value=""
+    >
+      <input
+        autoComplete="off"
+        className="form-control"
+        name="formula"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder=""
+        value=""
+      />
+    </FormControl>
+  </FormulaInput>
+</Component>
+`;
+
+exports[`FormulaInput suggests when the user starts typing 2`] = `
+<Component>
+  <FormulaInput
+    getSuggestions={[Function]}
+    onChange={[Function]}
+    value="a"
+  >
+    <FormControl
+      autoComplete="off"
+      name="formula"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder=""
+      value="a"
+    >
+      <input
+        autoComplete="off"
+        className="form-control"
+        name="formula"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder=""
+        value="a"
+      />
+    </FormControl>
+    <Suggestions
+      selected={null}
+      suggestions={
+        Array [
+          "Alpha",
+          "Bravo",
+          "Charlie",
+        ]
+      }
+    >
+      <ListGroup
+        horizontal={null}
+        variant={null}
+      >
+        <ForwardRef
+          as="div"
+          className="list-group"
+          onSelect={[Function]}
+        >
+          <div
+            className="list-group"
+            onKeyDown={[Function]}
+          >
+            <ListGroupItem
+              active={false}
+              disabled={false}
+              key="Alpha"
+              variant={null}
+            >
+              <ForwardRef
+                as="div"
+                className="list-group-item"
+                disabled={false}
+                eventKey={null}
+                onClick={[Function]}
+              >
+                <div
+                  className="list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  <Title
+                    body="Alpha"
+                  >
+                    <span
+                      key="h-1"
+                    >
+                      Alpha
+                    </span>
+                  </Title>
+                </div>
+              </ForwardRef>
+            </ListGroupItem>
+            <ListGroupItem
+              active={false}
+              disabled={false}
+              key="Bravo"
+              variant={null}
+            >
+              <ForwardRef
+                as="div"
+                className="list-group-item"
+                disabled={false}
+                eventKey={null}
+                onClick={[Function]}
+              >
+                <div
+                  className="list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  <Title
+                    body="Bravo"
+                  >
+                    <span
+                      key="h-1"
+                    >
+                      Bravo
+                    </span>
+                  </Title>
+                </div>
+              </ForwardRef>
+            </ListGroupItem>
+            <ListGroupItem
+              active={false}
+              disabled={false}
+              key="Charlie"
+              variant={null}
+            >
+              <ForwardRef
+                as="div"
+                className="list-group-item"
+                disabled={false}
+                eventKey={null}
+                onClick={[Function]}
+              >
+                <div
+                  className="list-group-item"
+                  data-rb-event-key={null}
+                  disabled={false}
+                  onClick={[Function]}
+                >
+                  <Title
+                    body="Charlie"
+                  >
+                    <span
+                      key="h-1"
+                    >
+                      Charlie
+                    </span>
+                  </Title>
+                </div>
+              </ForwardRef>
+            </ListGroupItem>
+          </div>
+        </ForwardRef>
+      </ListGroup>
+    </Suggestions>
+  </FormulaInput>
+</Component>
+`;
+
+exports[`FormulaInput suggests when the user starts typing 3`] = `
+<Component>
+  <FormulaInput
+    getSuggestions={[Function]}
+    onChange={[Function]}
+    value="Alpha"
+  >
+    <FormControl
+      autoComplete="off"
+      name="formula"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder=""
+      value="Alpha"
+    >
+      <input
+        autoComplete="off"
+        className="form-control"
+        name="formula"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder=""
+        value="Alpha"
+      />
+    </FormControl>
+  </FormulaInput>
+</Component>
+`;
+
+exports[`FormulaInput suggests when the user starts typing 4`] = `
+<Component>
+  <FormulaInput
+    getSuggestions={[Function]}
+    onChange={[Function]}
+    value="Alpha + Charlie"
+  >
+    <FormControl
+      autoComplete="off"
+      name="formula"
+      onChange={[Function]}
+      onKeyDown={[Function]}
+      placeholder=""
+      value="Alpha + Charlie"
+    >
+      <input
+        autoComplete="off"
+        className="form-control"
+        name="formula"
+        onChange={[Function]}
+        onKeyDown={[Function]}
+        placeholder=""
+        value="Alpha + Charlie"
+      />
+    </FormControl>
+  </FormulaInput>
+</Component>
+`;

@@ -1,28 +1,14 @@
-import React, { useCallback, useMemo } from 'react'
+import React from 'react'
 
 import { Formula, formula as F } from '@pi-base/core'
 
 import { Display } from '../../Shared/Formula'
 import Hints from './Hints'
-import { Property, Search, Space, Theorem } from '../../../models'
-import { SearchResults } from '../../../models/Store'
+import { Property, Search, Theorem } from '../../../models'
+import { Store, search as searchStore } from '../../../models/Store'
 import Spaces from '../List'
 import Table from '../../Traits/Table'
 import TheoremSummary from '../../Theorems/SummaryList'
-
-function ByFormula({
-  formula,
-  results
-}: {
-  formula: Formula<Property>
-  results: SearchResults
-}) {
-  if (results.kind === 'contradiction') {
-    return (<Contradiction formula={formula} contradiction={results.contradiction} />)
-  } else {
-    return (<Matches formula={formula} spaces={results.spaces} />)
-  }
-}
 
 function Contradiction({
   formula,
@@ -53,72 +39,43 @@ function Contradiction({
   }
 }
 
-function Matches({
-  formula,
-  spaces
-}: {
-  formula: Formula<Property>
-  spaces: Space[]
-}) {
-  const Title = useCallback(
-    function Title() {
-      return (
-        <>
-          Spaces ⊢
-          {' '}
-          <Display value={formula} link="property" />
-        </>
-      )
-    },
-    [formula]
-  )
-
-  const properties = useMemo(
-    () => Array.from(F.properties(formula)),
-    [formula]
-  )
-
-  return (
-    <Table Title={Title} spaces={spaces} properties={properties} />
-  )
-}
-
-function ByText({
-  results,
-  text
-}: {
-  results: SearchResults
-  text: string
-}) {
-  const spaces = results.kind === 'spaces' ? results.spaces : []
-
-  return (
-    <>
-      <h5>
-        Searching for
-        {' '}
-        <code>{text}</code>
-      </h5>
-      <Spaces spaces={spaces} />
-    </>
-  )
-}
-
 export default function Results({
   search,
   setSearch,
-  results
+  store
 }: {
-  search: Search | null
+  search: Search
   setSearch: (q: string) => void
-  results: SearchResults
+  store: Store
 }) {
-  if (!search) { return (<Hints setSearch={setSearch} />) }
+  if (!search.formula && !search.text) { return (<Hints setSearch={setSearch} />) }
 
-  switch (search.kind) {
-    case 'formula':
-      return (<ByFormula formula={search.formula} results={results} />)
-    case 'text':
-      return (<ByText text={search.text} results={results} />)
+  const results = searchStore(store, search)
+
+  if (results.kind === 'contradiction') {
+    return <Contradiction contradiction={results.contradiction} formula={search?.formula!} />
   }
+
+  const fragments = [<span key={1}>Spaces </span>]
+  if (search.text) {
+    fragments.push(<span key={2}>matching <code>{search.text}</code> </span>)
+  }
+  if (search.text && search.formula) {
+    fragments.push(<span key={3}>and </span>)
+  }
+  if (search.formula) {
+    fragments.push(<span key={4}>satisfying <Display value={search.formula} link="property" /></span>)
+  }
+
+  return (
+    <>
+      <h5>{fragments}</h5>
+      {search?.formula
+        ? <Table
+          spaces={results.spaces}
+          properties={Array.from(F.properties(search.formula))} />
+        : <Spaces spaces={results.spaces} />
+      }
+    </>
+  )
 }

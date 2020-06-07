@@ -1,7 +1,7 @@
 import React from 'react'
 import { ListGroup } from 'react-bootstrap'
 
-import Inline from '../../../Shared/Inline'
+import Inline from '../Inline'
 
 export default function Suggestions({
   selected,

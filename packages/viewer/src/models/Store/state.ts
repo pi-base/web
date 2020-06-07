@@ -23,9 +23,7 @@ export type Proof = {
   theorems: Id[]
 }
 
-export type Search =
-  | { kind: 'formula'; formula: Formula<Property> }
-  | { kind: 'text'; text: string }
+export type Search = { formula: Formula<Property> | null; text: string }
 
 export type SearchResults =
   | { kind: 'spaces'; spaces: Space[] }
@@ -236,16 +234,17 @@ export function spacesMatching(
 }
 
 export function search(store: Store, search: Search): SearchResults {
-  switch (search.kind) {
-    case 'formula':
-      return spacesMatching(
-        store,
-        F.mapProperty((p) => p.uid, search.formula),
-        spaces(store)
-      )
-    case 'text':
-      return { kind: 'spaces', spaces: searchSpaces(store, search.text) }
-  }
+  const byText = search.text
+    ? searchSpaces(store, search.text)
+    : spaces(store)
+
+  return search.formula
+    ? spacesMatching(
+      store,
+      F.mapProperty((p) => p.uid, search.formula),
+      byText
+    )
+    : { kind: 'spaces', spaces: byText }
 }
 
 export function uncheckedSpaces(store: Store) {
