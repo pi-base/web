@@ -55,6 +55,7 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
       />
     </FormControl>
     <Suggestions
+      apply={[Function]}
       selected={null}
       suggestions={
         Array [
@@ -78,20 +79,22 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
             onKeyDown={[Function]}
           >
             <ListGroupItem
+              action={true}
               active={false}
               disabled={false}
               key="Alpha"
+              onClick={[Function]}
               variant={null}
             >
               <ForwardRef
-                as="div"
-                className="list-group-item"
+                as="button"
+                className="list-group-item list-group-item-action"
                 disabled={false}
                 eventKey={null}
                 onClick={[Function]}
               >
-                <div
-                  className="list-group-item"
+                <button
+                  className="list-group-item list-group-item-action"
                   data-rb-event-key={null}
                   disabled={false}
                   onClick={[Function]}
@@ -105,24 +108,26 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
                       Alpha
                     </span>
                   </Title>
-                </div>
+                </button>
               </ForwardRef>
             </ListGroupItem>
             <ListGroupItem
+              action={true}
               active={false}
               disabled={false}
               key="Bravo"
+              onClick={[Function]}
               variant={null}
             >
               <ForwardRef
-                as="div"
-                className="list-group-item"
+                as="button"
+                className="list-group-item list-group-item-action"
                 disabled={false}
                 eventKey={null}
                 onClick={[Function]}
               >
-                <div
-                  className="list-group-item"
+                <button
+                  className="list-group-item list-group-item-action"
                   data-rb-event-key={null}
                   disabled={false}
                   onClick={[Function]}
@@ -136,24 +141,26 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
                       Bravo
                     </span>
                   </Title>
-                </div>
+                </button>
               </ForwardRef>
             </ListGroupItem>
             <ListGroupItem
+              action={true}
               active={false}
               disabled={false}
               key="Charlie"
+              onClick={[Function]}
               variant={null}
             >
               <ForwardRef
-                as="div"
-                className="list-group-item"
+                as="button"
+                className="list-group-item list-group-item-action"
                 disabled={false}
                 eventKey={null}
                 onClick={[Function]}
               >
-                <div
-                  className="list-group-item"
+                <button
+                  className="list-group-item list-group-item-action"
                   data-rb-event-key={null}
                   disabled={false}
                   onClick={[Function]}
@@ -167,7 +174,7 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
                       Charlie
                     </span>
                   </Title>
-                </div>
+                </button>
               </ForwardRef>
             </ListGroupItem>
           </div>

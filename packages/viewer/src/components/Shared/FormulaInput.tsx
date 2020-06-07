@@ -70,6 +70,16 @@ export default function FormulaInput({
     }, [setSelected, setSuggest, onChange]
   )
 
+  const applySuggestion = useCallback(
+    function applySuggestion(index: number | null) {
+      setSelected(null)
+      setSuggest(false)
+      if (index !== null && suggestions) {
+        onChange(replaceFragment(value, suggestions[index]))
+      }
+    }, [suggestions, value, onChange, setSelected, setSuggest]
+  )
+
   const handleKeyDown = useCallback(
     function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
       switch (event.keyCode) {
@@ -82,14 +92,10 @@ export default function FormulaInput({
           event.preventDefault()
         // fall through
         case RIGHT:
-          setSelected(null)
-          setSuggest(false)
-          if (selected !== null && suggestions) {
-            onChange(replaceFragment(value, suggestions[selected]))
-          }
+          applySuggestion(selected)
           return
       }
-    }, [selected, suggestions, value, setSelected, setSuggest, onChange]
+    }, [selected, suggestions, applySuggestion, setSelected]
   )
 
   return (
@@ -102,7 +108,12 @@ export default function FormulaInput({
         placeholder={placeholder}
         autoComplete="off"
       />
-      {suggest && <Suggestions selected={selected} suggestions={suggestions} />}
+      {suggest &&
+        <Suggestions
+          apply={applySuggestion}
+          selected={selected}
+          suggestions={suggestions}
+        />}
     </>
   )
 }
