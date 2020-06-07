@@ -57,7 +57,7 @@ exports[`Nav renders correctly 1`] = `
       >
         <a
           class="nav-link"
-          href="/https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
+          href="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
         >
           Contribute
         </a>
