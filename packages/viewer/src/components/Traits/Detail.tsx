@@ -6,7 +6,6 @@ import paths from '../../paths'
 import Description from '../Shared/Description'
 import Inline from '../Shared/Inline'
 import Proof from './Proof'
-import Value from '../Traits/Value'
 
 export default React.memo(
   function Detail({ property, space, trait }: {
@@ -17,11 +16,12 @@ export default React.memo(
     return (
       <>
         <h1>
-          <Value value={trait.value} />
           <Link to={paths.space(space)}>
             <Inline body={space.name} />
           </Link>
-          {' ⊢ '}
+          {trait.value
+            ? ' is '
+            : ' is not '}
           <Link to={paths.property(property)}>
             <Inline body={property.name} />
           </Link>

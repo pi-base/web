@@ -11,7 +11,7 @@ export default function Home() {
           <h1>π-Base</h1>
           <p>a community database of topological counterexamples</p>
           <p>➜ Search by propery, such as <Link to="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable">non-metric continua</Link></p>
-          <p>➜ Find spaces by name, such as <Link to="/spaces?q=compactification">compactifications</Link></p>
+          <p>➜ Find spaces by name, such as <Link to="/spaces?text=compactification">compactifications</Link></p>
           <p>➜ View counterexamples to the converse of a theorem, such as <Link to="/theorems/T000112">T₅ ⇒ T₄</Link></p>
         </div>
       </Jumbotron>

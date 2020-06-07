@@ -4,7 +4,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import paths from '../paths'
 
-const showDevLink = process.env.NODE_ENV === 'development' || window.location.host.startsWith('dev.')
+const showDevLink = process.env.NODE_ENV === 'development' || window.location.host.includes('dev.') || window.location.host.includes('development.')
 
 export default React.memo(
   function Navigation() {
@@ -23,7 +23,7 @@ export default React.memo(
             </Nav>
             <Nav className="ml-auto">
               {showDevLink && <Link className="nav-link" to="/dev">Dev</Link>}
-              <Link className="nav-link" to={paths.contributingGuide()}>Contribute</Link>
+              <a className="nav-link" href={paths.contributingGuide()}>Contribute</a>
             </Nav>
           </Navbar.Collapse>
         </Container>
