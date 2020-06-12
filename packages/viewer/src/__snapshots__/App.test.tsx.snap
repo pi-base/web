@@ -478,7 +478,7 @@ exports[`App renders correctly 1`] = `
                                 a community database of topological counterexamples
                               </p>
                               <p>
-                                ➜ Search by propery, such as 
+                                ➜ Search by property, such as 
                                 <Link
                                   to="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
                                 >
