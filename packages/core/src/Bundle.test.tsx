@@ -31,6 +31,8 @@ describe('Bundle', () => {
             { name: 'doi', doi: 'doi' },
             { name: 'wikipedia', wikipedia: 'wikipedia' },
             { name: 'mr', mr: 'mr' },
+            { name: 'mathse', mathse: 'mathse' },
+            { name: 'mo', mo: 'mo' }
           ]
         })],
       ]),
