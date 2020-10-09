@@ -18,6 +18,8 @@ import {
   TraitId,
 } from '@pi-base/core'
 
+export const MAIN_BRANCH = 'master'
+
 export type Proof = {
   properties: Id[]
   theorems: Id[]
@@ -73,11 +75,11 @@ export const initial: Store = {
     spaces: [],
     traits: [],
     theorems: [],
-    version: { ref: 'master', sha: 'HEAD' },
+    version: { ref: MAIN_BRANCH, sha: 'HEAD' },
   }),
   etag: null,
   remote: {
-    branch: 'master',
+    branch: MAIN_BRANCH,
     host: defaultHost,
     state: 'fetching',
     fetched: new Date(),

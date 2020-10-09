@@ -39,7 +39,7 @@ export default function App({
         <QueryParamProvider ReactRouterRoute={Route}>
           <Provider value={store}>
             <StatusBar status={status(store)} />
-            <Nav />
+            <Nav branch={store.remote.branch} />
             <Main dispatch={dispatch} handler={errorHandler} />
           </Provider >
         </QueryParamProvider>

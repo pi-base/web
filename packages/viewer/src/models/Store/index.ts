@@ -26,6 +26,7 @@ export {
 } from './context'
 
 export {
+  MAIN_BRANCH,
   defaultHost,
   initial,
   loaded,

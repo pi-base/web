@@ -19,7 +19,18 @@
   color: #fff;
 }
 
-.navbar-light {
-  background-image: url('/peanocurvelight.svg');
+.navbar {
   background-repeat: repeat;
+}
+
+.navbar.bg-light {
+  background-image: url('/peanocurvelight.svg');
+}
+
+.navbar.bg-dark {
+  background-image: url('/peanocurve.svg');
+}
+
+.navbar.bg-dark .nav-link {
+  color: rgba(255, 255, 255, 0.9);
 }

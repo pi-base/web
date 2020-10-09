@@ -3,13 +3,23 @@ import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import paths from '../paths'
+import { MAIN_BRANCH } from '../models/Store'
+import { FaCodeBranch } from 'react-icons/fa'
 
 const showDevLink = process.env.NODE_ENV === 'development' || window.location.host.includes('dev.') || window.location.host.includes('development.')
 
+const BranchTile = ({ branch }: { branch: string }) => (
+  <button className="nav-link">
+    <FaCodeBranch />
+    {' '}
+    {branch}
+  </button>
+)
+
 export default React.memo(
-  function Navigation() {
+  function Navigation({ branch }: { branch: string }) {
     return (
-      <Navbar bg="light">
+      <Navbar bg={branch === MAIN_BRANCH ? "light" : "dark"}>
         <Container>
           <Navbar.Brand>
             <Link to="/">π-Base</Link>
@@ -22,6 +32,7 @@ export default React.memo(
               <Link className="nav-link" to="/theorems">Theorems</Link>
             </Nav>
             <Nav className="ml-auto">
+              {branch !== MAIN_BRANCH && <BranchTile branch={branch} />}
               {showDevLink && <Link className="nav-link" to="/dev">Dev</Link>}
               <a className="nav-link" href={paths.contributingGuide()}>Contribute</a>
             </Nav>
