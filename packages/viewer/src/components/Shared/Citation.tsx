@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Ref, TaggedRef } from '@pi-base/core'
-import { tag } from '@pi-base/core/lib/Ref'
+import { TaggedRef } from '@pi-base/core/lib/Ref'
 
 interface Props {
   id: string

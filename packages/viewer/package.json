@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@pi-base/core": "^0.0.9",
+    "@pi-base/core": "^0.0.10",
     "@sentry/browser": "^5.15.5",
     "bootstrap": "^4.4.1",
     "fuse.js": "^5.0.10-beta",
