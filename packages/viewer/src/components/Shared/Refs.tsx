@@ -1,25 +1,14 @@
 import React from 'react'
 
 import { Ref } from '@pi-base/core'
+import { tag } from '@pi-base/core/lib/Ref'
 
-import { DOI, MR, Wiki } from './Citation'
-
-function Item({ item }: { item: any }) {
-  if (item.doi) {
-    return <DOI id={item.doi} name={item.name} />
-  } else if (item.mr) {
-    return <MR id={item.mr} />
-  } else if (item.wikipedia) {
-    return <Wiki id={item.wikipedia} />
-  } else {
-    return null
-  }
-}
+import { Reference } from './Citation'
 
 export default function Refs({ refs }: { refs: Ref[] }) {
   return (
     <ul>
-      {refs.map((item: Ref, i: number) => <li key={i}><Item item={item} /></li>)}
+      {refs.map((item: Ref, i: number) => <li key={i}><Reference ref={tag(item)} /></li>)}
     </ul>
   )
 }
