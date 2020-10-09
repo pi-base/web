@@ -78,29 +78,11 @@ exports[`App renders correctly 1`] = `
                   title="Checking Theorems"
                 >
                   <Toast
-                    animation={true}
-                    autohide={false}
-                    delay={3000}
-                    show={true}
                     style={
                       Object {
                         "bottom": "20px",
                         "left": "20px",
                         "position": "absolute",
-                      }
-                    }
-                    transition={
-                      Object {
-                        "$$typeof": Symbol(react.forward_ref),
-                        "defaultProps": Object {
-                          "appear": false,
-                          "in": false,
-                          "mountOnEnter": false,
-                          "timeout": 300,
-                          "unmountOnExit": false,
-                        },
-                        "displayName": "Fade",
-                        "render": [Function],
                       }
                     }
                   >
@@ -252,9 +234,8 @@ exports[`App renders correctly 1`] = `
                       <NavbarCollapse
                         id="navbar-nav"
                       >
-                        <Collapse
+                        <ForwardRef
                           appear={false}
-                          dimension="height"
                           getDimensionValue={[Function]}
                           id="navbar-nav"
                           in={false}
@@ -380,7 +361,7 @@ exports[`App renders correctly 1`] = `
                               </Nav>
                             </div>
                           </Transition>
-                        </Collapse>
+                        </ForwardRef>
                       </NavbarCollapse>
                     </div>
                   </Container>

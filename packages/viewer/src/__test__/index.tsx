@@ -2,6 +2,7 @@ import React from 'react'
 import testUtils from 'react-dom/test-utils'
 import jestFetchMock from 'jest-fetch-mock'
 import { mount as enzymeMount } from 'enzyme'
+import { QueryParamProvider } from 'use-query-params'
 
 import { Bundle, bundle, formula } from '@pi-base/core'
 import { MemoryRouter as Router, Route } from 'react-router'
@@ -81,14 +82,16 @@ export function Wrapper({
 
   return (
     <Context.Provider value={store}>
-      <Router
-        initialEntries={initialEntries}
-        {...props}
-      >
-        <Route path="/test">
-          {children}
-        </Route>
-      </Router>
+      <QueryParamProvider>
+        <Router
+          initialEntries={initialEntries}
+          {...props}
+        >
+          <Route path="/test">
+            {children}
+          </Route>
+        </Router>
+      </QueryParamProvider>
     </Context.Provider>
   )
 }

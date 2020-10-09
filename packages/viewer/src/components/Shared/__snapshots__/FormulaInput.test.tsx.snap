@@ -65,10 +65,7 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
         ]
       }
     >
-      <ListGroup
-        horizontal={null}
-        variant={null}
-      >
+      <ListGroup>
         <ForwardRef
           as="div"
           className="list-group"
@@ -84,7 +81,6 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
               disabled={false}
               key="Alpha"
               onClick={[Function]}
-              variant={null}
             >
               <ForwardRef
                 as="button"
@@ -117,7 +113,6 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
               disabled={false}
               key="Bravo"
               onClick={[Function]}
-              variant={null}
             >
               <ForwardRef
                 as="button"
@@ -150,7 +145,6 @@ exports[`FormulaInput suggests when the user starts typing 2`] = `
               disabled={false}
               key="Charlie"
               onClick={[Function]}
-              variant={null}
             >
               <ForwardRef
                 as="button"
