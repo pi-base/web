@@ -15,7 +15,7 @@ export function Tabs({ initial, children }: {
   })
   const tab = (match && match.params.tab) || initial
 
-  const setTab = (tab: string) => history.push(`${base}/${tab}`)
+  const setTab = (tab: string | null) => history.push(`${base}/${tab}`)
 
   return (
     <Bootstrap.Tabs
