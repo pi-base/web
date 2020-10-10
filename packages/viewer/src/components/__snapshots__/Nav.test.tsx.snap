@@ -55,8 +55,9 @@ exports[`Nav renders correctly 1`] = `
       <div
         class="ml-auto navbar-nav"
       >
-        <button
+        <a
           class="nav-link"
+          href="/dev"
         >
           <svg
             fill="currentColor"
@@ -72,7 +73,7 @@ exports[`Nav renders correctly 1`] = `
             />
           </svg>
            
-        </button>
+        </a>
         <a
           class="nav-link"
           href="https://github.com/pi-base/data/blob/master/CONTRIBUTING.md"
