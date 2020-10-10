@@ -47,7 +47,11 @@ function MO({ id, name }: Props) {
   )
 }
 
-export function Reference({ ref: { kind, id, name } }: { ref: TaggedRef }) {
+export function Reference({ ref }: { ref: TaggedRef }) {
+  // TODO: why aren't typechecks catching this?
+  if (!ref) { return null }
+
+  const { kind, id, name } = ref
   switch (kind) {
     case 'doi':
       return (<DOI id={id} name={name} />)
@@ -66,9 +70,8 @@ export function Reference({ ref: { kind, id, name } }: { ref: TaggedRef }) {
 
 export default function Citation({ citation }: { citation: string }) {
   const [kind, id] = citation.split(':', 2)
-  const ref = { kind, id } as TaggedRef
+  if (!kind || !id) { return null }
 
-  return (
-    <Reference ref={ref} />
-  )
+  const ref = { kind, id } as TaggedRef
+  return (<Reference ref={ref} />)
 }
