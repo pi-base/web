@@ -24,7 +24,7 @@ const delimitedParser = (type: string, start: string, stop: string) => {
     const tag = value.slice(0, stopPosition + stop.length)
     const inner = tag.slice(start.length, stopPosition)
 
-    return eat(tag)({type, [type]: inner})
+    return eat(tag)({ type, [type]: inner })
   }
 
   parser.locator = (value: string, from: number) => value.indexOf(start, from)
@@ -36,6 +36,7 @@ function pibase(this: any) {
   const parser = this.Parser.prototype
 
   parser.inlineTokenizers.citation = delimitedParser('citation', '{{', '}}')
+  parser.inlineTokenizers.internalLink = delimitedParser('internalLink', '{', '}')
   parser.inlineTokenizers.inlineMathDollars = delimitedParser(
     'inlineMath',
     '$',
@@ -53,6 +54,7 @@ function pibase(this: any) {
     parser.inlineMethods.indexOf('escape'),
     0,
     'citation',
+    'internalLink',
     'inlineMathDollars',
     'inlineMathParens'
   )
@@ -72,6 +74,14 @@ function pibase(this: any) {
         hProperties: {
           inline: true,
           formula: node.inlineMath
+        }
+      }
+    })
+    visit(tree, 'internalLink', node => {
+      node.data = {
+        hName: 'internalLink',
+        hProperties: {
+          to: node.internalLink
         }
       }
     })
