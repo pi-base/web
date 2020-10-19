@@ -8,7 +8,7 @@ import { Reference } from './Citation'
 export default function Refs({ refs }: { refs: Ref[] }) {
   return (
     <ul>
-      {refs.map((item: Ref, i: number) => <li key={i}><Reference ref={tag(item)} /></li>)}
+      {refs.map((item: Ref, i: number) => <li key={i}><Reference reference={tag(item)} /></li>)}
     </ul>
   )
 }

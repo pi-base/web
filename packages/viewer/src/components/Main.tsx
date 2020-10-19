@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import Dev from './Dev'
 import Home from './Home'
 import NotFound from './Shared/NotFound'
+import Preview from './Preview'
 import Properties from './Properties'
 import Spaces from './Spaces'
 import Theorems from './Theorems'
@@ -28,6 +29,7 @@ export default React.memo(
           <Route path="/spaces" component={Spaces} />
           <Route path="/properties" component={Properties} />
           <Route path="/theorems" component={Theorems} />
+          <Route path="/dev/preview" component={Preview} />
           <Route path="/dev">
             <Dev dispatch={dispatch} handler={handler} />
           </Route>

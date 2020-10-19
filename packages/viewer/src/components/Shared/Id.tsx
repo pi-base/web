@@ -1,7 +1,10 @@
 import React from 'react'
 
-const prefix = /^\w0*/
+import { Tagged as tagged, trim } from '@pi-base/core/lib/Id'
+export type Tagged = tagged
+
+export { expand, tag } from '@pi-base/core/lib/Id'
 
 export default function Id({ value }: { value: string }) {
-  return <>{value.replace(prefix, '')}</>
+  return <>{trim(value)}</>
 }

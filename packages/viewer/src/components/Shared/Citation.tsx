@@ -1,6 +1,10 @@
 import React from 'react'
 
+import Space from '../Spaces/Link'
+import Property from '../Properties/Link'
+import Theorem from '../Theorems/Link'
 import { TaggedRef } from '@pi-base/core/lib/Ref'
+import * as Id from './Id'
 
 interface Props {
   id: string
@@ -47,11 +51,11 @@ function MO({ id, name }: Props) {
   )
 }
 
-export function Reference({ ref }: { ref: TaggedRef }) {
+export function Reference({ reference }: { reference: TaggedRef }) {
   // TODO: why aren't typechecks catching this?
-  if (!ref) { return null }
+  if (!reference) { return null }
 
-  const { kind, id, name } = ref
+  const { kind, id, name } = reference
   switch (kind) {
     case 'doi':
       return (<DOI id={id} name={name} />)
@@ -73,5 +77,30 @@ export default function Citation({ citation }: { citation: string }) {
   if (!kind || !id) { return null }
 
   const ref = { kind, id } as TaggedRef
-  return (<Reference ref={ref} />)
+  return (<Reference reference={ref} />)
+}
+
+function InternalLinkError({ to }: { to: string }) {
+  return (
+    <>
+      Parse error:
+      <code>{` {${to}}`}</code>
+    </>
+  )
+}
+
+export function InternalLink({ to }: { to: string }) {
+  const tagged = Id.tag(to)
+  if (!tagged) { return <InternalLinkError to={to} /> }
+
+  switch (tagged.kind) {
+    case 'space':
+      return <Space id={tagged.id} />
+    case 'property':
+      return <Property id={tagged.id} />
+    case 'theorem':
+      return <Theorem id={tagged.id} />
+    default:
+      return null
+  }
 }

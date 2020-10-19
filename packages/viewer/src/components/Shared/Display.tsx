@@ -4,7 +4,7 @@ import rehype2react from 'rehype-react'
 
 import { Parser } from '@pi-base/core'
 
-import Citation from './Citation'
+import Citation, { InternalLink } from './Citation'
 import Math from './Math'
 
 function gather(nodes: any[], to: number) {
@@ -45,6 +45,12 @@ function truncate(this: any, to: number = 100) {
   }
 }
 
+const sharedComponents = {
+  citation: Citation,
+  inlineMath: Math,
+  internalLink: InternalLink
+}
+
 const parsePreview = Parser()
   .use(truncate)
   .use(
@@ -52,8 +58,7 @@ const parsePreview = Parser()
     {
       createElement: React.createElement,
       components: {
-        citation: Citation,
-        inlineMath: Math,
+        ...sharedComponents,
         p: 'span'
       },
       Fragment: React.Fragment
@@ -66,8 +71,7 @@ const parseTitle = Parser()
     {
       createElement: React.createElement,
       components: {
-        citation: Citation,
-        inlineMath: Math,
+        ...sharedComponents,
         p: 'span'
       },
       Fragment: React.Fragment
@@ -79,10 +83,7 @@ const parseDisplay = Parser()
     rehype2react,
     {
       createElement: React.createElement,
-      components: {
-        citation: Citation,
-        inlineMath: Math
-      },
+      components: sharedComponents,
       Fragment: React.Fragment
     }
   )
