@@ -1,4 +1,4 @@
-name: "build-test"
+name: 'build-test'
 on:
   push:
 
@@ -6,116 +6,54 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Cached install
-      uses: bahmutov/npm-install@v1.1.0
-    - name: Test
-      run: yarn test --coverage
-    - name: Report coverage
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint:check
+      - name: Formatting
+        run: npm run fmt:check
+      - name: Test
+        run: npm run test:cov
+      - name: Report coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Cached install
-      uses: bahmutov/npm-install@v1.1.0
-    - name: Build
-      run: yarn build
-      env:
-        REACT_APP_BUNDLE_HOST: https://pi-base-bundles.s3.us-east-2.amazonaws.com
-        REACT_APP_RELEASE: ${{ github.sha }}
-    - name: Upload build
-      uses: actions/upload-artifact@v1
-      with:
-        name: build
-        path: build
-
-  devRelease:
-    if: github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
-    needs:
-    - test
-    - build
-    steps:
-    - uses: actions/checkout@v1
-    - name: Download Build
-      uses: actions/download-artifact@v1
-      with:
-        name: build
-        path: build
-    - name: Upload Build to S3
-      run: |
-        aws s3 cp --recursive build s3://pi-base-viewer-dev
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-  release:
-    if: github.ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
-    needs:
-    - test
-    - build
-    steps:
-    - uses: actions/checkout@v1
-    - name: Create a Sentry.io release
-      uses: bjacobel/sentry-cli-action@master
-      with:
-        args: releases new ${{ github.sha }}
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-    - name: Download Build
-      uses: actions/download-artifact@v1
-      with:
-        name: build
-        path: build
-    - name: Upload Build to S3
-      run: |
-        aws s3 cp --recursive build s3://pi-base-viewer
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    - name: Associate Commits
-      uses: bjacobel/sentry-cli-action@master
-      with:
-        args: releases set-commits ${{ github.sha }} --auto
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-    - name: Upload Source Map
-      uses: bjacobel/sentry-cli-action@master
-      with:
-        args: releases files ${{ github.sha }} upload-sourcemaps build/static/js --rewrite --strip-common-prefix
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-    - name: Finalize Release
-      uses: bjacobel/sentry-cli-action@master
-      with:
-        args: releases finalize ${{ github.sha }}
-      env:
-        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-    - name: Notify Slack
-      run: |
-        curl -X POST \
-          -H 'Content-type: application/json' \
-          -H 'Authorization: Bearer ${{ secrets.SLACK_BOT_TOKEN }}' \
-          --data '{
-            "channel": "activity",
-            "icon_emoji": ":female_scientist:",
-            "attachments": [
-              {
-          	    "mrkdwn_in": ["text"],
-                "text": "New release for *${{ github.repository }}*",
-          		  "color": "good",
-          		  "fields": [
-                  { "title": "Message", "value": "${{ github.event.head_commit.message }}"},
-          		    { "title": "Author", "value": "${{ github.actor }}" },
-                  { "title": "Ref", "value": "${{ github.ref }}", "short": true },
-                  { "title": "Sha", "value": "${{ github.sha }}", "short": true }
-                ]
-              }
-            ]
-          }' \
-          https://slack.com/api/chat.postMessage
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install
+        run: npm ci
+      - name: Cached install
+        uses: bahmutov/npm-install@v1.1.0
+      - name: Upload build
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: public
