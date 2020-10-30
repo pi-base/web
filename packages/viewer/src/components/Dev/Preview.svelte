@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Typeset } from '../Shared'
+  import Example from './Example.svelte'
 
   let truncated = false
   let body = ''
@@ -22,6 +23,11 @@
         <label class="form-check-label" for="truncated"> Truncated </label>
       </div>
     </div>
+
+    <Example
+      set={(value) => {
+        body = value
+      }} />
   </div>
   <div class="col-sm">
     <Typeset {body} {truncated} />
