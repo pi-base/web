@@ -30,6 +30,6 @@ export function parser({ linkers = {}, truncate = false }: Options) {
 
   return async function parse(body: string) {
     const parsed = await parser.run(parser.parse(body))
-    return toH(h, parsed).outerHTML
+    return toH(h, parsed).innerHTML
   }
 }

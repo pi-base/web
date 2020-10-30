@@ -23,7 +23,7 @@ describe('parse', () => {
 
     test('doi links', () =>
       expect(parse('{{doi:123}}')).resolves.toEqual(
-        '<p><a href="https://doi.org/123">DOI 123</a></p>',
+        '<a href="https://doi.org/123">DOI 123</a>',
       ))
 
     test('block math', async () => {
@@ -43,17 +43,17 @@ describe('parse', () => {
     test('unmatched', async () => {
       const math = await parse('A $ B')
 
-      expect(math).toEqual('<p>A $ B</p>')
+      expect(math).toEqual('A $ B')
     })
 
     test('internal links', () =>
       expect(parse('C.f. {S123}')).resolves.toEqual(
-        '<p>C.f. <a href="/objects/S123">S123</a></p>',
+        'C.f. <a href="/objects/S123">S123</a>',
       ))
 
     test('missing internal links', () =>
       expect(parse('C.f. {missing}')).resolves.toEqual(
-        '<p>C.f. <code to="missing">Could not find object</code></p>',
+        'C.f. <code to="missing">Could not find object</code>',
       ))
   })
 
@@ -61,8 +61,6 @@ describe('parse', () => {
     const parse = parser({ linkers, truncate: true })
 
     test('trims extra elements', () =>
-      expect(parse('a list\n* one\n* two\n* three')).resolves.toEqual(
-        '<p>a list</p>',
-      ))
+      expect(parse('a list\n* one\n* two\n* three')).resolves.toEqual('a list'))
   })
 })

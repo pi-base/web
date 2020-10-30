@@ -1,20 +1,22 @@
 import { getContext, setContext } from 'svelte'
 import { Readable, derived, get, writable } from 'svelte/store'
-import type { Property, Space, Theorem } from '@pi-base/core'
+import type { Theorem as BTheorem } from '@pi-base/core'
 
 import type { Source } from './types'
 import * as Gateway from './gateway'
 import { ILocal, Local } from './repositories/local'
-import { Collection, collect } from './stores/collection'
+import { Collection, collect, indexByUid } from './stores/collection'
 import * as Src from './stores/source'
 import * as Sync from './stores/sync'
+import type { Property, Space, Theorem } from './types'
+import { hydrate } from './util'
 
 export type Context = {
   source: Src.Store
   sync: Sync.Store
-  properties: Readable<Collection<Property>>
-  spaces: Readable<Collection<Space>>
-  theorems: Readable<Collection<Theorem>>
+  properties: Readable<Collection<Property, number | string>>
+  spaces: Readable<Collection<Space, number | string>>
+  theorems: Readable<Collection<Theorem, number | string>>
   sha: Readable<string | undefined>
 }
 
@@ -59,12 +61,19 @@ export function initialize(
     previousSource = s
   })
 
+  // TODO: avoid double-indexing properties
   return {
     source,
     sync,
     properties: collect(data, (d) => d.properties),
     spaces: collect(data, (d) => d.spaces),
-    theorems: collect(data, (d) => d.theorems),
+    theorems: collect(data, (d) => {
+      const ps = indexByUid(d.properties)
+      return d.theorems.reduce((ts: Theorem[], t: BTheorem) => {
+        const hydrated = hydrate(t, ps)
+        return hydrated ? [...ts, hydrated] : ts
+      }, [])
+    }),
     sha: derived(data, (d) => d?.sha),
   }
 }

@@ -1,13 +1,11 @@
 <script lang="ts">
   import { properties } from '../../context'
-
   import { Title, Typeset } from '../Shared'
 
   export let id: string
 
   const store = properties()
-
-  const property = $store.find(parseInt(id.slice(1)))
+  $: property = $store.find(id)
 </script>
 
 {#if property}
