@@ -5,7 +5,7 @@
   import { Filter, Id, Link, Title, Typeset } from '../Shared'
 
   const index = list(properties(), {
-    weights: { name: 0.7, description: 0.3 },
+    weights: { name: 0.7, aliases: 0.7, description: 0.3 },
     queryParam: 'filter',
   })
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { theorems } from '../../context'
-  import { Formula, Title, Typeset } from '../Shared'
+  import { Formula, References, Tabs, Title, Typeset } from '../Shared'
 
   export let id: string
 
@@ -18,4 +18,14 @@
   </h1>
 
   <Typeset body={theorem.description} />
+
+  <Tabs.Tabs initial="references">
+    <Tabs.Nav>
+      <Tabs.Link to="references">References</Tabs.Link>
+    </Tabs.Nav>
+
+    <Tabs.Tab path="references">
+      <References references={theorem.refs} />
+    </Tabs.Tab>
+  </Tabs.Tabs>
 {/if}
