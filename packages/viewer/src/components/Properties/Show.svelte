@@ -1,6 +1,7 @@
 <script lang="ts">
   import { properties } from '../../context'
   import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
   export let id: string
@@ -21,12 +22,16 @@
 
   <Typeset body={property.description} />
 
-  <Tabs.Tabs initial="theorems">
+  <Tabs.Tabs initial="spaces">
     <Tabs.Nav>
+      <Tabs.Link to="spaces">Spaces</Tabs.Link>
       <Tabs.Link to="theorems">Theorems</Tabs.Link>
       <Tabs.Link to="references">References</Tabs.Link>
     </Tabs.Nav>
 
+    <Tabs.Tab path="spaces">
+      <Spaces {property} />
+    </Tabs.Tab>
     <Tabs.Tab path="theorems">
       <Theorems {property} />
     </Tabs.Tab>
