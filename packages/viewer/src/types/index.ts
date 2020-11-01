@@ -13,6 +13,8 @@ export type Theorem = Omit<BTheorem, 'when' | 'then'> & {
   then: Formula<Property>
 }
 
+export type TraitId = [number, number]
+
 export type Source = {
   host: string
   branch: string

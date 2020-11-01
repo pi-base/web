@@ -3,7 +3,7 @@
   import Log from './Log.svelte'
   import { Link } from '../Shared'
 
-  const { spaces, properties, theorems } = context()
+  const { spaces, properties, theorems, traits } = context()
 </script>
 
 <table class="table">
@@ -19,6 +19,10 @@
     <tr>
       <th>Theorems</th>
       <td>{$theorems.all.length}</td>
+    </tr>
+    <tr>
+      <th>Traits</th>
+      <td>{$traits.all.length}</td>
     </tr>
     <tr>
       <th />

@@ -5,11 +5,11 @@ import type { Theorem as BTheorem } from '@pi-base/core'
 import type { Source } from './types'
 import * as Gateway from './gateway'
 import { ILocal, Local } from './repositories/local'
-import { Collection, collect, indexByUid } from './stores/collection'
+import { Collection, collect, index, indexByUid } from './stores/collection'
 import * as Src from './stores/source'
 import * as Sync from './stores/sync'
-import type { Property, Space, Theorem } from './types'
-import { hydrate } from './util'
+import type { Property, Space, Theorem, Trait, TraitId } from './types'
+import { hydrate, idToInt } from './util'
 
 export type Context = {
   source: Src.Store
@@ -17,6 +17,7 @@ export type Context = {
   properties: Readable<Collection<Property, number | string>>
   spaces: Readable<Collection<Space, number | string>>
   theorems: Readable<Collection<Theorem, number | string>>
+  traits: Readable<Collection<Trait, TraitId>>
   sha: Readable<string | undefined>
 }
 
@@ -74,6 +75,12 @@ export function initialize(
         return hydrated ? [...ts, hydrated] : ts
       }, [])
     }),
+    traits: derived(data, (d) =>
+      index(d?.traits || [], ({ space, property }) => [
+        idToInt(space),
+        idToInt(property),
+      ]),
+    ),
     sha: derived(data, (d) => d?.sha),
   }
 }
@@ -96,4 +103,8 @@ export function spaces() {
 
 export function theorems() {
   return context().theorems
+}
+
+export function traits() {
+  return context().traits
 }

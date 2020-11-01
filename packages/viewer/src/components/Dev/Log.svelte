@@ -1,13 +1,14 @@
 <script lang="ts">
   import context from '../../context'
 
-  const { spaces, properties, theorems } = context()
+  const { spaces, properties, theorems, traits } = context()
 
   function log() {
     console.log({
       spaces: $spaces,
       properties: $properties,
       theorems: $theorems,
+      traits: $traits,
     })
   }
 </script>
