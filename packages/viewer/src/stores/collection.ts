@@ -1,5 +1,5 @@
 import { Readable, derived } from 'svelte/store'
-import { idToInt } from '../util'
+import { Id } from '../models'
 
 export type Collection<V, K = number> = {
   all: V[]
@@ -11,10 +11,10 @@ export function indexByUid<T extends { uid: string }>(
 ): Collection<T, number | string> {
   return index(
     items,
-    (i) => idToInt(i.uid),
+    (i) => Id.toInt(i.uid),
     (input: number | string) => {
       if (typeof input === 'string') {
-        return idToInt(input)
+        return Id.toInt(input)
       } else {
         return input
       }

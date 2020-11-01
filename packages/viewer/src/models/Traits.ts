@@ -1,5 +1,5 @@
 import type { Data, Property, Space, Trait } from '../types'
-import { idToInt } from '../util'
+import { Id } from '../models'
 
 export default class Traits {
   private traits: Map<string, Trait>
@@ -18,8 +18,8 @@ export default class Traits {
     this.traits = new Map(
       traits.map((t) => [this.traitId(t.space, t.property), t]),
     )
-    this.spaces = new Map(spaces.map((s) => [idToInt(s.uid), s]))
-    this.properties = new Map(properties.map((p) => [idToInt(p.uid), p]))
+    this.spaces = new Map(spaces.map((s) => [Id.toInt(s.uid), s]))
+    this.properties = new Map(properties.map((p) => [Id.toInt(p.uid), p]))
   }
 
   find(space: Space, property: Property) {
@@ -51,6 +51,6 @@ export default class Traits {
   }
 
   private traitId(space: string, property: string) {
-    return `${idToInt(space)}.${idToInt(property)}`
+    return `${Id.toInt(space)}.${Id.toInt(property)}`
   }
 }

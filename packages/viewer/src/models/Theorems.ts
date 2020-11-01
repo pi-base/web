@@ -1,8 +1,8 @@
 import type { Theorem as BTheorem } from '@pi-base/core'
 
+import Id from './Id'
 import Theorem from './Theorem'
 import type { Data, Property } from '../types'
-import { idToInt } from '../util'
 
 export default class Theorems {
   private theorems: Map<number, Theorem>
@@ -22,13 +22,13 @@ export default class Theorems {
     theorems.forEach((t) => {
       const hydrated = Theorem.hydrate(t, (p) => ix.get(p))
       if (hydrated) {
-        this.theorems.set(idToInt(t.uid), hydrated)
+        this.theorems.set(Id.toInt(t.uid), hydrated)
       }
     })
   }
 
   find(uid: string | number) {
-    const key = typeof uid === 'string' ? idToInt(uid) : uid
+    const key = typeof uid === 'string' ? Id.toInt(uid) : uid
     return this.theorems.get(key) || null
   }
 

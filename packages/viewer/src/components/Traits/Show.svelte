@@ -1,15 +1,14 @@
 <script lang="ts">
   import { Link, References, Typeset } from '../Shared'
   import context from '../../context'
-  import { idToInt } from '../../util'
 
   export let space: string
   export let property: string
 
   const { spaces, properties, traits } = context()
 
-  $: s = $spaces.find(idToInt(space))
-  $: p = $properties.find(idToInt(property))
+  $: s = $spaces.find(space)
+  $: p = $properties.find(property)
   $: t = s && p && $traits.find(s, p)
 </script>
 
