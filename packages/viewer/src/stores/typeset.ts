@@ -1,10 +1,10 @@
 import { Readable, get, readable } from 'svelte/store'
-import type { Property, Space, Theorem } from '@pi-base/core'
 
 import { parser, externalLinks, internalLinks } from '../parser'
 import type { Collection } from '../stores/collection'
+import type { Property, Space, Theorem } from '../types'
 
-type R<T> = Readable<Collection<T>>
+type R<T> = Readable<Collection<T, string | number>>
 
 export default function typeset(
   body: string,

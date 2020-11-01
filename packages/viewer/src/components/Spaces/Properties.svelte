@@ -1,26 +1,15 @@
 <script lang="ts">
   import { Link, Id, Typeset } from '../Shared'
   import { Value } from '../Traits'
-  import type { Property, Space, Trait } from '../../types'
+  import type { Space } from '../../types'
   import context from '../../context'
-  import { idToInt } from '../../util'
 
   export let space: Space
 
-  const { properties, traits } = context()
+  const { traits } = context()
 
-  // TODO: improve performance. May want a trait (and theorem) store proper
-  // and domain objects (e.g. with getters)
   // TODO: fuzzy find, sort, toggle deduced
-  $: related = $traits.all.reduce((acc: [Property, Trait][], t: Trait) => {
-    if (t.space === space.uid) {
-      const property = $properties.find(idToInt(t.property))
-      if (property) {
-        return [...acc, [property, t]] as [Property, Trait][]
-      }
-    }
-    return acc
-  }, [])
+  $: related = $traits.forSpace(space)
 </script>
 
 <table class="table">

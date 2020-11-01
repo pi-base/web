@@ -46,7 +46,7 @@ export function index<Value, Key, Input extends Key = Key>(
 export function collect<S, T extends { uid: string }>(
   remote: Readable<S | undefined>,
   project: (data: S) => T[],
-): Readable<Collection<T>> {
+): Readable<Collection<T, string | number>> {
   return derived(remote, ($remote) =>
     indexByUid($remote ? project($remote) : []),
   )

@@ -10,7 +10,7 @@
 
   $: s = $spaces.find(idToInt(space))
   $: p = $properties.find(idToInt(property))
-  $: t = $traits.find(`${idToInt(space)}.${idToInt(property)}`)
+  $: t = s && p && $traits.find(s, p)
 </script>
 
 {#if s && p && t}

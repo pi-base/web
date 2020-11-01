@@ -1,7 +1,7 @@
-import type { Property, Space, Theorem } from '@pi-base/core'
 import { tag } from '@pi-base/core/lib/Id'
 
 import type { Collection } from '../stores/collection'
+import type { Property, Space, Theorem } from '../types'
 
 export default function internalLinks(
   properties: Collection<Property>,

@@ -1,13 +1,18 @@
 <script lang="ts">
+  import { derived } from 'svelte/store'
+
   import { spaces } from '../../context'
   import { list } from '../../stores'
 
   import { Filter, Id, Link, Title, Typeset } from '../Shared'
 
-  const index = list(spaces(), {
-    weights: { name: 0.7, aliases: 0.7, description: 0.3 },
-    queryParam: 'filter',
-  })
+  const index = list(
+    derived(spaces(), (ss) => ss.all),
+    {
+      weights: { name: 0.7, aliases: 0.7, description: 0.3 },
+      queryParam: 'filter',
+    },
+  )
 </script>
 
 <Title title="Spaces" />

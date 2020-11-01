@@ -1,7 +1,6 @@
 import Fuse from 'fuse.js'
 import { Readable, Writable, derived, writable } from 'svelte/store'
 
-import type { Collection } from './collection'
 import * as sort from './sort'
 import urlSearchParam from './urlSearchParam'
 
@@ -20,7 +19,7 @@ export type Store<T> = Readable<T[]> & {
 }
 
 export default function list<T extends Record<string, unknown>>(
-  collection: Readable<Collection<T>>,
+  collection: Readable<T[]>,
   { weights, queryParam }: Options<T>,
 ): Store<T> {
   const keys = Object.entries(weights).map(([name, weight]) => ({
@@ -29,7 +28,7 @@ export default function list<T extends Record<string, unknown>>(
   }))
   const index = derived(
     collection,
-    ($collection) => new Fuse($collection.all, { keys }),
+    ($collection) => new Fuse($collection, { keys }),
   )
 
   const sorter = sort.store<keyof T>()
@@ -43,7 +42,7 @@ export default function list<T extends Record<string, unknown>>(
   const { subscribe } = derived(
     [collection, index, sorter, filter],
     ([$collection, $index, $sort, $filter]) =>
-      sortAndFilter($collection.all, $index, $sort, $filter),
+      sortAndFilter($collection, $index, $sort, $filter),
   )
 
   return {

@@ -1,5 +1,4 @@
 import { Readable, get, readable } from 'svelte/store'
-import { index } from './collection'
 
 import list, { Store } from './list'
 
@@ -11,13 +10,11 @@ const items: Item[] = [
   { name: 'Three', value: 3 },
 ]
 
-const collection = index(items, (i) => i.value)
-
 let store: Store<{ name: string; value: number }>
 
 beforeEach(() => {
   store = list(
-    readable(collection, () => {}),
+    readable(items, () => {}),
     {
       weights: {
         name: 1,

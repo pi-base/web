@@ -22,7 +22,7 @@
     </tr>
     <tr>
       <th>Traits</th>
-      <td>{$traits.all.length}</td>
+      <td>{$traits.size}</td>
     </tr>
     <tr>
       <th />
