@@ -43,7 +43,9 @@
           <Typeset body={name} />
         </td>
         <td>
-          <Value {value} />
+          <Link to="/spaces/{space.uid}/properties/{uid}">
+            <Value {value} />
+          </Link>
         </td>
       </tr>
     {/each}

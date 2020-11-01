@@ -17,7 +17,7 @@ export type Context = {
   properties: Readable<Collection<Property, number | string>>
   spaces: Readable<Collection<Space, number | string>>
   theorems: Readable<Collection<Theorem, number | string>>
-  traits: Readable<Collection<Trait, TraitId>>
+  traits: Readable<Collection<Trait, string>>
   sha: Readable<string | undefined>
 }
 
@@ -76,10 +76,10 @@ export function initialize(
       }, [])
     }),
     traits: derived(data, (d) =>
-      index(d?.traits || [], ({ space, property }) => [
-        idToInt(space),
-        idToInt(property),
-      ]),
+      index(
+        d?.traits || [],
+        ({ space, property }) => `${idToInt(space)}.${idToInt(property)}`,
+      ),
     ),
     sha: derived(data, (d) => d?.sha),
   }
