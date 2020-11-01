@@ -5,9 +5,12 @@
 
   import * as Dev from './Dev'
   import * as Properties from './Properties'
+  import * as Spaces from './Spaces'
   import * as Theorems from './Theorems'
 </script>
 
+<Route path="/spaces" component={Spaces.List} />
+<Route path="/spaces/:id/*" component={Spaces.Show} />
 <Route path="/properties" component={Properties.List} />
 <Route path="/properties/:id/*" component={Properties.Show} />
 <Route path="/theorems" component={Theorems.List} />
