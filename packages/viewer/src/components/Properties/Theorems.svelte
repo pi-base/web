@@ -1,6 +1,4 @@
 <script lang="ts">
-  import * as F from '@pi-base/core/lib/Formula'
-
   import { Formula, Link, Id } from '../Shared'
   import type { Property } from '../../types'
   import { theorems } from '../../context'
@@ -9,10 +7,7 @@
 
   const store = theorems()
 
-  $: related = $store.all.filter(
-    ({ when, then }) =>
-      F.properties(when).has(property) || F.properties(then).has(property),
-  )
+  $: related = $store.forProperty(property)
 </script>
 
 <table class="table">

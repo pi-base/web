@@ -1,4 +1,5 @@
 import type { Theorem as BTheorem } from '@pi-base/core'
+import * as F from '@pi-base/core/lib/Formula'
 
 import Id from './Id'
 import Theorem from './Theorem'
@@ -29,12 +30,19 @@ export default class Theorems {
     })
   }
 
+  get all() {
+    return Array.from(this.theorems.values())
+  }
+
   find(uid: string | number) {
     const key = typeof uid === 'string' ? Id.toInt(uid) : uid
     return this.theorems.get(key) || null
   }
 
-  get all() {
-    return Array.from(this.theorems.values())
+  forProperty(property: Property) {
+    return this.all.filter(
+      ({ when, then }) =>
+        F.properties(when).has(property) || F.properties(then).has(property),
+    )
   }
 }

@@ -8,7 +8,7 @@ import { ILocal, Local } from './repositories/local'
 import { Collection, collect } from './stores/collection'
 import * as Src from './stores/source'
 import * as Sync from './stores/sync'
-import type { Property, Space, Theorem } from './types'
+import type { Property, Space } from './types'
 
 export type Context = {
   source: Src.Store
