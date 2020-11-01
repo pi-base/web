@@ -1,5 +1,7 @@
 import type { Property, Space, Theorem } from '@pi-base/core'
 import { atom, property, space, theorem } from '@pi-base/core/lib/testUtils'
+
+import { Theorems } from '../models'
 import { Collection, indexByUid } from '../stores/collection'
 
 import internalLinks from './internalLinks'
@@ -12,13 +14,16 @@ describe('with ambient data', () => {
   const spaces: Collection<Space> = indexByUid([
     space({ uid: 'S000002', name: 'Two' }),
   ])
-  const theorems: Collection<Theorem> = indexByUid([
-    theorem({
-      uid: 'T000003',
-      when: atom('P000001'),
-      then: atom('P000002'),
-    }),
-  ])
+  const theorems: Theorems = new Theorems(
+    [
+      theorem({
+        uid: 'T000003',
+        when: atom('P000001'),
+        then: atom('P000002'),
+      }),
+    ],
+    properties.all,
+  )
 
   const link = internalLinks(properties, spaces, theorems)
 

@@ -18,13 +18,13 @@ export type Store<T> = Readable<T[]> & {
   filter: Writable<string>
 }
 
-export default function list<T extends Record<string, unknown>>(
+export default function list<T>(
   collection: Readable<T[]>,
   { weights, queryParam }: Options<T>,
 ): Store<T> {
   const keys = Object.entries(weights).map(([name, weight]) => ({
     name,
-    weight: weight || 0,
+    weight: (weight as number) || 0,
   }))
   const index = derived(
     collection,

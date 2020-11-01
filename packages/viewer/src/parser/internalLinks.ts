@@ -1,12 +1,13 @@
 import { tag } from '@pi-base/core/lib/Id'
 
+import type { Theorems } from '../models'
 import type { Collection } from '../stores/collection'
-import type { Property, Space, Theorem } from '../types'
+import type { Property, Space } from '../types'
 
 export default function internalLinks(
   properties: Collection<Property>,
   spaces: Collection<Space>,
-  theorems: Collection<Theorem>,
+  theorems: Theorems,
 ) {
   return function linker({ to }: { to?: string }) {
     const trimmed = (to || '').trim()

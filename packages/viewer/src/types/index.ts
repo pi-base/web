@@ -7,14 +7,6 @@ import type {
 } from '@pi-base/core'
 export type { Property, Space, Trait } from '@pi-base/core'
 
-export type Theorem = Omit<BTheorem, 'when' | 'then'> & {
-  name: string
-  when: Formula<Property>
-  then: Formula<Property>
-}
-
-export type TraitId = [number, number]
-
 export type Source = {
   host: string
   branch: string

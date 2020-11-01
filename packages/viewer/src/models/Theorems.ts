@@ -1,11 +1,12 @@
 import type { Theorem as BTheorem } from '@pi-base/core'
 
-import { index } from '../stores/collection'
-import type { Data, Property, Theorem } from '../types'
-import { hydrate } from '../util'
+import Theorem from './Theorem'
+import type { Data, Property } from '../types'
+import { idToInt } from '../util'
 
 export default class Theorems {
-  private theorems: Map<string, Theorem>
+  private theorems: Map<number, Theorem>
+
   static fromData(data: Data | undefined): Theorems {
     if (data) {
       return new Theorems(data.theorems, data.properties)
@@ -15,19 +16,20 @@ export default class Theorems {
   }
 
   constructor(theorems: BTheorem[], properties: Property[]) {
-    const ix = index(properties, (p) => p.uid)
+    const ix = new Map(properties.map((p) => [p.uid, p]))
 
     this.theorems = new Map()
     theorems.forEach((t) => {
-      const hydrated = hydrate(t, ix)
+      const hydrated = Theorem.hydrate(t, (p) => ix.get(p))
       if (hydrated) {
-        this.theorems.set(t.uid, hydrated)
+        this.theorems.set(idToInt(t.uid), hydrated)
       }
     })
   }
 
-  find(uid: string) {
-    return this.theorems.get(uid) || null
+  find(uid: string | number) {
+    const key = typeof uid === 'string' ? idToInt(uid) : uid
+    return this.theorems.get(key) || null
   }
 
   get all() {
