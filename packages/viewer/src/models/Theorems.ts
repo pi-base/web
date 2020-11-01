@@ -7,7 +7,9 @@ import type { Data, Property } from '../types'
 export default class Theorems {
   private theorems: Map<number, Theorem>
 
-  static fromData(data: Data | undefined): Theorems {
+  static fromData(
+    data: Pick<Data, 'properties' | 'theorems'> | undefined,
+  ): Theorems {
     if (data) {
       return new Theorems(data.theorems, data.properties)
     } else {

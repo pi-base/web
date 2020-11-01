@@ -1,4 +1,4 @@
-type Event =
+export type Event =
   | { event: 'remote_fetch_started'; host: string; branch: string }
   | { event: 'remote_fetch_complete'; result: unknown }
   | { event: 'bundle_unchanged'; etag: string }

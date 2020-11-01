@@ -6,7 +6,9 @@ export default class Traits {
   private spaces: Map<number, Space>
   private properties: Map<number, Property>
 
-  static fromData(data: Data | undefined): Traits {
+  static fromData(
+    data: Pick<Data, 'properties' | 'spaces' | 'traits'> | undefined,
+  ): Traits {
     if (data) {
       return new Traits(data.traits, data.spaces, data.properties)
     } else {
