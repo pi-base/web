@@ -1,4 +1,6 @@
-import type { Data, Property, Space, Trait } from '../types'
+import * as F from '@pi-base/core/lib/Formula'
+
+import type { Data, Formula, Property, Space, Trait } from '../types'
 import { Id } from '../models'
 
 export default class Traits {
@@ -54,5 +56,13 @@ export default class Traits {
 
   private traitId(space: string, property: string) {
     return `${Id.toInt(space)}.${Id.toInt(property)}`
+  }
+
+  evaluate({ formula, space }: { formula: Formula<Property>; space: Space }) {
+    const traits = new Map(
+      this.forSpace(space).map(([property, trait]) => [property, trait.value]),
+    )
+
+    return F.evaluate<Property>(formula, traits)
   }
 }

@@ -1,10 +1,5 @@
 import { Readable, derived } from 'svelte/store'
-import { Id } from '../models'
-
-export type Collection<V, K = number> = {
-  all: V[]
-  find(id: K): V | null
-}
+import { Collection, Id } from '../models'
 
 export function indexByUid<T extends { uid: string }>(
   items: T[],

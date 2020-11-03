@@ -5,12 +5,13 @@
 
   import * as Dev from './Dev'
   import * as Properties from './Properties'
+  import Search from './Search'
   import * as Spaces from './Spaces'
   import * as Traits from './Traits'
   import * as Theorems from './Theorems'
 </script>
 
-<Route path="/spaces" component={Spaces.List} />
+<Route path="/spaces" component={Search} />
 <Route path="/spaces/:space/properties/:property" component={Traits.Show} />
 <Route path="/spaces/:id/*" component={Spaces.Show} />
 <Route path="/properties" component={Properties.List} />

@@ -7,17 +7,17 @@ export default function urlSearchParam(
   name: string,
   { subscribe, set }: Writable<string>,
 ) {
-  let search: URLSearchParams
+  function parse() {
+    return new URL(location.href).searchParams
+  }
 
   onMount(() => {
-    search = new URL(location.href).searchParams
-    set(search.get(name) || '')
+    set(parse().get(name) || '')
   })
 
   subscribe((value) => {
-    // There is a possible race condition here if two of these are mounted at
-    // once and both changing. Re-parsing search from the current href would
-    // decrease this risk, but require more processing.
+    const search = parse()
+
     if (!search) {
       return
     }
@@ -28,7 +28,6 @@ export default function urlSearchParam(
       search.delete(name)
     }
 
-    // Should this be debounced?
     window.history.replaceState(
       null,
       '',
