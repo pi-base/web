@@ -65,4 +65,16 @@ export default class Traits {
 
     return F.evaluate<Property>(formula, traits)
   }
+
+  isCounterexample(
+    { when, then }: { when: Formula<Property>; then: Formula<Property> },
+    space: Space,
+  ): boolean {
+    return (
+      this.evaluate({
+        formula: F.and(when, F.negate(then)),
+        space,
+      }) === true
+    )
+  }
 }

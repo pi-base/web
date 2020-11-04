@@ -33,14 +33,14 @@ export default class Theorem {
     uid,
     when,
     then,
-    description,
-    refs,
+    description = '',
+    refs = [],
   }: {
     uid: string
     when: F.Formula<Property>
     then: F.Formula<Property>
-    description: string
-    refs: Ref[]
+    description?: string
+    refs?: Ref[]
   }) {
     this.uid = uid
     this.when = when
@@ -54,5 +54,19 @@ export default class Theorem {
     const con = F.render(this.then, (p) => p.name)
 
     return `${ant} ⇒ ${con}`
+  }
+
+  get properties() {
+    const set = F.properties(this.when)
+    F.properties(this.then).forEach((p) => set.add(p))
+    return Array.from(set)
+  }
+
+  get converse(): Theorem {
+    return {
+      ...this,
+      when: this.then,
+      then: this.when,
+    }
   }
 }

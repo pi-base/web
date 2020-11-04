@@ -3,11 +3,10 @@
 
   import { properties } from '../../context'
   import { list } from '../../stores'
-  import type { Property } from '../../types'
 
   import { Filter, Id, Link, Title, Typeset } from '../Shared'
 
-  const index = list<Property>(
+  const index = list(
     derived(properties(), (ps) => ps.all),
     {
       weights: { name: 0.7, aliases: 0.7, description: 0.3 },

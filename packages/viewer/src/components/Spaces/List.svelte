@@ -3,11 +3,10 @@
 
   import { spaces } from '../../context'
   import { list } from '../../stores'
-  import type { Space } from '../../types'
 
   import { Filter, Id, Link, Title, Typeset } from '../Shared'
 
-  const index = list<Space>(
+  const index = list(
     derived(spaces(), (ss) => ss.all),
     {
       weights: { name: 0.7, aliases: 0.7, description: 0.3 },

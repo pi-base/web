@@ -35,12 +35,18 @@ test('all', () => {
   expect(theorems.all.length).toEqual(2)
 })
 
-test('find by number', () => {
-  expect(theorems.find(1)!.uid).toEqual('T1')
-})
+describe('find', () => {
+  test('find by number', () => {
+    expect(theorems.find(1)!.uid).toEqual('T1')
+  })
 
-test('find by id', () => {
-  expect(theorems.find('T002')!.uid).toEqual('T2')
+  test('find by id', () => {
+    expect(theorems.find('T002')!.uid).toEqual('T2')
+  })
+
+  test('not found', () => {
+    expect(theorems.find(13)).toBeNull()
+  })
 })
 
 describe('forProperty', () => {

@@ -1,7 +1,6 @@
 import { tag } from '@pi-base/core/lib/Id'
 
-import type { Theorems } from '../models'
-import type { Collection } from '../stores/collection'
+import type { Collection, Theorems } from '../models'
 import type { Property, Space } from '../types'
 
 export default function internalLinks(

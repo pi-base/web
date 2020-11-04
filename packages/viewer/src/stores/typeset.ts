@@ -1,8 +1,7 @@
 import { Readable, get, readable } from 'svelte/store'
 
-import type { Theorems } from '../models'
+import type { Collection, Theorems } from '../models'
 import { parser, externalLinks, internalLinks } from '../parser'
-import type { Collection } from '../stores/collection'
 import type { Property, Space } from '../types'
 
 type R<T> = Readable<Collection<T, string | number>>

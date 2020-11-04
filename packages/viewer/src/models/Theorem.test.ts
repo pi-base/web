@@ -3,11 +3,11 @@ import type { Property } from '../types'
 
 import Theorem from './Theorem'
 
-describe('hydrate', () => {
-  const p1 = property({ uid: 'P000001' })
-  const p2 = property({ uid: 'P000002' })
-  const p3 = property({ uid: 'P000003' })
+const p1 = property({ uid: 'P000001' })
+const p2 = property({ uid: 'P000002' })
+const p3 = property({ uid: 'P000003' })
 
+describe('hydrate', () => {
   const raw = theorem({
     uid: 'T000001',
     when: and(atom('P000001'), atom('P000002')),
@@ -33,5 +33,30 @@ describe('hydrate', () => {
     const find = index([p1, p3])
 
     expect(Theorem.hydrate(raw, find)).toBeUndefined()
+  })
+})
+
+describe('properties', () => {
+  it('lists the referenced theorems', () => {
+    const theorem = new Theorem({
+      uid: 'T1',
+      when: and(atom(p1), atom(p2)),
+      then: atom(p3),
+    })
+
+    expect(theorem.properties).toEqual([p1, p2, p3])
+  })
+})
+
+describe('converse', () => {
+  it('reverses the implication', () => {
+    const theorem = new Theorem({
+      uid: 'T1',
+      when: atom(p1),
+      then: atom(p3),
+    })
+
+    expect(theorem.converse.when).toEqual(atom(p3))
+    expect(theorem.converse.then).toEqual(atom(p1))
   })
 })

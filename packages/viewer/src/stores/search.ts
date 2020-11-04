@@ -4,6 +4,15 @@ import { Readable, derived, get as _get } from 'svelte/store'
 import type { Collection, Traits } from '../models'
 import type { Formula, Property, Space } from '../types'
 
+export type Input = {
+  text?: string
+  formula?: Formula<Property>
+}
+
+export type Search = {
+  search(input: Input): Space[]
+}
+
 export default function create({
   spaces,
   traits,
@@ -23,13 +32,7 @@ export default function create({
       }),
   )
 
-  function search({
-    text = '',
-    formula,
-  }: {
-    text?: string
-    formula?: Formula<Property>
-  }) {
+  function search({ text = '', formula }: Input) {
     const searched =
       text.trim() === ''
         ? get<Collection<Space>>(spaces).all

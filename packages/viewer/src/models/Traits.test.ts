@@ -1,5 +1,4 @@
-import { and, atom, property, space, trait } from '@pi-base/core/lib/testUtils'
-import type { Property, Space } from '../types'
+import { atom, property, space, trait } from '@pi-base/core/lib/testUtils'
 
 import Traits from './Traits'
 
@@ -34,4 +33,30 @@ test('forSpace', () => {
 
 test('size', () => {
   expect(traits.size).toEqual(3)
+})
+
+describe('isCounterexample', () => {
+  test('disprovable', () => {
+    expect(
+      traits.isCounterexample(
+        {
+          when: atom(p1),
+          then: atom(p2, false),
+        },
+        s2,
+      ),
+    ).toEqual(true)
+  })
+
+  test('unknown', () => {
+    expect(
+      traits.isCounterexample(
+        {
+          when: atom(p1),
+          then: atom(p2, false),
+        },
+        s1,
+      ),
+    ).toEqual(false)
+  })
 })

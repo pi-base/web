@@ -1,8 +1,8 @@
-import type { Property, Space, Theorem } from '@pi-base/core'
+import type { Property, Space } from '@pi-base/core'
 import { atom, property, space, theorem } from '@pi-base/core/lib/testUtils'
 
-import { Theorems } from '../models'
-import { Collection, indexByUid } from '../stores/collection'
+import { Collection, Theorems } from '../models'
+import { indexByUid } from '../stores/collection'
 
 import internalLinks from './internalLinks'
 
