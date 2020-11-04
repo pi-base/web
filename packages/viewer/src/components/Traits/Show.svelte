@@ -18,7 +18,7 @@
       <Typeset body={s.name} />
     </Link>
     is
-    {t.value || 'not'}
+    {t.value ? '' : 'not'}
     <Link to="/properties/{p.uid}">
       <Typeset body={p.name} />
     </Link>

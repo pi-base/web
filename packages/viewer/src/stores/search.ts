@@ -36,8 +36,13 @@ export default function create({
         : get<Fuse<Space>>(index)
             .search(text)
             .map((r) => r.item)
-    const $traits = get<Traits>(traits)
-    return searched.filter((space) => $traits.evaluate({ formula, space }))
+
+    if (formula) {
+      const $traits = get<Traits>(traits)
+      return searched.filter((space) => $traits.evaluate({ formula, space }))
+    } else {
+      return searched
+    }
   }
 
   return {
