@@ -1,7 +1,7 @@
 <script lang="ts">
   import { writable } from 'svelte/store'
 
-  import type { Formula, Property } from '../../types'
+  import type { Formula, Property } from '../../models'
   import urlSearchParam from '../../stores/urlSearchParam'
   import Examples from './Examples.svelte'
   import FormulaInput from './Formula.svelte'

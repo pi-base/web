@@ -1,12 +1,4 @@
-import {
-  and,
-  atom,
-  property,
-  space,
-  trait,
-  theorem,
-} from '@pi-base/core/lib/testUtils'
-import type { Property, Space } from '../types'
+import { atom, property, theorem } from '@pi-base/core/lib/testUtils'
 
 import Theorems from './Theorems'
 

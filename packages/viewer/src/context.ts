@@ -1,16 +1,14 @@
 import { getContext, setContext } from 'svelte'
 import { Readable, derived, get, writable } from 'svelte/store'
 
-import type { Source } from './types'
 import * as Gateway from './gateway'
-import { Collection, Theorems } from './models'
+import { Collection, Property, Space, Source, Theorems } from './models'
 import { ILocal, Local } from './repositories/local'
 import { collect } from './stores/collection'
 import * as Deduction from './stores/deduction'
 import * as Src from './stores/source'
 import * as Sync from './stores/sync'
 import * as Traits from './stores/traits'
-import type { Property, Space } from './types'
 
 export type Context = {
   source: Src.Store

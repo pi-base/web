@@ -1,6 +1,5 @@
 import { Readable, writable } from 'svelte/store'
-import type { Data, Trait } from '../types'
-import Traits from '../models/Traits'
+import { Data, Trait, Traits } from '../models'
 
 export type Store = Readable<Traits> & {
   add(traits: Trait[]): void

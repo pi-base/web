@@ -1,6 +1,6 @@
 import { bundle } from '@pi-base/core'
 
-import type { Data, Source } from './types'
+import type { Data, Source } from './models'
 import { trace } from './debug'
 
 export async function sync(

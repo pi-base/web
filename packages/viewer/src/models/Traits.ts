@@ -1,7 +1,6 @@
 import * as F from '@pi-base/core/lib/Formula'
 
-import type { Data, Formula, Property, Space, Trait } from '../types'
-import { Id } from '../models'
+import { Data, Formula, Id, Property, Space, Trait } from '../models'
 
 export default class Traits {
   private traits: Map<string, Trait>

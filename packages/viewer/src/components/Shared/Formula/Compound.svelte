@@ -1,7 +1,7 @@
 <script lang="ts">
   import type * as F from '@pi-base/core/lib/Formula'
 
-  import type { Property } from '../../../types'
+  import type { Property } from '../../../models'
 
   import Formula from '../Formula.svelte'
 

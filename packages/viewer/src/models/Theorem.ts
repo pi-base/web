@@ -1,7 +1,7 @@
 import type { Ref, Theorem as BTheorem } from '@pi-base/core'
 import * as F from '@pi-base/core/lib/Formula'
 
-import type { Property } from '../types'
+import type { Property } from '../models'
 
 export default class Theorem {
   static hydrate(

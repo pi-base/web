@@ -1,8 +1,7 @@
 import { Readable, get, writable } from 'svelte/store'
 import { ImplicationIndex, Prover } from '@pi-base/core'
 import * as F from '@pi-base/core/lib/Formula'
-import type { Collection, Theorems, Traits } from '../models'
-import type { Space } from '../types'
+import type { Collection, Space, Theorems, Traits } from '../models'
 import type { Store as TraitsStore } from './traits'
 
 export type State = {

@@ -1,6 +1,6 @@
 <script lang="ts">
   import context from '../../context'
-  import type { Property, Space } from '../../types'
+  import type { Property, Space } from '../../models'
 
   import { Link, Typeset } from '../Shared'
   import Value from './Value.svelte'

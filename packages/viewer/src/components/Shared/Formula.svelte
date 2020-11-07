@@ -1,6 +1,6 @@
 <script lang="ts">
   import type * as F from '@pi-base/core/lib/Formula'
-  import type { Property } from '../../types'
+  import type { Property } from '../../models'
 
   import Atom from './Formula/Atom.svelte'
   import Compound from './Formula/Compound.svelte'

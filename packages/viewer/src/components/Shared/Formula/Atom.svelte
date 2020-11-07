@@ -3,7 +3,7 @@
   import type * as F from '@pi-base/core/lib/Formula'
 
   import Typeset from '../Typeset.svelte'
-  import type { Property } from '../../../types'
+  import type { Property } from '../../../models'
 
   export let value: F.Atom<Property>
   export let link: boolean = true

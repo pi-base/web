@@ -4,7 +4,7 @@
   import * as F from '@pi-base/core/lib/Formula'
 
   import context from '../../context'
-  import type { Formula, Property } from '../../types'
+  import type { Formula, Property } from '../../models'
 
   export let raw: Writable<string>
   export let formula: Writable<Formula<Property> | undefined>

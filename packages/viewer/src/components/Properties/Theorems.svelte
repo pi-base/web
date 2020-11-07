@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Formula, Link, Id } from '../Shared'
-  import type { Property } from '../../types'
+  import type { Property } from '../../models'
   import context from '../../context'
 
   export let property: Property

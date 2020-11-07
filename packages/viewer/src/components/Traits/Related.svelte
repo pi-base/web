@@ -3,8 +3,7 @@
   import { Icons, Link, Typeset } from '../Shared'
   import { Value } from '../Traits'
   import context from '../../context'
-  import type { Traits } from '../../models'
-  import type { Property, Trait } from '../../types'
+  import type { Trait, Traits } from '../../models'
 
   interface Record {
     uid: string

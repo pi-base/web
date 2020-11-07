@@ -1,9 +1,8 @@
 import { and, atom, property, space, trait } from '@pi-base/core/lib/testUtils'
 import { writable } from 'svelte/store'
 import { indexByUid } from './collection'
-import Traits from '../models/Traits'
 
-import type { Property, Space, Trait } from '../types'
+import { Property, Space, Trait, Traits } from '../models'
 import create, { Search } from './search'
 
 const properties: Record<string, Property> = {}

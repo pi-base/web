@@ -5,7 +5,7 @@
   import { Table } from '../Traits'
   import context from '../../context'
   import { search } from '../../stores'
-  import type { Property } from '../../types'
+  import type { Property } from '../../models'
 
   export let text: string
   export let formula: F.Formula<Property> | undefined

@@ -1,5 +1,5 @@
 import { and, atom, property, theorem } from '@pi-base/core/lib/testUtils'
-import type { Property } from '../types'
+import type { Property } from '../models'
 
 import Theorem from './Theorem'
 

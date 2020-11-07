@@ -1,8 +1,7 @@
 import Fuse from 'fuse.js'
 import { Readable, derived, get as _get } from 'svelte/store'
 
-import type { Collection, Traits } from '../models'
-import type { Formula, Property, Space } from '../types'
+import type { Collection, Formula, Property, Space, Traits } from '../models'
 
 export type Input = {
   text?: string

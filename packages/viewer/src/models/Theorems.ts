@@ -1,9 +1,7 @@
 import type { Theorem as BTheorem } from '@pi-base/core'
 import * as F from '@pi-base/core/lib/Formula'
 
-import Id from './Id'
-import Theorem from './Theorem'
-import type { Data, Property } from '../types'
+import { Data, Id, Property, Theorem } from '../models'
 
 export default class Theorems {
   private theorems: Map<number, Theorem>
