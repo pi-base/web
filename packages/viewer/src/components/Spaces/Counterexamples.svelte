@@ -1,14 +1,14 @@
 <script lang="ts">
   import context from '../../context'
-  import type { Space } from '../../types'
-  import { Formula, Link, Typeset } from '../Shared'
+  import type { Space } from '../../models'
+  import { Formula, Id, Link, Typeset } from '../Shared'
 
   export let space: Space
 
   const { theorems, traits } = context()
 
-  $: results = $theorems.all.filter((theorem) =>
-    $traits.isCounterexample(theorem, space),
+  $: results = $theorems.all.filter((t) =>
+    $traits.isCounterexample(t.converse, space),
   )
 </script>
 
@@ -30,7 +30,9 @@ theorems
       {#each results as { uid, when, then } (uid)}
         <tr>
           <td>
-            <Link to="/theorems/{uid}">{uid}</Link>
+            <Link to="/theorems/{uid}">
+              <Id {uid} />
+            </Link>
           </td>
           <td>
             <Formula value={when} />

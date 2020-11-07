@@ -58,10 +58,13 @@ export default class Traits {
 
   evaluate({ formula, space }: { formula: Formula<Property>; space: Space }) {
     const traits = new Map(
-      this.forSpace(space).map(([property, trait]) => [property, trait.value]),
+      this.forSpace(space).map(([property, trait]) => [
+        property.uid,
+        trait.value,
+      ]),
     )
-
-    return F.evaluate<Property>(formula, traits)
+    const mapped = F.mapProperty((p) => p.uid, formula)
+    return F.evaluate(mapped, traits)
   }
 
   isCounterexample(
