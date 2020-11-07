@@ -13,10 +13,10 @@ export async function sync(
   if (result) {
     trace({ event: 'remote_fetch_complete', result })
     return {
-      spaces: Array.from(result.bundle.spaces.values()),
-      properties: Array.from(result.bundle.properties.values()),
-      traits: Array.from(result.bundle.traits.values()),
-      theorems: Array.from(result.bundle.theorems.values()),
+      spaces: [...result.bundle.spaces.values()],
+      properties: [...result.bundle.properties.values()],
+      traits: [...result.bundle.traits.values()],
+      theorems: [...result.bundle.theorems.values()],
       etag: result.etag,
       sha: result.bundle.version.sha,
     }

@@ -43,31 +43,17 @@ export default class Traits {
   }
 
   forProperty(property: Property): [Space, Trait][] {
-    return Array.from(this.spaces.values()).reduce(
-      (acc: [Space, Trait][], space: Space) => {
-        const trait = this.find(space, property)
-        return trait ? [...acc, [space, trait] as [Space, Trait]] : acc
-      },
-      [],
-    )
+    return this.collect(this.spaces, (space) => this.find(space, property))
   }
 
   forSpace(space: Space): [Property, Trait][] {
-    return Array.from(this.properties.values()).reduce(
-      (acc: [Property, Trait][], property: Property) => {
-        const trait = this.find(space, property)
-        return trait ? [...acc, [property, trait] as [Property, Trait]] : acc
-      },
-      [],
+    return this.collect(this.properties, (property) =>
+      this.find(space, property),
     )
   }
 
   get size() {
     return this.traits.size
-  }
-
-  private traitId(space: string, property: string) {
-    return `${Id.toInt(space)}.${Id.toInt(property)}`
   }
 
   evaluate({ formula, space }: { formula: Formula<Property>; space: Space }) {
@@ -88,5 +74,23 @@ export default class Traits {
         space,
       }) === true
     )
+  }
+
+  private traitId(space: string, property: string) {
+    return `${Id.toInt(space)}.${Id.toInt(property)}`
+  }
+
+  private collect<T>(
+    collection: Map<unknown, T>,
+    lookup: (item: T) => Trait | undefined,
+  ): [T, Trait][] {
+    const result: [T, Trait][] = []
+    collection.forEach((item) => {
+      const trait = lookup(item)
+      if (trait) {
+        result.push([item, trait])
+      }
+    })
+    return result
   }
 }

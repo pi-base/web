@@ -30,7 +30,7 @@ export function index<Value, Key, Input extends Key = Key>(
 
   return {
     get all() {
-      return Array.from(index.values())
+      return [...index.values()]
     },
     find(id: Input) {
       return index.get(normalize(id)) || null

@@ -8,11 +8,10 @@
   const { source } = context()
 
   $: onMain = $source.branch === mainBranch
-  $: showDev = devHost || !onMain
   $: bg = onMain ? 'light' : 'dark'
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-{bg} bg-{onMain ? 'light' : 'dark'}">
+<nav class="navbar navbar-expand-lg navbar-{bg} bg-{bg}">
   <div class="container">
     <span class="navbar-brand"> <a href="/">π-Base</a> </span>
 
@@ -23,7 +22,7 @@
     </div>
 
     <div class="navbar-nav">
-      {#if showDev}
+      {#if devHost || !onMain}
         <Link to="/dev">{$source.branch}</Link>
       {/if}
       <a class="nav-link" href={contributingUrl}>Contribute</a>

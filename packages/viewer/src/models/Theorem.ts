@@ -59,7 +59,7 @@ export default class Theorem {
   get properties() {
     const set = F.properties(this.when)
     F.properties(this.then).forEach((p) => set.add(p))
-    return Array.from(set)
+    return [...set]
   }
 
   get converse(): Theorem {

@@ -26,4 +26,4 @@ Spaces
 
 <Table
   spaces={results}
-  properties={formula ? Array.from(F.properties(formula)) : []} />
+  properties={formula ? [...F.properties(formula)] : []} />

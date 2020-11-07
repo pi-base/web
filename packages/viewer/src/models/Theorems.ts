@@ -31,7 +31,7 @@ export default class Theorems {
   }
 
   get all() {
-    return Array.from(this.theorems.values())
+    return [...this.theorems.values()]
   }
 
   find(uid: string | number) {

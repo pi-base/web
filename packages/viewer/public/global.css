@@ -1,3 +1,40 @@
+.navbar {
+  background-repeat: repeat;
+}
+
+.status {
+  height: 2em;
+}
+
+.status .progress {
+  height: 2px;
+}
+
+.nav.nav-tabs {
+  margin-bottom: 1em;
+}
+
+.navbar.bg-light {
+  background-image: url('/peanocurvelight.svg');
+}
+
+.navbar.bg-dark {
+  background-image: url('/peanocurve.svg');
+}
+
+.jumbotron.home-jumbotron {
+  margin-top: -20px;
+  background-color: #343a40;
+  background-image: url('/peanocurve.svg');
+  background-repeat: repeat;
+  color: #fff;
+}
+
+.example:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .rotate {
   animation:spin 2s linear infinite;
 }
@@ -5,10 +42,3 @@
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
-
-.notifications {
-  position: absolute;
-  bottom: 50px;
-  left: 50px;
-  width: 200px;
-}

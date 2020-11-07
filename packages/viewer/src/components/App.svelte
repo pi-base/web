@@ -12,8 +12,8 @@
 
 <Router>
   <Nav />
+  <Status />
   <main class="container">
-    <Status />
     <Routes />
   </main>
 </Router>
