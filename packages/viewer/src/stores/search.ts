@@ -1,7 +1,8 @@
 import Fuse from 'fuse.js'
-import { Readable, derived, get as _get } from 'svelte/store'
+import { Readable, derived } from 'svelte/store'
 
 import type { Collection, Formula, Property, Space, Traits } from '../models'
+import { read } from '../util'
 
 export type Input = {
   text?: string
@@ -34,13 +35,13 @@ export default function create({
   function search({ text = '', formula }: Input) {
     const searched =
       text.trim() === ''
-        ? get<Collection<Space>>(spaces).all
-        : get<Fuse<Space>>(index)
+        ? read(spaces).all
+        : read(index)
             .search(text)
             .map((r) => r.item)
 
     if (formula) {
-      const $traits = get<Traits>(traits)
+      const $traits = read(traits)
       return searched.filter((space) => $traits.evaluate({ formula, space }))
     } else {
       return searched
@@ -51,5 +52,3 @@ export default function create({
     search,
   }
 }
-
-const get = <T>(store: Readable<T>): T => _get<T, Readable<T>>(store)
