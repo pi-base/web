@@ -1,5 +1,6 @@
 export { Link } from 'svelte-routing'
 
+export * as Icons from './Icons'
 export * as Tabs from './Tabs/index'
 
 export { default as Age } from './Age.svelte'

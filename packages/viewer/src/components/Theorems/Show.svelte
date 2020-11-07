@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { theorems } from '../../context'
+  import context from '../../context'
   import { References, Tabs, Title, Typeset } from '../Shared'
   import Converse from './Converse.svelte'
   import Name from './Name.svelte'
 
   export let id: string
 
-  const store = theorems()
-  $: theorem = $store.find(id)
+  const theorems = context().theorems
+  $: theorem = $theorems.find(id)
 </script>
 
 {#if theorem}

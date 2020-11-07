@@ -1,13 +1,13 @@
 <script lang="ts">
   import { derived } from 'svelte/store'
 
-  import { properties } from '../../context'
+  import context from '../../context'
   import { list } from '../../stores'
 
   import { Filter, Id, Link, Title, Typeset } from '../Shared'
 
   const index = list(
-    derived(properties(), (ps) => ps.all),
+    derived(context().properties, (ps) => ps.all),
     {
       weights: { name: 0.7, aliases: 0.7, description: 0.3 },
       queryParam: 'filter',

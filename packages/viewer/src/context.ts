@@ -3,11 +3,13 @@ import { Readable, derived, get, writable } from 'svelte/store'
 
 import type { Source } from './types'
 import * as Gateway from './gateway'
-import { Collection, Theorems, Traits } from './models'
+import { Collection, Theorems } from './models'
 import { ILocal, Local } from './repositories/local'
 import { collect } from './stores/collection'
+import * as Deduction from './stores/deduction'
 import * as Src from './stores/source'
 import * as Sync from './stores/sync'
+import * as Traits from './stores/traits'
 import type { Property, Space } from './types'
 
 export type Context = {
@@ -16,7 +18,8 @@ export type Context = {
   properties: Readable<Collection<Property, number | string>>
   spaces: Readable<Collection<Space, number | string>>
   theorems: Readable<Theorems>
-  traits: Readable<Traits>
+  traits: Traits.Store
+  deduction: Deduction.Store
   sha: Readable<string | undefined>
 }
 
@@ -61,13 +64,18 @@ export function initialize(
     previousSource = s
   })
 
+  const spaces = collect(data, (d) => d.spaces)
+  const theorems = derived(data, Theorems.fromData)
+  const traits = Traits.create(data)
+
   return {
     source,
     sync,
     properties: collect(data, (d) => d.properties),
-    spaces: collect(data, (d) => d.spaces),
-    theorems: derived(data, Theorems.fromData),
-    traits: derived(data, Traits.fromData),
+    spaces,
+    theorems,
+    traits,
+    deduction: Deduction.create(spaces, traits, theorems),
     sha: derived(data, (d) => d?.sha),
   }
 }
@@ -78,20 +86,4 @@ export function set(value: Context) {
 
 export default function context() {
   return getContext<Context>(contextKey)
-}
-
-export function properties() {
-  return context().properties
-}
-
-export function spaces() {
-  return context().spaces
-}
-
-export function theorems() {
-  return context().theorems
-}
-
-export function traits() {
-  return context().traits
 }

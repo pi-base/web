@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { spaces } from '../../context'
+  import context from '../../context'
   import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
 
   export let id: string
 
-  const store = spaces()
-  $: space = $store.find(id)
+  const { spaces } = context()
+  $: space = $spaces.find(id)
 </script>
 
 {#if space}

@@ -2,7 +2,7 @@
   import context from '../../context'
   import type { Property, Space } from '../../types'
 
-  import { Link } from '../Shared'
+  import { Link, Typeset } from '../Shared'
   import Value from './Value.svelte'
 
   export let properties: Property[]
@@ -17,7 +17,9 @@
       <td />
       {#each properties as { uid, name } (uid)}
         <td>
-          <Link to="/properties/{uid}">{name}</Link>
+          <Link to="/properties/{uid}">
+            <Typeset body={name} />
+          </Link>
         </td>
       {/each}
     </tr>
@@ -26,7 +28,9 @@
     {#each spaces as space (space.uid)}
       <tr>
         <td>
-          <Link to="/spaces/{space.uid}">{space.name}</Link>
+          <Link to="/spaces/{space.uid}">
+            <Typeset body={space.name} />
+          </Link>
         </td>
         {#each properties as property (property.uid)}
           <td>

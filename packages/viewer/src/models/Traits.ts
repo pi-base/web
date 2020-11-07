@@ -14,16 +14,28 @@ export default class Traits {
     if (data) {
       return new Traits(data.traits, data.spaces, data.properties)
     } else {
-      return new Traits([], [], [])
+      return new Traits()
     }
   }
 
-  constructor(traits: Trait[], spaces: Space[], properties: Property[]) {
+  constructor(
+    traits: Trait[] = [],
+    spaces: Space[] = [],
+    properties: Property[] = [],
+  ) {
     this.traits = new Map(
       traits.map((t) => [this.traitId(t.space, t.property), t]),
     )
     this.spaces = new Map(spaces.map((s) => [Id.toInt(s.uid), s]))
     this.properties = new Map(properties.map((p) => [Id.toInt(p.uid), p]))
+  }
+
+  add(traits: Trait[]): Traits {
+    return new Traits(
+      [...this.traits.values(), ...traits],
+      [...this.spaces.values()],
+      [...this.properties.values()],
+    )
   }
 
   find(space: Space, property: Property) {

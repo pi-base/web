@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { properties } from '../../context'
+  import context from '../../context'
   import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
   export let id: string
 
-  const store = properties()
-  $: property = $store.find(id)
+  const properties = context().properties
+  $: property = $properties.find(id)
 </script>
 
 {#if property}

@@ -1,4 +1,6 @@
 /coverage/
+/cypress/screenshots
+/cypress/videos
 /node_modules/
 /public/build/
 

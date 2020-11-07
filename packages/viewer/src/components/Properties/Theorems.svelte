@@ -1,13 +1,13 @@
 <script lang="ts">
   import { Formula, Link, Id } from '../Shared'
   import type { Property } from '../../types'
-  import { theorems } from '../../context'
+  import context from '../../context'
 
   export let property: Property
 
-  const store = theorems()
+  const theorems = context().theorems
 
-  $: related = $store.forProperty(property)
+  $: related = $theorems.forProperty(property)
 </script>
 
 <table class="table">
