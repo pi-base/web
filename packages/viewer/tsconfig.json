@@ -1,11 +1,25 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-  "include": ["src/**/*"],
-  "exclude": ["node_modules/*", "__sapper__/*", "public/*", "cypress/*"],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules/*",
+    "__sapper__/*",
+    "public/*",
+    "cypress/*"
+  ],
   "compilerOptions": {
+    "baseUrl": ".",
     "sourceMap": true,
     "strict": true,
-    "types": ["jest", "node"],
-    "typeRoots": ["src/types", "node_modules/@types"]
+    "types": [
+      "jest",
+      "node"
+    ],
+    "typeRoots": [
+      "src/types",
+      "node_modules/@types"
+    ]
   }
 }

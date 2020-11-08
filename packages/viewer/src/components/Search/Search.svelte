@@ -21,14 +21,14 @@
       <label class="form-label" for="text">Filter by Text</label>
       <input
         class="form-control"
-        name="formula"
+        name="text"
         placeholder="e.g. plank"
         bind:value={$text} />
     </div>
     <div class="form-group">
       <label class="form-label" for="formula">Filter by Formula</label>
       <FormulaInput
-        name="text"
+        name="formula"
         placeholder="e.g. compact + metrizable"
         raw={rawFormula}
         {formula} />
