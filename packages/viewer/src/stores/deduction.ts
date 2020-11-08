@@ -1,8 +1,8 @@
-import { Readable, get, writable } from 'svelte/store'
-import { ImplicationIndex, Prover } from '@pi-base/core'
+import { Readable, writable } from 'svelte/store'
+import { ImplicationIndex, Prover, disprove } from '@pi-base/core'
 import type { Proof } from '@pi-base/core/lib/Logic/Types'
 import * as F from '@pi-base/core/lib/Formula'
-import type { Collection, Space, Theorems, Traits } from '../models'
+import type { Collection, Property, Space, Theorem, Theorems } from '../models'
 import type { Store as TraitsStore } from './traits'
 import { eachTick, read } from '../util'
 
@@ -21,6 +21,35 @@ export type Store = Readable<State> & {
   run(): void
 }
 
+function indexTheorems(theorems: Theorems) {
+  return new ImplicationIndex(
+    theorems.all.map(({ uid, when, then }) => ({
+      uid,
+      when: F.mapProperty((p) => p.uid, when),
+      then: F.mapProperty((p) => p.uid, then),
+    })),
+  )
+}
+
+export function check(
+  store: Readable<Theorems>,
+  formula: F.Formula<Property>,
+): Theorem[] | 'tautology' | null {
+  const collection = read(store)
+  const proof = disprove(
+    indexTheorems(collection),
+    F.mapProperty((p) => p.uid, formula),
+  )
+
+  if (proof === 'tautology') {
+    return proof
+  } else if (!proof) {
+    return null
+  }
+
+  return proof.map((uid) => collection.find(uid)!)
+}
+
 export function create(
   spaces: Readable<Collection<Space>>,
   traits: TraitsStore,
@@ -34,23 +63,18 @@ export function create(
 
   function run() {
     const ss = read(spaces).all
-    const ths = read(theorems)
-    const trs = read(traits)
-
-    const implications = new ImplicationIndex(
-      ths.all.map(({ uid, when, then }) => ({
-        uid,
-        when: F.mapProperty((p) => p.uid, when),
-        then: F.mapProperty((p) => p.uid, then),
-      })),
-    )
+    const implications = indexTheorems(read(theorems))
 
     set({ kind: 'checking', checked: 0, total: ss.length })
 
     eachTick(ss, (s: Space, si: number, halt: () => void) => {
       update((state) => ({ ...state, checking: s.name }))
 
-      const map = new Map(trs.forSpace(s).map(([p, t]) => [p.uid, t.value]))
+      const map = new Map(
+        read(traits)
+          .forSpace(s)
+          .map(([p, t]) => [p.uid, t.value]),
+      )
       const prover = new Prover(implications, map)
 
       const contradiction = prover.run()
