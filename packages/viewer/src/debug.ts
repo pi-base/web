@@ -4,6 +4,7 @@ export type Event =
   | { event: 'bundle_unchanged'; etag: string }
   | { event: 'checkout'; branch: string }
   | { event: 'set_host'; host: string }
+  | { event: 'build_typesetter' }
 
 export function trace(payload: Event, log = console.log) {
   const { event, ...rest } = payload
@@ -19,5 +20,7 @@ export function trace(payload: Event, log = console.log) {
       return log('Checking out', rest)
     case 'set_host':
       return log('Setting host', rest)
+    case 'build_typesetter':
+      return log('Rebuilding typesetter')
   }
 }

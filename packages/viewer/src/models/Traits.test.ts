@@ -1,22 +1,23 @@
-import { atom, property, space, trait } from '@pi-base/core/lib/testUtils'
+import { atom, property, space, trait } from '../__test__'
 
+import Collection from './Collection'
 import Traits from './Traits'
 
-const s1 = space({ uid: 'S1' })
-const s2 = space({ uid: 'S2' })
+const s1 = space({ id: 1 })
+const s2 = space({ id: 2 })
 
-const p1 = property({ uid: 'P1' })
-const p2 = property({ uid: 'P2' })
+const p1 = property({ id: 1 })
+const p2 = property({ id: 2 })
 
-const traits = Traits.fromData({
-  spaces: [s1, s2],
-  properties: [p1, p2],
-  traits: [
-    trait({ space: 'S1', property: 'P1' }),
-    trait({ space: 'S2', property: 'P1' }),
-    trait({ space: 'S2', property: 'P2' }),
+const traits = Traits.build(
+  [
+    trait({ space: 1, property: 1 }),
+    trait({ space: 2, property: 1 }),
+    trait({ space: 2, property: 2 }),
   ],
-})
+  Collection.byId([s1, s2]),
+  Collection.byId([p1, p2]),
+)
 
 test('find', () => {
   expect(traits.find(s1, p1)).not.toBeUndefined()

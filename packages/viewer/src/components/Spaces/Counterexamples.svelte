@@ -1,7 +1,8 @@
 <script lang="ts">
   import context from '../../context'
   import type { Space } from '../../models'
-  import { Formula, Id, Link, Typeset } from '../Shared'
+  import { Typeset } from '../Shared'
+  import { Table } from '../Theorems'
 
   export let space: Space
 
@@ -18,30 +19,5 @@ is a counterexample to the converse of
 theorems
 
 {#if results.length > 0}
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>When</th>
-        <th>Then</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each results as { uid, when, then } (uid)}
-        <tr>
-          <td>
-            <Link to="/theorems/{uid}">
-              <Id {uid} />
-            </Link>
-          </td>
-          <td>
-            <Formula value={when} />
-          </td>
-          <td>
-            <Formula value={then} />
-          </td>
-        </tr>
-      {/each}
-    </tbody>
-  </table>
+  <Table theorems={results} />
 {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Link, References, Typeset } from '../Shared'
   import context from '../../context'
-  import type { Property, Theorem } from '../../models'
+  import type { Property, Theorem, Trait } from '../../models'
   import { read } from '../../util'
   import Proof from './Proof.svelte'
 
@@ -11,7 +11,10 @@
   const { spaces, properties, theorems, traits } = context()
 
   // TODO: clean up
-  function hydrate(proof: { properties: string[]; theorems: string[] }) {
+  function hydrate(proof: {
+    properties: number[]
+    theorems: number[]
+  }): { traits: [Property, Trait][]; theorems: Theorem[] } {
     const ps = read(properties)
     const trs = read(traits)
     const ths = read(theorems)
@@ -20,7 +23,7 @@
       traits: proof.properties.map((pid) => {
         const p = ps.find(pid)!
         const t = trs.find(s!, p)!
-        return { pid, name: p.name, value: t.value, deduced: !!t.proof }
+        return [p, t]
       }),
       theorems: proof.theorems.map((p) => ths.find(p)!),
     }
@@ -33,21 +36,17 @@
 
 {#if s && p && t}
   <h1>
-    <Link to="/spaces/{s.uid}">
-      <Typeset body={s.name} />
-    </Link>
+    <Link.Space space={s} />
     is
     {t.value ? '' : 'not'}
-    <Link to="/properties/{p.uid}">
-      <Typeset body={p.name} />
-    </Link>
+    <Link.Property property={p} />
   </h1>
 
-  {#if s && t && t.proof}
-    <Proof space={s} {...hydrate(t.proof)} />
-  {:else if t}
+  {#if s && t && t.asserted}
     <Typeset body={t.description} />
 
     <References references={t.refs} />
+  {:else if s && t && !t.asserted}
+    <Proof space={s} {...hydrate(t.proof)} />
   {/if}
 {/if}

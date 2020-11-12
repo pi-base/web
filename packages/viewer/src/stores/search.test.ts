@@ -1,40 +1,23 @@
-import { and, atom, property, space, trait } from '@pi-base/core/lib/testUtils'
+import { TraitsArgs, and, atom, traits } from '../__test__'
 import { writable } from 'svelte/store'
-import { indexByUid } from './collection'
 
-import { Property, Space, Trait, Traits } from '../models'
+import type { Collection, Property } from '../models'
 import create, { Search } from './search'
 
-const properties: Record<string, Property> = {}
+let properties: Collection<Property>
 
-function p(id: string | number) {
-  id = '' + id
-  return (properties[id] = properties[id] || property({ uid: `P${id}` }))
-}
-
-function setup(data: Record<string, Record<number, boolean>>): Search {
-  const spaces = new Set<Space>()
-  const properties = new Set<Property>()
-  const traits: Trait[] = []
-
-  Object.entries(data).forEach(([name, map], i) => {
-    const s = space({ uid: `S${i}`, name })
-    spaces.add(s)
-
-    Object.entries(map).forEach(([pid, value]) => {
-      const property = p(pid)
-      properties.add(property)
-
-      traits.push(trait({ property: property.uid, space: s.uid, value }))
-    })
-  })
+function setup(spec: TraitsArgs): Search {
+  const state = traits(spec)
+  properties = state.properties
 
   return create({
-    spaces: writable(indexByUid(Array.from(spaces))),
-    traits: writable(
-      new Traits(traits, Array.from(spaces), Array.from(properties)),
-    ),
+    spaces: writable(state.spaces),
+    traits: writable(state.traits),
   })
+}
+
+function p(id: number) {
+  return properties.find(id)!
 }
 
 describe('with a store', () => {

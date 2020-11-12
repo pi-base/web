@@ -1,7 +1,7 @@
 <script lang="ts">
+  import { Link } from 'svelte-routing'
   import context from '../../context'
   import Log from './Log.svelte'
-  import { Link } from '../Shared'
 
   const { spaces, properties, theorems, traits } = context()
 </script>

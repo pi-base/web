@@ -30,6 +30,7 @@
       }} />
   </div>
   <div class="col-sm">
-    <Typeset {body} {truncated} />
+    <!-- TODO: truncated -->
+    <Typeset {body} />
   </div>
 </div>

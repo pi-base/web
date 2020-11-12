@@ -1,28 +1,23 @@
-import type { Property, Space } from '@pi-base/core'
-import { atom, property, space, theorem } from '@pi-base/core/lib/testUtils'
-
+import { atom, property, space, theorem } from '../__test__'
 import { Collection, Theorems } from '../models'
-import { indexByUid } from '../stores/collection'
 
 import internalLinks from './internalLinks'
 
 describe('with ambient data', () => {
-  const properties: Collection<Property> = indexByUid([
-    property({ uid: 'P000001', name: 'One' }),
-    property({ uid: 'P000002', name: 'Two' }),
+  const properties = Collection.byId([
+    property({ id: 1, name: 'One' }),
+    property({ id: 2, name: 'Two' }),
   ])
-  const spaces: Collection<Space> = indexByUid([
-    space({ uid: 'S000002', name: 'Two' }),
-  ])
-  const theorems: Theorems = new Theorems(
+  const spaces = Collection.byId([space({ id: 2, name: 'Two' })])
+  const theorems: Theorems = Theorems.build(
     [
       theorem({
-        uid: 'T000003',
-        when: atom('P000001'),
-        then: atom('P000002'),
+        id: 3,
+        when: atom(1),
+        then: atom(2),
       }),
     ],
-    properties.all,
+    properties,
   )
 
   const link = internalLinks(properties, spaces, theorems)

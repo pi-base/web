@@ -1,16 +1,55 @@
-import type { Property, Space, Theorem as BTheorem, Trait } from '@pi-base/core'
-export type { Formula, Property, Space, Trait } from '@pi-base/core'
+import type { Formula, Ref } from '@pi-base/core'
+export type { Formula, Ref } from '@pi-base/core'
+
+export type Property = {
+  id: number
+  name: string
+  aliases: string[]
+  description: string
+  refs: Ref[]
+}
+
+export type Space = {
+  id: number
+  name: string
+  aliases: string[]
+  description: string
+  refs: Ref[]
+}
+
+export type AssertedTrait = {
+  asserted: true
+  space: number
+  property: number
+  value: boolean
+  description: string
+  refs: Ref[]
+}
+
+export type DeducedTrait = {
+  asserted: false
+  space: number
+  property: number
+  value: boolean
+  proof: Proof
+}
+
+export type Trait = AssertedTrait | DeducedTrait
+
+export type SerializedTheorem = {
+  id: number
+  when: Formula<number>
+  then: Formula<number>
+  description: string
+  refs: Ref[]
+}
+
+export type Proof = {
+  properties: number[]
+  theorems: number[]
+}
 
 export type Source = {
   host: string
   branch: string
-}
-
-export type Data = {
-  properties: Property[]
-  spaces: Space[]
-  traits: Trait[]
-  theorems: BTheorem[]
-  etag: string
-  sha: string
 }

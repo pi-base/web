@@ -1,44 +1,47 @@
 import * as F from '@pi-base/core/lib/Formula'
 
-import { Data, Formula, Id, Property, Space, Trait } from '../models'
+import Collection from './Collection'
+import type { Formula, Property, Space, Trait } from '../models'
 
 export default class Traits {
   private traits: Map<string, Trait>
-  private spaces: Map<number, Space>
-  private properties: Map<number, Property>
+  private spaces: Collection<Space>
+  private properties: Collection<Property>
 
-  static fromData(
-    data: Pick<Data, 'properties' | 'spaces' | 'traits'> | undefined,
+  static build(
+    traits: Trait[] = [],
+    spaces: Collection<Space> = Collection.empty(),
+    properties: Collection<Property> = Collection.empty(),
   ): Traits {
-    if (data) {
-      return new Traits(data.traits, data.spaces, data.properties)
-    } else {
-      return new Traits()
-    }
+    return new Traits(traits, spaces, properties)
+  }
+
+  static empty() {
+    return new Traits()
   }
 
   constructor(
     traits: Trait[] = [],
-    spaces: Space[] = [],
-    properties: Property[] = [],
+    spaces: Collection<Space> = Collection.empty(),
+    properties: Collection<Property> = Collection.empty(),
   ) {
     this.traits = new Map(
       traits.map((t) => [this.traitId(t.space, t.property), t]),
     )
-    this.spaces = new Map(spaces.map((s) => [Id.toInt(s.uid), s]))
-    this.properties = new Map(properties.map((p) => [Id.toInt(p.uid), p]))
+    this.spaces = spaces
+    this.properties = properties
   }
 
   add(traits: Trait[]): Traits {
     return new Traits(
       [...this.traits.values(), ...traits],
-      [...this.spaces.values()],
-      [...this.properties.values()],
+      this.spaces,
+      this.properties,
     )
   }
 
   find(space: Space, property: Property) {
-    return this.traits.get(this.traitId(space.uid, property.uid))
+    return this.traits.get(this.traitId(space.id, property.id))
   }
 
   forProperty(property: Property): [Space, Trait][] {
@@ -51,6 +54,10 @@ export default class Traits {
     )
   }
 
+  get all(): Trait[] {
+    return [...this.traits.values()]
+  }
+
   get size() {
     return this.traits.size
   }
@@ -58,11 +65,11 @@ export default class Traits {
   evaluate({ formula, space }: { formula: Formula<Property>; space: Space }) {
     const traits = new Map(
       this.forSpace(space).map(([property, trait]) => [
-        property.uid,
+        property.id,
         trait.value,
       ]),
     )
-    const mapped = F.mapProperty((p) => p.uid, formula)
+    const mapped = F.mapProperty((p) => p.id, formula)
     return F.evaluate(mapped, traits)
   }
 
@@ -78,16 +85,16 @@ export default class Traits {
     )
   }
 
-  private traitId(space: string, property: string) {
-    return `${Id.toInt(space)}.${Id.toInt(property)}`
+  private traitId(space: number, property: number) {
+    return `${space}.${property}`
   }
 
   private collect<T>(
-    collection: Map<unknown, T>,
+    collection: Collection<T>,
     lookup: (item: T) => Trait | undefined,
   ): [T, Trait][] {
     const result: [T, Trait][] = []
-    collection.forEach((item) => {
+    collection.all.forEach((item) => {
       const trait = lookup(item)
       if (trait) {
         result.push([item, trait])

@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Related } from '../Traits'
-  import type { Space } from '../../models'
+  import type { Property, Space, Trait, Traits } from '../../models'
 
   export let space: Space
+
+  function related(traits: Traits): [Space, Property, Trait][] {
+    return traits.forSpace(space).map(([p, t]) => [space, p, t])
+  }
 </script>
 
-<Related
-  label="Property"
-  related={(traits) => traits.forSpace(space)}
-  linkRecord={(uid) => `/properties/${uid}`}
-  linkTrait={(uid) => `/spaces/${space.uid}/properties/${uid}`} />
+<Related label="Property" {related} />

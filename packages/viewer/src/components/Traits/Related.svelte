@@ -1,19 +1,12 @@
 <script lang="ts">
   import Fuse from 'fuse.js'
-  import { Icons, Link, Typeset } from '../Shared'
+  import { Icons, Link } from '../Shared'
   import { Value } from '../Traits'
   import context from '../../context'
-  import type { Trait, Traits } from '../../models'
-
-  interface Record {
-    uid: string
-    name: string
-  }
+  import type { Property, Space, Trait, Traits } from '../../models'
 
   export let label: string
-  export let related: (traits: Traits) => [Record, Trait][]
-  export let linkRecord: (uid: string) => string
-  export let linkTrait: (uid: string) => string
+  export let related: (traits: Traits) => [Space, Property, Trait][]
 
   const { traits } = context()
 
@@ -27,7 +20,9 @@
   $: all = related($traits)
   $: index = new Fuse(all, { keys: ['0.name'] })
   $: searched = filter ? index.search(filter).map((r) => r.item) : all
-  $: filtered = searched.filter(([_, t]) => showDeduced || !t.proof)
+  $: filtered = searched.filter(
+    ([_space, _property, t]) => showDeduced || t.asserted,
+  )
 </script>
 
 <div class="input-group">
@@ -56,20 +51,19 @@
     </tr>
   </thead>
   <tbody>
-    {#each filtered as [{ uid, name }, { value, proof }] (uid)}
+    {#each filtered as [space, property, trait] ([space.id, property.id])}
       <tr>
         <td>
-          <Link to={linkRecord(uid)}>
-            <Typeset body={name} />
-          </Link>
+          <!-- FIXME: conditionally space or property -->
+          <Link.Space {space} />
         </td>
         <td>
-          <Link to={linkTrait(uid)}>
-            <Value {value} />
-          </Link>
+          <Link.Trait {space} {property}>
+            <Value value={trait.value} />
+          </Link.Trait>
         </td>
         <td>
-          {#if proof}
+          {#if !trait.asserted}
             <Value value={true} />
           {/if}
         </td>

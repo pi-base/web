@@ -3,25 +3,22 @@ import { bundle } from '@pi-base/core'
 
 import { mainBranch } from '../constants'
 import { trace } from '../debug'
-import type { Data, Source } from '../types'
+import type { Source } from '../types'
 
-export type State = {
-  source: Source
-  data: Data
-}
+export type State = Source
 
 export interface Store extends Readable<Source> {
   checkout(branch: string): void
   setHost(host: string): void
 }
 
+export const initial: Source = {
+  branch: mainBranch,
+  host: bundle.defaultHost,
+}
+
 export function create(source?: Source): Store {
-  const store = writable<Source>(
-    source || {
-      host: bundle.defaultHost,
-      branch: mainBranch,
-    },
-  )
+  const store = writable<Source>(source || initial)
 
   const { subscribe, update } = store
 

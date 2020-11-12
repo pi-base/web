@@ -19,7 +19,7 @@ it('can fetch successfully', async () => {
 
   jest.spyOn(bundle, 'fetch').mockImplementation(async () => remote)
 
-  const result = await sync({ host: 'example', branch: 'test' })
+  const result = await sync('example', 'test')
 
   expect(result).toEqual({
     spaces: [],
@@ -47,13 +47,7 @@ it('notifies if the etag matches', async () => {
 
   jest.spyOn(bundle, 'fetch').mockImplementation(async () => undefined)
 
-  const result = await sync(
-    {
-      host: 'example',
-      branch: 'test',
-    },
-    current,
-  )
+  const result = await sync('example', 'test', current.etag)
 
   expect(result).toEqual(undefined)
   expect(trace.mock.calls).toEqual([

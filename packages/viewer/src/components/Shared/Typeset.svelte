@@ -1,15 +1,15 @@
 <script lang="ts">
   import context from '../../context'
-  import { typeset } from '../../stores'
 
   export let body: string
-  export let truncated = false
+  // TODO: export let truncated = false
 
-  const { properties, spaces, theorems } = context()
+  const { typeset } = context()
 
-  $: html = typeset(body, properties, spaces, theorems, truncated)
+  let html = ''
+  $: setTimeout(() => $typeset(body).then((result) => (html = result)), 0)
 </script>
 
 {#if body}
-  {@html $html}
+  {@html html || body}
 {/if}

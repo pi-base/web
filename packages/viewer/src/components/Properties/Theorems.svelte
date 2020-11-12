@@ -1,38 +1,13 @@
 <script lang="ts">
-  import { Formula, Link, Id } from '../Shared'
+  import { Table as Theorems } from '../Theorems'
   import type { Property } from '../../models'
   import context from '../../context'
 
   export let property: Property
 
-  const theorems = context().theorems
+  const { theorems } = context()
 
   $: related = $theorems.forProperty(property)
 </script>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Id</th>
-      <th>When</th>
-      <th>Then</th>
-    </tr>
-  </thead>
-  <tbody>
-    {#each related as { uid, when, then } (uid)}
-      <tr>
-        <td>
-          <Link to="/properties/{uid}">
-            <Id {uid} />
-          </Link>
-        </td>
-        <td>
-          <Formula value={when} />
-        </td>
-        <td>
-          <Formula value={then} />
-        </td>
-      </tr>
-    {/each}
-  </tbody>
-</table>
+<Theorems theorems={related} />

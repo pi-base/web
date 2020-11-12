@@ -1,22 +1,22 @@
-import { and, atom, property, theorem } from '@pi-base/core/lib/testUtils'
-import type { Property } from '../models'
+import { and, atom, property, theorem } from '../__test__'
+import { Collection, Property } from '../models'
 
 import Theorem from './Theorem'
 
-const p1 = property({ uid: 'P000001' })
-const p2 = property({ uid: 'P000002' })
-const p3 = property({ uid: 'P000003' })
+const p1 = property({ id: 1 })
+const p2 = property({ id: 2 })
+const p3 = property({ id: 3 })
 
 describe('hydrate', () => {
   const raw = theorem({
-    uid: 'T000001',
-    when: and(atom('P000001'), atom('P000002')),
-    then: atom('P000003'),
+    id: 1,
+    when: and(atom(1), atom(2)),
+    then: atom(3),
   })
 
   function index(properties: Property[]) {
-    const ix = new Map(properties.map((p) => [p.uid, p]))
-    return (uid: string) => ix.get(uid)
+    const ix = Collection.byId(properties)
+    return (id: number) => ix.find(id) || undefined
   }
 
   it('creates formulae with full properties', () => {
@@ -26,7 +26,7 @@ describe('hydrate', () => {
 
     expect(hydrated.when).toEqual(and(atom(p1), atom(p2)))
     expect(hydrated.then).toEqual(atom(p3))
-    expect(hydrated.name).toEqual('(P000001 ∧ P000002) ⇒ P000003')
+    expect(hydrated.name).toEqual('(Property 1 ∧ Property 2) ⇒ Property 3')
   })
 
   it('returns undefined if references are not present', () => {
@@ -39,7 +39,7 @@ describe('hydrate', () => {
 describe('properties', () => {
   it('lists the referenced theorems', () => {
     const theorem = new Theorem({
-      uid: 'T1',
+      id: 1,
       when: and(atom(p1), atom(p2)),
       then: atom(p3),
     })
@@ -51,7 +51,7 @@ describe('properties', () => {
 describe('converse', () => {
   it('reverses the implication', () => {
     const theorem = new Theorem({
-      uid: 'T1',
+      id: 1,
       when: atom(p1),
       then: atom(p3),
     })

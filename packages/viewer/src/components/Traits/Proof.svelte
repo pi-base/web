@@ -1,16 +1,11 @@
 <script lang="ts">
-  import { Formula, Id, Link } from '../Shared'
+  import { Formula, Link } from '../Shared'
   import Value from './Value.svelte'
-  import type { Space, Theorem } from '../../models'
+  import type { Property, Space, Theorem, Trait } from '../../models'
 
   export let space: Space
-  export let traits: {
-    pid: string
-    name: string
-    value: boolean
-    deduced: boolean
-  }[]
   export let theorems: Theorem[]
+  export let traits: [Property, Trait][]
 </script>
 
 Automatically deduced from the following
@@ -26,18 +21,18 @@ Automatically deduced from the following
         </tr>
       </thead>
       <tbody>
-        {#each traits as { pid, name, value, deduced } (pid)}
+        {#each traits as [property, trait] (property.id)}
           <tr>
             <td>
-              <Link to="/properties/{pid}">{name}</Link>
+              <Link.Property {property} />
             </td>
             <td>
-              <Link to="/spaces/{space.uid}/properties/{pid}">
-                <Value {value} />
-              </Link>
+              <Link.Trait {space} {property}>
+                <Value value={trait.value} />
+              </Link.Trait>
             </td>
             <td>
-              {#if deduced}
+              {#if !trait.asserted}
                 <Value value={true} />
               {/if}
             </td>
@@ -57,18 +52,16 @@ Automatically deduced from the following
         </tr>
       </thead>
       <tbody>
-        {#each theorems as { uid, when, then } (uid)}
+        {#each theorems as theorem (theorem.id)}
           <tr>
             <td>
-              <Link to="/theorems/{uid}">
-                <Id {uid} />
-              </Link>
+              <Link.Theorem {theorem} />
             </td>
             <td>
-              <Formula value={when} />
+              <Formula value={theorem.when} />
             </td>
             <td>
-              <Formula value={then} />
+              <Formula value={theorem.then} />
             </td>
           </tr>
         {/each}

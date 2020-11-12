@@ -1,26 +1,19 @@
-import { Readable, get, readable } from 'svelte/store'
-
-import type { Collection, Property, Space, Theorems } from '../models'
+import type { Property, Space, Theorem } from '../models'
 import { parser, externalLinks, internalLinks } from '../parser'
+import type { Finder } from '../parser/internalLinks'
 
-type R<T> = Readable<Collection<T, string | number>>
+export type Typesetter = (body: string) => Promise<string>
 
-export default function typeset(
-  body: string,
-  properties: R<Property>,
-  spaces: R<Space>,
-  theorems: Readable<Theorems>,
-  truncate = false,
-) {
-  const parse = parser({
+export function typesetter(
+  properties: Finder<Property>,
+  spaces: Finder<Space>,
+  theorems: Finder<Theorem>,
+): Typesetter {
+  // TODO: truncation
+  return parser({
     linkers: {
       citation: externalLinks,
-      internalLink: internalLinks(get(properties), get(spaces), get(theorems)),
+      internalLink: internalLinks(properties, spaces, theorems),
     },
-    truncate,
-  })
-
-  return readable(body, (set) => {
-    parse(body).then(set)
   })
 }

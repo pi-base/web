@@ -1,11 +1,15 @@
 import { tag } from '@pi-base/core/lib/Id'
 
-import type { Collection, Property, Space, Theorems } from '../models'
+import { Id, Property, Space, Theorem } from '../models'
+
+export type Finder<T> = {
+  find(id: number): T | null
+}
 
 export default function internalLinks(
-  properties: Collection<Property>,
-  spaces: Collection<Space>,
-  theorems: Theorems,
+  properties: Finder<Property>,
+  spaces: Finder<Space>,
+  theorems: Finder<Theorem>,
 ) {
   return function linker({ to }: { to?: string }) {
     const trimmed = (to || '').trim()
@@ -19,7 +23,7 @@ export default function internalLinks(
         const space = spaces.find(tagged.id)
         if (space) {
           return {
-            href: `/spaces/${space.uid}`,
+            href: `/spaces/${Id.format('S', space.id)}`,
             label: space.name,
           }
         } else {
@@ -30,7 +34,7 @@ export default function internalLinks(
         const property = properties.find(tagged.id)
         if (property) {
           return {
-            href: `/properties/${property.uid}`,
+            href: `/properties/${Id.format('P', property.id)}`,
             label: property.name,
           }
         } else {
@@ -40,9 +44,10 @@ export default function internalLinks(
       case 'theorem':
         const theorem = theorems.find(tagged.id)
         if (theorem) {
+          const uid = Id.format('T', theorem.id)
           return {
-            href: `/theorems/${theorem.uid}`,
-            label: `Theorem ${theorem.uid}`,
+            href: `/theorems/${uid}`,
+            label: `Theorem ${uid}`,
           }
         } else {
           return `Could not find Theorem ${to}`

@@ -1,12 +1,12 @@
-import type { Ref, Theorem as BTheorem } from '@pi-base/core'
+import type { Ref } from '@pi-base/core'
 import * as F from '@pi-base/core/lib/Formula'
 
-import type { Property } from '../models'
+import type { Property, SerializedTheorem } from '../models'
 
 export default class Theorem {
   static hydrate(
-    base: BTheorem,
-    lookup: (uid: string) => Property | undefined,
+    base: SerializedTheorem,
+    lookup: (id: number) => Property | undefined,
   ): Theorem | undefined {
     const { when, then, ...rest } = base
 
@@ -23,26 +23,26 @@ export default class Theorem {
     })
   }
 
-  readonly uid: string
+  readonly id: number
   readonly when: F.Formula<Property>
   readonly then: F.Formula<Property>
   readonly description: string
   readonly refs: Ref[]
 
   constructor({
-    uid,
+    id,
     when,
     then,
     description = '',
     refs = [],
   }: {
-    uid: string
+    id: number
     when: F.Formula<Property>
     then: F.Formula<Property>
     description?: string
     refs?: Ref[]
   }) {
-    this.uid = uid
+    this.id = id
     this.when = when
     this.then = then
     this.description = description

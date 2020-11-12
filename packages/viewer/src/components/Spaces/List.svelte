@@ -4,7 +4,7 @@
   import context from '../../context'
   import { list } from '../../stores'
 
-  import { Filter, Id, Link, Title, Typeset } from '../Shared'
+  import { Filter, Link, Title, Typeset } from '../Shared'
 
   const index = list(
     derived(context().spaces, (ss) => ss.all),
@@ -22,23 +22,22 @@
 <table class="table">
   <thead>
     <tr>
-      <th on:click={index.sort('uid')}>Id</th>
+      <th on:click={index.sort('id')}>Id</th>
       <th on:click={index.sort('name')}>Name</th>
       <th>Description</th>
     </tr>
   </thead>
-  {#each $index as { uid, name, description } (uid)}
+  {#each $index as space (space.id)}
     <tr>
       <td>
-        <Link to="/spaces/{uid}">
-          <Id {uid} />
-        </Link>
+        <Link.Space {space}>{space.id}</Link.Space>
       </td>
       <td>
-        <Typeset body={name} />
+        <Typeset body={space.name} />
       </td>
       <td>
-        <Typeset body={description} truncated={true} />
+        <!-- TODO: truncated -->
+        <Typeset body={space.description} />
       </td>
     </tr>
   {/each}

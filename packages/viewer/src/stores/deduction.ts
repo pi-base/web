@@ -2,8 +2,16 @@ import { Readable, writable } from 'svelte/store'
 import { ImplicationIndex, Prover, disprove } from '@pi-base/core'
 import type { Proof } from '@pi-base/core/lib/Logic/Types'
 import * as F from '@pi-base/core/lib/Formula'
-import type { Collection, Property, Space, Theorem, Theorems } from '../models'
-import type { Store as TraitsStore } from './traits'
+import type {
+  Collection,
+  DeducedTrait,
+  Property,
+  Space,
+  Theorem,
+  Theorems,
+  Trait,
+  Traits,
+} from '../models'
 import { eachTick, read } from '../util'
 
 export type State =
@@ -21,12 +29,19 @@ export type Store = Readable<State> & {
   run(): void
 }
 
+export const initial: State = {
+  kind: 'checking',
+  checked: 0,
+  total: 1,
+}
+
 function indexTheorems(theorems: Theorems) {
   return new ImplicationIndex(
-    theorems.all.map(({ uid, when, then }) => ({
-      uid,
-      when: F.mapProperty((p) => p.uid, when),
-      then: F.mapProperty((p) => p.uid, then),
+    // TODO: core shouldn't assume ids are strings
+    theorems.all.map(({ id, when, then }) => ({
+      uid: id.toString(),
+      when: F.mapProperty((p) => p.id.toString(), when),
+      then: F.mapProperty((p) => p.id.toString(), then),
     })),
   )
 }
@@ -38,7 +53,7 @@ export function check(
   const collection = read(store)
   const proof = disprove(
     indexTheorems(collection),
-    F.mapProperty((p) => p.uid, formula),
+    F.mapProperty((p) => p.id.toString(), formula),
   )
 
   if (proof === 'tautology') {
@@ -52,8 +67,9 @@ export function check(
 
 export function create(
   spaces: Readable<Collection<Space>>,
-  traits: TraitsStore,
+  traits: Readable<Traits>,
   theorems: Readable<Theorems>,
+  addTraits: (traits: Trait[]) => void,
 ): Store {
   const { set, subscribe, update } = writable<State>({
     kind: 'checking',
@@ -73,7 +89,7 @@ export function create(
       const map = new Map(
         read(traits)
           .forSpace(s)
-          .map(([p, t]) => [p.uid, t.value]),
+          .map(([p, t]) => [p.id.toString(), t.value]),
       )
       const prover = new Prover(implications, map)
 
@@ -86,18 +102,20 @@ export function create(
 
       const { proofs = [] } = prover.derivations()
 
-      const newTraits = proofs.map(({ property, value, proof }) => ({
-        uid: '', // FIXME
-        counterexamples_id: undefined,
-        space: s.uid,
-        property,
-        value,
-        proof,
-        description: '',
-        refs: [],
-      }))
+      const newTraits: DeducedTrait[] = proofs.map(
+        ({ property, value, proof }) => ({
+          asserted: false,
+          space: s.id,
+          property: parseInt(property),
+          value,
+          proof: {
+            properties: proof.properties.map(parseInt),
+            theorems: proof.theorems.map(parseInt),
+          },
+        }),
+      )
 
-      traits.add(newTraits)
+      addTraits(newTraits)
 
       update((state) => ({ ...state, checked: si }))
     })

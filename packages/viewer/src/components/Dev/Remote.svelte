@@ -1,11 +1,13 @@
 <script lang="ts">
   import context from '../../context'
+  import { state } from '../../stores/sync'
 
   import Sync from './Sync.svelte'
 
-  const { source, sha } = context()
+  const { source, sync } = context()
+  const status = state(sync)
 
-  $: currentSha = $sha
+  $: currentSha = $status?.sha
 </script>
 
 <table class="table">

@@ -2,6 +2,7 @@ import { Readable, get } from 'svelte/store'
 
 type Halt = () => void
 
+// TODO: use svelte's tick
 export function eachTick<T>(
   items: T[],
   handler: (item: T, index: number, halt: Halt) => void,

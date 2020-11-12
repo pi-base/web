@@ -1,26 +1,100 @@
-import { bundle } from '@pi-base/core'
+import * as pb from '@pi-base/core'
+import * as F from '@pi-base/core/lib/Formula'
 
-import type { Data, Source } from './models'
+import { Id, Property, Space, SerializedTheorem, Trait } from './models'
 import { trace } from './debug'
 
-export async function sync(
-  { host, branch }: Source,
-  current?: Data,
-): Promise<Data | undefined> {
+export type Sync = (
+  host: string,
+  branch: string,
+  etag?: string,
+) => Promise<Result | undefined>
+
+export type Result = {
+  spaces: Space[]
+  properties: Property[]
+  theorems: SerializedTheorem[]
+  traits: Trait[]
+  etag: string
+  sha: string
+}
+
+export const sync: Sync = async (
+  host: string,
+  branch: string,
+  etag?: string,
+) => {
   trace({ event: 'remote_fetch_started', host, branch })
-  const result = await bundle.fetch({ host, branch, etag: current?.etag })
+  const result = await pb.bundle.fetch({ host, branch, etag })
 
   if (result) {
     trace({ event: 'remote_fetch_complete', result })
     return {
-      spaces: [...result.bundle.spaces.values()],
-      properties: [...result.bundle.properties.values()],
-      traits: [...result.bundle.traits.values()],
-      theorems: [...result.bundle.theorems.values()],
+      spaces: transform(space, result.bundle.spaces),
+      properties: transform(property, result.bundle.properties),
+      traits: transform(trait, result.bundle.traits),
+      theorems: transform(theorem, result.bundle.theorems),
       etag: result.etag,
       sha: result.bundle.version.sha,
     }
-  } else if (current) {
-    trace({ event: 'bundle_unchanged', etag: current.etag })
+  } else if (etag) {
+    trace({ event: 'bundle_unchanged', etag })
   }
+}
+
+function property({
+  uid,
+  name,
+  aliases,
+  description,
+  refs,
+}: pb.Property): Property {
+  return {
+    id: Id.toInt(uid),
+    name,
+    aliases,
+    description,
+    refs,
+  }
+}
+
+function space({ uid, name, aliases, description, refs }: pb.Space): Space {
+  return {
+    id: Id.toInt(uid),
+    name,
+    aliases,
+    description,
+    refs,
+  }
+}
+
+function trait({ space, property, value, description, refs }: pb.Trait): Trait {
+  return {
+    asserted: true,
+    space: Id.toInt(space),
+    property: Id.toInt(property),
+    value,
+    description,
+    refs,
+  }
+}
+
+function theorem({
+  uid,
+  when,
+  then,
+  description,
+  refs,
+}: pb.Theorem): SerializedTheorem {
+  return {
+    id: Id.toInt(uid),
+    when: F.mapProperty(Id.toInt, when),
+    then: F.mapProperty(Id.toInt, then),
+    description,
+    refs,
+  }
+}
+
+function transform<U, V>(f: (u: U) => V, collection: Map<unknown, U>): V[] {
+  return [...collection.values()].map(f)
 }

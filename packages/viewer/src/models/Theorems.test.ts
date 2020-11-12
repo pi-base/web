@@ -1,27 +1,25 @@
-import { atom, property, theorem } from '@pi-base/core/lib/testUtils'
+import { atom, property, theorem } from '../__test__'
 
+import Collection from './Collection'
 import Theorems from './Theorems'
 
-const p1 = property({ uid: 'P1' })
-const p2 = property({ uid: 'P2' })
-const p3 = property({ uid: 'P3' })
+const p1 = property({ id: 1 })
+const p2 = property({ id: 2 })
+const p3 = property({ id: 3 })
 
 const t1 = theorem({
-  uid: 'T1',
-  when: atom('P1'),
-  then: atom('P2'),
+  id: 1,
+  when: atom(1),
+  then: atom(2),
 })
 
 const t2 = theorem({
-  uid: 'T2',
-  when: atom('P2'),
-  then: atom('P3'),
+  id: 2,
+  when: atom(2),
+  then: atom(3),
 })
 
-const theorems = Theorems.fromData({
-  properties: [p1, p2, p3],
-  theorems: [t1, t2],
-})
+const theorems = Theorems.build([t1, t2], Collection.byId([p1, p2, p3]))
 
 test('all', () => {
   expect(theorems.all.length).toEqual(2)
@@ -29,11 +27,11 @@ test('all', () => {
 
 describe('find', () => {
   test('find by number', () => {
-    expect(theorems.find(1)!.uid).toEqual('T1')
+    expect(theorems.find(1)!.id).toEqual(1)
   })
 
   test('find by id', () => {
-    expect(theorems.find('T002')!.uid).toEqual('T2')
+    expect(theorems.find('T002')!.id).toEqual(2)
   })
 
   test('not found', () => {
@@ -43,10 +41,10 @@ describe('find', () => {
 
 describe('forProperty', () => {
   test('P1', () => {
-    expect(theorems.forProperty(p1).map((t) => t.uid)).toEqual(['T1'])
+    expect(theorems.forProperty(p1).map((t) => t.id)).toEqual([1])
   })
 
   test('P2', () => {
-    expect(theorems.forProperty(p2).map((t) => t.uid)).toEqual(['T1', 'T2'])
+    expect(theorems.forProperty(p2).map((t) => t.id)).toEqual([1, 2])
   })
 })
