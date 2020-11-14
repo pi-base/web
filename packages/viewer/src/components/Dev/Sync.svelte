@@ -18,7 +18,7 @@
     <Repeat />
   </button>
   <Age date={state.at} />
-{:else}
+{:else if state.kind === 'error'}
   <button type="button" class="btn" on:click={sync.sync}>
     <Repeat />
   </button>
