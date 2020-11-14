@@ -10,6 +10,6 @@
   $: setTimeout(() => $typeset(body).then((result) => (html = result)), 0)
 </script>
 
-{#if body}
-  {@html html || body}
-{/if}
+{#if html}
+  {@html html}
+{:else if body}{body}{/if}
