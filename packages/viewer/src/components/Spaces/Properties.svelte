@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Link } from '../Shared'
   import { Related } from '../Traits'
   import type { Property, Space, Trait, Traits } from '../../models'
 
@@ -9,4 +10,6 @@
   }
 </script>
 
-<Related label="Property" {related} />
+<Related label="Property" {related} let:property>
+  <Link.Property {property} />
+</Related>

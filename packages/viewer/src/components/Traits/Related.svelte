@@ -54,8 +54,7 @@
     {#each filtered as [space, property, trait] ([space.id, property.id])}
       <tr>
         <td>
-          <!-- FIXME: conditionally space or property -->
-          <Link.Space {space} />
+          <slot {space} {property} />
         </td>
         <td>
           <Link.Trait {space} {property}>
