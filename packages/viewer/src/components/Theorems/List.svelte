@@ -39,8 +39,7 @@
         <Formula value={theorem.then} />
       </td>
       <td>
-        <!-- TODO: truncated -->
-        <Typeset body={theorem.description} />
+        <Typeset body={theorem.description} truncated={true} />
       </td>
     </tr>
   {/each}

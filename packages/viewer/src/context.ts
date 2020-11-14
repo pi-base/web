@@ -5,11 +5,11 @@ import * as F from '@pi-base/core/lib/Formula'
 import { trace } from './debug'
 import * as Gateway from './gateway'
 import local from './repositories/local'
-import { Prestore, Store, create } from './stores'
+import { Store, create } from './stores'
 import * as Typeset from './stores/typeset'
 
 export type Context = Store & {
-  typeset: Readable<(str: string) => Promise<string>>
+  typeset: Readable<(str: string, truncated?: boolean) => Promise<string>>
 }
 
 const contextKey = {}

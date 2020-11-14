@@ -1,15 +1,47 @@
 import type * as unified from 'unified'
 import type * as unist from 'unist'
 
-export default function truncate(): unified.Transformer {
-  return function transformer(tree: unist.Node) {
-    const children = (tree.children as unist.Node[]) || []
+type Node = unist.Node & {
+  children?: Node[]
+  value?: string
+}
 
-    return {
-      ...tree,
-      // TODO: add heuristics about the length of this node
-      // and bound it.
-      children: children.slice(0, 1),
+function gather(nodes: Node[], to: number) {
+  let length = 0
+  const acc = []
+
+  for (let i = 0; i < nodes.length; i++) {
+    const node = nodes[i]
+
+    if (node.type === 'text') {
+      const value = node.value || ''
+      if (value.length + length >= to) {
+        const fragment = value.slice(0, to - length - value.length) + '...'
+        acc.push({ ...node, value: fragment })
+        return acc
+      } else {
+        acc.push(node)
+        length = length + value.length + 1
+      }
+    } else {
+      if (length + 3 >= to) {
+        acc.push(node)
+        acc.push({ type: 'text', value: '...' })
+        return acc
+      } else {
+        acc.push(node)
+        length = length + 3
+      }
     }
+  }
+
+  return acc
+}
+
+export default function truncate(to = 100) {
+  return function transformer(tree: Node) {
+    const node = (tree.children || [])[0] || {}
+
+    return { ...node, children: gather(node.children || [], to) }
   }
 }

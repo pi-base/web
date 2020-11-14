@@ -1,13 +1,16 @@
 <script lang="ts">
+  import { tick } from 'svelte'
   import context from '../../context'
 
   export let body: string
-  // TODO: export let truncated = false
+  export let truncated = false
 
   const { typeset } = context()
 
   let html = ''
-  $: setTimeout(() => $typeset(body).then((result) => (html = result)), 0)
+  $: tick()
+    .then(() => $typeset(body, truncated))
+    .then((result) => (html = result))
 </script>
 
 {#if html}

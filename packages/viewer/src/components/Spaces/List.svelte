@@ -36,8 +36,7 @@
         <Typeset body={space.name} />
       </td>
       <td>
-        <!-- TODO: truncated -->
-        <Typeset body={space.description} />
+        <Typeset body={space.description} truncated={true} />
       </td>
     </tr>
   {/each}

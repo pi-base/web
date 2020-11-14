@@ -58,9 +58,11 @@ describe('parse', () => {
   })
 
   describe('truncated', () => {
-    const parse = parser({ linkers, truncate: true })
+    const parse = parser({ linkers })
 
     test('trims extra elements', () =>
-      expect(parse('a list\n* one\n* two\n* three')).resolves.toEqual('a list'))
+      expect(parse('a list\n* one\n* two\n* three', true)).resolves.toEqual(
+        'a list',
+      ))
   })
 })

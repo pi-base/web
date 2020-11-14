@@ -36,8 +36,7 @@
         <Typeset body={property.name} />
       </td>
       <td>
-        <!-- TODO: truncated -->
-        <Typeset body={property.description} />
+        <Typeset body={property.description} truncated={true} />
       </td>
     </tr>
   {/each}
