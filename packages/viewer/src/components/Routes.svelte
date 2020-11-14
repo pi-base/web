@@ -12,7 +12,7 @@
 </script>
 
 <Route path="/spaces" component={Search} />
-<Route path="/spaces/:space/properties/:property" component={Traits.Show} />
+<Route path="/spaces/:spaceId/properties/:propertyId" component={Traits.Show} />
 <Route path="/spaces/:id/*" component={Spaces.Show} />
 <Route path="/properties" component={Properties.List} />
 <Route path="/properties/:id/*" component={Properties.Show} />

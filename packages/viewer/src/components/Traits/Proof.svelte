@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Formula, Link } from '../Shared'
+  import { Link } from '../Shared'
+  import { Table as Theorems } from '../Theorems'
   import Value from './Value.svelte'
   import type { Property, Space, Theorem, Trait } from '../../models'
 
@@ -43,29 +44,6 @@ Automatically deduced from the following
   </div>
   <div class="col">
     <h5>Theorems</h5>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>When</th>
-          <th>Then</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each theorems as theorem (theorem.id)}
-          <tr>
-            <td>
-              <Link.Theorem {theorem} />
-            </td>
-            <td>
-              <Formula value={theorem.when} />
-            </td>
-            <td>
-              <Formula value={theorem.then} />
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
+    <Theorems {theorems} />
   </div>
 </div>

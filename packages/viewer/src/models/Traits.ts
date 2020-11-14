@@ -1,7 +1,16 @@
 import * as F from '@pi-base/core/lib/Formula'
 
 import Collection from './Collection'
-import type { Formula, Property, Space, Trait } from '../models'
+import type {
+  Formula,
+  Proof,
+  Property,
+  Space,
+  SerializedProof,
+  Theorem,
+  Theorems,
+  Trait,
+} from '../models'
 
 export default class Traits {
   private traits: Map<string, Trait>
@@ -83,6 +92,37 @@ export default class Traits {
         space,
       }) === true
     )
+  }
+
+  proof(space: Space, proof: SerializedProof, ts: Theorems): Proof | undefined {
+    const traits: [Property, Trait][] = []
+    const theorems: Theorem[] = []
+
+    for (const pid of proof.properties) {
+      const p = this.properties.find(pid)
+      if (!p) {
+        return
+      }
+      const t = this.find(space, p)
+      if (!t) {
+        return
+      }
+
+      traits.push([p, t])
+    }
+
+    for (const tid of proof.theorems) {
+      const t = ts.find(tid)
+      if (!t) {
+        return
+      }
+      theorems.push(t)
+    }
+
+    return {
+      traits,
+      theorems,
+    }
   }
 
   private traitId(space: number, property: number) {

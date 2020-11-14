@@ -31,7 +31,10 @@ export type DeducedTrait = {
   space: number
   property: number
   value: boolean
-  proof: Proof
+  proof: {
+    properties: number[]
+    theorems: number[]
+  }
 }
 
 export type Trait = AssertedTrait | DeducedTrait
@@ -44,7 +47,7 @@ export type SerializedTheorem = {
   refs: Ref[]
 }
 
-export type Proof = {
+export type SerializedProof = {
   properties: number[]
   theorems: number[]
 }
