@@ -87,7 +87,6 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
 
   set(pre.properties, pre.spaces, pre.theorems, pre.traits)
 
-  // FIXME: double-sync
   if (!pre.sync) {
     sync.sync()
   }

@@ -2,26 +2,25 @@ import { Readable, get } from 'svelte/store'
 
 type Halt = () => void
 
-// TODO: use svelte's tick
 export function eachTick<T>(
   items: T[],
   handler: (item: T, index: number, halt: Halt) => void,
 ): Halt {
-  let timeout: NodeJS.Timeout
+  let stop = false
 
   function halt() {
-    timeout && clearTimeout(timeout)
+    stop = true
   }
 
   function go(i: number) {
     const item = items[i]
-    if (!item) {
-      return halt()
+    if (stop || !item) {
+      return
     }
 
     handler(item, i, halt)
 
-    timeout = setTimeout(() => go(i + 1), 0)
+    setTimeout(() => go(i + 1), 0)
   }
 
   go(0)
