@@ -5,27 +5,28 @@ type Halt = () => void
 export function eachTick<T>(
   items: T[],
   handler: (item: T, halt: Halt) => void,
-): Halt {
-  let stop = false
+): Promise<void> {
+  return new Promise((resolve) => {
+    let stop = false
 
-  function halt() {
-    stop = true
-  }
-
-  function go(i: number) {
-    const item = items[i]
-    if (stop || !item) {
-      return
+    function halt() {
+      stop = true
     }
 
-    handler(item, halt)
+    function go(i: number) {
+      const item = items[i]
+      if (stop || !item) {
+        resolve()
+        return
+      }
 
-    setTimeout(() => go(i + 1), 0)
-  }
+      handler(item, halt)
 
-  go(0)
+      setTimeout(() => go(i + 1), 0)
+    }
 
-  return halt
+    go(0)
+  })
 }
 
 // svelte's get allows for reading from polymorphic store types, but the
@@ -39,7 +40,7 @@ export function subscribeUntil<S>(
   store: Readable<S>,
   condition: (state: S) => boolean,
 ): Promise<void> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const unsubscribe = store.subscribe((state) => {
       if (condition(state)) {
         resolve()

@@ -4,20 +4,6 @@ export default class Collection<Value, Input = number | string, Key = number> {
   private index: Map<Key, Value>
   private normalize: (input: Input) => Key
 
-  static byUid<T extends { uid: string }>(values: T[]): Collection<T> {
-    return new this(
-      values,
-      (value) => Id.toInt(value.uid),
-      (input: number | string) => {
-        if (typeof input === 'string') {
-          return Id.toInt(input)
-        } else {
-          return input
-        }
-      },
-    )
-  }
-
   static byId<T extends { id: number }>(values: T[]): Collection<T> {
     return new this(
       values,
