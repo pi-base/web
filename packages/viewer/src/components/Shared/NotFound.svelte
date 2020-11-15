@@ -1,4 +1,7 @@
 <script lang="ts">
+  // TODO: report on mount
 </script>
 
-<slot>Not Found</slot>
+<code>
+  <slot>Not Found</slot>
+</code>

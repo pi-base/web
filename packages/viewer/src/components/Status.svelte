@@ -10,18 +10,16 @@
   let timeout: NodeJS.Timeout
 
   deduction.subscribe((state) => {
-    if (state.kind === 'checking') {
-      checked = state.checked
-      total = state.total
+    checked = state.checked.size
+    total = state.all.size
 
-      progress = ((checked + 1) * 100.0) / total
+    progress = (checked * 100.0) / total
 
-      if (checked + 1 === total) {
-        // Give the animation time to visually finish
-        timeout = setTimeout(() => (progress = null), 1000)
-      } else if (timeout) {
-        clearTimeout(timeout)
-      }
+    if (checked === total) {
+      // Give the animation time to visually finish
+      timeout = setTimeout(() => (progress = null), 1000)
+    } else if (timeout) {
+      clearTimeout(timeout)
     }
   })
 </script>

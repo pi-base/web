@@ -1,5 +1,6 @@
 import type { Ref, Trait } from '../models'
 import type { Prestore } from '../stores'
+import type { State as Deduction } from '../stores/deduction'
 
 type Serializer<T> = [
   (value: T) => string, // serializer
@@ -76,12 +77,29 @@ const traits: Serializer<Trait[]> = [
   },
 ]
 
+const deduction: Serializer<Deduction> = [
+  (state: Deduction) =>
+    JSON.stringify({
+      ...state,
+      checked: [...state.checked],
+      all: [...state.all],
+    }),
+  (raw: string) => {
+    const { checked, all, contradiction } = JSON.parse(raw)
+    return {
+      contradiction,
+      checked: new Set(checked),
+      all: new Set(all),
+    }
+  },
+]
+
 export const prestore: Serializers<Prestore> = {
   properties: json(),
   spaces: json(),
   theorems: json(),
-  traits: traits,
+  traits,
   source: json(),
   sync: json(),
-  deduction: json(),
+  deduction,
 }

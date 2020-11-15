@@ -7,9 +7,11 @@ import * as F from '@pi-base/core/lib/Formula'
 import type { Context } from './context/types'
 import { trace } from './debug'
 import * as Gateway from './gateway'
+import { Id } from './models'
 import { local } from './repositories'
 import { Store, create } from './stores'
 import * as Typeset from './stores/typeset'
+import { subscribeUntil } from './util'
 
 // TODO: it seems like this shouldn't be necessary. Should the store more closely
 // match the prestore (i.e. Readable<Theorem[]> instead of Readable<Theorems>)?
@@ -51,13 +53,20 @@ export function initialize(
     },
   )
 
+  function loaded() {
+    return subscribeUntil(
+      store.sync,
+      (state) => state.kind === 'fetched' || state.kind === 'error',
+    )
+  }
+
   function load<T, S>(
-    store: Readable<S>,
+    s: Readable<S>,
     lookup: (state: S) => T | null,
-    until: Promise<unknown>,
+    until: Promise<unknown> = loaded(),
   ): Promise<T> {
     return new Promise((resolve, reject) => {
-      const unsubscribe = store.subscribe((state) => {
+      const unsubscribe = s.subscribe((state) => {
         const found = lookup(state)
         if (found) {
           resolve(found)
@@ -72,22 +81,16 @@ export function initialize(
     })
   }
 
-  function loaded(): Promise<void> {
-    return new Promise((resolve) => {
-      const unsubscribe = store.sync.subscribe((state) => {
-        if (state.kind === 'fetched' || state.kind === 'error') {
-          resolve()
-          unsubscribe()
-        }
-      })
-    })
+  function checked(spaceId: string) {
+    return store.deduction.checked(Id.toInt(spaceId))
   }
 
   return {
     ...store,
     typeset,
-    load,
     loaded,
+    load,
+    checked,
   }
 }
 

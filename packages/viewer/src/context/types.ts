@@ -7,9 +7,10 @@ export type Context = Store & {
   load<T, S>(
     store: Readable<S>,
     lookup: (state: S) => T | null,
-    until: Promise<unknown>,
+    until?: Promise<unknown>,
   ): Promise<T>
 
   // Lifecycle hooks
   loaded(): Promise<void>
+  checked(spaceId: string): Promise<void>
 }

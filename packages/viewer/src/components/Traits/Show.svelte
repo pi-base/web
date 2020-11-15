@@ -1,24 +1,31 @@
 <script lang="ts">
-  import { Link, References, Typeset } from '../Shared'
+  import { get } from 'svelte/store'
+  import { Loading, Link, NotFound, References, Typeset } from '../Shared'
   import context from '../../context'
   import Proof from './Proof.svelte'
 
   export let spaceId: string
   export let propertyId: string
 
-  const { spaces, properties, theorems, traits } = context()
+  const { spaces, properties, theorems, traits, load, checked } = context()
 
-  $: space = $spaces.find(spaceId)
-  $: property = $properties.find(propertyId)
-  $: trait = space && property && $traits.find(space, property)
-  $: proof =
-    space &&
-    trait &&
-    !trait.asserted &&
-    $traits.proof(space, trait.proof, $theorems)
+  const loading = load(
+    traits,
+    (ts) =>
+      ts.lookup({
+        spaceId,
+        propertyId,
+        spaces: get(spaces),
+        properties: get(properties),
+        theorems: get(theorems),
+      }),
+    checked(spaceId),
+  )
 </script>
 
-{#if space && property && trait}
+{#await loading}
+  <Loading />
+{:then { property, space, trait, proof, meta }}
   <h1>
     <Link.Space {space} />
     is
@@ -26,11 +33,13 @@
     <Link.Property {property} />
   </h1>
 
-  {#if trait?.asserted}
-    <Typeset body={trait.description} />
-
-    <References references={trait.refs} />
-  {:else if space && proof}
+  {#if proof}
     <Proof {space} {...proof} />
+  {:else if meta}
+    <Typeset body={meta.description} />
+
+    <References references={meta.refs} />
   {/if}
-{/if}
+{:catch}
+  <NotFound>Could not find space {spaceId} / property {propertyId}</NotFound>
+{/await}

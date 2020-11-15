@@ -15,7 +15,7 @@
   export let id: string
 
   const ctx = context()
-  const load = ctx.load(ctx.properties, (p) => p.find(id), ctx.loaded())
+  const load = ctx.load(ctx.properties, (p) => p.find(id))
 </script>
 
 {#await load}

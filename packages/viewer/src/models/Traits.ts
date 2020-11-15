@@ -63,6 +63,50 @@ export default class Traits {
     )
   }
 
+  lookup({
+    spaceId,
+    propertyId,
+    spaces,
+    properties,
+    theorems,
+  }: {
+    spaceId: string
+    propertyId: string
+    spaces: Collection<Space>
+    properties: Collection<Property>
+    theorems: Theorems
+  }) {
+    const space = spaces.find(spaceId)
+    if (!space) {
+      return null
+    }
+
+    const property = properties.find(propertyId)
+    if (!property) {
+      return null
+    }
+
+    const trait = this.find(space, property)
+    if (!trait) {
+      return null
+    }
+
+    const proof = trait.asserted
+      ? undefined
+      : this.proof(space, trait.proof, theorems)
+    const meta = trait.asserted
+      ? { description: trait.description, refs: trait.refs }
+      : undefined
+
+    return {
+      property,
+      space,
+      trait,
+      proof,
+      meta,
+    }
+  }
+
   get all(): Trait[] {
     return [...this.traits.values()]
   }

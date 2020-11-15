@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { tick } from 'svelte'
   import context from '../../context'
 
   export let body: string

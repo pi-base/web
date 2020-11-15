@@ -12,27 +12,22 @@ import type {
   Trait,
   Traits,
 } from '../models'
-import { eachTick, read } from '../util'
+import { eachTick, read, subscribeUntil } from '../util'
 
-export type State =
-  | {
-      kind: 'checking'
-      checked: number
-      total: number
-    }
-  | {
-      kind: 'contradiction'
-      proof: Proof
-    }
+export type State = {
+  checked: Set<number>
+  all: Set<number>
+  contradiction?: Proof
+}
 
 export type Store = Readable<State> & {
+  checked(spaceId: number): Promise<void>
   run(): void
 }
 
 export const initial: State = {
-  kind: 'checking',
-  checked: 0,
-  total: 1,
+  checked: new Set(),
+  all: new Set(),
 }
 
 function indexTheorems(theorems: Theorems) {
@@ -72,18 +67,17 @@ export function create(
   addTraits: (traits: Trait[]) => void,
 ): Store {
   const { set, subscribe, update } = writable<State>({
-    kind: 'checking',
-    checked: 0,
-    total: read(spaces).all.length,
+    checked: new Set(),
+    all: new Set(read(spaces).all.map((s) => s.id)),
   })
 
   function run() {
     const ss = read(spaces).all
     const implications = indexTheorems(read(theorems))
 
-    set({ kind: 'checking', checked: 0, total: ss.length })
+    set({ checked: new Set(), all: new Set(ss.map((s) => s.id)) })
 
-    eachTick(ss, (s: Space, si: number, halt: () => void) => {
+    eachTick(ss, (s: Space, halt: () => void) => {
       update((state) => ({ ...state, checking: s.name }))
 
       const map = new Map(
@@ -95,7 +89,7 @@ export function create(
 
       const contradiction = prover.run()
       if (contradiction) {
-        set({ kind: 'contradiction', proof: contradiction })
+        update((s) => ({ ...s, contradiction }))
         halt()
         return
       }
@@ -117,7 +111,10 @@ export function create(
 
       addTraits(newTraits)
 
-      update((state) => ({ ...state, checked: si }))
+      update((state) => ({
+        ...state,
+        checked: new Set([...state.checked, s.id]),
+      }))
     })
   }
 
@@ -126,5 +123,11 @@ export function create(
   return {
     subscribe,
     run,
+    checked(spaceId: number) {
+      return subscribeUntil(
+        { subscribe },
+        (state) => state.checked.has(spaceId) || !!state.contradiction,
+      )
+    },
   }
 }

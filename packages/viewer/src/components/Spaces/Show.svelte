@@ -15,7 +15,7 @@
   export let id: string
 
   const ctx = context()
-  const load = ctx.load(ctx.spaces, (s) => s.find(id), ctx.loaded())
+  const load = ctx.load(ctx.spaces, (s) => s.find(id))
 </script>
 
 {#await load}

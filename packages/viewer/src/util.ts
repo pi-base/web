@@ -4,7 +4,7 @@ type Halt = () => void
 
 export function eachTick<T>(
   items: T[],
-  handler: (item: T, index: number, halt: Halt) => void,
+  handler: (item: T, halt: Halt) => void,
 ): Halt {
   let stop = false
 
@@ -18,7 +18,7 @@ export function eachTick<T>(
       return
     }
 
-    handler(item, i, halt)
+    handler(item, halt)
 
     setTimeout(() => go(i + 1), 0)
   }
@@ -33,4 +33,18 @@ export function eachTick<T>(
 // restricts types for more ergonomic usage for the common case.
 export function read<T>(readable: Readable<T>): T {
   return get(readable)
+}
+
+export function subscribeUntil<S>(
+  store: Readable<S>,
+  condition: (state: S) => boolean,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = store.subscribe((state) => {
+      if (condition(state)) {
+        resolve()
+        unsubscribe()
+      }
+    })
+  })
 }
