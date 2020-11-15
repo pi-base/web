@@ -8,9 +8,10 @@
   const { typeset } = context()
 
   let html = ''
-  $: tick()
-    .then(() => $typeset(body, truncated))
-    .then((result) => (html = result))
+  $: setTimeout(
+    () => $typeset(body, truncated).then((result) => (html = result)),
+    0,
+  )
 </script>
 
 {#if html}

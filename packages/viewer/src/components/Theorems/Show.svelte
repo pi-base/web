@@ -1,16 +1,25 @@
 <script lang="ts">
   import context from '../../context'
-  import { References, Tabs, Title, Typeset } from '../Shared'
+  import {
+    Loading,
+    NotFound,
+    References,
+    Tabs,
+    Title,
+    Typeset,
+  } from '../Shared'
   import Converse from './Converse.svelte'
   import Name from './Name.svelte'
 
   export let id: string
 
-  const theorems = context().theorems
-  $: theorem = $theorems.find(id)
+  const ctx = context()
+  const load = ctx.load(ctx.theorems, (t) => t.find(id), ctx.loaded())
 </script>
 
-{#if theorem}
+{#await load}
+  <Loading />
+{:then theorem}
   <Title title={theorem.name} />
 
   <h1>
@@ -32,4 +41,6 @@
       <References references={theorem.refs} />
     </Tabs.Tab>
   </Tabs.Tabs>
-{/if}
+{:catch}
+  <NotFound>Could not find theorem {id}</NotFound>
+{/await}

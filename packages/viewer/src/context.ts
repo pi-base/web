@@ -1,18 +1,15 @@
+export type { Context } from './context/types'
+
 import { getContext, setContext } from 'svelte'
 import { Readable, derived } from 'svelte/store'
 import * as F from '@pi-base/core/lib/Formula'
 
+import type { Context } from './context/types'
 import { trace } from './debug'
 import * as Gateway from './gateway'
-import local from './repositories/local'
+import { local } from './repositories'
 import { Store, create } from './stores'
 import * as Typeset from './stores/typeset'
-
-export type Context = Store & {
-  typeset: Readable<(str: string, truncated?: boolean) => Promise<string>>
-}
-
-const contextKey = {}
 
 // TODO: it seems like this shouldn't be necessary. Should the store more closely
 // match the prestore (i.e. Readable<Theorem[]> instead of Readable<Theorems>)?
@@ -54,8 +51,47 @@ export function initialize(
     },
   )
 
-  return { ...store, typeset }
+  function load<T, S>(
+    store: Readable<S>,
+    lookup: (state: S) => T | null,
+    until: Promise<unknown>,
+  ): Promise<T> {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = store.subscribe((state) => {
+        const found = lookup(state)
+        if (found) {
+          resolve(found)
+          unsubscribe()
+        }
+      })
+
+      until.then(() => {
+        reject()
+        unsubscribe()
+      })
+    })
+  }
+
+  function loaded(): Promise<void> {
+    return new Promise((resolve) => {
+      const unsubscribe = store.sync.subscribe((state) => {
+        if (state.kind === 'fetched' || state.kind === 'error') {
+          resolve()
+          unsubscribe()
+        }
+      })
+    })
+  }
+
+  return {
+    ...store,
+    typeset,
+    load,
+    loaded,
+  }
 }
+
+const contextKey = {}
 
 export function set(value: Context) {
   setContext<Context>(contextKey, value)

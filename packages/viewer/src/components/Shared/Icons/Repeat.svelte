@@ -1,8 +1,12 @@
+<script lang="ts">
+  export let rotate = false
+</script>
+
 <svg
   width="1em"
   height="1em"
   viewBox="0 0 16 16"
-  class="bi bi-arrow-repeat"
+  class="bi bi-arrow-repeat {rotate ? 'rotate' : ''}"
   fill="currentColor"
   xmlns="http://www.w3.org/2000/svg">
   <path

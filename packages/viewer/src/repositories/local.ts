@@ -1,8 +1,7 @@
 import type { Readable } from 'svelte/store'
 
 import type { Prestore } from '../stores'
-import * as Deduction from '../stores/deduction'
-import * as Src from '../stores/source'
+import initial from './initial'
 
 import { Serializers, prestore } from './serializers'
 
@@ -97,15 +96,7 @@ export const spec: Spec<Prestore> = {
   // do a partial load (and fallback on the default for only those fields), or
   // should it invalidate all stored fields?
   serializers: prestore,
-  initial: {
-    properties: [],
-    spaces: [],
-    theorems: [],
-    traits: [],
-    source: Src.initial,
-    sync: undefined,
-    deduction: Deduction.initial,
-  },
+  initial,
 }
 
 export default function create(specfication = spec) {

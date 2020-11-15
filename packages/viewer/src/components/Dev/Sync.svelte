@@ -10,8 +10,8 @@
 </script>
 
 {#if state.kind === 'fetching'}
-  <button type="button" class="btn rotate" disabled>
-    <Repeat />
+  <button type="button" class="btn" disabled>
+    <Repeat rotate={true} />
   </button>
 {:else if state.kind === 'fetched'}
   <button type="button" class="btn" on:click={sync.sync}>

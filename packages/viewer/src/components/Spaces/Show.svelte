@@ -1,16 +1,26 @@
 <script lang="ts">
   import context from '../../context'
-  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import {
+    Aliases,
+    Loading,
+    NotFound,
+    References,
+    Tabs,
+    Title,
+    Typeset,
+  } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
 
   export let id: string
 
-  const { spaces } = context()
-  $: space = $spaces.find(id)
+  const ctx = context()
+  const load = ctx.load(ctx.spaces, (s) => s.find(id), ctx.loaded())
 </script>
 
-{#if space}
+{#await load}
+  <Loading />
+{:then space}
   <Title title={space.name} />
 
   <h1>
@@ -39,4 +49,6 @@
       <References references={space.refs} />
     </Tabs.Tab>
   </Tabs.Tabs>
-{/if}
+{:catch}
+  <NotFound>Could not find space {id}</NotFound>
+{/await}

@@ -1,9 +1,8 @@
 <script lang="ts">
   import { Route } from 'svelte-routing'
 
-  import Home from './Home.svelte'
-
   import * as Dev from './Dev'
+  import Home from './Home.svelte'
   import * as Properties from './Properties'
   import Search from './Search'
   import * as Spaces from './Spaces'

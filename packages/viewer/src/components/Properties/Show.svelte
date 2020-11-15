@@ -1,16 +1,26 @@
 <script lang="ts">
   import context from '../../context'
-  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import {
+    Aliases,
+    Loading,
+    NotFound,
+    References,
+    Tabs,
+    Title,
+    Typeset,
+  } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
   export let id: string
 
-  const properties = context().properties
-  $: property = $properties.find(id)
+  const ctx = context()
+  const load = ctx.load(ctx.properties, (p) => p.find(id), ctx.loaded())
 </script>
 
-{#if property}
+{#await load}
+  <Loading />
+{:then property}
   <Title title={property.name} />
 
   <h1>
@@ -39,4 +49,6 @@
       <References references={property.refs} />
     </Tabs.Tab>
   </Tabs.Tabs>
-{/if}
+{:catch}
+  <NotFound>Could not find property {id}</NotFound>
+{/await}
