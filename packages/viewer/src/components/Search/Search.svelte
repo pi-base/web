@@ -4,7 +4,7 @@
   import type { Formula, Property } from '../../models'
   import urlSearchParam from '../../stores/urlSearchParam'
   import Examples from './Examples.svelte'
-  import FormulaInput from './Formula.svelte'
+  import FormulaInput from '../Shared/Formula/Input'
   import Results from './Results.svelte'
 
   const text = writable('')
@@ -35,7 +35,7 @@
     </div>
   </div>
   <div class="col-8">
-    {#if $text || $rawFormula}
+    {#if $text || $formula}
       <Results text={$text} formula={$formula} />
     {:else}
       <Examples select={(example) => ($rawFormula = example)} />
