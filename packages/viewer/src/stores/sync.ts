@@ -24,13 +24,9 @@ export function state<T>(store: Store<T>): Readable<T | undefined> {
 
 export function create<T>(
   run: () => Promise<T>,
-  initialValue?: { value: T; at: Date },
+  initialValue = initial<T>(),
 ): Store<T> {
-  const state: State<T> = initialValue
-    ? { kind: 'fetched', ...initialValue }
-    : initial<T>()
-
-  const store = writable<State<T>>(state)
+  const store = writable<State<T>>(initialValue)
 
   async function sync() {
     if (read(store).kind === 'fetching') {

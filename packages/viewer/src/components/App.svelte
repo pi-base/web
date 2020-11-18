@@ -2,12 +2,19 @@
   import { Router } from 'svelte-routing'
 
   import { initialize, set } from '../context'
+  import type * as Errors from '../errors'
 
   import Nav from './Nav.svelte'
   import Routes from './Routes.svelte'
   import Status from './Status.svelte'
 
-  const context = initialize()
+  export let showDev: boolean
+  export let errorHandler: Errors.Handler
+
+  const context = initialize({
+    showDev,
+    errorHandler,
+  })
   set(context)
 
   // HACK: the typsetter is a store derived from spaces / properties / theorems,

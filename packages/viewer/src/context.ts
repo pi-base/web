@@ -6,12 +6,17 @@ import * as F from '@pi-base/core/lib/Formula'
 
 import type { Context } from './context/types'
 import { trace } from './debug'
+import * as Errors from './errors'
 import * as Gateway from './gateway'
 import { Id } from './models'
-import { local } from './repositories'
-import { Store, create } from './stores'
+import { Local, local } from './repositories'
+import { Prestore, Store, create } from './stores'
 import * as Typeset from './stores/typeset'
 import { subscribeUntil } from './util'
+
+export type Config = {
+  showDevLink: boolean
+}
 
 // TODO: it seems like this shouldn't be necessary. Should the store more closely
 // match the prestore (i.e. Readable<Theorem[]> instead of Readable<Theorems>)?
@@ -31,11 +36,19 @@ function project(store: Store) {
   }
 }
 
-export function initialize(
+export function initialize({
   db = local(),
+  errorHandler = Errors.log(),
   gateway = Gateway.sync,
+  showDev = false,
   typesetter = Typeset.typesetter,
-): Context {
+}: {
+  db?: Local<Prestore>
+  errorHandler?: Errors.Handler
+  gateway?: Gateway.Sync
+  showDev?: boolean
+  typesetter?: Typeset.Builder
+} = {}): Context {
   const pre = db.load()
   const store = create(pre, gateway)
 
@@ -87,6 +100,8 @@ export function initialize(
 
   return {
     ...store,
+    showDev,
+    errorHandler,
     typeset,
     loaded,
     load,

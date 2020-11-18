@@ -4,8 +4,7 @@
 
   import Link from './Nav/Link.svelte'
 
-  const devHost = window.location.host.match(/(dev(elopment)?[.-]|localhost)/)
-  const { source } = context()
+  const { showDev, source } = context()
 
   $: onMain = $source.branch === mainBranch
   $: bg = onMain ? 'light' : 'dark'
@@ -22,7 +21,7 @@
     </div>
 
     <div class="navbar-nav">
-      {#if devHost || !onMain}
+      {#if showDev || !onMain}
         <Link to="/dev">{$source.branch}</Link>
       {/if}
       <a class="nav-link" href={contributingUrl}>Contribute</a>

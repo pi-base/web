@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@pi-base/core": "0.0.11",
+    "@sentry/browser": "^5.27.4",
     "fromnow": "^3.0.1",
     "fuse.js": "^6.4.1",
     "hast-to-hyperscript": "^9.0.0",
