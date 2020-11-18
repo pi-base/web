@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { buildVersion } from '../../constants'
   import context from '../../context'
   import { state } from '../../stores/sync'
 
@@ -11,6 +12,10 @@
 </script>
 
 <table class="table">
+  <tr>
+    <th>Build</th>
+    <td><code>{buildVersion}</code></td>
+  </tr>
   <tr>
     <th>Host</th>
     <td>

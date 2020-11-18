@@ -4,6 +4,7 @@
     "src/**/*"
   ],
   "exclude": [
+    "rollup.config.js",
     "node_modules/*",
     "__sapper__/*",
     "public/*",

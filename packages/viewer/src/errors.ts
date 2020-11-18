@@ -1,4 +1,5 @@
 import * as Sentry from '@sentry/browser'
+import { buildVersion } from './constants'
 
 type Meta = Record<string, unknown>
 
@@ -11,7 +12,7 @@ export function log(): Handler {
 }
 
 export function sentry(dsn: string): Handler {
-  const release = 'FIXME'
+  const release = `pi-base@${buildVersion}`
 
   Sentry.init({ dsn, release })
 
