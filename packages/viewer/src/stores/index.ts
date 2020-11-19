@@ -49,8 +49,13 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
   const traits = writable(new Traits())
   const source = Source.create()
   const sync = Sync.create(refresh, pre.sync)
-  const deduction = Deduction.create(spaces, traits, theorems, (added) =>
-    traits.update(($traits) => $traits.add(added)),
+
+  const deduction = Deduction.create(
+    pre.deduction,
+    spaces,
+    traits,
+    theorems,
+    (added) => traits.update(($traits) => $traits.add(added)),
   )
 
   function set(

@@ -4,6 +4,11 @@
   import Log from './Log.svelte'
 
   const { spaces, properties, theorems, traits } = context()
+
+  function reset() {
+    localStorage.clear()
+    window.location.reload()
+  }
 </script>
 
 <table class="table">
@@ -25,8 +30,7 @@
       <td>{$traits.size}</td>
     </tr>
     <tr>
-      <th />
-      <td>
+      <td colspan="2">
         <Log>Log to Console</Log>
         <Link
           type="button"
@@ -34,6 +38,9 @@
           to="/dev/preview">
           Editor Preview
         </Link>
+        <button type="button" class="btn btn-outline-dark" on:click={reset}>
+          Reset
+        </button>
       </td>
     </tr>
   </tbody>

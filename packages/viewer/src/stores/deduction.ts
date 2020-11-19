@@ -1,4 +1,4 @@
-import { Readable, writable } from 'svelte/store'
+import { Readable, get, writable } from 'svelte/store'
 import { ImplicationIndex, Prover, disprove } from '@pi-base/core'
 import type { Proof } from '@pi-base/core/lib/Logic/Types'
 import * as F from '@pi-base/core/lib/Formula'
@@ -60,25 +60,41 @@ export function check(
   return proof.map((uid) => collection.find(uid)!)
 }
 
+function initialize(spaces: Collection<Space>): State {
+  return {
+    checked: new Set(),
+    all: new Set(spaces.all.map((s) => s.id)),
+  }
+}
+
 export function create(
+  initial: State | undefined,
   spaces: Readable<Collection<Space>>,
   traits: Readable<Traits>,
   theorems: Readable<Theorems>,
   addTraits: (traits: Trait[]) => void,
 ): Store {
-  const { set, subscribe, update } = writable<State>({
-    checked: new Set(),
-    all: new Set(read(spaces).all.map((s) => s.id)),
-  })
+  const store = writable<State>(initial || initialize(read(spaces)))
 
   function run() {
-    const ss = read(spaces).all
+    const allSpaces = read(spaces).all
     const implications = indexTheorems(read(theorems))
 
-    set({ checked: new Set(), all: new Set(ss.map((s) => s.id)) })
+    store.update((s) => ({
+      ...s,
+      all: new Set([...s.all, ...allSpaces.map((s) => s.id)]),
+    }))
 
-    eachTick(ss, (s: Space, halt: () => void) => {
-      update((state) => ({ ...state, checking: s.name }))
+    const checked = read(store).checked
+    const unchecked: Space[] = []
+    allSpaces.forEach((s) => {
+      if (!checked.has(s.id)) {
+        unchecked.push(s)
+      }
+    })
+
+    eachTick(unchecked, (s: Space, halt: () => void) => {
+      store.update((state) => ({ ...state, checking: s.name }))
 
       const map = new Map(
         read(traits)
@@ -89,7 +105,7 @@ export function create(
 
       const contradiction = prover.run()
       if (contradiction) {
-        update((s) => ({ ...s, contradiction }))
+        store.update((s) => ({ ...s, contradiction }))
         halt()
         return
       }
@@ -111,7 +127,7 @@ export function create(
 
       addTraits(newTraits)
 
-      update((state) => ({
+      store.update((state) => ({
         ...state,
         checked: new Set([...state.checked, s.id]),
       }))
@@ -121,11 +137,11 @@ export function create(
   theorems.subscribe(run)
 
   return {
-    subscribe,
+    subscribe: store.subscribe,
     run,
     checked(spaceId: number) {
       return subscribeUntil(
-        { subscribe },
+        store,
         (state) => state.checked.has(spaceId) || !!state.contradiction,
       )
     },

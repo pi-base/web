@@ -13,7 +13,12 @@
     checked = state.checked.size
     total = state.all.size
 
-    progress = (checked * 100.0) / total
+    // Don't flicker a full bar if we're just hydrating a fully checked state
+    // from local storage.
+    const newProgress = (checked * 100.0) / total
+    if (progress || newProgress !== 100.0) {
+      progress = newProgress
+    }
 
     if (checked === total) {
       // Give the animation time to visually finish
