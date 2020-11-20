@@ -23,6 +23,7 @@ export type State = {
 export type Store = Readable<State> & {
   checked(spaceId: number): Promise<void>
   run(): void
+  prove(theorem: Theorem): Theorem[] | 'tautology' | null
 }
 
 export const initial: State = {
@@ -32,7 +33,6 @@ export const initial: State = {
 
 function indexTheorems(theorems: Theorems) {
   return new ImplicationIndex(
-    // TODO: core shouldn't assume ids are strings
     theorems.all.map(({ id, when, then }) => ({
       uid: id.toString(),
       when: F.mapProperty((p) => p.id.toString(), when),
@@ -57,7 +57,20 @@ export function check(
     return null
   }
 
-  return proof.map((uid) => collection.find(uid)!)
+  const seen = new Set<string>()
+  const result: Theorem[] = []
+
+  for (const uid of proof) {
+    if (!seen.has(uid)) {
+      const theorem = collection.find(parseInt(uid))
+      if (!theorem) {
+        return null
+      }
+      result.push(theorem)
+    }
+  }
+
+  return result
 }
 
 function initialize(spaces: Collection<Space>): State {
@@ -144,6 +157,9 @@ export function create(
         store,
         (state) => state.checked.has(spaceId) || !!state.contradiction,
       )
+    },
+    prove(theorem: Theorem) {
+      return check(theorems, F.and(theorem.when, F.negate(theorem.then)))
     },
   }
 }

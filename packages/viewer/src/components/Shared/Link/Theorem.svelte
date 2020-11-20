@@ -5,4 +5,4 @@
   export let theorem: { id: number }
 </script>
 
-<Link to="/spaces/{Id.format('T', theorem.id)}">{theorem.id}</Link>
+<Link to="/theorems/{Id.format('T', theorem.id)}">{theorem.id}</Link>
