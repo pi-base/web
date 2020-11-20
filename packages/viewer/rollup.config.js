@@ -9,6 +9,8 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import replace from '@rollup/plugin-replace';
+import css from 'rollup-plugin-css-only';
+import copy from 'rollup-plugin-copy';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -44,6 +46,12 @@ export default {
 	plugins: [
 		replace({
 			__buildVersion__: process.env.CIRCLE_SHA1 || 'dev',
+		}),
+		css({ output: 'vendor.css' }),
+		copy({
+			targets: [
+				{ src: 'fonts/*', dest: 'public/build/fonts' }
+			]
 		}),
 		svelte({
 			// enable run-time checks when not in production

@@ -1,4 +1,7 @@
 <script lang="ts">
+  import 'katex/dist/katex.min.css'
+  import 'bootstrap/dist/css/bootstrap.min.css'
+
   import { Router } from 'svelte-routing'
 
   import { initialize, set } from '../context'
