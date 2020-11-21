@@ -4,6 +4,7 @@ import { Readable, Writable, writable } from 'svelte/store'
 import * as F from '@pi-base/core/lib/Formula'
 
 import type { Collection, Formula, Property } from '../../../../models'
+import { read } from '../../../../util'
 
 export type State = {
   suggest: boolean
@@ -41,11 +42,13 @@ export function create({
   // On properties change, rebuild the index and reset suggestions
   properties.subscribe((collection) => {
     index.setCollection(collection.all)
-    set(initial)
+    process(read(raw))
   })
 
   // As the raw text changes, re-compute resolved formula
-  raw.subscribe((str) => {
+  raw.subscribe(process)
+
+  function process(str: string) {
     // The resolved formula is cached to prevent flickering while typing, but
     // should be cleared if the user deletes the existing text
     if (str.trim() === '') {
@@ -71,7 +74,7 @@ export function create({
         set({ suggest: true, suggestions, selected: undefined })
       }
     }
-  })
+  }
 
   return {
     subscribe,

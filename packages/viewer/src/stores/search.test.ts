@@ -3,6 +3,7 @@ import { writable } from 'svelte/store'
 
 import type { Collection, Property } from '../models'
 import create, { Search } from './search'
+import { read } from '../util'
 
 let properties: Collection<Property>
 
@@ -37,26 +38,25 @@ describe('with a store', () => {
   })
 
   it('can search by name', () => {
-    expect(store.search({ text: 'ba' }).map((s) => s.name)).toEqual([
-      'bar',
-      'baz',
-    ])
+    store.search({ text: 'ba' })
+
+    expect(read(store).map((s) => s.name)).toEqual(['bar', 'baz'])
   })
 
   it('can search by formula', () => {
-    const formula = and(atom(p(1)), atom(p(2)))
+    store.search({
+      formula: and(atom(p(1)), atom(p(2))),
+    })
 
-    expect(store.search({ formula }).map((s) => s.name)).toEqual(['bar'])
+    expect(read(store).map((s) => s.name)).toEqual(['bar'])
   })
 
   it('can do both', () => {
-    expect(
-      store
-        .search({
-          text: 'ba',
-          formula: atom(p(1), false),
-        })
-        .map((s) => s.name),
-    ).toEqual(['baz'])
+    store.search({
+      text: 'ba',
+      formula: atom(p(1), false),
+    })
+
+    expect(read(store).map((s) => s.name)).toEqual(['baz'])
   })
 })

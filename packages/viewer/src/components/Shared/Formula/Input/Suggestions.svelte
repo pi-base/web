@@ -8,7 +8,7 @@
   export let onClick: (index: number) => void
 </script>
 
-<ul class="list-group">
+<ul class="list-group suggestions">
   {#each suggestions as property, i (property.id)}
     <li
       class="list-group-item {i === selected ? 'active' : ''}"

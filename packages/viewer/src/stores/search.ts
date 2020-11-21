@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { Readable, derived } from 'svelte/store'
+import { Readable, derived, writable } from 'svelte/store'
 
 import type { Collection, Formula, Property, Space, Traits } from '../models'
 import { read } from '../util'
@@ -9,8 +9,8 @@ export type Input = {
   formula?: Formula<Property>
 }
 
-export type Search = {
-  search(input: Input): Space[]
+export type Search = Readable<Space[]> & {
+  search(input: Input): void
 }
 
 export default function create({
@@ -20,6 +20,8 @@ export default function create({
   spaces: Readable<Collection<Space>>
   traits: Readable<Traits>
 }) {
+  const input = writable<Input>({})
+
   const index = derived(
     spaces,
     ($spaces) =>
@@ -32,23 +34,24 @@ export default function create({
       }),
   )
 
-  function search({ text = '', formula }: Input) {
-    const searched =
-      text.trim() === ''
-        ? read(spaces).all
-        : read(index)
-            .search(text)
-            .map((r) => r.item)
+  const { subscribe } = derived(
+    [index, traits, input],
+    ([$index, $traits, { text = '', formula }]) => {
+      const searched =
+        text.trim() === ''
+          ? read(spaces).all
+          : $index.search(text).map((r) => r.item)
 
-    if (formula) {
-      const $traits = read(traits)
-      return searched.filter((space) => $traits.evaluate({ formula, space }))
-    } else {
-      return searched
-    }
-  }
+      if (formula) {
+        return searched.filter((space) => $traits.evaluate({ formula, space }))
+      } else {
+        return searched
+      }
+    },
+  )
 
   return {
-    search,
+    search: input.set,
+    subscribe,
   }
 }
