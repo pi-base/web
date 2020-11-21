@@ -1,5 +1,6 @@
 [![ci-cd](https://github.com/pi-base/viewer/workflows/ci-cd/badge.svg)](https://github.com/pi-base/viewer/actions?query=branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/pi-base/viewer/badge.svg?branch=master)](https://coveralls.io/github/pi-base/viewer?branch=master)
+[![viewer](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/7u7evp&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/7u7evp/runs)
 
 # π-Base
 
