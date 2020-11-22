@@ -30,7 +30,9 @@
     {/if}
   </h1>
 
-  <Typeset body={property.description} />
+  <section class="description">
+    <Typeset body={property.description} />
+  </section>
 
   <Tabs.Tabs initial="spaces">
     <Tabs.Nav>

@@ -26,7 +26,9 @@
     <Name {theorem} />
   </h1>
 
-  <Typeset body={theorem.description} />
+  <section class="description">
+    <Typeset body={theorem.description} />
+  </section>
 
   <Tabs.Tabs initial="converse">
     <Tabs.Nav>

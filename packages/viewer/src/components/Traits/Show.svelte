@@ -45,7 +45,9 @@
   {#if proof}
     <Proof {space} {...proof} />
   {:else if meta}
-    <Typeset body={meta.description} />
+    <section class="description">
+      <Typeset body={space.description} />
+    </section>
 
     <References references={meta.refs} />
   {/if}

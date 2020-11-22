@@ -11,7 +11,9 @@
   $: connector = value.kind === 'and' ? '∧' : '∨'
 </script>
 
+(
 {#each value.subs as f, i}
   <Formula value={f} {link} />
   {i === value.subs.length - 1 ? '' : connector}
 {/each}
+)

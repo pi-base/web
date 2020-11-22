@@ -3,7 +3,7 @@
   import context from '../../../context'
   import { Formula } from '../../Shared'
   import type { Property } from '../../../models'
-  import { check } from '../../../stores/deduction'
+  import { disprove } from '../../../stores/deduction'
   import Disprovable from './Disprovable.svelte'
 
   export let text: string | undefined
@@ -11,11 +11,11 @@
 
   const { theorems } = context()
 
-  $: result = formula ? check(theorems, formula) : null
+  $: proof = formula ? disprove(theorems, formula) : null
 </script>
 
-{#if formula && result}
-  <Disprovable {formula} proof={result} />
+{#if formula && proof}
+  <Disprovable {formula} {proof} />
 {:else}
   No spaces found
   {#if text}matching <code>{text}</code>{/if}

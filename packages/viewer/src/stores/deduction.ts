@@ -1,5 +1,5 @@
-import { Readable, get, writable } from 'svelte/store'
-import { ImplicationIndex, Prover, disprove } from '@pi-base/core'
+import { Readable, writable } from 'svelte/store'
+import { ImplicationIndex, Prover, disprove as check } from '@pi-base/core'
 import type { Proof } from '@pi-base/core/lib/Logic/Types'
 import * as F from '@pi-base/core/lib/Formula'
 import type {
@@ -41,12 +41,12 @@ function indexTheorems(theorems: Theorems) {
   )
 }
 
-export function check(
+export function disprove(
   store: Readable<Theorems>,
   formula: F.Formula<Property>,
 ): Theorem[] | 'tautology' | null {
   const collection = read(store)
-  const proof = disprove(
+  const proof = check(
     indexTheorems(collection),
     F.mapProperty((p) => p.id.toString(), formula),
   )
@@ -159,7 +159,7 @@ export function create(
       )
     },
     prove(theorem: Theorem) {
-      return check(theorems, F.and(theorem.when, F.negate(theorem.then)))
+      return disprove(theorems, F.and(theorem.when, F.negate(theorem.then)))
     },
   }
 }
