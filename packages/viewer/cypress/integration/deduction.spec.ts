@@ -15,3 +15,15 @@ it('shows derived proofs', () => {
 
   cy.url().should('match', new RegExp('/theorems/T000119$'))
 })
+
+it('derives multi-step proofs', () => {
+  cy.visit('/spaces/S000004/properties/P000031')
+
+  cy.contains('Indiscrete Topology on a Two-Point Set')
+  cy.contains('Metacompact')
+
+  cy.contains('Finite')
+  cy.contains('198') // Finite => Compact
+  cy.contains('14') // Compact => Paracompact
+  cy.contains('13') // Paracompact => Metacompact
+})

@@ -132,8 +132,8 @@ export function create(
           property: parseInt(property),
           value,
           proof: {
-            properties: proof.properties.map(parseInt),
-            theorems: proof.theorems.map(parseInt),
+            properties: proof.properties.map((n) => parseInt(n)),
+            theorems: proof.theorems.map((n) => parseInt(n)),
           },
         }),
       )

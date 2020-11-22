@@ -1,6 +1,13 @@
 <script lang="ts">
   import { get } from 'svelte/store'
-  import { Loading, Link, NotFound, References, Typeset } from '../Shared'
+  import {
+    Loading,
+    Link,
+    NotFound,
+    References,
+    Title,
+    Typeset,
+  } from '../Shared'
   import context from '../../context'
   import Proof from './Proof.svelte'
 
@@ -26,6 +33,8 @@
 {#await loading}
   <Loading />
 {:then { property, space, trait, proof, meta }}
+  <Title title={`${space.name}: ${property.name}`} />
+
   <h1>
     <Link.Space {space} />
     is
