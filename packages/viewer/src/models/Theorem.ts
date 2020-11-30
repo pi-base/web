@@ -49,15 +49,15 @@ export default class Theorem {
   }
 
   get name() {
-    const ant = F.render(this.when, (p) => p.name)
-    const con = F.render(this.then, (p) => p.name)
+    const ant = F.render(this.when, p => p.name)
+    const con = F.render(this.then, p => p.name)
 
     return `${ant} ⇒ ${con}`
   }
 
   get properties() {
     const set = F.properties(this.when)
-    F.properties(this.then).forEach((p) => set.add(p))
+    F.properties(this.then).forEach(p => set.add(p))
     return [...set]
   }
 

@@ -11,7 +11,7 @@ describe('trace', () => {
     ]
 
     let logs = 0
-    events.forEach((e) => trace(e, () => (logs += 1)))
+    events.forEach(e => trace(e, () => (logs += 1)))
 
     expect(logs).toEqual(events.length)
   })

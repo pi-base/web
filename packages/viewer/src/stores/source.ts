@@ -26,7 +26,7 @@ export function create(source?: Source): Store {
     subscribe,
 
     checkout(branch: string) {
-      update((current) => {
+      update(current => {
         if (branch !== current.branch) {
           trace({ event: 'checkout', branch })
           return { ...current, branch }
@@ -37,7 +37,7 @@ export function create(source?: Source): Store {
     },
 
     setHost(host: string) {
-      update((current) => {
+      update(current => {
         if (host !== current.host) {
           trace({ event: 'set_host', host })
           return { host, branch: mainBranch }

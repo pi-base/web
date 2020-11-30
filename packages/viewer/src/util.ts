@@ -6,7 +6,7 @@ export function eachTick<T>(
   items: T[],
   handler: (item: T, halt: Halt) => void,
 ): Promise<void> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     let stop = false
 
     function halt() {
@@ -40,8 +40,8 @@ export function subscribeUntil<S>(
   store: Readable<S>,
   condition: (state: S) => boolean,
 ): Promise<void> {
-  return new Promise((resolve) => {
-    const unsubscribe = store.subscribe((state) => {
+  return new Promise(resolve => {
+    const unsubscribe = store.subscribe(state => {
       if (condition(state)) {
         resolve()
         unsubscribe()

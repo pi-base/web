@@ -12,7 +12,7 @@ export default class Theorems {
       (acc: Theorem[], t: SerializedTheorem) => {
         const hydrated = Theorem.hydrate(
           t,
-          (p) => properties.find(p) || undefined,
+          p => properties.find(p) || undefined,
         )
         return hydrated ? [...acc, hydrated] : acc
       },

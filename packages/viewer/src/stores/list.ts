@@ -28,7 +28,7 @@ export default function list<T>(
   }))
   const index = derived(
     collection,
-    ($collection) => new Fuse($collection, { keys }),
+    $collection => new Fuse($collection, { keys }),
   )
 
   const sorter = sort.store<keyof T>()
@@ -60,7 +60,7 @@ function sortAndFilter<T>(
   sorter: sort.Sort<keyof T>,
   filter: string,
 ): T[] {
-  const filtered = filter ? index.search(filter).map((r) => r.item) : collection
+  const filtered = filter ? index.search(filter).map(r => r.item) : collection
 
   return sort.apply(sorter, filtered)
 }

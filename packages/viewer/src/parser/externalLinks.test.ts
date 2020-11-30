@@ -2,7 +2,7 @@ import link from './externalLinks'
 
 const providers = ['doi', 'mr', 'wikipedia', 'mathse', 'mo']
 
-providers.forEach((provider) => {
+providers.forEach(provider => {
   it(`parses ${provider} links`, () => {
     expect(link({ citation: `${provider}:123` })).not.toBeUndefined()
   })

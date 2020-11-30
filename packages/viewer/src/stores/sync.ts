@@ -17,7 +17,7 @@ export function initial<T>(): State<T> {
 }
 
 export function state<T>(store: Store<T>): Readable<T | undefined> {
-  return derived(store, (state) =>
+  return derived(store, state =>
     state.kind === 'fetched' ? state.value : undefined,
   )
 }

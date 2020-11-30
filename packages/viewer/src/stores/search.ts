@@ -24,7 +24,7 @@ export default function create({
 
   const index = derived(
     spaces,
-    ($spaces) =>
+    $spaces =>
       new Fuse($spaces.all, {
         keys: [
           { name: 'name', weight: 0.7 },
@@ -40,10 +40,10 @@ export default function create({
       const searched =
         text.trim() === ''
           ? read(spaces).all
-          : $index.search(text).map((r) => r.item)
+          : $index.search(text).map(r => r.item)
 
       if (formula) {
-        return searched.filter((space) => $traits.evaluate({ formula, space }))
+        return searched.filter(space => $traits.evaluate({ formula, space }))
       } else {
         return searched
       }

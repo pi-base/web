@@ -41,10 +41,10 @@ describe('find', () => {
 
 describe('forProperty', () => {
   test('P1', () => {
-    expect(theorems.forProperty(p1).map((t) => t.id)).toEqual([1])
+    expect(theorems.forProperty(p1).map(t => t.id)).toEqual([1])
   })
 
   test('P2', () => {
-    expect(theorems.forProperty(p2).map((t) => t.id)).toEqual([1, 2])
+    expect(theorems.forProperty(p2).map(t => t.id)).toEqual([1, 2])
   })
 })

@@ -13,10 +13,7 @@ export type Options = {
 }
 
 export function parser({ linkers = {} }: Options) {
-  const parser = Parser().
-    use(remarkRehype).
-    use(rehypeKatex).
-    use(link(linkers))
+  const parser = Parser().use(remarkRehype).use(rehypeKatex).use(link(linkers))
 
   return async function parse(body: string, truncated = false) {
     const p = truncated ? parser().use(truncate) : parser

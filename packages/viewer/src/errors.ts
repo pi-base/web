@@ -17,7 +17,7 @@ export function sentry(dsn: string): Handler {
   Sentry.init({ dsn, release })
 
   return function handle(error: Error, meta: Meta = {}) {
-    Sentry.withScope((scope) => {
+    Sentry.withScope(scope => {
       Object.entries(meta).forEach(([key, value]) => {
         scope.setExtra(key, value)
       })

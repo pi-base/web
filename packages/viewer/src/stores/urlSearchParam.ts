@@ -15,7 +15,7 @@ export default function urlSearchParam(
     set(parse().get(name) || '')
   })
 
-  subscribe((value) => {
+  subscribe(value => {
     const search = parse()
 
     if (!search) {

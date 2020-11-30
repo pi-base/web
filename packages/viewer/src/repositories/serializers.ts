@@ -23,9 +23,9 @@ type TraitRow =
   | [0, number, number, boolean, number[], number[]]
 
 const traits: Serializer<Trait[]> = [
-  (values) =>
+  values =>
     JSON.stringify(
-      values.map((t) => {
+      values.map(t => {
         if (t.asserted) {
           return [1, t.space, t.property, t.value, t.description, t.refs]
         } else {
@@ -40,7 +40,7 @@ const traits: Serializer<Trait[]> = [
         }
       }),
     ),
-  (str) => {
+  str => {
     const traits: Trait[] = []
 
     if (!str) {

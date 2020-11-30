@@ -55,7 +55,7 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
     spaces,
     traits,
     theorems,
-    (added) => traits.update(($traits) => $traits.add(added)),
+    added => traits.update($traits => $traits.add(added)),
   )
 
   function set(
@@ -97,7 +97,7 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
   }
 
   let previousSource: Source.State
-  source.subscribe((s) => {
+  source.subscribe(s => {
     // Re-sync on source _change_, but not initial subscription
     if (
       previousSource &&

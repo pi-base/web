@@ -82,7 +82,7 @@ function build<T extends Record<string, unknown>>(
     // Listen for changes to each field, and schedule persisting the update
     subscribe(source) {
       for (const key in source) {
-        source[key].subscribe((value) => schedule(key, value))
+        source[key].subscribe(value => schedule(key, value))
       }
     },
   }
