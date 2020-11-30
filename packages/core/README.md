@@ -21,5 +21,5 @@ See the [viewer](https://github.com/pi-base/viewer) and [compiler](https://githu
 ```bash
 $ npm run build
 $ npm run test
-$ npm run publish
+$ npm publish
 ```
