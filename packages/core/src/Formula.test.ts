@@ -10,7 +10,7 @@ import {
   parse,
   properties,
   render,
-  toJSON
+  toJSON,
 } from './Formula'
 
 const compound: Formula<string> = and(
@@ -24,13 +24,12 @@ const render_ = (f: Formula<string>) => render(f, (p: string) => p)
 describe('Formula', () => {
   describe('structure', () => {
     it('has accessors', () => {
-      const f: any = compound
+      const f = compound
 
-      expect(f.subs[0].property).toEqual('compact')
-      expect(f.subs[0].value).toEqual(true)
-
-      expect(f.subs[1].subs[1].property).toEqual('separable')
-      expect(f.subs[1].subs[1].value).toEqual(false)
+      expect(f.subs[0]).toEqual(atom('compact'))
+      expect((f.subs[1] as F.Or<string>).subs[1]).toEqual(
+        atom('separable', false)
+      )
     })
   })
 
@@ -71,7 +70,7 @@ describe('Formula', () => {
   describe('map', () => {
     it('maps over entire atoms', () => {
       const result = F.map(
-        term => atom(term.property.slice(0, 2), !term.value),
+        (term) => atom(term.property.slice(0, 2), !term.value),
         compound
       )
 
@@ -81,7 +80,7 @@ describe('Formula', () => {
 
   describe('mapProperty', () => {
     it('only maps over properties', () => {
-      const result = F.mapProperty(property => property.slice(0, 2), compound)
+      const result = F.mapProperty((property) => property.slice(0, 2), compound)
 
       expect(render_(result)).toEqual('(co ∧ (co ∨ ¬se) ∧ ¬fi)')
     })
@@ -92,7 +91,7 @@ describe('Formula', () => {
       const traits = new Map([
         ['compact', true],
         ['connected', true],
-        ['first countable', false]
+        ['first countable', false],
       ])
 
       expect(evaluate(compound, traits)).toEqual(true)
@@ -103,7 +102,7 @@ describe('Formula', () => {
         ['compact', true],
         ['connected', false],
         ['separable', true],
-        ['first countable', false]
+        ['first countable', false],
       ])
 
       expect(evaluate(compound, traits)).toEqual(false)
@@ -112,7 +111,7 @@ describe('Formula', () => {
     it('is undefined if a sub is undefined', () => {
       const traits = new Map([
         ['compact', true],
-        ['first countable', false]
+        ['first countable', false],
       ])
 
       expect(evaluate(compound, traits)).toEqual(undefined)
@@ -171,7 +170,7 @@ describe('parsing', () => {
 
 describe('serialization', () => {
   ;[atom('A', false), or(atom('B', true), atom('C', false)), compound].forEach(
-    formula => {
+    (formula) => {
       it(`roundtrips ${render_(formula)}`, () => {
         expect(fromJSON(toJSON(formula))).toEqual(formula)
       })

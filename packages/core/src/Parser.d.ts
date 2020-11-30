@@ -1,5 +1,5 @@
 declare module 'remark-rehype' {
-  import {Plugin} from 'unified'
+  import { Plugin } from 'unified'
 
   const remarkRehype: Plugin
 

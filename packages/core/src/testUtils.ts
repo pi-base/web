@@ -1,10 +1,10 @@
-import {Formula, Property, Space, Theorem, Trait} from './index'
-export {and, atom, or} from './Formula'
+import { Formula, Property, Space, Theorem, Trait } from './index'
+export { and, atom, or } from './Formula'
 
 export function property({
   uid,
   ...opts
-}: {uid: string} & Partial<Property>): Property {
+}: { uid: string } & Partial<Property>): Property {
   return {
     uid,
     counterexamples_id: undefined,
@@ -12,11 +12,14 @@ export function property({
     description: uid,
     aliases: [],
     refs: [],
-    ...opts
+    ...opts,
   }
 }
 
-export function space({uid, ...opts}: {uid: string} & Partial<Space>): Space {
+export function space({
+  uid,
+  ...opts
+}: { uid: string } & Partial<Space>): Space {
   return {
     uid,
     counterexamples_id: undefined,
@@ -25,21 +28,21 @@ export function space({uid, ...opts}: {uid: string} & Partial<Space>): Space {
     aliases: [],
     refs: [],
     ambiguous_construction: false,
-    ...opts
+    ...opts,
   }
 }
 
 export function trait({
   value = true,
   ...opts
-}: {property: string; space: string} & Partial<Trait>): Trait {
+}: { property: string; space: string } & Partial<Trait>): Trait {
   return {
     uid: '',
     counterexamples_id: undefined,
     description: '',
     refs: [],
     value,
-    ...opts
+    ...opts,
   }
 }
 
@@ -60,6 +63,6 @@ export function theorem({
     refs: [],
     when,
     then,
-    ...opts
+    ...opts,
   }
 }

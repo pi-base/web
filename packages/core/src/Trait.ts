@@ -1,14 +1,14 @@
-import {Id} from './Id'
-import {Record} from './Record'
+import { Id as BaseId } from './Id'
+import { Record } from './Record'
 
-export type Proof = {
+export type Proof<Id = BaseId> = {
   theorems: Id[]
   properties: Id[]
 }
 
-export type Trait = Record & {
-  space: string
-  property: string
+export type Trait<Id = BaseId> = Record & {
+  space: Id
+  property: Id
   value: boolean
-  proof?: Proof
+  proof?: Proof<Id>
 }

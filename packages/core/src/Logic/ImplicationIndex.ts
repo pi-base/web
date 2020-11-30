@@ -3,30 +3,38 @@ import { union } from '../Util'
 
 import { Id, Implication } from './Types'
 
-export default class ImplicationIndex<T extends Implication>{
-  all: T[]
-  private byProperty: Map<Id, Set<T>>
+export default class ImplicationIndex<
+  TheoremId = Id,
+  PropertyId = Id,
+  Theorem extends Implication<TheoremId, PropertyId> = Implication<
+    TheoremId,
+    PropertyId
+  >
+> {
+  all: Theorem[]
+  private byProperty: Map<PropertyId, Set<Theorem>>
 
-  static properties(implication: Implication) {
-    return union(
-      properties(implication.when),
-      properties(implication.then)
-    )
+  static properties<TheoremId, PropertyId>(
+    implication: Implication<TheoremId, PropertyId>
+  ): Set<PropertyId> {
+    return union(properties(implication.when), properties(implication.then))
   }
 
-  constructor(implications: T[]) {
+  constructor(implications: Theorem[]) {
     this.all = implications
     this.byProperty = new Map()
 
-    implications.forEach((i: T) => {
-      ImplicationIndex.properties(i).forEach((id: Id) => {
-        if (!this.byProperty.has(id)) { this.byProperty.set(id, new Set()) }
+    implications.forEach((i: Theorem) => {
+      ImplicationIndex.properties(i).forEach((id: PropertyId) => {
+        if (!this.byProperty.has(id)) {
+          this.byProperty.set(id, new Set())
+        }
         this.byProperty.get(id)!.add(i)
       })
     })
   }
 
-  withProperty(id: Id) {
-    return this.byProperty.get(id) || new Set<T>()
+  withProperty(id: PropertyId): Set<Theorem> {
+    return this.byProperty.get(id) || new Set<Theorem>()
   }
 }

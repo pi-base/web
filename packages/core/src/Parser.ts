@@ -1,13 +1,14 @@
-/// <reference path="Parser.d.ts" />
 import remark from 'remark'
-import remark2rehype from 'remark-rehype'
+import type unified from 'unified'
+import type unist from 'unist'
 import visit from 'unist-util-visit'
 
-// Adapted from
-// * https://github.com/djm/remark-shortcodes/blob/master/index.js
-// * https://using-remark.gatsbyjs.org/custom-components/
-const delimitedParser = (type: string, start: string, stop: string) => {
-  function parser(eat: Function, value: string, silent: boolean) {
+function delimitedParser(type: string, start: string, stop: string) {
+  function parser(
+    eat: (tag: string) => (token: Record<string, unknown>) => void,
+    value: string,
+    silent: boolean
+  ) {
     if (!value.startsWith(start)) {
       return
     }
@@ -32,11 +33,25 @@ const delimitedParser = (type: string, start: string, stop: string) => {
   return parser
 }
 
-function pibase(this: any) {
+export function tokenize(this: unified.Processor): unified.Transformer {
   const parser = this.Parser.prototype
 
   parser.inlineTokenizers.citation = delimitedParser('citation', '{{', '}}')
-  parser.inlineTokenizers.internalLink = delimitedParser('internalLink', '{', '}')
+  parser.inlineTokenizers.internalLink = delimitedParser(
+    'internalLink',
+    '{',
+    '}'
+  )
+  parser.inlineTokenizers.blockMathDollars = delimitedParser(
+    'blockMath',
+    '$$',
+    '$$'
+  )
+  parser.inlineTokenizers.blockMathParens = delimitedParser(
+    'blockMath',
+    '\\[',
+    '\\]'
+  )
   parser.inlineTokenizers.inlineMathDollars = delimitedParser(
     'inlineMath',
     '$',
@@ -55,42 +70,53 @@ function pibase(this: any) {
     0,
     'citation',
     'internalLink',
+    'blockMathDollars',
+    'blockMathParens',
     'inlineMathDollars',
     'inlineMathParens'
   )
 
-  const transformer = (tree: any) => {
-    visit(tree, 'citation', node => {
+  return function transformer(tree: unist.Node) {
+    visit(tree, 'citation', (node) => {
       node.data = {
         hName: 'citation',
         hProperties: {
-          citation: node.citation
-        }
+          citation: node.citation,
+        },
       }
     })
-    visit(tree, 'inlineMath', node => {
+
+    visit(tree, 'blockMath', (node) => {
       node.data = {
-        hName: 'inlineMath',
+        hName: 'span',
         hProperties: {
-          inline: true,
-          formula: node.inlineMath
-        }
+          className: ['math-display'],
+        },
+        hChildren: [{ type: 'text', value: node.blockMath }],
       }
     })
-    visit(tree, 'internalLink', node => {
+
+    visit(tree, 'inlineMath', (node) => {
+      node.data = {
+        hName: 'span',
+        hProperties: {
+          className: ['math-inline'],
+        },
+        hChildren: [{ type: 'text', value: node.inlineMath }],
+      }
+    })
+
+    visit(tree, 'internalLink', (node) => {
       node.data = {
         hName: 'internalLink',
         hProperties: {
-          to: node.internalLink
-        }
+          to: node.internalLink,
+        },
       }
     })
   }
-
-  return transformer
 }
 
-export default () =>
-  remark()
-    .use(pibase)
-    .use(remark2rehype)
+export default function Parser(): unified.Processor {
+  return remark().use(tokenize)
+}

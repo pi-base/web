@@ -6,12 +6,30 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Cached install
-      uses: bahmutov/npm-install@v1.1.0
-    - name: Test
-      run: yarn build && yarn test --coverage
-    - name: Report coverage
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install
+        run: npm ci
+      - name: Lint
+        run: npm run lint:check
+      - name: Formatting
+        run: npm run fmt:check
+      - name: Build grammar
+        run: npm run prebuild
+      - name: Test
+        run: npm run test:cov
+      - name: Report coverage
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

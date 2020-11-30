@@ -1,4 +1,4 @@
-import {Record} from './Record'
+import { Record } from './Record'
 
 export type Space = Record & {
   name: string

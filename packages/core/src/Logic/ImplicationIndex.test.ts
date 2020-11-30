@@ -1,28 +1,31 @@
 import { atom, or } from '../Formula'
-
-import ImplicationIndex from './ImplicationIndex'
+import { index } from '../__test__'
 
 describe('ImplicationIndex', () => {
-  const implications = [
-    { uid: '1', when: atom('A'), then: atom('B') },
-    { uid: '2', when: atom('B'), then: or(atom('C'), atom('D')) }
-  ]
-
-  const index = new ImplicationIndex(implications)
+  const theorems = index(
+    [atom('A'), atom('B')],
+    [atom('B'), or(atom('C'), atom('D'))]
+  )
 
   it('can return all items', () => {
-    expect(index.all).toEqual(implications)
+    expect(theorems.all.length).toEqual(2)
   })
 
-  it('finds by property name', () => {
-    expect(index.withProperty('D')).toEqual(new Set([implications[1]]))
-  })
+  describe('withProperty', () => {
+    function idsWithProperty(property: string) {
+      return [...theorems.withProperty(property)].map((t) => t.id).sort()
+    }
 
-  it('can match multiple implications', () => {
-    expect(index.withProperty('B')).toEqual(new Set(implications))
-  })
+    it('finds by property name', () => {
+      expect(idsWithProperty('D')).toEqual([2])
+    })
 
-  it('can fail to find', () => {
-    expect(index.withProperty('Z')).toEqual(new Set())
+    it('can match multiple implications', () => {
+      expect(idsWithProperty('B')).toEqual([1, 2])
+    })
+
+    it('can fail to find', () => {
+      expect(idsWithProperty('Z')).toEqual([])
+    })
   })
 })
