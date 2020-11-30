@@ -1,7 +1,6 @@
-import type { Ref } from '@pi-base/core'
-import * as F from '@pi-base/core/lib/Formula'
+import { formula as F } from '@pi-base/core'
 
-import type { Property, SerializedTheorem } from '../models'
+import type { Property, Ref, SerializedTheorem } from '../models'
 
 export default class Theorem {
   static hydrate(

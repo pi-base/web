@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as F from '@pi-base/core/lib/Formula'
+  import { formula as F } from '@pi-base/core'
   import { Formula } from '../../Shared'
   import { Table } from '../../Traits'
   import type { Property, Space } from '../../../models'

@@ -1,12 +1,27 @@
 {
   "extends": "@tsconfig/svelte/tsconfig.json",
-  "include": ["src/**/*", "cypress/**/*"],
-  "exclude": ["rollup.config.js", "node_modules/*", "__sapper__/*", "public/*"],
+  "include": [
+    "src/**/*",
+    "cypress/**/*"
+  ],
+  "exclude": [
+    "rollup.config.js",
+    "node_modules/*",
+    "__sapper__/*",
+    "public/*"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "sourceMap": true,
     "strict": true,
-    "types": ["jest", "node"],
-    "typeRoots": ["src/types", "node_modules/@types"]
+    "types": [
+      "jest",
+      "node",
+      "cypress"
+    ],
+    "typeRoots": [
+      "src/types",
+      "node_modules/@types"
+    ],
   }
 }

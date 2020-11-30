@@ -2,7 +2,7 @@
   import type { Ref } from '@pi-base/core'
   import Reference from './Reference.svelte'
 
-  export let references: Ref[]
+  export let references: Ref.Ref[]
 </script>
 
 <ul>

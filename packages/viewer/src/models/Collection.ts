@@ -1,5 +1,4 @@
-import Id from './Id'
-
+import { Id } from '@pi-base/core'
 export default class Collection<Value, Input = number | string, Key = number> {
   private index: Map<Key, Value>
   private normalize: (input: Input) => Key

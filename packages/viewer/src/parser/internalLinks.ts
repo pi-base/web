@@ -1,5 +1,3 @@
-import { tag } from '@pi-base/core/lib/Id'
-
 import { Id, Property, Space, Theorem } from '../models'
 
 export type Finder<T> = {
@@ -17,7 +15,7 @@ export default function internalLinks(
       return
     }
 
-    const tagged = tag(trimmed)
+    const tagged = Id.tag(trimmed)
     switch (tagged?.kind) {
       case 'space':
         const space = spaces.find(tagged.id)

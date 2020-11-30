@@ -1,4 +1,4 @@
-import * as F from '@pi-base/core/lib/Formula'
+import { formula as F } from '@pi-base/core'
 
 import Collection from './Collection'
 import type {

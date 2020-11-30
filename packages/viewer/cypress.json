@@ -1,5 +1,5 @@
 {
   "baseUrl": "http://localhost:5000",
   "projectId": "7u7evp",
-  "experimentalFetchPolyfill": true
+  "chromeWebSecurity": false
 }

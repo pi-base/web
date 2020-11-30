@@ -1,4 +1,3 @@
-import type * as unified from 'unified'
 import type * as unist from 'unist'
 
 type Node = unist.Node & {

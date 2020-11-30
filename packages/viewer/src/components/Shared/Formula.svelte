@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type * as F from '@pi-base/core/lib/Formula'
-  import type { Property } from '../../models'
+  import type { Formula, Property } from '../../models'
 
   import Atom from './Formula/Atom.svelte'
   import Compound from './Formula/Compound.svelte'
 
-  export let value: F.Formula<Property>
+  export let value: Formula<Property>
   export let link = true
 </script>
 

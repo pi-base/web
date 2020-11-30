@@ -1,5 +1,7 @@
-import type { Formula, Ref } from '@pi-base/core'
-export type { Formula, Ref } from '@pi-base/core'
+export type { Formula } from '@pi-base/core'
+import type { Formula, Ref as R } from '@pi-base/core'
+
+export type Ref = R.Ref
 
 export type Property = {
   id: number

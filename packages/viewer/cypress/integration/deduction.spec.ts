@@ -1,9 +1,5 @@
 beforeEach(() => {
-  cy.server()
-  cy.route(
-    'https://pi-base-bundles.s3.us-east-2.amazonaws.com/refs/heads/master.json',
-    'fixture:main.min.json',
-  )
+  cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
 })
 
 it('shows derived proofs', () => {
@@ -27,3 +23,15 @@ it('derives multi-step proofs', () => {
   cy.contains('14') // Compact => Paracompact
   cy.contains('13') // Paracompact => Metacompact
 })
+
+it('derives proofs of converses', () => {
+  cy.visit('/theorems/T000010') // (Extremally disconnected + Metrizable) => Discrete
+
+  cy.contains(/The converse.*follows from/)
+
+  cy.contains('85') // Discrete => Completely metrizable
+  cy.contains('77') // Completely metrizable => metrizable
+  cy.contains('44') // Discrete => Extremally disconnected
+})
+
+export { }

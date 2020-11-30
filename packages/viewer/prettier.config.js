@@ -1,4 +1,6 @@
 module.exports = {
+  parser: "typescript",
+  arrowParens: "avoid",
   endOfLine: "lf",
   trailingComma: "all",
   tabWidth: 2,

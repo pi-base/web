@@ -1,10 +1,6 @@
 describe('with a working remote', () => {
   beforeEach(() => {
-    cy.server()
-    cy.route(
-      'https://pi-base-bundles.s3.us-east-2.amazonaws.com/refs/heads/master.json',
-      'fixture:main.min.json',
-    )
+    cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
   })
 
   it('searches by text and formula', () => {
@@ -25,7 +21,7 @@ describe('with a working remote', () => {
 
     cy.get('input[name="formula"]').type('discrete + ~metrizable')
 
-    cy.contains('Discrete ∧¬ Metrizable is impossible by')
+    cy.contains(/Discrete.*∧.*¬.*Metrizable.*\).*is impossible by/)
     cy.contains('85').click()
     cy.contains('Discrete ⇒ Completely metrizable')
   })
@@ -40,3 +36,5 @@ describe('with a working remote', () => {
     // TODO - cy.get('.suggestions').should('not.exist')
   })
 })
+
+export { }

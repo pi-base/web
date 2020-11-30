@@ -18,7 +18,6 @@ Automatically deduced from the following
         <tr>
           <th>Property</th>
           <th>Value</th>
-          <th>Deduced</th>
         </tr>
       </thead>
       <tbody>
@@ -31,11 +30,6 @@ Automatically deduced from the following
               <Link.Trait {space} {property}>
                 <Value value={trait.value} />
               </Link.Trait>
-            </td>
-            <td>
-              {#if !trait.asserted}
-                <Value value={true} />
-              {/if}
             </td>
           </tr>
         {/each}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import * as Id from '@pi-base/core/lib/Id'
+  import { Id } from '../../models'
 
   export let uid: string
   export let trim = true

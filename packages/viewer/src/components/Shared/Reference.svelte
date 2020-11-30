@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { Ref } from '@pi-base/core'
-  import { tag } from '@pi-base/core/lib/Ref'
+  import { Ref } from '@pi-base/core'
   import { format } from '../../parser/externalLinks'
 
-  export let reference: Ref
+  export let reference: Ref.Ref
 
-  $: value = format(tag(reference))
+  $: value = format(Ref.tag(reference))
 </script>
 
 {#if value}

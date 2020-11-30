@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js'
 import { Readable, Writable, writable } from 'svelte/store'
 
-import * as F from '@pi-base/core/lib/Formula'
+import { formula as F } from '@pi-base/core'
 
 import type { Collection, Formula, Property } from '../../../../models'
 import { read } from '../../../../util'

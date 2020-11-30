@@ -1,10 +1,11 @@
 import { Readable, writable } from 'svelte/store'
-import { ImplicationIndex, Prover, disprove as check } from '@pi-base/core'
+import { ImplicationIndex, deduceTraits, disproveFormula, proveTheorem } from '@pi-base/core'
 import type { Proof } from '@pi-base/core/lib/Logic/Types'
-import * as F from '@pi-base/core/lib/Formula'
+import { formula as F } from '@pi-base/core'
 import type {
   Collection,
   DeducedTrait,
+  Formula,
   Property,
   Space,
   Theorem,
@@ -17,7 +18,7 @@ import { eachTick, read, subscribeUntil } from '../util'
 export type State = {
   checked: Set<number>
   all: Set<number>
-  contradiction?: Proof
+  contradiction?: Proof<number>
 }
 
 export type Store = Readable<State> & {
@@ -31,46 +32,27 @@ export const initial: State = {
   all: new Set(),
 }
 
-function indexTheorems(theorems: Theorems) {
-  return new ImplicationIndex(
+function indexTheorems(theorems: Theorems): ImplicationIndex<number, number> {
+  return new ImplicationIndex<number, number>(
     theorems.all.map(({ id, when, then }) => ({
-      uid: id.toString(),
-      when: F.mapProperty((p) => p.id.toString(), when),
-      then: F.mapProperty((p) => p.id.toString(), then),
+      id,
+      when: F.mapProperty((p) => p.id, when),
+      then: F.mapProperty((p) => p.id, then),
     })),
   )
 }
 
 export function disprove(
   store: Readable<Theorems>,
-  formula: F.Formula<Property>,
+  formula: Formula<Property>,
 ): Theorem[] | 'tautology' | null {
   const collection = read(store)
-  const proof = check(
+  const proof = disproveFormula(
     indexTheorems(collection),
-    F.mapProperty((p) => p.id.toString(), formula),
+    F.mapProperty((p) => p.id, formula),
   )
 
-  if (proof === 'tautology') {
-    return proof
-  } else if (!proof) {
-    return null
-  }
-
-  const seen = new Set<string>()
-  const result: Theorem[] = []
-
-  for (const uid of proof) {
-    if (!seen.has(uid)) {
-      const theorem = collection.find(parseInt(uid))
-      if (!theorem) {
-        return null
-      }
-      result.push(theorem)
-    }
-  }
-
-  return result
+  return loadProof(collection, proof)
 }
 
 function initialize(spaces: Collection<Space>): State {
@@ -89,9 +71,15 @@ export function create(
 ): Store {
   const store = writable<State>(initial || initialize(read(spaces)))
 
+  let implications: ImplicationIndex<number, number>
+
+  theorems.subscribe($theorems => {
+    implications = indexTheorems($theorems)
+    run()
+  })
+
   function run() {
     const allSpaces = read(spaces).all
-    const implications = indexTheorems(read(theorems))
 
     store.update((s) => ({
       ...s,
@@ -112,29 +100,23 @@ export function create(
       const map = new Map(
         read(traits)
           .forSpace(s)
-          .map(([p, t]) => [p.id.toString(), t.value]),
+          .map(([p, t]) => [p.id, t.value]),
       )
-      const prover = new Prover(implications, map)
+      const result = deduceTraits(implications, map)
 
-      const contradiction = prover.run()
-      if (contradiction) {
-        store.update((s) => ({ ...s, contradiction }))
+      if (result.kind === 'contradiction') {
+        store.update((s) => ({ ...s, contradiction: result.contradiction }))
         halt()
         return
       }
 
-      const { proofs = [] } = prover.derivations()
-
-      const newTraits: DeducedTrait[] = proofs.map(
+      const newTraits: DeducedTrait[] = result.derivations.all().map(
         ({ property, value, proof }) => ({
           asserted: false,
           space: s.id,
-          property: parseInt(property),
+          property,
           value,
-          proof: {
-            properties: proof.properties.map((n) => parseInt(n)),
-            theorems: proof.theorems.map((n) => parseInt(n)),
-          },
+          proof
         }),
       )
 
@@ -147,7 +129,6 @@ export function create(
     })
   }
 
-  theorems.subscribe(run)
 
   return {
     subscribe: store.subscribe,
@@ -159,7 +140,38 @@ export function create(
       )
     },
     prove(theorem: Theorem) {
-      return disprove(theorems, F.and(theorem.when, F.negate(theorem.then)))
+      const proof = proveTheorem(
+        implications,
+        F.mapProperty(p => p.id, theorem.when),
+        F.mapProperty(p => p.id, theorem.then)
+      )
+      return loadProof(read(theorems), proof)
     },
   }
+}
+
+function loadProof(
+  theorems: Theorems,
+  proof: number[] | 'tautology' | null | undefined
+): Theorem[] | 'tautology' | null {
+  if (proof === 'tautology') {
+    return proof
+  } else if (!proof) {
+    return null
+  }
+
+  const seen = new Set<number>()
+  const result: Theorem[] = []
+
+  for (const id of proof) {
+    if (!seen.has(id)) {
+      const theorem = theorems.find(id)
+      if (!theorem) {
+        return null
+      }
+      result.push(theorem)
+    }
+  }
+
+  return result
 }

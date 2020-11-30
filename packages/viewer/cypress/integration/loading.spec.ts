@@ -1,15 +1,7 @@
 describe('Loading', () => {
-  describe('with a working remote', () => {
-    beforeEach(() => {
-      cy.server()
-      cy.route(
-        'https://pi-base-bundles.s3.us-east-2.amazonaws.com/refs/heads/master.json',
-        'fixture:main.min.json',
-      )
-    })
-  })
-
   it('loads', () => {
+    cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
+
     cy.visit('/theorems/T000002')
 
     cy.title().should(
@@ -19,3 +11,5 @@ describe('Loading', () => {
     cy.contains('Countably compact ⇒ Weakly Countably Compact')
   })
 })
+
+export { }

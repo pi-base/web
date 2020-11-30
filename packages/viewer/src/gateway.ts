@@ -1,5 +1,4 @@
 import * as pb from '@pi-base/core'
-import * as F from '@pi-base/core/lib/Formula'
 
 import { Id, Property, Space, SerializedTheorem, Trait } from './models'
 import { trace } from './debug'
@@ -88,8 +87,8 @@ function theorem({
 }: pb.Theorem): SerializedTheorem {
   return {
     id: Id.toInt(uid),
-    when: F.mapProperty(Id.toInt, when),
-    then: F.mapProperty(Id.toInt, then),
+    when: pb.formula.mapProperty(Id.toInt, when),
+    then: pb.formula.mapProperty(Id.toInt, then),
     description,
     refs,
   }
