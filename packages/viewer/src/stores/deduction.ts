@@ -5,13 +5,13 @@ import {
   disproveFormula,
   proveTheorem,
 } from '@pi-base/core'
-import type { Proof } from '@pi-base/core/lib/Logic/Types'
 import { formula as F } from '@pi-base/core'
 import type {
   Collection,
   DeducedTrait,
   Formula,
   Property,
+  Proof,
   Space,
   Theorem,
   Theorems,
@@ -23,7 +23,10 @@ import { eachTick, read, subscribeUntil } from '../util'
 export type State = {
   checked: Set<number>
   all: Set<number>
-  contradiction?: Proof<number>
+  contradiction?: {
+    properties: number[]
+    theorems: number[]
+  }
 }
 
 export type Store = Readable<State> & {

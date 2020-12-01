@@ -26,6 +26,14 @@ $ npm run dev
 
 The developer panel (at `/dev`) has some utilities that may be helpful for controlling where the data bundle is fetched from, or for interacting with the stored data. By default, the current production data bundle will be used. You may also want to clone the [data](https://github.com/pi-base/data) repo and run a compiler locally to view edits as you make them; see the [compiler's README](https://github.com/pi-base/compile) for more details.
 
+Other helpful development commands
+
+```bash
+$ npm run test:watch # run tests on change
+$ npm run test:cov   # run tests with coverage report
+$ npm run cy:open    # starts cypress
+```
+
 ## Deployment
 
 Deployment is automatic on a successful push to `master`. See `.github/actions` and `package.json` for details.
