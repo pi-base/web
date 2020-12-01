@@ -33,8 +33,24 @@ describe('with a working remote', () => {
 
     cy.contains('Closed long ray')
 
-    // TODO - cy.get('.suggestions').should('not.exist')
+    cy.get('.suggestions').should('not.exist')
+  })
+
+  it('can follow formula links from the home page', () => {
+    cy.visit('/')
+
+    cy.contains('non-metric continua').click()
+
+    cy.contains('Lexicographic unit square')
+  })
+
+  it('can follow text links from the home page', () => {
+    cy.visit('/')
+
+    cy.contains('compactifications').click()
+
+    cy.contains('One Point Compactification')
   })
 })
 
-export { }
+export {}

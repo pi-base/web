@@ -11,6 +11,7 @@
   export let formula: Writable<Formula<Property> | undefined>
   export let name: string
   export let placeholder: string | undefined = undefined
+  export let suggest = true
 
   const store = create({ raw, formula, properties: context().properties })
 
@@ -39,7 +40,7 @@
   bind:value={$raw}
   on:keydown={handleKeyDown} />
 
-{#if $store.suggest}
+{#if suggest && $store.suggest}
   <Suggestions
     suggestions={$store.suggestions}
     selected={$store.selected}

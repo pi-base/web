@@ -11,17 +11,17 @@
     <p>
       ➜ Search by property, such as
       <Link
-        to="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable">
+        to="/spaces?formula=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable">
         non-metric continua
       </Link>
     </p>
     <p>
       ➜ Find spaces by name, such as
-      <Link href="/spaces?text=compactification">compactifications</Link>
+      <Link to="/spaces?text=compactification">compactifications</Link>
     </p>
     <p>
       ➜ View counterexamples to the converse of a theorem, such as
-      <Link href="/theorems/T000112">T₅ ⇒ T₄</Link>
+      <Link to="/theorems/T000112">T₅ ⇒ T₄</Link>
     </p>
   </div>
 </div>

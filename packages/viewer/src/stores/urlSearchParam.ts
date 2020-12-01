@@ -15,6 +15,7 @@ export default function urlSearchParam(
     set(parse().get(name) || '')
   })
 
+  let initialized = false
   subscribe(value => {
     const search = parse()
 
@@ -24,9 +25,10 @@ export default function urlSearchParam(
 
     if (value) {
       search.set(name, value)
-    } else {
+    } else if (initialized) {
       search.delete(name)
     }
+    initialized = true
 
     window.history.replaceState(
       null,
