@@ -1,7 +1,13 @@
-[![test](https://github.com/pi-base/core/workflows/test/badge.svg)](https://github.com/pi-base/core/actions?query=branch%3Amaster)
-[![Coverage Status](https://coveralls.io/repos/github/pi-base/core/badge.svg?branch=master)](https://coveralls.io/github/pi-base/core?branch=master)
+<h2 align="center">π-Base Core</h2>
+<div align="center">
 
-# pi-base/core
+[![Test](https://github.com/pi-base/core/workflows/Test/badge.svg?branch=main)](https://github.com/pi-base/core/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/pi-base/core/branch/main/graph/badge.svg?token=7JO1N1OXJB)](https://codecov.io/gh/pi-base/core)
+
+<!-- TODO: [![Release](https://github.com/pi-base/core/workflows/Release/badge.svg?branch=main)](https://github.com/pi-base/code/actions/workflows/release.yml) -->
+<!-- TODO: npm badge -->
+
+<div align="center">
 
 Shared data model for the [π-Base viewer](https://github.com/pi-base/viewer) and associated utilities.
 

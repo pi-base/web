@@ -11,6 +11,7 @@
     "lint": "eslint 'src/**/*.ts' --fix",
     "lint:check": "eslint 'src/**/*.ts'",
     "peg": "pegjs --plugin ts-pegjs --output src/Formula/Grammar.ts src/Formula/Grammar.pegjs",
+    "pretest": "npm run peg",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:watch": "jest --watchAll"
