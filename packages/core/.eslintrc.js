@@ -1,18 +1,18 @@
-{
-  "plugins": ["jest", "@typescript-eslint"],
-  "extends": [
+module.exports = {
+  plugins: ["jest", "@typescript-eslint"],
+  extends: [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "prettier/@typescript-eslint"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
     "ecmaVersion": 9,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "rules": {
+  rules: {
     "eslint-comments/no-use": "off",
     "import/no-namespace": "off",
     "no-unused-vars": "off",
@@ -52,7 +52,7 @@
     "@typescript-eslint/type-annotation-spacing": "error",
     "@typescript-eslint/unbound-method": "error"
   },
-  "env": {
+  env: {
     "node": true,
     "es6": true,
     "jest/globals": true

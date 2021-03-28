@@ -2,7 +2,25 @@
   "name": "@pi-base/core",
   "version": "0.1.0",
   "description": "Shared pi-base data models",
+  "keywords": [
+    "Node",
+    "Math",
+    "Topology"
+  ],
+  "homepage": "https://topology.pi-base.org",
+  "bugs": {
+    "url": "https://github.com/pi-base/core/issues"
+  },
+  "license": "MIT",
+  "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
+  "files": [
+    "lib"
+  ],
   "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pi-base/core.git"
+  },
   "scripts": {
     "prebuild": "npm run peg",
     "build": "tsc",
@@ -16,20 +34,6 @@
     "test:cov": "jest --coverage",
     "test:watch": "jest --watchAll"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/pi-base/core.git"
-  },
-  "keywords": [
-    "node",
-    "math",
-    "topology"
-  ],
-  "files": [
-    "lib"
-  ],
-  "author": "James Dabbs",
-  "license": "MIT",
   "dependencies": {
     "remark": "^12.0",
     "remark-rehype": "^8.0.0",

@@ -1,6 +1,6 @@
+.eslintcache
 coverage/
 lib/
 node_modules/
-.eslintcache
 
 src/Formula/Grammar.ts
