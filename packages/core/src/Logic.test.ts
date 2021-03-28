@@ -14,7 +14,7 @@ describe('deduceTraits', () => {
 
   function run(
     theorems: ImplicationIndex<number>,
-    traits: Record<string, boolean>
+    traits: Record<string, boolean>,
   ): void {
     const result = deduceTraits(theorems, recordToMap(traits))
     if (result.kind === 'contradiction') {
@@ -28,7 +28,7 @@ describe('deduceTraits', () => {
     [atom('P'), atom('Q')],
     [atom('Q'), atom('R')],
     [atom('R'), or(atom('S'), atom('T'))],
-    [and(atom('X'), atom('Y')), atom('T', false)]
+    [and(atom('X'), atom('Y')), atom('T', false)],
   )
 
   describe('chained proofs', () => {
@@ -76,7 +76,7 @@ describe('proveTheorem', () => {
     [and(atom('P'), atom('Q')), atom('R')],
     [atom('R'), atom('P')],
     [atom('R'), atom('S')],
-    [atom('S'), atom('Q')]
+    [atom('S'), atom('Q')],
   )
 
   it('can find a chained proof', () => {

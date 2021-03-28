@@ -39,9 +39,9 @@ export function serialize(bundle: Bundle): Serialized {
 
 export function deserialize(serialized: Serialized): Bundle {
   return {
-    properties: indexBy(serialized.properties, (p) => p.uid),
-    spaces: indexBy(serialized.spaces, (s) => s.uid),
-    theorems: indexBy(serialized.theorems, (t) => t.uid),
+    properties: indexBy(serialized.properties, p => p.uid),
+    spaces: indexBy(serialized.spaces, s => s.uid),
+    theorems: indexBy(serialized.theorems, t => t.uid),
     traits: indexBy(serialized.traits, traitId),
     version: serialized.version,
   }
@@ -58,7 +58,7 @@ export function bundleUrl({ branch, host = defaultHost }: FetchOpts): string {
 }
 
 export async function fetch(
-  opts: FetchOpts
+  opts: FetchOpts,
 ): Promise<{ bundle: Bundle; etag: string } | undefined> {
   const headers = new Headers()
   if (opts.etag) {

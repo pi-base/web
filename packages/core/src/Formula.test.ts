@@ -16,7 +16,7 @@ import {
 const compound: Formula<string> = and(
   atom('compact', true),
   or(atom('connected', true), atom('separable', false)),
-  atom('first countable', false)
+  atom('first countable', false),
 )
 
 const render_ = (f: Formula<string>) => render(f, (p: string) => p)
@@ -28,7 +28,7 @@ describe('Formula', () => {
 
       expect(f.subs[0]).toEqual(atom('compact'))
       expect((f.subs[1] as F.Or<string>).subs[1]).toEqual(
-        atom('separable', false)
+        atom('separable', false),
       )
     })
   })
@@ -38,7 +38,7 @@ describe('Formula', () => {
       const props = properties(compound)
 
       expect(props).toEqual(
-        new Set(['compact', 'connected', 'separable', 'first countable'])
+        new Set(['compact', 'connected', 'separable', 'first countable']),
       )
     })
   })
@@ -50,7 +50,7 @@ describe('Formula', () => {
 
     it('can render to string', () => {
       expect(render_(compound)).toEqual(
-        '(compact ∧ (connected ∨ ¬separable) ∧ ¬first countable)'
+        '(compact ∧ (connected ∨ ¬separable) ∧ ¬first countable)',
       )
     })
   })
@@ -62,7 +62,7 @@ describe('Formula', () => {
 
     it('can negate a compound formula', () => {
       expect(render_(negate(compound))).toEqual(
-        '(¬compact ∨ (¬connected ∧ separable) ∨ first countable)'
+        '(¬compact ∨ (¬connected ∧ separable) ∨ first countable)',
       )
     })
   })
@@ -70,8 +70,8 @@ describe('Formula', () => {
   describe('map', () => {
     it('maps over entire atoms', () => {
       const result = F.map(
-        (term) => atom(term.property.slice(0, 2), !term.value),
-        compound
+        term => atom(term.property.slice(0, 2), !term.value),
+        compound,
       )
 
       expect(render_(result)).toEqual('(¬co ∧ (¬co ∨ se) ∧ fi)')
@@ -80,7 +80,7 @@ describe('Formula', () => {
 
   describe('mapProperty', () => {
     it('only maps over properties', () => {
-      const result = F.mapProperty((property) => property.slice(0, 2), compound)
+      const result = F.mapProperty(property => property.slice(0, 2), compound)
 
       expect(render_(result)).toEqual('(co ∧ (co ∨ ¬se) ∧ ¬fi)')
     })
@@ -126,7 +126,7 @@ describe('parsing', () => {
 
   it('handles whitespace', () => {
     expect(parse('   \t   Second Countable \n ')).toEqual(
-      atom('Second Countable', true)
+      atom('Second Countable', true),
     )
   })
 
@@ -136,13 +136,13 @@ describe('parsing', () => {
 
   it('inserts parens', () => {
     expect(parse('compact + connected + ~t_2')).toEqual(
-      and(atom('compact', true), atom('connected', true), atom('t_2', false))
+      and(atom('compact', true), atom('connected', true), atom('t_2', false)),
     )
   })
 
   it('allows parens', () => {
     expect(F.parse('(foo + bar)')).toEqual(
-      F.and(F.atom('foo', true), F.atom('bar', true))
+      F.and(F.atom('foo', true), F.atom('bar', true)),
     )
   })
 
@@ -152,13 +152,15 @@ describe('parsing', () => {
 
   it('can parse nested formulae', () => {
     expect(
-      parse('compact + (connected || not second countable) + ~first countable')!
+      parse(
+        'compact + (connected || not second countable) + ~first countable',
+      )!,
     ).toEqual(
       and(
         atom('compact', true),
         or(atom('connected', true), atom('second countable', false)),
-        atom('first countable', false)
-      )
+        atom('first countable', false),
+      ),
     )
   })
 
@@ -170,10 +172,10 @@ describe('parsing', () => {
 
 describe('serialization', () => {
   ;[atom('A', false), or(atom('B', true), atom('C', false)), compound].forEach(
-    (formula) => {
+    formula => {
       it(`roundtrips ${render_(formula)}`, () => {
         expect(fromJSON(toJSON(formula))).toEqual(formula)
       })
-    }
+    },
   )
 })

@@ -1,5 +1,0 @@
-coverage/
-lib/
-node_modules/
-src/Formula/Grammar.ts
-*.d.ts

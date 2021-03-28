@@ -16,47 +16,49 @@
   "files": [
     "lib"
   ],
-  "main": "lib/index.js",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pi-base/core.git"
   },
   "scripts": {
-    "prebuild": "npm run peg",
-    "build": "tsc",
+    "build": "node ./bin/build",
+    "build:declarations": "tsc --emitDeclarationOnly",
+    "build:watch": "node ./bin/build --watch",
     "fmt": "prettier --write **/*.ts",
     "fmt:check": "prettier --check **/*.ts",
     "lint": "eslint 'src/**/*.ts' --fix",
     "lint:check": "eslint 'src/**/*.ts'",
-    "peg": "pegjs --plugin ts-pegjs --output src/Formula/Grammar.ts src/Formula/Grammar.pegjs",
-    "pretest": "npm run peg",
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
-    "remark": "^12.0",
+    "remark": "^13.0",
     "remark-rehype": "^8.0.0",
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.15",
-    "@types/node": "^14.14.9",
-    "@typescript-eslint/eslint-plugin": "^4.8.2",
-    "@typescript-eslint/parser": "^4.8.1",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-jest": "^24.1.3",
-    "husky": "^4.3.0",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "esbuild": "^0.10.2",
+    "eslint": "^7.23.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-jest": "^24.3.2",
+    "husky": "^5.2.0",
     "jest": "^26.6.3",
     "jest-circus": "^26.6.3",
-    "js-yaml": "^3.14.0",
-    "lint-staged": "^10.5.1",
+    "js-yaml": "^4.0.0",
+    "lint-staged": "^10.5.4",
     "pegjs": "^0.10.0",
-    "prettier": "^2.2.0",
-    "ts-jest": "^26.4.4",
-    "ts-pegjs": "^0.2.7",
-    "typescript": "^4.1.2"
+    "pegjs-jest": "^0.0.2",
+    "prettier": "^2.2.1",
+    "ts-jest": "^26.5.4",
+    "ts-pegjs": "^0.3.1",
+    "typescript": "^4.2.3"
   },
   "husky": {
     "hooks": {

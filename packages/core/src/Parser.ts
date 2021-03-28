@@ -7,7 +7,7 @@ function delimitedParser(type: string, start: string, stop: string) {
   function parser(
     eat: (tag: string) => (token: Record<string, unknown>) => void,
     value: string,
-    silent: boolean
+    silent: boolean,
   ) {
     if (!value.startsWith(start)) {
       return
@@ -40,27 +40,27 @@ export function tokenize(this: unified.Processor): unified.Transformer {
   parser.inlineTokenizers.internalLink = delimitedParser(
     'internalLink',
     '{',
-    '}'
+    '}',
   )
   parser.inlineTokenizers.blockMathDollars = delimitedParser(
     'blockMath',
     '$$',
-    '$$'
+    '$$',
   )
   parser.inlineTokenizers.blockMathParens = delimitedParser(
     'blockMath',
     '\\[',
-    '\\]'
+    '\\]',
   )
   parser.inlineTokenizers.inlineMathDollars = delimitedParser(
     'inlineMath',
     '$',
-    '$'
+    '$',
   )
   parser.inlineTokenizers.inlineMathParens = delimitedParser(
     'inlineMath',
     '\\(',
-    '\\)'
+    '\\)',
   )
 
   // It is important that the \(...\) tokenizer appears before the escape tokenizer
@@ -73,11 +73,11 @@ export function tokenize(this: unified.Processor): unified.Transformer {
     'blockMathDollars',
     'blockMathParens',
     'inlineMathDollars',
-    'inlineMathParens'
+    'inlineMathParens',
   )
 
   return function transformer(tree: unist.Node) {
-    visit(tree, 'citation', (node) => {
+    visit(tree, 'citation', node => {
       node.data = {
         hName: 'citation',
         hProperties: {
@@ -86,7 +86,7 @@ export function tokenize(this: unified.Processor): unified.Transformer {
       }
     })
 
-    visit(tree, 'blockMath', (node) => {
+    visit(tree, 'blockMath', node => {
       node.data = {
         hName: 'span',
         hProperties: {
@@ -96,7 +96,7 @@ export function tokenize(this: unified.Processor): unified.Transformer {
       }
     })
 
-    visit(tree, 'inlineMath', (node) => {
+    visit(tree, 'inlineMath', node => {
       node.data = {
         hName: 'span',
         hProperties: {
@@ -106,7 +106,7 @@ export function tokenize(this: unified.Processor): unified.Transformer {
       }
     })
 
-    visit(tree, 'internalLink', (node) => {
+    visit(tree, 'internalLink', node => {
       node.data = {
         hName: 'internalLink',
         hProperties: {

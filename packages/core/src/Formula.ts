@@ -1,4 +1,7 @@
-import { parse as _parse } from './Formula/Grammar'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { parse as _parse } from './Formula/Grammar.pegjs'
+
 import { union } from './Util'
 
 export interface Atom<P> {
@@ -46,9 +49,9 @@ export function render<T>(f: Formula<T>, term: (t: T) => string): string {
       const name = term(f.property)
       return f.value ? name : '¬' + name
     case 'and':
-      return '(' + f.subs.map((sf) => render(sf, term)).join(' ∧ ') + ')'
+      return '(' + f.subs.map(sf => render(sf, term)).join(' ∧ ') + ')'
     case 'or':
-      return '(' + f.subs.map((sf) => render(sf, term)).join(' ∨ ') + ')'
+      return '(' + f.subs.map(sf => render(sf, term)).join(' ∨ ') + ')'
   }
 }
 
@@ -65,7 +68,7 @@ export function negate<P>(formula: Formula<P>): Formula<P> {
 
 export function map<P, Q>(
   func: (p: Atom<P>) => Atom<Q>,
-  formula: Formula<P>
+  formula: Formula<P>,
 ): Formula<Q> {
   switch (formula.kind) {
     case 'atom':
@@ -73,14 +76,14 @@ export function map<P, Q>(
     default:
       return {
         ...formula,
-        subs: formula.subs.map((sub) => map(func, sub)),
+        subs: formula.subs.map(sub => map(func, sub)),
       }
   }
 }
 
 export function mapProperty<P, Q>(
   func: (p: P) => Q,
-  formula: Formula<P>
+  formula: Formula<P>,
 ): Formula<Q> {
   function mapAtom(a: Atom<P>): Atom<Q> {
     return { ...a, property: func(a.property) }
@@ -94,7 +97,7 @@ export function compact<P>(f: Formula<P | undefined>): Formula<P> | undefined {
 
 export function evaluate<T>(
   f: Formula<T>,
-  traits: Map<T, boolean>
+  traits: Map<T, boolean>,
 ): boolean | undefined {
   let result: boolean | undefined
 
@@ -106,7 +109,7 @@ export function evaluate<T>(
       return undefined
     case 'and':
       result = true // by default
-      f.subs.forEach((sub) => {
+      f.subs.forEach(sub => {
         if (result === false) {
           return
         }
@@ -122,7 +125,7 @@ export function evaluate<T>(
       return result
     case 'or':
       result = false
-      f.subs.forEach((sub) => {
+      f.subs.forEach(sub => {
         if (result === true) {
           return
         }

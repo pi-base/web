@@ -3,9 +3,9 @@ module.exports = {
   extends: [
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "prettier/@typescript-eslint"
+    "prettier"
   ],
+  ignorePatterns: ["*.d.ts"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     "ecmaVersion": 9,

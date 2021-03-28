@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es2015",
-    "outDir": "./lib",
     "rootDir": "./src",
+    "outFile": "./dist/main.d.ts",
+    "moduleResolution": "node",
+    "declaration": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "declaration": true,
     "sourceMap": true,
     "strict": true,
     "noImplicitAny": true,

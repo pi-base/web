@@ -7,7 +7,7 @@ describe('Bundle', () => {
     function roundtrip(name: string, bundle: Bundle) {
       it(`roundtrips ${name}`, () => {
         expect(
-          deserialize(JSON.parse(JSON.stringify(serialize(bundle))))
+          deserialize(JSON.parse(JSON.stringify(serialize(bundle)))),
         ).toEqual(bundle)
       })
     }

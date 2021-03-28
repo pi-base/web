@@ -2,7 +2,7 @@ name: Test
 on:
   push:
     branches:
-      - '*'
+      - "*"
 
 jobs:
   lint:
@@ -39,3 +39,5 @@ jobs:
       - uses: bahmutov/npm-install@v1
       - name: Build
         run: npm run build
+      - name: Build
+        run: npm run build:declarations
