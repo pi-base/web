@@ -9,7 +9,7 @@ let theorems: ImplicationIndex
 
 beforeAll(async () => {
   const serialized = await fs.readFile(
-    './src/__test__/fixtures/bundle.min.json'
+    './src/__test__/fixtures/bundle.min.json',
   )
   bundle = deserialize(JSON.parse(serialized.toString()))
   theorems = new ImplicationIndex(
@@ -17,7 +17,7 @@ beforeAll(async () => {
       id: uid,
       when,
       then,
-    }))
+    })),
   )
 })
 
@@ -25,7 +25,7 @@ it('can prove simple implications', () => {
   const result = proveTheorem(
     theorems,
     atom('P000008'), // T5
-    atom('P000003') // T2
+    atom('P000003'), // T2
   )
 
   expect(result).toEqual([
@@ -43,8 +43,8 @@ it('can prove compound implications', () => {
     atom('P000052'), // Discrete
     and(
       atom('P000049'), // Extremally Disconnected
-      atom('P000053') // Metrizable
-    )
+      atom('P000053'), // Metrizable
+    ),
   )
 
   expect(result).toEqual([

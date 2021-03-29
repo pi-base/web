@@ -42,7 +42,7 @@ export default class Prover<
 
   constructor(
     implications: ImplicationIndex<TheoremId, PropertyId, Theorem>,
-    traits: Map<PropertyId, boolean> = new Map()
+    traits: Map<PropertyId, boolean> = new Map(),
   ) {
     this.traits = traits
     this.derivations = new Derivations([...traits.keys()])
@@ -68,7 +68,7 @@ export default class Prover<
   force(
     theorem: TheoremId,
     formula: Formula<PropertyId>,
-    support: PropertyId[] = []
+    support: PropertyId[] = [],
   ): Contradiction<TheoremId, PropertyId> | undefined {
     switch (formula.kind) {
       case 'and':
@@ -81,7 +81,7 @@ export default class Prover<
   }
 
   private apply(
-    implication: Theorem
+    implication: Theorem,
   ): Contradiction<TheoremId, PropertyId> | undefined {
     const a = implication.when
     const c = implication.then
@@ -102,7 +102,7 @@ export default class Prover<
 
   private contradiction(
     theorem: TheoremId,
-    properties: PropertyId[]
+    properties: PropertyId[],
   ): Contradiction<TheoremId, PropertyId> {
     return this.derivations.expand([theorem, properties])
   }
@@ -110,7 +110,7 @@ export default class Prover<
   private forceAtom(
     theorem: TheoremId,
     formula: Atom<PropertyId>,
-    support: PropertyId[]
+    support: PropertyId[],
   ): Contradiction<TheoremId, PropertyId> | undefined {
     const property = formula.property
 
@@ -130,7 +130,7 @@ export default class Prover<
   private forceAnd(
     theorem: TheoremId,
     formula: And<PropertyId>,
-    support: PropertyId[]
+    support: PropertyId[],
   ): Contradiction<TheoremId, PropertyId> | undefined {
     for (const sub of formula.subs) {
       const contradiction = this.force(theorem, sub, support)
@@ -143,7 +143,7 @@ export default class Prover<
   private forceOr(
     theorem: TheoremId,
     formula: Or<PropertyId>,
-    support: PropertyId[]
+    support: PropertyId[],
   ): Contradiction<TheoremId, PropertyId> | undefined {
     const result = formula.subs.reduce(
       (
@@ -153,7 +153,7 @@ export default class Prover<
               unknown: Formula<PropertyId> | undefined
             }
           | undefined,
-        sf: Formula<PropertyId>
+        sf: Formula<PropertyId>,
       ) => {
         if (!acc) {
           return undefined
@@ -171,14 +171,14 @@ export default class Prover<
         }
         return acc
       },
-      { falses: Array<Formula<PropertyId>>(), unknown: undefined }
+      { falses: Array<Formula<PropertyId>>(), unknown: undefined },
     )
 
     if (!result) return
 
     const falseProps = result.falses.reduce<PropertyId[]>(
       (acc, f) => acc.concat([...properties(f)]),
-      []
+      [],
     )
 
     if (result.falses.length === formula.subs.length) {

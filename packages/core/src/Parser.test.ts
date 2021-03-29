@@ -50,6 +50,6 @@ This is a list of links
 })
 
 function deposition(tree: Node) {
-  visit(tree, node => delete node['position'])
+  visit(tree, (node) => delete node['position'])
   return tree
 }

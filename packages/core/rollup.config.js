@@ -1,8 +1,8 @@
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import pegjs from 'rollup-plugin-pegjs';
-import typescript from '@rollup/plugin-typescript';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import pegjs from 'rollup-plugin-pegjs'
+import typescript from '@rollup/plugin-typescript'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 export default [
   {
@@ -10,14 +10,8 @@ export default [
     output: {
       file: 'dist/main.js',
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
     },
-    plugins: [
-      json(),
-      typescript(),
-      nodeResolve(),
-      commonjs(),
-      pegjs(),
-    ],
-  }
+    plugins: [json(), typescript(), nodeResolve(), commonjs(), pegjs()],
+  },
 ]

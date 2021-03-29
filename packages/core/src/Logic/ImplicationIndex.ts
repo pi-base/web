@@ -15,7 +15,7 @@ export default class ImplicationIndex<
   private byProperty: Map<PropertyId, Set<Theorem>>
 
   static properties<TheoremId, PropertyId>(
-    implication: Implication<TheoremId, PropertyId>
+    implication: Implication<TheoremId, PropertyId>,
   ): Set<PropertyId> {
     return union(properties(implication.when), properties(implication.then))
   }

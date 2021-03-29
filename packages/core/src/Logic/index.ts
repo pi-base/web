@@ -11,7 +11,7 @@ import { Id } from './Types'
 // find either the collection of derivable traits, or a contradiction
 export function deduceTraits<TheoremId = Id, PropertyId = Id>(
   implications: ImplicationIndex<TheoremId, PropertyId>,
-  traits: Map<PropertyId, boolean>
+  traits: Map<PropertyId, boolean>,
 ): Result<TheoremId, PropertyId> {
   return new Prover(implications, traits).run()
 }
@@ -24,7 +24,7 @@ export function deduceTraits<TheoremId = Id, PropertyId = Id>(
 // the formula is a disjunction, `force(a | b)` does not actually force anything.
 export function disproveFormula<TheoremId = Id, PropertyId = Id>(
   implications: ImplicationIndex<TheoremId, PropertyId>,
-  formula: Formula<PropertyId>
+  formula: Formula<PropertyId>,
 ): TheoremId[] | 'tautology' | undefined {
   const prover = new Prover<TheoremId | 'given', PropertyId>(implications)
 
@@ -44,7 +44,7 @@ export function disproveFormula<TheoremId = Id, PropertyId = Id>(
 export function proveTheorem<TheoremId = Id, PropertyId = Id>(
   theorems: ImplicationIndex<TheoremId, PropertyId>,
   when: Formula<PropertyId>,
-  then: Formula<PropertyId>
+  then: Formula<PropertyId>,
 ): TheoremId[] | 'tautology' | undefined {
   // We don't want to `disproveFormula(when + ~then)` given the current
   // limitations of `disproveFormula` above. Instead we:
@@ -83,7 +83,7 @@ export function proveTheorem<TheoremId = Id, PropertyId = Id>(
 }
 
 function formatProof<TheoremId, PropertyId>(
-  proof: Proof<TheoremId | 'given', PropertyId>
+  proof: Proof<TheoremId | 'given', PropertyId>,
 ): TheoremId[] | 'tautology' {
   const filtered: TheoremId[] = []
   proof.theorems.forEach((id: TheoremId | 'given') => {

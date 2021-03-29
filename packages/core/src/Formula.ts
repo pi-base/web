@@ -49,9 +49,9 @@ export function render<T>(f: Formula<T>, term: (t: T) => string): string {
       const name = term(f.property)
       return f.value ? name : '¬' + name
     case 'and':
-      return '(' + f.subs.map(sf => render(sf, term)).join(' ∧ ') + ')'
+      return '(' + f.subs.map((sf) => render(sf, term)).join(' ∧ ') + ')'
     case 'or':
-      return '(' + f.subs.map(sf => render(sf, term)).join(' ∨ ') + ')'
+      return '(' + f.subs.map((sf) => render(sf, term)).join(' ∨ ') + ')'
   }
 }
 
@@ -76,7 +76,7 @@ export function map<P, Q>(
     default:
       return {
         ...formula,
-        subs: formula.subs.map(sub => map(func, sub)),
+        subs: formula.subs.map((sub) => map(func, sub)),
       }
   }
 }
@@ -109,7 +109,7 @@ export function evaluate<T>(
       return undefined
     case 'and':
       result = true // by default
-      f.subs.forEach(sub => {
+      f.subs.forEach((sub) => {
         if (result === false) {
           return
         }
@@ -125,7 +125,7 @@ export function evaluate<T>(
       return result
     case 'or':
       result = false
-      f.subs.forEach(sub => {
+      f.subs.forEach((sub) => {
         if (result === true) {
           return
         }

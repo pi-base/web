@@ -1,15 +1,13 @@
 module.exports = {
   bail: 10,
   clearMocks: true,
-  coverageDirectory: "coverage",
-  coveragePathIgnorePatterns: [
-    "/node_modules/"
-  ],
-  coverageProvider: "v8",
+  coverageDirectory: 'coverage',
+  coveragePathIgnorePatterns: ['/node_modules/'],
+  coverageProvider: 'v8',
   errorOnDeprecated: true,
   moduleFileExtensions: ['js', 'ts'],
   notify: true,
-  notifyMode: "failure-change",
+  notifyMode: 'failure-change',
   resetMocks: true,
   roots: ['src'],
   testEnvironment: 'node',
@@ -17,7 +15,7 @@ module.exports = {
   testRunner: 'jest-circus/runner',
   transform: {
     '^.+\\.pegjs$': 'pegjs-jest',
-    '^.+\\.ts$': 'ts-jest'
+    '^.+\\.ts$': 'ts-jest',
   },
-  verbose: true
+  verbose: true,
 }
