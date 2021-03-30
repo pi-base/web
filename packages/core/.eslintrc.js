@@ -1,3 +1,1 @@
-const config = require('@pi-base/dev').eslintConfig
-
-module.exports = config
+module.exports = require('@pi-base/dev').eslintConfig

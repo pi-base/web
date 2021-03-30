@@ -13,9 +13,6 @@
   },
   "license": "MIT",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
-  "files": [
-    "lib"
-  ],
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
   "repository": {
@@ -41,11 +38,10 @@
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
-    "@pi-base/dev": "^0.0.3",
+    "@pi-base/dev": "^0.0.5",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.37",
     "esbuild": "^0.10.2",
-    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "jest-circus": "^26.6.3",
     "js-yaml": "^4.0.0",
