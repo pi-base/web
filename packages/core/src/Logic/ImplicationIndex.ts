@@ -22,14 +22,16 @@ export default class ImplicationIndex<
 
   constructor(implications: Theorem[]) {
     this.all = implications
-    this.byProperty = new Map()
+    this.byProperty = new Map<PropertyId, Set<Theorem>>()
 
     implications.forEach((i: Theorem) => {
       ImplicationIndex.properties(i).forEach((id: PropertyId) => {
-        if (!this.byProperty.has(id)) {
-          this.byProperty.set(id, new Set())
+        let collection = this.byProperty.get(id)
+        if (!collection) {
+          collection = new Set<Theorem>()
+          this.byProperty.set(id, collection)
         }
-        this.byProperty.get(id)!.add(i)
+        collection.add(i)
       })
     })
   }

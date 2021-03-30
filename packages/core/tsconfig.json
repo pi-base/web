@@ -1,3 +1,6 @@
 {
-  "extends": "@pi-base/dev/tsconfig.shared.json"
+  "extends": "@pi-base/dev/tsconfig.shared.json",
+  "include": [
+    "src/**/*.ts"
+  ]
 }

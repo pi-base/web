@@ -8,7 +8,7 @@ describe('ImplicationIndex', () => {
   )
 
   it('can return all items', () => {
-    expect(theorems.all.length).toEqual(2)
+    expect(theorems.all).toHaveLength(2)
   })
 
   describe('withProperty', () => {

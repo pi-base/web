@@ -7,7 +7,7 @@ export default class Queue<
   Theorem extends Implication<TheoremId, PropertyId>
 > {
   private index: ImplicationIndex<TheoremId, PropertyId, Theorem>
-  private queue: Set<Implication<TheoremId, PropertyId>>
+  private queue: Set<Theorem>
 
   constructor(index: ImplicationIndex<TheoremId, PropertyId, Theorem>) {
     this.index = index
@@ -19,10 +19,12 @@ export default class Queue<
   }
 
   shift(): Theorem | undefined {
-    const item = this.queue.values().next().value
-    if (item) {
-      this.queue.delete(item)
+    const result = this.queue.values().next()
+    if (result.done) {
+      return
     }
-    return item
+
+    this.queue.delete(result.value)
+    return result.value
   }
 }

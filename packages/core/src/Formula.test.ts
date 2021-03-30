@@ -171,11 +171,15 @@ describe('parsing', () => {
 })
 
 describe('serialization', () => {
-  ;[atom('A', false), or(atom('B', true), atom('C', false)), compound].forEach(
-    (formula) => {
-      it(`roundtrips ${render_(formula)}`, () => {
-        expect(fromJSON(toJSON(formula))).toEqual(formula)
-      })
-    },
-  )
+  const formulae = [
+    atom('A', false),
+    or(atom('B', true), atom('C', false)),
+    compound,
+  ]
+
+  formulae.forEach((formula) => {
+    it(`roundtrips ${render_(formula)}`, () => {
+      expect(fromJSON(toJSON(formula))).toEqual(formula)
+    })
+  })
 })

@@ -19,9 +19,9 @@ export class Derivations<TheoremId = Id, PropertyId = Id> {
   private traits: Map<PropertyId, boolean>
 
   constructor(assumptions: PropertyId[] = []) {
-    this.evidence = new Map()
     this.given = new Set(assumptions)
-    this.traits = new Map()
+    this.evidence = new Map<PropertyId, Evidence<TheoremId, PropertyId>>()
+    this.traits = new Map<PropertyId, boolean>()
   }
 
   addEvidence(

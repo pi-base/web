@@ -42,7 +42,7 @@ export default class Prover<
 
   constructor(
     implications: ImplicationIndex<TheoremId, PropertyId, Theorem>,
-    traits: Map<PropertyId, boolean> = new Map(),
+    traits = new Map<PropertyId, boolean>(),
   ) {
     this.traits = traits
     this.derivations = new Derivations([...traits.keys()])

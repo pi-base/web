@@ -1,4 +1,5 @@
 import { Bundle, deserialize, serialize } from './Bundle'
+import { Theorem } from './Theorem'
 
 import { property, space, trait } from './testUtils'
 
@@ -34,7 +35,7 @@ describe('Bundle', () => {
         ],
       ]),
       traits: new Map([['S1|P1', trait({ space: 'S1', property: 'P1' })]]),
-      theorems: new Map(),
+      theorems: new Map<string, Theorem>(),
       version: { ref: 'test', sha: 'HEAD' },
     })
   })

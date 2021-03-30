@@ -72,6 +72,8 @@ export async function fetch(
     return
   }
 
+  // TODO: use a schema definition to handle validation failures
+  // eslint-disable-next-line
   const json = await response.json()
   const deserialized = deserialize(json)
 

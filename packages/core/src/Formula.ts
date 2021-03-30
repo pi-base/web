@@ -46,6 +46,7 @@ export function properties<P>(f: Formula<P>): Set<P> {
 export function render<T>(f: Formula<T>, term: (t: T) => string): string {
   switch (f.kind) {
     case 'atom':
+      // eslint-disable-next-line no-case-declarations
       const name = term(f.property)
       return f.value ? name : '¬' + name
     case 'and':
@@ -149,6 +150,7 @@ export function parse(q?: string): Formula<string> | undefined {
 
   let parsed
   try {
+    // eslint-disable-next-line
     parsed = _parse(q)
   } catch {
     if (q && q.startsWith('(')) {
@@ -174,10 +176,18 @@ export function fromJSON(json: Serialized): Formula<string> {
     return or<string>(...json.or.map(fromJSON))
   } else if ('property' in json && typeof json.property === 'string') {
     return atom<string>(json.property, json.value)
-  } else {
-    const [property, value] = Object.entries(json)[0]
-    return atom<string>(property, value)
   }
+
+  const entries = Object.entries(json)
+  if (entries.length !== 1) {
+    throw `cannot cast object with ${entries.length} keys to atom`
+  }
+
+  if (typeof entries[0][1] !== 'boolean') {
+    throw `cannot cast object with non-boolean value`
+  }
+
+  return atom<string>(...entries[0])
 }
 
 export function toJSON(f: Formula<string>): Serialized {
