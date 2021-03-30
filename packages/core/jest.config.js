@@ -1,21 +1,10 @@
+const config = require('@pi-base/dev').jestConfig
+
 module.exports = {
+  ...config,
   bail: 10,
-  clearMocks: true,
-  coverageDirectory: 'coverage',
-  coveragePathIgnorePatterns: ['/node_modules/'],
-  coverageProvider: 'v8',
-  errorOnDeprecated: true,
-  moduleFileExtensions: ['js', 'ts'],
-  notify: true,
-  notifyMode: 'failure-change',
-  resetMocks: true,
-  roots: ['src'],
-  testEnvironment: 'node',
-  testMatch: ['**/*.test.ts'],
-  testRunner: 'jest-circus/runner',
-  transform: {
+  transform: Object.assign(config.transform, {
     '^.+\\.pegjs$': 'pegjs-jest',
-    '^.+\\.ts$': 'ts-jest',
-  },
+  }),
   verbose: true,
 }
