@@ -1,30 +1,45 @@
-name: "build-test"
+name: Test
 on:
   pull_request:
   push:
+    branches:
+      - "*"
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1
+      - name: Lint
+        run: npm run lint:check
+      - name: Formatting
+        run: npm run fmt:check
+
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Cached install
-      uses: bahmutov/npm-install@v1.1.0
-    - name: Test
-      run: yarn build && yarn test --coverage
-    - name: Report coverage
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: bahmutov/npm-install@v1
+      - name: Test
+        run: npm run test:cov
+      - name: Report coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/lcov.info
+          fail_ci_if_error: true
 
   build: # ensure the action runs without error
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: |
-        yarn install
-        yarn build
-    - uses: ./
-      with:
-        repo: .
-        out: bundle.json
+      - uses: actions/checkout@v2
+      - run: |
+          yarn install
+          yarn build
+      - uses: ./
+        with:
+          repo: .
+          out: bundle.json

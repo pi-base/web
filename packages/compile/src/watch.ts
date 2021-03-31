@@ -29,7 +29,7 @@ async function build() {
       log('')
       errors.forEach((messages, path) => {
         log(chalk.yellow(path))
-        messages.forEach(message => log(`* ${message}`))
+        messages.forEach((message) => log(`* ${message}`))
         log('')
       })
     }

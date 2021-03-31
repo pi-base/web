@@ -9,17 +9,23 @@ function refName(raw: string) {
 
 export async function find() {
   let version = await fromRepo()
-  if (version) { return version }
+  if (version) {
+    return version
+  }
 
   version = fromEnv()
-  if (version) { return version }
+  if (version) {
+    return version
+  }
 
   throw new Error('Could not determine bundle version')
 }
 
 async function fromRepo(): Promise<Version | undefined> {
-  const contents = await readFile('.git/HEAD').catch(() => { })
-  if (!contents) { return }
+  const contents = await readFile('.git/HEAD').catch(() => {})
+  if (!contents) {
+    return
+  }
 
   const head = refName(contents)
 
@@ -27,17 +33,21 @@ async function fromRepo(): Promise<Version | undefined> {
     const sha = await readFile(`.git/refs/heads/${head}`)
     return {
       ref: head,
-      sha: sha.trim()
+      sha: sha.trim(),
     }
   }
 }
 
 function fromEnv(env: NodeJS.ProcessEnv = process.env): Version | undefined {
-  if (!env.GITHUB_REF) { return }
-  if (!env.GITHUB_SHA) { return }
+  if (!env.GITHUB_REF) {
+    return
+  }
+  if (!env.GITHUB_SHA) {
+    return
+  }
 
   return {
     ref: refName(env.GITHUB_REF) || 'unknown',
-    sha: env.GITHUB_SHA
+    sha: env.GITHUB_SHA,
   }
 }

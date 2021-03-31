@@ -1,0 +1,1 @@
+npx pi-base-dev lint:staged

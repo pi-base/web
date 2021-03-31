@@ -7,5 +7,5 @@ inputs:
   out:
     description: Path to write the bundle to
 runs:
-  using: 'node12'
-  main: 'lib/main.js'
+  using: "node12"
+  main: "dist/main.js"

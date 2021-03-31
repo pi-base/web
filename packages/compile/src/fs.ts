@@ -16,8 +16,10 @@ export type File = {
 
 export async function readFiles(pattern: string): Promise<File[]> {
   const items = await glob(pattern)
-  return Promise.all(items.map(async function read(path: string) {
-    const contents = await readFile(path)
-    return { path, contents: contents.toString() }
-  }))
+  return Promise.all(
+    items.map(async function read(path: string) {
+      const contents = await readFile(path)
+      return { path, contents: contents.toString() }
+    }),
+  )
 }

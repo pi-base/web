@@ -11,13 +11,7 @@ type State = {
 
 type Logger = (message: string, ...args: any[]) => void
 
-export function boot({
-  log,
-  port
-}: {
-  log: Logger
-  port: number
-}) {
+export function boot({ log, port }: { log: Logger; port: number }) {
   let state: State = { bundle: undefined, errors: undefined }
 
   function setState(updates: Partial<State>) {
@@ -28,8 +22,8 @@ export function boot({
 
   app.use(
     cors({
-      exposedHeaders: ['ETag']
-    })
+      exposedHeaders: ['ETag'],
+    }),
   )
 
   app.use((req: Request, _, next: NextFunction) => {
@@ -53,6 +47,6 @@ export function boot({
 
   return {
     app,
-    setState
+    setState,
   }
 }

@@ -21,7 +21,7 @@ describe('load', () => {
     const { errors = new Map() } = await load(path.join(repo, 'invalid'))
 
     expect(errors.get('theorems/T000001.md')).toContain(
-      'if references unknown property=P100016'
+      'if references unknown property=P100016',
     )
   })
 })
@@ -37,38 +37,41 @@ describe('validate', () => {
 
   it('handles property validation failures', () => {
     const { errors } = validate({
-      properties: [{
-        path: 'properties/1.md',
-        contents: theredoc`
+      properties: [
+        {
+          path: 'properties/1.md',
+          contents: theredoc`
           ---
           uid: 1
           ---
           description
-        `
-      }],
-      version
+        `,
+        },
+      ],
+      version,
     })
 
-    expect(errors).toEqual(new Map([
-      ['properties/1.md', ['name is required']]
-    ]))
+    expect(errors).toEqual(new Map([['properties/1.md', ['name is required']]]))
   })
 
   it('handles theorem reference errors', () => {
     const { errors } = validate({
-      properties: [{
-        path: 'properties/P1.md',
-        contents: theredoc`
+      properties: [
+        {
+          path: 'properties/P1.md',
+          contents: theredoc`
           ---
           uid: P1
           name: P1
           ---
           Trivially.
-        `
-      }],
-      theorems: [{
-        path: 'theorems/T1.md',
-        contents: theredoc`
+        `,
+        },
+      ],
+      theorems: [
+        {
+          path: 'theorems/T1.md',
+          contents: theredoc`
           ---
           uid: T1
           if:
@@ -77,33 +80,41 @@ describe('validate', () => {
             P2: true
           ---
           Trivially.
-        `
-      }],
-      version
+        `,
+        },
+      ],
+      version,
     })
 
-    expect(errors).toEqual(new Map([
-      ['theorems/T1.md', ['then references unknown property=P2']]
-    ]))
+    expect(errors).toEqual(
+      new Map([['theorems/T1.md', ['then references unknown property=P2']]]),
+    )
   })
 
   it('handles trait reference errors', () => {
     const { errors } = validate({
-      traits: [{
-        path: 'spaces/S1/properties/P1.md',
-        contents: theredoc`
+      traits: [
+        {
+          path: 'spaces/S1/properties/P1.md',
+          contents: theredoc`
           ---
           space: S1
           property: P1
           ---
           Trivially.
-        `
-      }],
-      version
+        `,
+        },
+      ],
+      version,
     })
 
-    expect(errors).toEqual(new Map([
-      ['spaces/S1/properties/P1.md', ['unknown property=P1', 'unknown space=S1']]
-    ]))
+    expect(errors).toEqual(
+      new Map([
+        [
+          'spaces/S1/properties/P1.md',
+          ['unknown property=P1', 'unknown space=S1'],
+        ],
+      ]),
+    )
   })
 })

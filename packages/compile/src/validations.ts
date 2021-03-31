@@ -25,10 +25,13 @@ function loadFront(raw: string): any {
   return yaml.safeLoadFront(raw)
 }
 
-export function all<I, O>(validator: Validator<I, O>, inputs: I[]): Result<O[]> {
+export function all<I, O>(
+  validator: Validator<I, O>,
+  inputs: I[],
+): Result<O[]> {
   const out: Result<O[]> = { value: [], errors: [] }
 
-  inputs.forEach(input => {
+  inputs.forEach((input) => {
     const { value, errors } = validator(input)
     if (value && out.value) {
       out.value.push(value)
@@ -43,7 +46,7 @@ export function all<I, O>(validator: Validator<I, O>, inputs: I[]): Result<O[]> 
 
 function validate<T>(
   path: string,
-  handler: (error: Handler) => T | undefined
+  handler: (error: Handler) => T | undefined,
 ): Result<T> {
   const result: Result<T> = { errors: [] }
 
@@ -60,8 +63,10 @@ function duplicated<T>(values: T[]) {
   const seen = new Set<T>()
   const dupes = new Set<T>()
 
-  values.forEach(value => {
-    if (seen.has(value)) { dupes.add(value) }
+  values.forEach((value) => {
+    if (seen.has(value)) {
+      dupes.add(value)
+    }
     seen.add(value)
   })
 
@@ -81,14 +86,22 @@ function required<T>(value: T, key: keyof T, error: Handler) {
 }
 
 const paths = {
-  property(p: string) { return `properties/${p}.md` },
-  space(s: string) { return `spaces/${s}/README.md` },
-  theorem(t: string) { return `theorems/${t}.md` },
-  trait({ space, property }: { space: string, property: string }) { return `spaces/${space}/properties/${property}.md` }
+  property(p: string) {
+    return `properties/${p}.md`
+  },
+  space(s: string) {
+    return `spaces/${s}/README.md`
+  },
+  theorem(t: string) {
+    return `theorems/${t}.md`
+  },
+  trait({ space, property }: { space: string; property: string }) {
+    return `spaces/${space}/properties/${property}.md`
+  },
 }
 
 export function property(input: File): Result<Property> {
-  return validate(input.path, error => {
+  return validate(input.path, (error) => {
     const {
       counterexamples_id,
       uid = '',
@@ -106,7 +119,7 @@ export function property(input: File): Result<Property> {
       name: String(name).trim(),
       aliases,
       refs,
-      description: String(description).trim()
+      description: String(description).trim(),
     }
 
     if (!input.path.endsWith(paths.property(uid))) {
@@ -123,7 +136,7 @@ export function property(input: File): Result<Property> {
 }
 
 export function space(input: File) {
-  return validate(input.path, error => {
+  return validate(input.path, (error) => {
     const {
       counterexamples_id,
       uid = '',
@@ -143,7 +156,7 @@ export function space(input: File) {
       description: String(description).trim(),
       aliases,
       refs,
-      ambiguous_construction
+      ambiguous_construction,
     }
 
     if (!input.path.endsWith(paths.space(uid))) {
@@ -160,7 +173,7 @@ export function space(input: File) {
 }
 
 export function theorem(input: File) {
-  return validate(input.path, error => {
+  return validate(input.path, (error) => {
     const {
       counterexamples_id,
       uid = '',
@@ -179,7 +192,7 @@ export function theorem(input: File) {
       then: then && Formula.fromJSON(then),
       description: String(description).trim(),
       refs,
-      converse
+      converse,
     }
 
     if (!input.path.endsWith(paths.theorem(uid))) {
@@ -197,7 +210,7 @@ export function theorem(input: File) {
 }
 
 export function trait(input: File) {
-  return validate(input.path, error => {
+  return validate(input.path, (error) => {
     const {
       uid = '',
       counterexamples_id,
@@ -216,7 +229,7 @@ export function trait(input: File) {
       value: Boolean(value),
       counterexamples_id,
       refs,
-      description
+      description,
     }
 
     if (!input.path.endsWith(paths.trait({ space, property }))) {
@@ -234,18 +247,22 @@ export function trait(input: File) {
 }
 
 export function bundle(bundle: Bundle): Result<Bundle> {
-  return validate('', error => {
-    const duplicatePropertyNames = duplicated(Array.from(bundle.properties.values()).map(s => s.name))
+  return validate('', (error) => {
+    const duplicatePropertyNames = duplicated(
+      Array.from(bundle.properties.values()).map((s) => s.name),
+    )
     if (duplicatePropertyNames.length > 0) {
       error(`Duplicate property names: ${duplicatePropertyNames}`)
     }
 
-    const duplicateSpaceNames = duplicated(Array.from(bundle.spaces.values()).map(s => s.name))
+    const duplicateSpaceNames = duplicated(
+      Array.from(bundle.spaces.values()).map((s) => s.name),
+    )
     if (duplicateSpaceNames.length > 0) {
       error(`Duplicate space names: ${duplicateSpaceNames}`)
     }
 
-    bundle.traits.forEach(trait => {
+    bundle.traits.forEach((trait) => {
       const errorKey = paths.trait(trait)
 
       if (!bundle.properties.has(trait.property)) {
@@ -256,23 +273,23 @@ export function bundle(bundle: Bundle): Result<Bundle> {
       }
     })
 
-    bundle.theorems.forEach(theorem => {
+    bundle.theorems.forEach((theorem) => {
       const key = paths.theorem(theorem.uid)
 
-      Formula.properties(theorem.when).forEach(id => {
+      Formula.properties(theorem.when).forEach((id) => {
         if (!bundle.properties.has(id)) {
           error(`if references unknown property=${id}`, key)
         }
       })
 
-      Formula.properties(theorem.then).forEach(id => {
+      Formula.properties(theorem.then).forEach((id) => {
         if (!bundle.properties.has(id)) {
           error(`then references unknown property=${id}`, key)
         }
       })
 
       if (theorem.converse) {
-        theorem.converse.forEach(id => {
+        theorem.converse.forEach((id) => {
           if (!bundle.theorems.has(id)) {
             error(`converse references unknown theorem=${id}`, key)
           }
@@ -290,7 +307,10 @@ export function bundle(bundle: Bundle): Result<Bundle> {
           result = checked.bundle
           break
         case 'contradiction':
-          error(`properties=${checked.contradiction.properties} contradict theorems=${checked.contradiction.theorems}`, key)
+          error(
+            `properties=${checked.contradiction.properties} contradict theorems=${checked.contradiction.theorems}`,
+            key,
+          )
           break
       }
     }

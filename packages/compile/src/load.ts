@@ -6,17 +6,13 @@ import * as Validations from './validations'
 import { find as findVersion } from './version'
 
 export function rootDirectories(repo: string) {
-  return [
-    `${repo}/properties`,
-    `${repo}/spaces`,
-    `${repo}/theorems`
-  ]
+  return [`${repo}/properties`, `${repo}/spaces`, `${repo}/theorems`]
 }
 
 export default async function load(
-  repo: string
+  repo: string,
 ): Promise<{
-  bundle?: Bundle,
+  bundle?: Bundle
   errors?: Map<string, string[]>
 }> {
   return validate({
@@ -24,7 +20,7 @@ export default async function load(
     spaces: await readFiles(`${repo}/spaces/*/README.md`),
     theorems: await readFiles(`${repo}/theorems/*.md`),
     traits: await readFiles(`${repo}/spaces/*/properties/*.md`),
-    version: await findVersion()
+    version: await findVersion(),
   })
 }
 
@@ -33,12 +29,12 @@ export function validate({
   spaces = [],
   theorems = [],
   traits = [],
-  version
+  version,
 }: {
   properties?: File[]
   spaces?: File[]
   theorems?: File[]
-  traits?: File[],
+  traits?: File[]
   version: Version
 }) {
   let bundle: Bundle | undefined
@@ -49,7 +45,7 @@ export function validate({
       spaces: checkAll(Validations.space, spaces),
       theorems: checkAll(Validations.theorem, theorems),
       traits: checkAll(Validations.trait, traits),
-      version
+      version,
     })
 
     return format(Validations.bundle(bundle))
@@ -73,7 +69,10 @@ class ValidationError extends Error {
   }
 }
 
-function checkAll<I, O>(validator: Validations.Validator<I, O>, inputs: I[]): O[] {
+function checkAll<I, O>(
+  validator: Validations.Validator<I, O>,
+  inputs: I[],
+): O[] {
   const result = Validations.all(validator, inputs)
 
   if (result.errors.length > 0 || !result.value) {
@@ -83,11 +82,19 @@ function checkAll<I, O>(validator: Validations.Validator<I, O>, inputs: I[]): O[
   return result.value
 }
 
-function format({ value, errors }: Validations.Result<Bundle>): { bundle?: Bundle, errors?: Map<string, string[]> } {
+function format({
+  value,
+  errors,
+}: Validations.Result<Bundle>): {
+  bundle?: Bundle
+  errors?: Map<string, string[]>
+} {
   if (errors.length > 0) {
     const grouped = new Map()
     errors.forEach(({ path, message }) => {
-      if (!grouped.has(path)) { grouped.set(path, []) }
+      if (!grouped.has(path)) {
+        grouped.set(path, [])
+      }
       grouped.get(path).push(message)
     })
 

@@ -1,7 +1,14 @@
-[![build-test](https://github.com/pi-base/compile/workflows/build-test/badge.svg)](https://github.com/pi-base/compile/actions?query=branch%3Amaster)
-[![Coverage Status](https://coveralls.io/repos/github/pi-base/compile/badge.svg?branch=master)](https://coveralls.io/github/pi-base/compile?branch=master)
+<h2 align="center">π-Base Compiler</h2>
+<div align="center">
+
+[![Test](https://github.com/pi-base/compile/workflows/Test/badge.svg?branch=main)](https://github.com/pi-base/compile/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/pi-base/compile/branch/main/graph/badge.svg?token=7JO1N1OXJB)](https://codecov.io/gh/pi-base/compile)
+
+<!-- TODO: CD release, action link -->
 
 Compiles, checks, and publishes a data bundle for the [π-base viewer](https://github.com/pi-base/viewer) to view.
+
+</div>
 
 ## Running Locally
 
