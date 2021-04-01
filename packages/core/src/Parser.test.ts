@@ -7,7 +7,7 @@ function parse(input: string) {
   return parser.runSync(parser.parse(input))
 }
 
-it('parses a citation', () => {
+it.skip('parses a citation', () => {
   const parsed = parse('{{doi:123}}')
 
   expect(deposition(parsed)).toEqual({
@@ -32,7 +32,7 @@ it('parses a citation', () => {
   })
 })
 
-it('parses a complex example', () => {
+it.skip('parses a complex example', () => {
   const example = `Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
 
 This is a list of links

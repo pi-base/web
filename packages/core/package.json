@@ -1,6 +1,6 @@
 {
   "name": "@pi-base/core",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Shared pi-base data models",
   "keywords": [
     "Node",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
   "main": "./dist/main.js",
-  "types": "./dist/main.d.ts",
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pi-base/core.git"
@@ -23,6 +23,7 @@
     "build": "node ./bin/build",
     "build:declarations": "tsc --emitDeclarationOnly",
     "build:watch": "node ./bin/build --watch",
+    "build:declarations:watch": "tsc --watch --emitDeclarationOnly",
     "fmt": "pi-base-dev fmt",
     "fmt:check": "pi-base-dev fmt:check",
     "lint": "pi-base-dev lint",

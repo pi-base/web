@@ -16,3 +16,5 @@ export * as bundle from './Bundle'
 export * as formula from './Formula'
 export * as Id from './Id'
 export * as Ref from './Ref'
+
+export * as TestUtils from './testUtils'
