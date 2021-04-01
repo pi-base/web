@@ -28,10 +28,12 @@
     "fmt:check": "pi-base-dev fmt:check",
     "lint": "pi-base-dev lint",
     "lint:check": "pi-base-dev lint:check",
+    "lint:staged": "pi-base-dev lint:staged",
     "test": "pi-base-dev test",
     "test:cov": "pi-base-dev test:cov",
     "test:watch": "pi-base-dev test:watch",
-    "prepare": "pi-base-dev prepare"
+    "prepare": "pi-base-dev prepare",
+    "release": "standard-version"
   },
   "dependencies": {
     "remark": "^13.0",
@@ -39,7 +41,7 @@
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
-    "@pi-base/dev": "^0.0.7",
+    "@pi-base/dev": "^0.1.0",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.37",
     "esbuild": "^0.10.2",
