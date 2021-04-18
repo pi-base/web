@@ -37,18 +37,21 @@
   },
   "dependencies": {
     "remark": "^13.0",
-    "remark-rehype": "^8.0.0",
+    "remark-rehype": "^8.1.0",
     "unist-util-visit": "^2.0.3"
   },
   "devDependencies": {
-    "@pi-base/dev": "^0.1.0",
+    "@commitlint/config-conventional": "^12.1.1",
+    "@pi-base/dev": "^0.0.7",
     "@types/jest": "^26.0.22",
-    "@types/node": "^14.14.37",
-    "esbuild": "^0.10.2",
-    "js-yaml": "^4.0.0",
+    "@types/node": "^14.14.41",
+    "commitizen": "^4.2.3",
+    "commitlint": "^12.1.1",
+    "esbuild": "^0.11.12",
+    "js-yaml": "^4.1.0",
     "pegjs": "^0.10.0",
     "pegjs-jest": "^0.0.2",
     "ts-pegjs": "^0.3.1",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.4"
   }
 }
