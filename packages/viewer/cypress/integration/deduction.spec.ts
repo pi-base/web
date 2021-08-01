@@ -34,4 +34,4 @@ it('derives proofs of converses', () => {
   cy.contains('44') // Discrete => Extremally disconnected
 })
 
-export { }
+export {}

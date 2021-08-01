@@ -33,7 +33,7 @@ export default class Prover<
   Theorem extends Implication<TheoremId, PropertyId> = Implication<
     TheoremId,
     PropertyId
-  >
+  >,
 > {
   private traits: Map<PropertyId, boolean>
   private derivations: Derivations<TheoremId, PropertyId>

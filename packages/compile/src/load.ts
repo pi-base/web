@@ -9,9 +9,7 @@ export function rootDirectories(repo: string) {
   return [`${repo}/properties`, `${repo}/spaces`, `${repo}/theorems`]
 }
 
-export default async function load(
-  repo: string,
-): Promise<{
+export default async function load(repo: string): Promise<{
   bundle?: Bundle
   errors?: Map<string, string[]>
 }> {
@@ -82,10 +80,7 @@ function checkAll<I, O>(
   return result.value
 }
 
-function format({
-  value,
-  errors,
-}: Validations.Result<Bundle>): {
+function format({ value, errors }: Validations.Result<Bundle>): {
   bundle?: Bundle
   errors?: Map<string, string[]>
 } {

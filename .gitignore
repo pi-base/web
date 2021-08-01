@@ -1,4 +1,6 @@
+.env
 .eslintcache
+.yarn
 coverage/
 dist/
 node_modules/

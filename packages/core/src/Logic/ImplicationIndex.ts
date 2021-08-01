@@ -9,7 +9,7 @@ export default class ImplicationIndex<
   Theorem extends Implication<TheoremId, PropertyId> = Implication<
     TheoremId,
     PropertyId
-  >
+  >,
 > {
   all: Theorem[]
   private byProperty: Map<PropertyId, Set<Theorem>>

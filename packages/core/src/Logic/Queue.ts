@@ -4,7 +4,7 @@ import ImplicationIndex from './ImplicationIndex'
 export default class Queue<
   TheoremId,
   PropertyId,
-  Theorem extends Implication<TheoremId, PropertyId>
+  Theorem extends Implication<TheoremId, PropertyId>,
 > {
   private index: ImplicationIndex<TheoremId, PropertyId, Theorem>
   private queue: Set<Theorem>

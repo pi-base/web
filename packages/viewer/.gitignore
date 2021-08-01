@@ -3,6 +3,3 @@
 /cypress/videos/
 /node_modules/
 /public/build/
-
-.DS_Store
-.eslintcache
