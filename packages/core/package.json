@@ -20,7 +20,8 @@
     "url": "git+https://github.com/pi-base/core.git"
   },
   "scripts": {
-    "build": "node ./bin/build",
+    "_build": "node ./bin/build",
+    "build": "tsc",
     "build:declarations": "tsc --emitDeclarationOnly",
     "build:watch": "node ./bin/build --watch",
     "build:declarations:watch": "tsc --watch --emitDeclarationOnly",

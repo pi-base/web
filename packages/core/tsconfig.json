@@ -1,12 +1,10 @@
 {
-  "extends": "@pi-base/dev/tsconfig.shared.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src",
     "outDir": "dist"
   },
   "include": [
     "src/**/*.ts",
-    "src/*.ts"
   ],
   "exclude": [
     "node_modules"

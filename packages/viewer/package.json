@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "license": "ISC",
   "scripts": {
-    "build": "rollup -c",
+    "_build": "rollup -c",
+    "build": "tsc",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "rollup -c -w",

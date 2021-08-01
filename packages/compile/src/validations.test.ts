@@ -1,11 +1,11 @@
 import {
+  Id,
   Property,
   Space,
   Theorem,
   Trait,
   bundle as b,
   formula as f,
-  traitId,
 } from '@pi-base/core'
 import * as F from '@pi-base/core/lib/testUtils'
 
@@ -158,7 +158,7 @@ describe('bundle', () => {
     expect(errors).toEqual([])
 
     const { value, proof } = b!.traits.get(
-      traitId({ space: 'S1', property: 'P3' }),
+      Id.traitId({ space: 'S1', property: 'P3' }),
     )!
 
     expect(value).toEqual(true)

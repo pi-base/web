@@ -13,16 +13,22 @@ export type Linker = (
 
 export type Linkers = { [key: string]: Linker }
 
+type ExtendedNode = Node & {
+  tagName: string
+  properties: Record<string, unknown>
+  children: unknown[]
+}
+
 export default function link(linkers: Linkers) {
   return function (): Transformer {
     return function transformer(tree: Node) {
-      return visit(tree, 'element', (node: Node) => {
-        const linker = linkers[node.tagName as string]
+      return visit<ExtendedNode>(tree, 'element', (node: ExtendedNode) => {
+        const linker = linkers[node.tagName]
         if (!linker) {
           return
         }
 
-        const link = linker(node.properties as Record<string, unknown>)
+        const link = linker(node.properties)
         if (!link) {
           return
         } else if (typeof link === 'string') {

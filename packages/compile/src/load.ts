@@ -1,9 +1,11 @@
-import { Bundle, Version } from '@pi-base/core'
+import { bundle as b, Version } from '@pi-base/core'
 import * as B from '@pi-base/core/lib/Bundle'
 
 import { File, readFiles } from './fs'
 import * as Validations from './validations'
 import { find as findVersion } from './version'
+
+type Bundle = b.Bundle
 
 export function rootDirectories(repo: string) {
   return [`${repo}/properties`, `${repo}/spaces`, `${repo}/theorems`]
@@ -85,13 +87,13 @@ function format({ value, errors }: Validations.Result<Bundle>): {
   errors?: Map<string, string[]>
 } {
   if (errors.length > 0) {
-    const grouped = new Map()
-    errors.forEach(({ path, message }) => {
+    const grouped = new Map<string, string[]>()
+    for (const { path, message } of errors) {
       if (!grouped.has(path)) {
         grouped.set(path, [])
       }
-      grouped.get(path).push(message)
-    })
+      grouped.get(path)!.push(message)
+    }
 
     return { bundle: value, errors: grouped }
   } else {

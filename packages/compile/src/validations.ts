@@ -1,6 +1,7 @@
+import { z } from 'zod'
 import * as yaml from 'yaml-front-matter'
 
-import { Bundle, Property, check } from '@pi-base/core'
+import { Property, bundle as b } from '@pi-base/core'
 import * as Formula from '@pi-base/core/lib/Formula'
 
 import { File } from './fs'
@@ -21,8 +22,27 @@ export type Validator<I, O> = (input: I) => Result<O>
 
 type Handler = (message: string, key?: string) => void
 
+function check(
+  _bundle: b.Bundle,
+  _space: unknown,
+): {
+  kind: 'contradiction'
+  contradiction: { properties: string[]; theorems: string[] }
+} {
+  // FIXME
+  return {
+    kind: 'contradiction',
+    contradiction: { properties: [], theorems: [] },
+  }
+}
+
 function loadFront(raw: string): any {
   return yaml.safeLoadFront(raw)
+}
+
+function load<T>(schema: z.ZodSchema<T>, raw: string): T {
+  // TODO: use safeParse
+  return schema.parse(yaml.safeLoadFront(raw))
 }
 
 export function all<I, O>(
@@ -73,15 +93,15 @@ function duplicated<T>(values: T[]) {
   return Array.from(dupes)
 }
 
-function noExtras(rest: object, error: Handler) {
+function noExtras(rest: Record<string, unknown>, error: Handler) {
   if (Object.keys(rest).length > 0) {
-    error(`unexpected extra fields: ${Object.keys(rest)}`)
+    error(`unexpected extra fields: ${Object.keys(rest).join(', ')}`)
   }
 }
 
 function required<T>(value: T, key: keyof T, error: Handler) {
-  if (!value[key] && (value[key] as any) !== false) {
-    error(`${key} is required`)
+  if (!value[key] && (value[key] as unknown) !== false) {
+    error(`${key as string} is required`)
   }
 }
 
@@ -100,6 +120,52 @@ const paths = {
   },
 }
 
+const refSchema = z.intersection(
+  z.object({ name: z.string() }),
+  z.union([
+    z.object({ doi: z.string() }),
+    z.object({ wikipedia: z.string() }),
+    z.object({ mr: z.string() }),
+    z.object({ mathse: z.string() }),
+    z.object({ mo: z.string() }),
+  ]),
+)
+
+const recordFields = {
+  uid: z.string(),
+  counterexamples_id: z.string(),
+  refs: z.array(refSchema),
+  __content: z.string(),
+}
+
+const spaceSchema = z.object({
+  ...recordFields,
+  name: z.string(),
+  aliases: z.array(z.string()),
+  slug: z.optional(z.string()),
+  ambiguous_construction: z.boolean(),
+})
+
+const propertySchema = z.object({
+  ...recordFields,
+  name: z.string(),
+  aliases: z.array(z.string()),
+  slug: z.optional(z.string()),
+})
+
+// FIXME: union: and, or
+const formulaSchema = z.object({
+  property: z.string(),
+  value: z.boolean(),
+})
+
+const theoremSchema = z.object({
+  ...recordFields,
+  converse: z.array(z.string()),
+  if: formulaSchema,
+  then: formulaSchema,
+})
+
 export function property(input: File): Result<Property> {
   return validate(input.path, (error) => {
     const {
@@ -108,10 +174,8 @@ export function property(input: File): Result<Property> {
       name = '',
       aliases = [],
       refs = [],
-      slug,
       __content: description = '',
-      ...rest
-    } = loadFront(input.contents)
+    } = load(propertySchema, input.contents)
 
     const property = {
       counterexamples_id,
@@ -129,7 +193,7 @@ export function property(input: File): Result<Property> {
     required(property, 'uid', error)
     required(property, 'name', error)
     required(property, 'description', error)
-    noExtras(rest, error)
+    // TODO: noExtras(rest, error)
 
     return property
   })
@@ -144,10 +208,8 @@ export function space(input: File) {
       aliases = [],
       refs = [],
       ambiguous_construction,
-      slug,
       __content: description = '',
-      ...rest
-    } = loadFront(input.contents)
+    } = load(spaceSchema, input.contents)
 
     const space = {
       uid: String(uid).trim(),
@@ -166,7 +228,7 @@ export function space(input: File) {
     required(space, 'uid', error)
     required(space, 'name', error)
     required(space, 'description', error)
-    noExtras(rest, error)
+    // TODO: noExtras(rest, error)
 
     return space
   })
@@ -183,13 +245,14 @@ export function theorem(input: File) {
       converse,
       __content: description = '',
       ...rest
-    } = loadFront(input.contents)
+    } = load(theoremSchema, input.contents)
 
     const theorem = {
       counterexamples_id,
       uid: String(uid).trim(),
-      when: when && Formula.fromJSON(when),
-      then: then && Formula.fromJSON(then),
+      // FIXME
+      when: when && Formula.fromJSON(when as any),
+      then: then && Formula.fromJSON(then as any),
       description: String(description).trim(),
       refs,
       converse,
@@ -203,11 +266,18 @@ export function theorem(input: File) {
     required(theorem, 'when', error)
     required(theorem, 'then', error)
     required(theorem, 'description', error)
-    noExtras(rest, error)
+    // TODO: noExtras(rest, error)
 
     return theorem
   })
 }
+
+const traitSchema = z.object({
+  ...recordFields,
+  space: z.string(),
+  property: z.string(),
+  value: z.boolean(),
+})
 
 export function trait(input: File) {
   return validate(input.path, (error) => {
@@ -220,7 +290,7 @@ export function trait(input: File) {
       refs = [],
       __content: description = '',
       ...rest
-    } = loadFront(input.contents)
+    } = load(traitSchema, input.contents)
 
     const trait = {
       uid: String(uid).trim(),
@@ -240,26 +310,26 @@ export function trait(input: File) {
     required(trait, 'property', error)
     required(trait, 'value', error)
     required(trait, 'description', error)
-    noExtras(rest, error)
+    // noExtras(rest, error)
 
     return trait
   })
 }
 
-export function bundle(bundle: Bundle): Result<Bundle> {
+export function bundle(bundle: b.Bundle): Result<b.Bundle> {
   return validate('', (error) => {
     const duplicatePropertyNames = duplicated(
       Array.from(bundle.properties.values()).map((s) => s.name),
     )
     if (duplicatePropertyNames.length > 0) {
-      error(`Duplicate property names: ${duplicatePropertyNames}`)
+      error(`Duplicate property names: ${duplicatePropertyNames.join(', ')}`)
     }
 
     const duplicateSpaceNames = duplicated(
       Array.from(bundle.spaces.values()).map((s) => s.name),
     )
     if (duplicateSpaceNames.length > 0) {
-      error(`Duplicate space names: ${duplicateSpaceNames}`)
+      error(`Duplicate space names: ${duplicateSpaceNames.join(', ')}`)
     }
 
     bundle.traits.forEach((trait) => {
@@ -303,12 +373,16 @@ export function bundle(bundle: Bundle): Result<Bundle> {
       const key = paths.space(space.uid)
       const checked = check(bundle, space)
       switch (checked.kind) {
-        case 'bundle':
-          result = checked.bundle
-          break
+        // case 'bundle':
+        //   result = checked.bundle
+        //   break
         case 'contradiction':
           error(
-            `properties=${checked.contradiction.properties} contradict theorems=${checked.contradiction.theorems}`,
+            `properties=${checked.contradiction.properties.join(
+              ', ',
+            )} contradict theorems=${checked.contradiction.theorems.join(
+              ', ',
+            )}`,
             key,
           )
           break

@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "rootDir": ".",
+    "moduleResolution": "node",
+    "declaration": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true
+  },
+  "include": [
+    "packages/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

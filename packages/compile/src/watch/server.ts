@@ -2,10 +2,10 @@ import chalk from 'chalk'
 import cors from 'cors'
 import express, { NextFunction, Request, Response } from 'express'
 
-import { Bundle, bundle } from '@pi-base/core'
+import { bundle } from '@pi-base/core'
 
 type State = {
-  bundle: Bundle | undefined
+  bundle: bundle.Bundle | undefined
   errors: Map<string, string[]> | undefined
 }
 

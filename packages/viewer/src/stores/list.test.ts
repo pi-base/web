@@ -24,7 +24,7 @@ beforeEach(() => {
 })
 
 function values() {
-  return get<Item[], Readable<Item[]>>(store).map(i => i.value)
+  return get<Item[]>(store).map((i) => i.value)
 }
 
 it('has the expected values', () => {

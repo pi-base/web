@@ -77,7 +77,7 @@ export function tokenize(this: unified.Processor): unified.Transformer {
   // )
 
   return function transformer(tree: unist.Node) {
-    visit(tree, 'citation', (node) => {
+    visit<unist.Node & { citation?: unknown }>(tree, 'citation', (node) => {
       node.data = {
         hName: 'citation',
         hProperties: {
@@ -86,7 +86,7 @@ export function tokenize(this: unified.Processor): unified.Transformer {
       }
     })
 
-    visit(tree, 'blockMath', (node) => {
+    visit<unist.Node & { blockMath?: unknown }>(tree, 'blockMath', (node) => {
       node.data = {
         hName: 'span',
         hProperties: {
@@ -96,7 +96,7 @@ export function tokenize(this: unified.Processor): unified.Transformer {
       }
     })
 
-    visit(tree, 'inlineMath', (node) => {
+    visit<unist.Node & { inlineMath?: unknown }>(tree, 'inlineMath', (node) => {
       node.data = {
         hName: 'span',
         hProperties: {
@@ -106,14 +106,18 @@ export function tokenize(this: unified.Processor): unified.Transformer {
       }
     })
 
-    visit(tree, 'internalLink', (node) => {
-      node.data = {
-        hName: 'internalLink',
-        hProperties: {
-          to: node.internalLink,
-        },
-      }
-    })
+    visit<unist.Node & { internalLink?: unknown }>(
+      tree,
+      'internalLink',
+      (node) => {
+        node.data = {
+          hName: 'internalLink',
+          hProperties: {
+            to: node.internalLink,
+          },
+        }
+      },
+    )
   }
 }
 
