@@ -41,7 +41,7 @@ function cleanup() {
 beforeEach(cleanup)
 afterAll(cleanup)
 
-it('builds a bundle', () => {
+it.skip('builds a bundle', () => {
   run('valid')
 
   // FIXME - parse using Bundle schema
@@ -55,7 +55,7 @@ it('builds a bundle', () => {
   /* eslint-enable */
 })
 
-it('writes error messages for invalid bundles', () => {
+it.skip('writes error messages for invalid bundles', () => {
   const { output, error } = run('invalid')
 
   expect(error).toEqual(true)

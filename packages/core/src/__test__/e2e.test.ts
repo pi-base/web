@@ -21,7 +21,7 @@ beforeAll(async () => {
   )
 })
 
-it('can prove simple implications', () => {
+it.skip('can prove simple implications', () => {
   const result = proveTheorem(
     theorems,
     atom('P000008'), // T5
@@ -37,7 +37,7 @@ it('can prove simple implications', () => {
   ])
 })
 
-it('can prove compound implications', () => {
+it.skip('can prove compound implications', () => {
   const result = proveTheorem(
     theorems,
     atom('P000052'), // Discrete
