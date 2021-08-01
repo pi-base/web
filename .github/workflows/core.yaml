@@ -1,9 +1,13 @@
-name: lint
+name: core
+
 on:
   push:
+    paths:
+      - packages/core/**
+      - .github/workflows/core.yaml
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -13,9 +17,9 @@ jobs:
           cache: npm
       - name: Install packages
         run: npm install
-      - name: Bootstrap packages
+      - name: Bootstrap repo
         run: npx lerna bootstrap
-      - name: Check formatting
-        run: npm run fmt:check
-      - name: Lint
-        run: npm run lint:check
+      - name: Run tests
+        run: |-
+          cd packages/core
+          npm run test

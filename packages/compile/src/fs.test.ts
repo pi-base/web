@@ -9,11 +9,11 @@ describe('readFile', () => {
   })
 
   it('errors if not found', async () => {
-    let error = undefined
+    let error: unknown
 
     try {
       await readFile(__filename + '/not_a_file.ts')
-    } catch (e: unknown) {
+    } catch (e) {
       error = e
     }
 

@@ -6,7 +6,8 @@
     "fmt:check": "prettier --write 'packages/**/*.ts'",
     "lint": "eslint 'packages/**/*.ts' --fix",
     "lint:check": "eslint 'packages/**/*.ts'",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "test": "lerna run test"
   },
   "devDependencies": {
     "@pi-base/dev": "^0.0.7",

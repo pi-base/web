@@ -23,9 +23,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "pi-base-dev test",
-    "test:cov": "pi-base-dev test:cov",
-    "test:watch": "pi-base-dev test:watch"
+    "test": "jest",
+    "test:cov": "jest --coverage",
+    "test:watch": "jest --watchAll"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
