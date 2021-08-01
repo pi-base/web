@@ -33,7 +33,7 @@ async function run(): Promise<void> {
   fs.writeFileSync(outpath, JSON.stringify(B.serialize(bundle)))
 }
 
-run().catch((err) => {
+run().catch((err: Error) => {
   core.setFailed(err.message)
   core.error(err.message)
 })

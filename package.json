@@ -32,7 +32,7 @@
   },
   "lint-staged": {
     "*.{js,ts}": [
-      "true || eslint --cache --fix # FIXME",
+      "eslint --cache --fix",
       "prettier --write"
     ],
     "*.{css,yml,md}": "prettier --write"

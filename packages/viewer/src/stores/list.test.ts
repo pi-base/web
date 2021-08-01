@@ -1,4 +1,4 @@
-import { Readable, get, readable } from 'svelte/store'
+import { get, readable } from 'svelte/store'
 
 import list, { Store } from './list'
 
@@ -14,7 +14,9 @@ let store: Store<{ name: string; value: number }>
 
 beforeEach(() => {
   store = list(
-    readable(items, () => {}),
+    readable(items, () => {
+      // no-op
+    }),
     {
       weights: {
         name: 1,

@@ -25,13 +25,13 @@ describe('create', () => {
     )
 
     store = create({ raw, formula, properties })
-    store.subscribe(s => (state = s))
+    store.subscribe((s) => (state = s))
   })
 
   it('updates the suggestions on text change', () => {
     raw.set('Ba')
 
-    expect(state.suggestions.map(p => p.name)).toEqual(['Bar', 'Baz'])
+    expect(state.suggestions.map((p) => p.name)).toEqual(['Bar', 'Baz'])
     expect(get(formula)).toEqual(atom(property({ id: 2, name: 'Bar' })))
   })
 

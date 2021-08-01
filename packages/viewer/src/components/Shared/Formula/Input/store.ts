@@ -40,7 +40,7 @@ export function create({
   const { set, subscribe, update } = writable<State>(initial)
 
   // On properties change, rebuild the index and reset suggestions
-  properties.subscribe(collection => {
+  properties.subscribe((collection) => {
     index.setCollection(collection.all)
     process(read(raw))
   })
@@ -69,7 +69,7 @@ export function create({
     if (fragment.trim() === '') {
       set(initial)
     } else {
-      const suggestions = index.search(fragment, { limit }).map(r => r.item)
+      const suggestions = index.search(fragment, { limit }).map((r) => r.item)
       if (suggestions.length > 0) {
         set({ suggest: true, suggestions, selected: undefined })
       }
@@ -86,13 +86,13 @@ export function create({
       }))
     },
     setSelected(index: number) {
-      update(state => ({ ...state, selected: index }))
+      update((state) => ({ ...state, selected: index }))
     },
     expand(index?: number) {
       update(({ suggestions, selected }) => {
         const suggestion = suggestions[index || selected || 0]
         if (suggestion) {
-          raw.update(str => replaceFragment(str, suggestion.name))
+          raw.update((str) => replaceFragment(str, suggestion.name))
         }
         return initial
       })
@@ -109,7 +109,7 @@ function resolve(
     return
   }
 
-  return F.compact(F.mapProperty(p => index.search(p)[0]?.item, parsed))
+  return F.compact(F.mapProperty((p) => index.search(p)[0]?.item, parsed))
 }
 
 const separatorExp = /[~+&|()!?]/

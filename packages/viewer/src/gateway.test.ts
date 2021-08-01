@@ -17,7 +17,7 @@ it('can fetch successfully', async () => {
     etag: 'etag',
   }
 
-  jest.spyOn(bundle, 'fetch').mockImplementation(async () => remote)
+  jest.spyOn(bundle, 'fetch').mockImplementation(() => Promise.resolve(remote))
 
   const result = await sync('example', 'test')
 
@@ -45,7 +45,9 @@ it('notifies if the etag matches', async () => {
     sha: 'sha',
   }
 
-  jest.spyOn(bundle, 'fetch').mockImplementation(async () => undefined)
+  jest
+    .spyOn(bundle, 'fetch')
+    .mockImplementation(() => Promise.resolve(undefined))
 
   const result = await sync('example', 'test', current.etag)
 

@@ -22,7 +22,7 @@ const t2 = theorem({
 const theorems = Theorems.build([t1, t2], Collection.byId([p1, p2, p3]))
 
 test('all', () => {
-  expect(theorems.all.length).toEqual(2)
+  expect(theorems.all).toHaveLength(2)
 })
 
 describe('find', () => {
@@ -41,10 +41,10 @@ describe('find', () => {
 
 describe('forProperty', () => {
   test('P1', () => {
-    expect(theorems.forProperty(p1).map(t => t.id)).toEqual([1])
+    expect(theorems.forProperty(p1).map((t) => t.id)).toEqual([1])
   })
 
   test('P2', () => {
-    expect(theorems.forProperty(p2).map(t => t.id)).toEqual([1, 2])
+    expect(theorems.forProperty(p2).map((t) => t.id)).toEqual([1, 2])
   })
 })

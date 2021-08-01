@@ -13,7 +13,7 @@ describe('readFile', () => {
 
     try {
       await readFile(__filename + '/not_a_file.ts')
-    } catch (e) {
+    } catch (e: unknown) {
       error = e
     }
 
@@ -29,7 +29,7 @@ describe('readFiles', () => {
     expect(file!.contents).toContain('Zndrsplt')
   })
 
-  it('resolves to the file contents', async () => {
+  it('returns an empty array when none matches', async () => {
     const contents = await readFiles(path.join(__dirname, '**', '*.test.xyz'))
 
     expect(contents).toEqual([])

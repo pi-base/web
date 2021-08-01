@@ -23,16 +23,16 @@ export type Config = {
 function project(store: Store) {
   return {
     ...store,
-    properties: derived(store.properties, p => p.all),
-    spaces: derived(store.spaces, s => s.all),
-    theorems: derived(store.theorems, ts =>
-      ts.all.map(t => ({
+    properties: derived(store.properties, (p) => p.all),
+    spaces: derived(store.spaces, (s) => s.all),
+    theorems: derived(store.theorems, (ts) =>
+      ts.all.map((t) => ({
         ...t,
-        when: F.mapProperty(p => p.id, t.when),
-        then: F.mapProperty(p => p.id, t.then),
+        when: F.mapProperty((p) => p.id, t.when),
+        then: F.mapProperty((p) => p.id, t.then),
       })),
     ),
-    traits: derived(store.traits, t => t.all),
+    traits: derived(store.traits, (t) => t.all),
   }
 }
 
@@ -55,7 +55,7 @@ export function initialize({
   db.subscribe(project(store))
 
   if (!pre.sync) {
-    store.sync.sync()
+    void store.sync.sync()
   }
 
   const typeset = derived(
@@ -69,7 +69,7 @@ export function initialize({
   function loaded() {
     return subscribeUntil(
       store.sync,
-      state => state.kind === 'fetched' || state.kind === 'error',
+      (state) => state.kind === 'fetched' || state.kind === 'error',
     )
   }
 
@@ -79,7 +79,7 @@ export function initialize({
     until: Promise<unknown> = loaded(),
   ): Promise<T> {
     return new Promise((resolve, reject) => {
-      const unsubscribe = s.subscribe(state => {
+      const unsubscribe = s.subscribe((state) => {
         const found = lookup(state)
         if (found) {
           resolve(found)
@@ -87,7 +87,7 @@ export function initialize({
         }
       })
 
-      until.then(() => {
+      void until.then(() => {
         reject()
         unsubscribe()
       })

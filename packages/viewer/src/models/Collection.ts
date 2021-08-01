@@ -6,7 +6,7 @@ export default class Collection<Value, Input = number | string, Key = number> {
   static byId<T extends { id: number }>(values: T[]): Collection<T> {
     return new this(
       values,
-      value => value.id,
+      (value) => value.id,
       (input: number | string) => {
         if (typeof input === 'string') {
           return Id.toInt(input)
@@ -30,7 +30,7 @@ export default class Collection<Value, Input = number | string, Key = number> {
     index: (value: Value) => Key,
     normalize: (input: Input) => Key,
   ) {
-    this.index = new Map(values.map(value => [index(value), value]))
+    this.index = new Map(values.map((value) => [index(value), value]))
     this.normalize = normalize
   }
 

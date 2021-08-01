@@ -15,6 +15,8 @@ jobs:
           cache: npm
       - name: Install packages
         run: npm install
+      - name: Bootstrap packages
+        run: npx lerna bootstrap
       - name: Check formatting
         run: npm run fmt:check
       - name: Lint

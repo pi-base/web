@@ -22,9 +22,11 @@ function run(dir: string): { output: string; error: boolean } {
       .toString()
 
     return { output, error: false }
-  } catch (e) {
+  } catch (e: unknown) {
     return {
-      output: `${e.stdout.toString()}\n${e.stderr.toString()}`,
+      // FIXME
+      // output: `${e.stdout.toString()}\n${e.stderr.toString()}`,
+      output: 'Error',
       error: true,
     }
   }
@@ -42,12 +44,15 @@ afterAll(cleanup)
 it('builds a bundle', () => {
   run('valid')
 
+  // FIXME - parse using Bundle schema
+  /* eslint-disable */
   const bundle = JSON.parse(fs.readFileSync(out).toString())
 
-  expect(bundle.properties.length).toEqual(3)
-  expect(bundle.spaces.length).toEqual(2)
-  expect(bundle.theorems.length).toEqual(1)
-  expect(bundle.traits.length).toEqual(3)
+  expect(bundle.properties).toHaveLength(3)
+  expect(bundle.spaces).toHaveLength(2)
+  expect(bundle.theorems).toHaveLength(1)
+  expect(bundle.traits).toHaveLength(3)
+  /* eslint-enable */
 })
 
 it('writes error messages for invalid bundles', () => {

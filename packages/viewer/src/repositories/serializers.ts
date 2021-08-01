@@ -23,9 +23,9 @@ type TraitRow =
   | [0, number, number, boolean, number[], number[]]
 
 const traits: Serializer<Trait[]> = [
-  values =>
+  (values) =>
     JSON.stringify(
-      values.map(t => {
+      values.map((t) => {
         if (t.asserted) {
           return [1, t.space, t.property, t.value, t.description, t.refs]
         } else {
@@ -40,13 +40,15 @@ const traits: Serializer<Trait[]> = [
         }
       }),
     ),
-  str => {
+  (str) => {
     const traits: Trait[] = []
 
     if (!str) {
       return traits
     }
 
+    // FIXME
+    // eslint-disable-next-line
     JSON.parse(str).forEach((row: TraitRow) => {
       if (row[0] === 1) {
         const [_, space, property, value, description, refs] = row
@@ -85,8 +87,12 @@ const deduction: Serializer<Deduction> = [
       all: [...state.all],
     }),
   (raw: string) => {
+    // FIXME
+    // eslint-disable-next-line
     const { checked, all, contradiction } = JSON.parse(raw)
     return {
+      // FIXME
+      // eslint-disable-next-line
       contradiction,
       checked: new Set(checked),
       all: new Set(all),

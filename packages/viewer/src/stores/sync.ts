@@ -5,7 +5,7 @@ export type State<T> = (
   | { kind: 'initializing' }
   | { kind: 'fetching' }
   | { kind: 'fetched'; value: T }
-  | { kind: 'error'; error: Error }
+  | { kind: 'error'; error: unknown }
 ) & { at: Date }
 
 export type Store<T> = Readable<State<T>> & {
@@ -17,7 +17,7 @@ export function initial<T>(): State<T> {
 }
 
 export function state<T>(store: Store<T>): Readable<T | undefined> {
-  return derived(store, state =>
+  return derived(store, (state) =>
     state.kind === 'fetched' ? state.value : undefined,
   )
 }
@@ -37,7 +37,7 @@ export function create<T>(
     try {
       const value = await run()
       store.set({ kind: 'fetched', value, at: new Date() })
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error)
       store.set({ kind: 'error', error, at: new Date() })
     }

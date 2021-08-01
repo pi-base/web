@@ -33,7 +33,7 @@ export function store<Field>() {
       set(null)
     },
     toggle(field: Field) {
-      return update(current => {
+      return update((current) => {
         if (current && current.field === field && current.direction === 'asc') {
           return { field, direction: 'desc' }
         } else {

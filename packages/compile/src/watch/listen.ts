@@ -6,7 +6,7 @@ export default function listen(repo: string, onChange: (path: string) => void) {
   chokidar
     .watch(rootDirectories(repo), {
       ignored: [
-        /(^|[\/\\])\../, // dotfiles
+        /(^|[/\\])\../, // dotfiles
         /node_modules/,
       ],
       persistent: true,

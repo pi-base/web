@@ -6,7 +6,7 @@ describe('eachTick', () => {
   it('iterates through a list', async () => {
     const result: number[] = []
 
-    await eachTick([1, 2, 3], n => result.push(2 * n))
+    await eachTick([1, 2, 3], (n) => result.push(2 * n))
 
     expect(result).toEqual([2, 4, 6])
   })
@@ -37,7 +37,7 @@ describe('subscribeUntil', () => {
     const store = writable(0)
 
     let done = false
-    const wait = subscribeUntil(store, n => n > 5).then(() => (done = true))
+    const wait = subscribeUntil(store, (n) => n > 5).then(() => (done = true))
 
     store.set(1)
     expect(done).toEqual(false)

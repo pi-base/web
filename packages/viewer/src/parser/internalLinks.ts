@@ -16,31 +16,34 @@ export default function internalLinks(
     }
 
     const tagged = Id.tag(trimmed)
+    let space
+    let property
+    let theorem
     switch (tagged?.kind) {
       case 'space':
-        const space = spaces.find(tagged.id)
+        space = spaces.find(tagged.id)
         if (space) {
           return {
             href: `/spaces/${Id.format('S', space.id)}`,
             label: space.name,
           }
         } else {
-          return `Could not find Space ${to}`
+          return `Could not find Space ${trimmed}`
         }
 
       case 'property':
-        const property = properties.find(tagged.id)
+        property = properties.find(tagged.id)
         if (property) {
           return {
             href: `/properties/${Id.format('P', property.id)}`,
             label: property.name,
           }
         } else {
-          return `Could not find Property ${to}`
+          return `Could not find Property ${trimmed}`
         }
 
       case 'theorem':
-        const theorem = theorems.find(tagged.id)
+        theorem = theorems.find(tagged.id)
         if (theorem) {
           const uid = Id.format('T', theorem.id)
           return {
@@ -48,11 +51,11 @@ export default function internalLinks(
             label: `Theorem ${uid}`,
           }
         } else {
-          return `Could not find Theorem ${to}`
+          return `Could not find Theorem ${trimmed}`
         }
 
       default:
-        return `Could not parse ${to} as an ID`
+        return `Could not parse ${trimmed} as an ID`
     }
   }
 }

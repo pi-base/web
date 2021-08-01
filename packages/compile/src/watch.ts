@@ -35,8 +35,8 @@ async function build() {
     }
 
     setState({ bundle, errors })
-  } catch (e) {
-    log(chalk.red('Error'), e.message)
+  } catch (e: any) {
+    log(chalk.red('Error'), e)
   }
 }
 
@@ -45,7 +45,7 @@ log(`Press ${chalk.cyan('CTRL-C')} to exit.`)
 
 listen(root, (path: string) => {
   log(`${chalk.cyan(path)} changed. Re-compiling.`)
-  build()
+  void build()
 })
 
-build()
+void build()

@@ -6,7 +6,7 @@ import type { Writable } from 'svelte/store'
 export default function urlSearchParam(
   name: string,
   { subscribe, set }: Writable<string>,
-) {
+): void {
   function parse() {
     return new URL(location.href).searchParams
   }
@@ -16,7 +16,7 @@ export default function urlSearchParam(
   })
 
   let initialized = false
-  subscribe(value => {
+  subscribe((value) => {
     const search = parse()
 
     if (!search) {
@@ -30,11 +30,13 @@ export default function urlSearchParam(
     }
     initialized = true
 
+    const searchString = search.toString()
+
     window.history.replaceState(
       null,
       '',
-      search.toString()
-        ? `${window.location.pathname}?${search}`
+      searchString
+        ? `${window.location.pathname}?${searchString}`
         : window.location.pathname,
     )
   })

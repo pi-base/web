@@ -22,7 +22,10 @@ export async function find() {
 }
 
 async function fromRepo(): Promise<Version | undefined> {
-  const contents = await readFile('.git/HEAD').catch(() => {})
+  const contents = await readFile('.git/HEAD').catch(() => {
+    // ignore error
+  })
+
   if (!contents) {
     return
   }

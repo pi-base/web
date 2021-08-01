@@ -1,7 +1,7 @@
 import App from './components/App.svelte'
 import * as errors from './errors'
 
-const dev = window.location.host.match(/(dev(elopment)?[.-]|localhost)/)
+const dev = /(dev(elopment)?[.-]|localhost)/.exec(window.location.host)
 
 const app = new App({
   target: document.body,

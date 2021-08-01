@@ -65,7 +65,7 @@ describe('bundle', () => {
       ],
     })
 
-    expect(errors.length).toEqual(2)
+    expect(errors).toHaveLength(2)
   })
 
   it('checks theorem references', () => {

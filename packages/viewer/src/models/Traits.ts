@@ -35,7 +35,7 @@ export default class Traits {
     properties: Collection<Property> = Collection.empty(),
   ) {
     this.traits = new Map(
-      traits.map(t => [this.traitId(t.space, t.property), t]),
+      traits.map((t) => [this.traitId(t.space, t.property), t]),
     )
     this.spaces = spaces
     this.properties = properties
@@ -54,11 +54,13 @@ export default class Traits {
   }
 
   forProperty(property: Property): [Space, Trait][] {
-    return this.collect(this.spaces, space => this.find(space, property))
+    return this.collect(this.spaces, (space) => this.find(space, property))
   }
 
   forSpace(space: Space): [Property, Trait][] {
-    return this.collect(this.properties, property => this.find(space, property))
+    return this.collect(this.properties, (property) =>
+      this.find(space, property),
+    )
   }
 
   lookup({
@@ -120,7 +122,7 @@ export default class Traits {
         trait.value,
       ]),
     )
-    const mapped = F.mapProperty(p => p.id, formula)
+    const mapped = F.mapProperty((p) => p.id, formula)
     return F.evaluate(mapped, traits)
   }
 
@@ -176,7 +178,7 @@ export default class Traits {
     lookup: (item: T) => Trait | undefined,
   ): [T, Trait][] {
     const result: [T, Trait][] = []
-    collection.all.forEach(item => {
+    collection.all.forEach((item) => {
       const trait = lookup(item)
       if (trait) {
         result.push([item, trait])

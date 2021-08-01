@@ -60,13 +60,13 @@ function build<T extends Record<string, unknown>>(
 
   // Lookup a stored key, using the configured deserializer
   function get(key: keyof T): T[typeof key] | undefined {
-    const item = storage.getItem(`${prefix}.${key}`)
+    const item = storage.getItem(`${prefix}.${String(key)}`)
     return item ? serializers[key][1](item) : undefined
   }
 
   // Write a value to a key, using the configured serializer
   function set(key: keyof T, value: T[typeof key]) {
-    storage.setItem(`${prefix}.${key}`, serializers[key][0](value))
+    storage.setItem(`${prefix}.${String(key)}`, serializers[key][0](value))
   }
 
   return {
@@ -82,7 +82,7 @@ function build<T extends Record<string, unknown>>(
     // Listen for changes to each field, and schedule persisting the update
     subscribe(source) {
       for (const key in source) {
-        source[key].subscribe(value => schedule(key, value))
+        source[key].subscribe((value) => schedule(key, value))
       }
     },
   }

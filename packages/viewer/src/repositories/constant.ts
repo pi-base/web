@@ -5,6 +5,8 @@ export default function constant(value = initial) {
     load() {
       return value
     },
-    subscribe() {},
+    subscribe() {
+      // no-op
+    },
   }
 }

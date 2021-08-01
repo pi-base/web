@@ -367,7 +367,7 @@ export function bundle(bundle: b.Bundle): Result<b.Bundle> {
       }
     })
 
-    let result = bundle
+    const result = bundle
 
     for (const space of result.spaces.values()) {
       const key = paths.space(space.uid)

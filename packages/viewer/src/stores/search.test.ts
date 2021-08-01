@@ -40,7 +40,7 @@ describe('with a store', () => {
   it('can search by name', () => {
     store.search({ text: 'ba' })
 
-    expect(read(store).map(s => s.name)).toEqual(['bar', 'baz'])
+    expect(read(store).map((s) => s.name)).toEqual(['bar', 'baz'])
   })
 
   it('can search by formula', () => {
@@ -48,7 +48,7 @@ describe('with a store', () => {
       formula: and(atom(p(1)), atom(p(2))),
     })
 
-    expect(read(store).map(s => s.name)).toEqual(['bar'])
+    expect(read(store).map((s) => s.name)).toEqual(['bar'])
   })
 
   it('can do both', () => {
@@ -57,6 +57,6 @@ describe('with a store', () => {
       formula: atom(p(1), false),
     })
 
-    expect(read(store).map(s => s.name)).toEqual(['baz'])
+    expect(read(store).map((s) => s.name)).toEqual(['baz'])
   })
 })
