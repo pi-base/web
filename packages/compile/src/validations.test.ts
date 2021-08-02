@@ -6,8 +6,8 @@ import {
   Trait,
   bundle as b,
   formula as f,
+  TestUtils as F,
 } from '@pi-base/core'
-import * as F from '@pi-base/core/lib/testUtils'
 
 import * as V from './validations'
 

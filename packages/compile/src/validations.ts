@@ -1,8 +1,7 @@
 import { z } from 'zod'
 import * as yaml from 'yaml-front-matter'
 
-import { Property, bundle as b } from '@pi-base/core'
-import * as Formula from '@pi-base/core/lib/Formula'
+import { Property, bundle as b, formula as Formula } from '@pi-base/core'
 
 import { File } from './fs'
 
@@ -29,15 +28,11 @@ function check(
   kind: 'contradiction'
   contradiction: { properties: string[]; theorems: string[] }
 } {
-  // FIXME
+  // FIXME - look at core/Logic exported methods?
   return {
     kind: 'contradiction',
     contradiction: { properties: [], theorems: [] },
   }
-}
-
-function loadFront(raw: string): any {
-  return yaml.safeLoadFront(raw)
 }
 
 function load<T>(schema: z.ZodSchema<T>, raw: string): T {

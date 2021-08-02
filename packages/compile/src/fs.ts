@@ -1,11 +1,11 @@
-import fs from 'fs'
+import fs from 'fs/promises'
 import util from 'util'
 import grob from 'glob'
 
 const glob = util.promisify(grob)
 
-export async function readFile(path: string) {
-  const buffer = await util.promisify(fs.readFile)(path)
+export async function readFile(path: string): Promise<string> {
+  const buffer = await fs.readFile(path)
   return buffer.toString()
 }
 

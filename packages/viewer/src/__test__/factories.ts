@@ -1,4 +1,4 @@
-export { and, atom } from '@pi-base/core/lib/testUtils'
+import { TestUtils } from '@pi-base/core'
 import {
   AssertedTrait,
   Collection,
@@ -8,6 +8,9 @@ import {
   Trait,
   Traits,
 } from '../models'
+
+export const and = TestUtils.and
+export const atom = TestUtils.atom
 
 type F<T, Required extends keyof T> = Partial<T> & Pick<T, Required>
 

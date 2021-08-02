@@ -8,7 +8,7 @@ export {
   proveTheorem,
 } from './Logic'
 export { Space } from './Space'
-export { Theorem } from './Theorem'
+export { FormulaSchema, Theorem } from './Theorem'
 export { Trait } from './Trait'
 export { Version } from './Bundle'
 

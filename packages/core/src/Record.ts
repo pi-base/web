@@ -3,7 +3,7 @@ import { Ref } from './Ref'
 
 export const Record = z.object({
   uid: z.string(),
-  counterexamples_id: z.optional(z.string()),
+  counterexamples_id: z.optional(z.union([z.string(), z.undefined()])),
   description: z.string(),
   refs: z.array(Ref),
 })

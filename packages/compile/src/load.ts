@@ -1,5 +1,4 @@
 import { bundle as b, Version } from '@pi-base/core'
-import * as B from '@pi-base/core/lib/Bundle'
 
 import { File, readFiles } from './fs'
 import * as Validations from './validations'
@@ -40,7 +39,7 @@ export function validate({
   let bundle: Bundle | undefined
 
   try {
-    bundle = B.deserialize({
+    bundle = b.deserialize({
       properties: checkAll(Validations.property, properties),
       spaces: checkAll(Validations.space, spaces),
       theorems: checkAll(Validations.theorem, theorems),

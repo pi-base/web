@@ -2,23 +2,23 @@ import { z } from 'zod'
 import { Record } from './Record'
 import { Formula } from './Formula'
 
-const Formula: z.ZodSchema<Formula<string>> = z.lazy(() =>
+export const FormulaSchema: z.ZodSchema<Formula<string>> = z.lazy(() =>
   z.union([
     z.object({
       kind: z.literal('atom'),
       property: z.string(),
       value: z.boolean(),
     }),
-    z.object({ kind: z.literal('and'), subs: z.array(Formula) }),
-    z.object({ kind: z.literal('or'), subs: z.array(Formula) }),
+    z.object({ kind: z.literal('and'), subs: z.array(FormulaSchema) }),
+    z.object({ kind: z.literal('or'), subs: z.array(FormulaSchema) }),
   ]),
 )
 
 export const Theorem = z.intersection(
   Record,
   z.object({
-    when: Formula,
-    then: Formula,
+    when: FormulaSchema,
+    then: FormulaSchema,
     converse: z.optional(z.array(z.string())),
   }),
 )

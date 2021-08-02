@@ -1,7 +1,7 @@
 import * as core from '@actions/core'
 import * as fs from 'fs'
 import * as process from 'process'
-import * as B from '@pi-base/core/lib/Bundle'
+import { bundle as B } from '@pi-base/core'
 
 import load from './load'
 
