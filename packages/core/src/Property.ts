@@ -1,6 +1,12 @@
+import { z } from 'zod'
 import { Record } from './Record'
 
-export type Property = Record & {
-  name: string
-  aliases: string[]
-}
+export const Property = z.intersection(
+  Record,
+  z.object({
+    name: z.string(),
+    aliases: z.array(z.string()),
+  }),
+)
+
+export type Property = z.infer<typeof Property>

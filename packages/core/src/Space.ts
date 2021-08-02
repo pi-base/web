@@ -1,7 +1,13 @@
+import { z } from 'zod'
 import { Record } from './Record'
 
-export type Space = Record & {
-  name: string
-  aliases: string[]
-  ambiguous_construction: boolean
-}
+export const Space = z.intersection(
+  Record,
+  z.object({
+    name: z.string(),
+    aliases: z.array(z.string()),
+    ambiguous_construction: z.boolean(),
+  }),
+)
+
+export type Space = z.infer<typeof Space>

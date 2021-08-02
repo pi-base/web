@@ -1,5 +1,20 @@
+import { z } from 'zod'
+
+export const Ref = z.intersection(
+  z.object({ name: z.string() }),
+  z.union([
+    z.object({ doi: z.string() }),
+    z.object({ wikipedia: z.string() }),
+    z.object({ mr: z.string() }),
+    z.object({ mathse: z.string() }),
+    z.object({ mo: z.string() }),
+  ]),
+)
+
+export type Ref = z.infer<typeof Ref>
+
 // Ref describes the structure of existing bundled data
-export type Ref = { name: string } & Kind
+// export type Ref = { name: string } & Kind
 export type Kind =
   | { doi: string }
   | { wikipedia: string }

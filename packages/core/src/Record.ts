@@ -1,8 +1,11 @@
+import { z } from 'zod'
 import { Ref } from './Ref'
 
-export type Record = {
-  uid: string
-  counterexamples_id: string | undefined
-  description: string
-  refs: Ref[]
-}
+export const Record = z.object({
+  uid: z.string(),
+  counterexamples_id: z.optional(z.string()),
+  description: z.string(),
+  refs: z.array(Ref),
+})
+
+export type Record = z.infer<typeof Record>

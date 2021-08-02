@@ -1,3 +1,4 @@
+import { z } from 'zod'
 import { Id, traitId } from './Id'
 import { Property } from './Property'
 import { Space } from './Space'
@@ -6,10 +7,12 @@ import { Trait } from './Trait'
 
 export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 
-export type Version = {
-  ref: string
-  sha: string
-}
+export const Version = z.object({
+  ref: z.string(),
+  sha: z.string(),
+})
+
+export type Version = z.infer<typeof Version>
 
 export type Bundle = {
   properties: Map<Id, Property>
@@ -19,13 +22,15 @@ export type Bundle = {
   version: Version
 }
 
-export type Serialized = {
-  properties: Property[]
-  spaces: Space[]
-  theorems: Theorem[]
-  traits: Trait<Id>[]
-  version: Version
-}
+const Serialized = z.object({
+  properties: z.array(Property),
+  spaces: z.array(Space),
+  theorems: z.array(Theorem),
+  traits: z.array(Trait),
+  version: Version,
+})
+
+export type Serialized = z.infer<typeof Serialized>
 
 export function serialize(bundle: Bundle): Serialized {
   return {
@@ -37,13 +42,16 @@ export function serialize(bundle: Bundle): Serialized {
   }
 }
 
-export function deserialize(serialized: Serialized): Bundle {
+export function deserialize(data: unknown): Bundle {
+  const { spaces, properties, theorems, traits, version } =
+    Serialized.parse(data)
+
   return {
-    properties: indexBy(serialized.properties, (p) => p.uid),
-    spaces: indexBy(serialized.spaces, (s) => s.uid),
-    theorems: indexBy(serialized.theorems, (t) => t.uid),
-    traits: indexBy(serialized.traits, traitId),
-    version: serialized.version,
+    properties: indexBy(properties, (p) => p.uid),
+    spaces: indexBy(spaces, (s) => s.uid),
+    theorems: indexBy(theorems, (t) => t.uid),
+    traits: indexBy(traits, traitId),
+    version,
   }
 }
 
