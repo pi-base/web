@@ -7,13 +7,13 @@ const trace = jest.spyOn(debug, 'trace')
 
 it('can fetch successfully', async () => {
   const remote = {
-    bundle: {
-      spaces: new Map(),
-      properties: new Map(),
-      theorems: new Map(),
-      traits: new Map(),
+    bundle: bundle.deserialize({
+      spaces: [],
+      properties: [],
+      theorems: [],
+      traits: [],
       version: { sha: 'sha', ref: 'ref' },
-    },
+    }),
     etag: 'etag',
   }
 

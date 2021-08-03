@@ -29,10 +29,10 @@ export const sync: Sync = async (
   if (result) {
     trace({ event: 'remote_fetch_complete', result })
     return {
-      spaces: transform(space, result.bundle.spaces),
-      properties: transform(property, result.bundle.properties),
-      traits: transform(trait, result.bundle.traits),
-      theorems: transform(theorem, result.bundle.theorems),
+      spaces: result.bundle.spaces.map(space),
+      properties: result.bundle.properties.map(property),
+      traits: result.bundle.traits.map(trait),
+      theorems: result.bundle.theorems.map(theorem),
       etag: result.etag,
       sha: result.bundle.version.sha,
     }
@@ -51,9 +51,9 @@ function property({
   return {
     id: Id.toInt(uid),
     name,
-    aliases,
+    aliases: aliases || [],
     description,
-    refs,
+    refs: refs || [],
   }
 }
 
@@ -61,9 +61,9 @@ function space({ uid, name, aliases, description, refs }: pb.Space): Space {
   return {
     id: Id.toInt(uid),
     name,
-    aliases,
+    aliases: aliases || [],
     description,
-    refs,
+    refs: refs || [],
   }
 }
 
@@ -74,7 +74,7 @@ function trait({ space, property, value, description, refs }: pb.Trait): Trait {
     property: Id.toInt(property),
     value,
     description,
-    refs,
+    refs: refs || [],
   }
 }
 
@@ -90,10 +90,6 @@ function theorem({
     when: pb.formula.mapProperty(Id.toInt, when),
     then: pb.formula.mapProperty(Id.toInt, then),
     description,
-    refs,
+    refs: refs || [],
   }
-}
-
-function transform<U, V>(f: (u: U) => V, collection: Map<unknown, U>): V[] {
-  return [...collection.values()].map(f)
 }
