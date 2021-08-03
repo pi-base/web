@@ -1,7 +1,13 @@
-import { z } from 'zod'
+// FIXME
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as yaml from 'yaml-front-matter'
 
-import { Property, bundle as b, formula as Formula } from '@pi-base/core'
+import {
+  Property,
+  bundle as Bundle,
+  formula as Formula,
+  BundleChecker,
+} from '@pi-base/core'
 
 import { File } from './fs'
 
@@ -21,23 +27,12 @@ export type Validator<I, O> = (input: I) => Result<O>
 
 type Handler = (message: string, key?: string) => void
 
-function check(
-  _bundle: b.Bundle,
-  _space: unknown,
-): {
-  kind: 'contradiction'
-  contradiction: { properties: string[]; theorems: string[] }
-} {
-  // FIXME - look at core/Logic exported methods?
-  return {
-    kind: 'contradiction',
-    contradiction: { properties: [], theorems: [] },
+function loadFront(raw: string): Record<string, any> {
+  const loaded = yaml.safeLoadFront(raw)
+  if (typeof loaded !== 'object') {
+    throw Error(`Loaded unexpected type: ${typeof loaded}`)
   }
-}
-
-function load<T>(schema: z.ZodSchema<T>, raw: string): T {
-  // TODO: use safeParse
-  return schema.parse(yaml.safeLoadFront(raw))
+  return loaded
 }
 
 export function all<I, O>(
@@ -95,8 +90,8 @@ function noExtras(rest: Record<string, unknown>, error: Handler) {
 }
 
 function required<T>(value: T, key: keyof T, error: Handler) {
-  if (!value[key] && (value[key] as unknown) !== false) {
-    error(`${key as string} is required`)
+  if (!value[key] && (value[key] as unknown as boolean) !== false) {
+    error(`${String(key)} is required`)
   }
 }
 
@@ -115,52 +110,6 @@ const paths = {
   },
 }
 
-const refSchema = z.intersection(
-  z.object({ name: z.string() }),
-  z.union([
-    z.object({ doi: z.string() }),
-    z.object({ wikipedia: z.string() }),
-    z.object({ mr: z.string() }),
-    z.object({ mathse: z.string() }),
-    z.object({ mo: z.string() }),
-  ]),
-)
-
-const recordFields = {
-  uid: z.string(),
-  counterexamples_id: z.string(),
-  refs: z.array(refSchema),
-  __content: z.string(),
-}
-
-const spaceSchema = z.object({
-  ...recordFields,
-  name: z.string(),
-  aliases: z.array(z.string()),
-  slug: z.optional(z.string()),
-  ambiguous_construction: z.boolean(),
-})
-
-const propertySchema = z.object({
-  ...recordFields,
-  name: z.string(),
-  aliases: z.array(z.string()),
-  slug: z.optional(z.string()),
-})
-
-// FIXME: union: and, or
-const formulaSchema = z.object({
-  property: z.string(),
-  value: z.boolean(),
-})
-
-const theoremSchema = z.object({
-  ...recordFields,
-  converse: z.array(z.string()),
-  if: formulaSchema,
-  then: formulaSchema,
-})
-
 export function property(input: File): Result<Property> {
   return validate(input.path, (error) => {
     const {
@@ -169,8 +118,10 @@ export function property(input: File): Result<Property> {
       name = '',
       aliases = [],
       refs = [],
+      slug,
       __content: description = '',
-    } = load(propertySchema, input.contents)
+      ...rest
+    } = loadFront(input.contents)
 
     const property = {
       counterexamples_id,
@@ -182,13 +133,13 @@ export function property(input: File): Result<Property> {
     }
 
     if (!input.path.endsWith(paths.property(uid))) {
-      error(`path does not match uid=${uid}`)
+      error(`path does not match uid=${String(uid)}`)
     }
 
     required(property, 'uid', error)
     required(property, 'name', error)
     required(property, 'description', error)
-    // TODO: noExtras(rest, error)
+    noExtras(rest, error)
 
     return property
   })
@@ -203,8 +154,10 @@ export function space(input: File) {
       aliases = [],
       refs = [],
       ambiguous_construction,
+      slug,
       __content: description = '',
-    } = load(spaceSchema, input.contents)
+      ...rest
+    } = loadFront(input.contents)
 
     const space = {
       uid: String(uid).trim(),
@@ -217,13 +170,13 @@ export function space(input: File) {
     }
 
     if (!input.path.endsWith(paths.space(uid))) {
-      error(`path does not match uid=${uid}`)
+      error(`path does not match uid=${String(uid)}`)
     }
 
     required(space, 'uid', error)
     required(space, 'name', error)
     required(space, 'description', error)
-    // TODO: noExtras(rest, error)
+    noExtras(rest, error)
 
     return space
   })
@@ -240,39 +193,31 @@ export function theorem(input: File) {
       converse,
       __content: description = '',
       ...rest
-    } = load(theoremSchema, input.contents)
+    } = loadFront(input.contents)
 
     const theorem = {
       counterexamples_id,
       uid: String(uid).trim(),
-      // FIXME
-      when: when && Formula.fromJSON(when as any),
-      then: then && Formula.fromJSON(then as any),
+      when: when && Formula.fromJSON(when),
+      then: then && Formula.fromJSON(then),
       description: String(description).trim(),
       refs,
       converse,
     }
 
     if (!input.path.endsWith(paths.theorem(uid))) {
-      error(`path does not match uid=${uid}`)
+      error(`path does not match uid=${String(uid)}`)
     }
 
     required(theorem, 'uid', error)
     required(theorem, 'when', error)
     required(theorem, 'then', error)
     required(theorem, 'description', error)
-    // TODO: noExtras(rest, error)
+    noExtras(rest, error)
 
     return theorem
   })
 }
-
-const traitSchema = z.object({
-  ...recordFields,
-  space: z.string(),
-  property: z.string(),
-  value: z.boolean(),
-})
 
 export function trait(input: File) {
   return validate(input.path, (error) => {
@@ -285,7 +230,7 @@ export function trait(input: File) {
       refs = [],
       __content: description = '',
       ...rest
-    } = load(traitSchema, input.contents)
+    } = loadFront(input.contents)
 
     const trait = {
       uid: String(uid).trim(),
@@ -298,23 +243,27 @@ export function trait(input: File) {
     }
 
     if (!input.path.endsWith(paths.trait({ space, property }))) {
-      error(`path does not match space=${space} and property=${property}`)
+      error(
+        `path does not match space=${String(space)} and property=${String(
+          property,
+        )}`,
+      )
     }
 
     required(trait, 'space', error)
     required(trait, 'property', error)
     required(trait, 'value', error)
     required(trait, 'description', error)
-    // noExtras(rest, error)
+    noExtras(rest, error)
 
     return trait
   })
 }
 
-export function bundle(bundle: b.Bundle): Result<b.Bundle> {
+export function bundle(bundle: Bundle.Bundle): Result<Bundle.Bundle> {
   return validate('', (error) => {
     const duplicatePropertyNames = duplicated(
-      Array.from(bundle.properties.values()).map((s) => s.name),
+      bundle.properties.map((s) => s.name),
     )
     if (duplicatePropertyNames.length > 0) {
       error(`Duplicate property names: ${duplicatePropertyNames.join(', ')}`)
@@ -330,10 +279,10 @@ export function bundle(bundle: b.Bundle): Result<b.Bundle> {
     bundle.traits.forEach((trait) => {
       const errorKey = paths.trait(trait)
 
-      if (!bundle.properties.has(trait.property)) {
+      if (!bundle.property(trait.property)) {
         error(`unknown property=${trait.property}`, errorKey)
       }
-      if (!bundle.spaces.has(trait.space)) {
+      if (!bundle.space(trait.space)) {
         error(`unknown space=${trait.space}`, errorKey)
       }
     })
@@ -342,42 +291,40 @@ export function bundle(bundle: b.Bundle): Result<b.Bundle> {
       const key = paths.theorem(theorem.uid)
 
       Formula.properties(theorem.when).forEach((id) => {
-        if (!bundle.properties.has(id)) {
+        if (!bundle.property(id)) {
           error(`if references unknown property=${id}`, key)
         }
       })
 
       Formula.properties(theorem.then).forEach((id) => {
-        if (!bundle.properties.has(id)) {
+        if (!bundle.property(id)) {
           error(`then references unknown property=${id}`, key)
         }
       })
 
       if (theorem.converse) {
         theorem.converse.forEach((id) => {
-          if (!bundle.theorems.has(id)) {
+          if (!bundle.theorem(id)) {
             error(`converse references unknown theorem=${id}`, key)
           }
         })
       }
     })
 
-    const result = bundle
+    let result = bundle
 
     for (const space of result.spaces.values()) {
       const key = paths.space(space.uid)
-      const checked = check(bundle, space)
+      const checked = new BundleChecker(result).check(space)
       switch (checked.kind) {
-        // case 'bundle':
-        //   result = checked.bundle
-        //   break
+        case 'bundle':
+          result = checked.bundle
+          break
         case 'contradiction':
           error(
             `properties=${checked.contradiction.properties.join(
-              ', ',
-            )} contradict theorems=${checked.contradiction.theorems.join(
-              ', ',
-            )}`,
+              ',',
+            )} contradict theorems=${checked.contradiction.theorems.join(',')}`,
             key,
           )
           break
@@ -387,3 +334,4 @@ export function bundle(bundle: b.Bundle): Result<b.Bundle> {
     return result
   })
 }
+/* eslint-enable @typescript-eslint/no-unsafe-assignment */

@@ -4,9 +4,10 @@ import { Record } from './Record'
 export const Space = z.intersection(
   Record,
   z.object({
+    uid: z.string(),
     name: z.string(),
-    aliases: z.array(z.string()),
-    ambiguous_construction: z.boolean(),
+    aliases: z.optional(z.array(z.string())),
+    ambiguous_construction: z.optional(z.boolean()),
   }),
 )
 

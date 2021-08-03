@@ -1,5 +1,4 @@
 import { Bundle, deserialize, serialize } from './Bundle'
-import { Theorem } from './Theorem'
 
 import { property, space, trait } from './testUtils'
 
@@ -13,15 +12,15 @@ describe('Bundle', () => {
       })
     }
 
-    roundtrip('full', {
-      properties: new Map([
-        ['P1', property({ uid: 'P1' })],
-        ['P2', property({ uid: 'P2' })],
-        ['P3', property({ uid: 'P3' })],
-      ]),
-      spaces: new Map([
+    roundtrip(
+      'full',
+      new Bundle(
         [
-          'S1',
+          property({ uid: 'P1' }),
+          property({ uid: 'P2' }),
+          property({ uid: 'P3' }),
+        ],
+        [
           space({
             uid: 'S1',
             refs: [
@@ -33,10 +32,10 @@ describe('Bundle', () => {
             ],
           }),
         ],
-      ]),
-      traits: new Map([['S1|P1', trait({ space: 'S1', property: 'P1' })]]),
-      theorems: new Map<string, Theorem>(),
-      version: { ref: 'test', sha: 'HEAD' },
-    })
+        [],
+        [trait({ space: 'S1', property: 'P1' })],
+        { ref: 'test', sha: 'HEAD' },
+      ),
+    )
   })
 })

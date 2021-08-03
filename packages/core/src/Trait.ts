@@ -8,6 +8,7 @@ export type Proof<Id = BaseId> = {
 }
 
 export type Trait<Id = BaseId> = Record & {
+  uid?: string
   space: Id
   property: Id
   value: boolean
@@ -17,6 +18,7 @@ export type Trait<Id = BaseId> = Record & {
 export const Trait = z.intersection(
   Record,
   z.object({
+    uid: z.optional(z.string()),
     space: z.string(),
     property: z.string(),
     value: z.boolean(),

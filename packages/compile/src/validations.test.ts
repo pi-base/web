@@ -1,5 +1,4 @@
 import {
-  Id,
   Property,
   Space,
   Theorem,
@@ -127,7 +126,10 @@ describe('bundle', () => {
     ])
   })
 
-  it('adds deductions', () => {
+  // TODO: do we want this? Or do we expect the compiled bundle to
+  // only include the asserted traits, and to re-derive on the
+  // consuming end?
+  it.skip('adds deductions', () => {
     const { value: b, errors } = bundle({
       properties: [
         F.property({ uid: 'P1' }),
@@ -157,9 +159,7 @@ describe('bundle', () => {
 
     expect(errors).toEqual([])
 
-    const { value, proof } = b!.traits.get(
-      Id.traitId({ space: 'S1', property: 'P3' }),
-    )!
+    const { value, proof } = b!.trait({ space: 'S1', property: 'P3' })!
 
     expect(value).toEqual(true)
     expect(proof).toEqual({

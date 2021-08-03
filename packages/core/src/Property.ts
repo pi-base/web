@@ -4,8 +4,9 @@ import { Record } from './Record'
 export const Property = z.intersection(
   Record,
   z.object({
+    uid: z.string(),
     name: z.string(),
-    aliases: z.array(z.string()),
+    aliases: z.optional(z.array(z.string())),
   }),
 )
 

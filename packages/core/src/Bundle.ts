@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Id, traitId } from './Id'
+import { ImplicationIndex } from './Logic'
 import { Property } from './Property'
 import { Space } from './Space'
 import { Theorem } from './Theorem'
@@ -14,12 +15,98 @@ export const Version = z.object({
 
 export type Version = z.infer<typeof Version>
 
-export type Bundle = {
-  properties: Map<Id, Property>
-  spaces: Map<Id, Space>
-  traits: Map<Id, Trait<Id>>
-  theorems: Map<Id, Theorem>
-  version: Version
+export class Bundle {
+  private readonly _properties: Map<Id, Property>
+  private readonly _spaces: Map<Id, Space>
+  private readonly _theorems: Map<Id, Theorem>
+  private readonly _traits: Map<Id, Trait>
+
+  static deserialize(data: Serialized): Bundle {
+    const { spaces, properties, theorems, traits, version } = data
+
+    return new Bundle(properties, spaces, theorems, traits, version)
+  }
+
+  constructor(
+    properties: Property[],
+    spaces: Space[],
+    theorems: Theorem[],
+    traits: Trait[],
+    readonly version: Version,
+  ) {
+    this._properties = indexBy(properties, (p) => p.uid)
+    this._spaces = indexBy(spaces, (s) => s.uid)
+    this._theorems = indexBy(theorems, (t) => t.uid)
+    this._traits = indexBy(traits, traitId)
+  }
+
+  get properties(): Property[] {
+    return Array.from(this._properties.values())
+  }
+
+  get spaces(): Space[] {
+    return Array.from(this._spaces.values())
+  }
+
+  get theorems(): Theorem[] {
+    return Array.from(this._theorems.values())
+  }
+
+  get traits(): Trait[] {
+    return Array.from(this._traits.values())
+  }
+
+  property(uid: Id): Property | null {
+    return this._properties.get(uid) ?? null
+  }
+
+  space(uid: Id): Space | null {
+    return this._spaces.get(uid) ?? null
+  }
+
+  theorem(uid: Id): Theorem | null {
+    return this._theorems.get(uid) ?? null
+  }
+
+  trait(key: { space: Id; property: Id }): Trait | null {
+    return this._traits.get(traitId(key)) ?? null
+  }
+
+  traitMap(
+    options: { property: Property } | { space: Space },
+  ): Map<Id, boolean> {
+    const map = new Map<Id, boolean>()
+
+    if ('property' in options) {
+      for (const space of this.spaces) {
+        const trait = this.trait({
+          space: space.uid,
+          property: options.property.uid,
+        })
+        if (trait) {
+          map.set(space.uid, trait.value)
+        }
+      }
+    } else {
+      for (const property of this.properties) {
+        const trait = this.trait({
+          space: options.space.uid,
+          property: property.uid,
+        })
+        if (trait) {
+          map.set(property.uid, trait.value)
+        }
+      }
+    }
+
+    return map
+  }
+
+  get implications(): ImplicationIndex {
+    return new ImplicationIndex(
+      this.theorems.map(({ uid: id, when, then }) => ({ id, when, then })),
+    )
+  }
 }
 
 const Serialized = z.object({
@@ -34,25 +121,16 @@ export type Serialized = z.infer<typeof Serialized>
 
 export function serialize(bundle: Bundle): Serialized {
   return {
-    properties: [...bundle.properties.values()],
-    spaces: [...bundle.spaces.values()],
-    theorems: [...bundle.theorems.values()],
-    traits: [...bundle.traits.values()],
+    properties: bundle.properties,
+    spaces: bundle.spaces,
+    theorems: bundle.theorems,
+    traits: bundle.traits,
     version: bundle.version,
   }
 }
 
 export function deserialize(data: unknown): Bundle {
-  const { spaces, properties, theorems, traits, version } =
-    Serialized.parse(data)
-
-  return {
-    properties: indexBy(properties, (p) => p.uid),
-    spaces: indexBy(spaces, (s) => s.uid),
-    theorems: indexBy(theorems, (t) => t.uid),
-    traits: indexBy(traits, traitId),
-    version,
-  }
+  return Bundle.deserialize(Serialized.parse(data))
 }
 
 type FetchOpts = {

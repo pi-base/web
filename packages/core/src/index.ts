@@ -11,6 +11,7 @@ export { Space } from './Space'
 export { FormulaSchema, Theorem } from './Theorem'
 export { Trait } from './Trait'
 export { Version } from './Bundle'
+export { BundleChecker } from './BundleChecker'
 
 export * as bundle from './Bundle'
 export * as formula from './Formula'

@@ -17,6 +17,7 @@ export const FormulaSchema: z.ZodSchema<Formula<string>> = z.lazy(() =>
 export const Theorem = z.intersection(
   Record,
   z.object({
+    uid: z.string(),
     when: FormulaSchema,
     then: FormulaSchema,
     converse: z.optional(z.array(z.string())),

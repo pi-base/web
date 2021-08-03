@@ -10,10 +10,10 @@ describe('load', () => {
     const { bundle, errors } = await load(path.join(repo, 'valid'))
 
     expect(errors).toBeUndefined()
-    expect(bundle!.properties.size).toEqual(3)
-    expect(bundle!.spaces.size).toEqual(2)
-    expect(bundle!.theorems.size).toEqual(1)
-    expect(bundle!.traits.size).toEqual(3)
+    expect(bundle!.properties).toHaveLength(3)
+    expect(bundle!.spaces).toHaveLength(2)
+    expect(bundle!.theorems).toHaveLength(1)
+    expect(bundle!.traits).toHaveLength(3)
     expect(bundle!.version.ref).not.toBeUndefined()
   })
 
