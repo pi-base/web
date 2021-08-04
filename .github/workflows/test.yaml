@@ -1,10 +1,6 @@
-name: core
-
+name: test
 on:
   push:
-    paths:
-      - packages/core/**
-      - .github/workflows/core.yaml
 
 jobs:
   test:
@@ -17,9 +13,9 @@ jobs:
           cache: npm
       - name: Install packages
         run: npm install
-      - name: Bootstrap repo
+      - name: Bootstrap packages
         run: npx lerna bootstrap
+      - name: Link dependent packages
+        run: npx lerna link
       - name: Run tests
-        run: |-
-          cd packages/core
-          npm run test
+        run: npm run test

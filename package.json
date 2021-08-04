@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "npx lerna run build",
+    "clean": "npx lerna clean --yes",
     "fmt": "prettier --write 'packages/**/*.ts'",
     "fmt:check": "prettier --write 'packages/**/*.ts'",
     "lint": "eslint 'packages/**/*.ts' --fix",
