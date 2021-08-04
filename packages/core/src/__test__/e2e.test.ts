@@ -1,15 +1,19 @@
 import fs from 'fs/promises'
+import { fileURLToPath } from 'url'
+import { join } from 'path'
 
 import { ImplicationIndex, proveTheorem } from '..'
 import { Bundle, deserialize } from '../Bundle'
 import { and, atom } from '../Formula'
+
+const __filename = fileURLToPath(import.meta.url)
 
 let bundle: Bundle
 let theorems: ImplicationIndex
 
 beforeAll(async () => {
   const serialized = await fs.readFile(
-    './src/__test__/fixtures/bundle.min.json',
+    join(__filename, '..', 'fixtures', 'bundle.min.json'),
   )
   bundle = deserialize(JSON.parse(serialized.toString()))
   theorems = new ImplicationIndex(
@@ -21,7 +25,7 @@ beforeAll(async () => {
   )
 })
 
-it.skip('can prove simple implications', () => {
+it('can prove simple implications', () => {
   const result = proveTheorem(
     theorems,
     atom('P000008'), // T5
@@ -37,7 +41,7 @@ it.skip('can prove simple implications', () => {
   ])
 })
 
-it.skip('can prove compound implications', () => {
+it('can prove compound implications', () => {
   const result = proveTheorem(
     theorems,
     atom('P000052'), // Discrete

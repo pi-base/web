@@ -20,7 +20,7 @@ export const Theorem = z.intersection(
     uid: z.string(),
     when: FormulaSchema,
     then: FormulaSchema,
-    converse: z.optional(z.array(z.string())),
+    converse: z.optional(z.union([z.array(z.string()), z.null()])),
   }),
 )
 
