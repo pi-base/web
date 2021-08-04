@@ -14,6 +14,7 @@
   },
   "license": "MIT",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
+  "type": "module",
   "main": "./dist/main.js",
   "bin": "./dist/watch.js",
   "types": "./dist/main.d.ts",

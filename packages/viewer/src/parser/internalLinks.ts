@@ -9,7 +9,7 @@ export default function internalLinks(
   spaces: Finder<Space>,
   theorems: Finder<Theorem>,
 ) {
-  return function linker({ to }: { to?: string }) {
+  return function linker(to: string) {
     const trimmed = (to || '').trim()
     if (!trimmed) {
       return

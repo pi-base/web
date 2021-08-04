@@ -1,6 +1,6 @@
 // FIXME
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import * as yaml from 'yaml-front-matter'
+import yaml from 'yaml-front-matter'
 
 import {
   Property,

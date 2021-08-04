@@ -1,7 +1,8 @@
 import { parser } from './parse'
+import type { Linker } from './link'
 import citation from './externalLinks'
 
-function internalLink({ to }: { to?: string }) {
+const internalLink: Linker = (to: string) => {
   if (!to) {
     return
   }
@@ -21,19 +22,19 @@ describe('parse', () => {
   describe('untruncated', () => {
     const parse = parser({ linkers })
 
-    test.skip('doi links', () =>
+    test('doi links', () =>
       expect(parse('{{doi:123}}')).resolves.toEqual(
         '<a href="https://doi.org/123">DOI 123</a>',
       ))
 
-    test.skip('block math', async () => {
+    test('block math', async () => {
       const math = await parse('Thus $$2 + 2 = 4$$.')
 
       expect(math).toContain('Thus <span class="math-display">')
       expect(math).toMatchSnapshot()
     })
 
-    test.skip('inline math', async () => {
+    test('inline math', async () => {
       const math = await parse('Thus $2 + 2 = 4$.')
 
       expect(math).toContain('Thus <span class="math-inline">')
@@ -46,12 +47,12 @@ describe('parse', () => {
       expect(math).toEqual('A $ B')
     })
 
-    test.skip('internal links', () =>
+    test('internal links', () =>
       expect(parse('C.f. {S123}')).resolves.toEqual(
         'C.f. <a href="/objects/S123">S123</a>',
       ))
 
-    test.skip('missing internal links', () =>
+    test('missing internal links', () =>
       expect(parse('C.f. {missing}')).resolves.toEqual(
         'C.f. <code to="missing">Could not find object</code>',
       ))

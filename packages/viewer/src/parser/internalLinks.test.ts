@@ -24,18 +24,18 @@ describe('with ambient data', () => {
 
   describe('properties', () => {
     it('can link to properties', () => {
-      expect(link({ to: 'P000001' })).toEqual({
+      expect(link('P000001')).toEqual({
         href: '/properties/P000001',
         label: 'One',
       })
     })
 
     it('renders not found errors', () => {
-      expect(link({ to: 'P000003' })).toEqual('Could not find Property P000003')
+      expect(link('P000003')).toEqual('Could not find Property P000003')
     })
 
     it('expands padding if needed', () => {
-      expect(link({ to: 'P1' })).toEqual({
+      expect(link('P1')).toEqual({
         href: '/properties/P000001',
         label: 'One',
       })
@@ -44,19 +44,18 @@ describe('with ambient data', () => {
 
   describe('spaces', () => {
     it('can link to spaces', () => {
-      expect(link({ to: 'S000002' })).toEqual({
+      expect(link('S000002')).toEqual({
         href: '/spaces/S000002',
         label: 'Two',
       })
     })
 
     it('renders not found errors', () => {
-      expect(link({ to: 'S000003' })).toEqual('Could not find Space S000003')
+      expect(link('S000003')).toEqual('Could not find Space S000003')
     })
   })
 
   it('handles empty links', () => {
-    expect(link({ to: '' })).toBeUndefined()
-    expect(link({})).toBeUndefined()
+    expect(link('')).toBeUndefined()
   })
 })

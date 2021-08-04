@@ -7,16 +7,14 @@ export type Link = {
   label: string
 }
 
-export type Linker = (
-  properties: Record<string, unknown>,
-) => Link | string | void
+export type Linker = (contents: string) => Link | string | void
 
 export type Linkers = { [key: string]: Linker }
 
 type ExtendedNode = Node & {
   tagName: string
   properties: Record<string, unknown>
-  children: unknown[]
+  children: { type: string; value: string }[] // FIXME: handle "given a node that doesn't match this shape" case
 }
 
 export default function link(linkers: Linkers) {
@@ -28,12 +26,13 @@ export default function link(linkers: Linkers) {
           return
         }
 
-        const link = linker(node.properties)
+        const contents: string = node.children[0].value
+        const link = linker(contents)
         if (!link) {
           return
         } else if (typeof link === 'string') {
           node.tagName = 'code'
-
+          node.properties = { to: contents }
           node.children = [{ type: 'text', value: link }]
         } else {
           const { href, label } = link

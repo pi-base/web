@@ -1,5 +1,4 @@
 export { Formula, And, Atom, Or } from './Formula'
-export { default as Parser } from './Parser'
 export { Property } from './Property'
 export {
   ImplicationIndex,
@@ -17,5 +16,5 @@ export * as bundle from './Bundle'
 export * as formula from './Formula'
 export * as Id from './Id'
 export * as Ref from './Ref'
-
+export * as Parser from './Parser'
 export * as TestUtils from './testUtils'

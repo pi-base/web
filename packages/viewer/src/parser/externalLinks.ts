@@ -1,4 +1,4 @@
-export default function externalLinks({ citation }: { citation?: string }) {
+export default function externalLinks(citation: string) {
   if (!citation) {
     return
   }

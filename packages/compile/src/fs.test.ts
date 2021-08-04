@@ -1,6 +1,10 @@
 import path from 'path'
+import { fileURLToPath } from 'url'
 
 import { readFile, readFiles } from './fs'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 describe('readFile', () => {
   it('resolves to the file contents', async () => {

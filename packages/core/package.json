@@ -13,8 +13,12 @@
   },
   "license": "MIT",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
-  "main": "./dist/index.js",
+  "type": "module",
+  "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >= 16.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pi-base/core.git"
@@ -25,22 +29,25 @@
     "build:declarations": "tsc --emitDeclarationOnly",
     "build:watch": "node ./bin/build --watch",
     "build:declarations:watch": "tsc --watch --emitDeclarationOnly",
-    "test": "jest",
-    "test:cov": "jest --coverage",
-    "test:watch": "jest --watchAll"
+    "codegen": "peggy --format es src/Formula/Grammar.pegjs"
   },
   "dependencies": {
-    "remark": "^13.0",
+    "hast-to-hyperscript": "^10.0.1",
+    "hyperscript": "^2.0.2",
+    "micromark": "^3.0.3",
+    "rehype-katex": "^5.0.0",
+    "remark": "^14.0",
+    "remark-frontmatter": "^3.0.0",
+    "remark-math": "^4.0.0",
     "remark-rehype": "^8.1.0",
-    "unist-util-visit": "^2.0.3",
+    "unist-util-visit": "^4.0.0",
     "zod": "^3.7.1"
   },
   "devDependencies": {
-    "esbuild": "^0.11.12",
+    "@types/hyperscript": "^0.0.4",
+    "esbuild": "^0.12.17",
     "js-yaml": "^4.1.0",
-    "pegjs": "^0.10.0",
-    "pegjs-jest": "^0.0.2",
-    "ts-pegjs": "^0.3.1",
-    "typescript": "^4.2.4"
+    "peggy": "^1.2.0",
+    "typescript": "^4.3.5"
   }
 }

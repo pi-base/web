@@ -1,13 +1,17 @@
-import path from 'path'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
+
 import theredoc from 'theredoc'
 
 import load, { rootDirectories, validate } from './load'
 
-const repo = path.join(__dirname, '__tests__', 'repo')
+const __dirname: string = dirname(fileURLToPath(import.meta.url))
+
+const repo = join(__dirname, '__tests__', 'repo')
 
 describe('load', () => {
   it('builds a bundle', async () => {
-    const { bundle, errors } = await load(path.join(repo, 'valid'))
+    const { bundle, errors } = await load(join(repo, 'valid'))
 
     expect(errors).toBeUndefined()
     expect(bundle!.properties).toHaveLength(3)
@@ -18,7 +22,7 @@ describe('load', () => {
   })
 
   it('validates', async () => {
-    const { errors = new Map() } = await load(path.join(repo, 'invalid'))
+    const { errors = new Map() } = await load(join(repo, 'invalid'))
 
     expect(errors.get('theorems/T000001.md')).toContain(
       'if references unknown property=P100016',

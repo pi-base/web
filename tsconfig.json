@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "esnext",
+    "module": "es2020",
     "target": "esnext",
     "rootDir": ".",
     "moduleResolution": "node",

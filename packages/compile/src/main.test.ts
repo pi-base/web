@@ -1,10 +1,13 @@
 import * as cp from 'child_process'
-import * as path from 'path'
 import * as fs from 'fs'
+import { dirname, join } from 'path'
+import { fileURLToPath } from 'url'
 
-const main = path.join(__dirname, '..', 'lib', 'main.js')
-const repo = path.join(__dirname, '__tests__', 'repo')
-const out = path.join(repo, 'out.json')
+const __dirname: string = dirname(fileURLToPath(import.meta.url))
+
+const main = join(__dirname, '..', 'lib', 'main.js')
+const repo = join(__dirname, '__tests__', 'repo')
+const out = join(repo, 'out.json')
 
 // Note: this runs lib/main.js, which it expects to be compiled and current
 // You may need to manually run `yarn build`
@@ -15,7 +18,7 @@ function run(dir: string): { output: string; error: boolean } {
         env: {
           GITHUB_REF: 'refs/heads/test',
           GITHUB_SHA: 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
-          GITHUB_WORKSPACE: path.join(repo, dir),
+          GITHUB_WORKSPACE: join(repo, dir),
           INPUT_OUT: out,
         },
       })

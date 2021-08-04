@@ -20,16 +20,22 @@ module.exports = {
   coveragePathIgnorePatterns: ['/node_modules/'],
   coverageProvider: 'v8',
   errorOnDeprecated: true,
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
   moduleFileExtensions: ['js', 'ts'],
   moduleNameMapper,
   notify: true,
   notifyMode: 'failure-change',
+  preset: 'ts-jest/presets/default-esm',
   resetMocks: true,
   testEnvironment: 'node',
   testMatch: ['**/*.test.ts'],
   transform: {
-    '^.+\\.pegjs$': 'pegjs-jest',
-    '^.+\\.ts$': 'ts-jest',
+    '^.+\\.tsx?$': 'ts-jest',
   },
   verbose: true,
 }
