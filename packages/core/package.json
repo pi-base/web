@@ -1,6 +1,6 @@
 {
   "name": "@pi-base/core",
-  "version": "0.3.0",
+  "version": "0.3.0-rc1",
   "description": "Shared pi-base data models",
   "keywords": [
     "Node",
@@ -16,6 +16,9 @@
   "type": "module",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >= 16.0.0"
   },
@@ -29,7 +32,8 @@
     "build:module": "esbuild src/index.ts --bundle --format=esm --outdir=dist --minify",
     "build:watch": "node ./bin/build --watch",
     "build:declarations:watch": "tsc --watch --emitDeclarationOnly",
-    "codegen": "peggy --format es src/Formula/Grammar.pegjs"
+    "codegen": "peggy --format es src/Formula/Grammar.pegjs",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "hast-to-hyperscript": "^10.0.1",
