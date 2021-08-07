@@ -24,9 +24,9 @@
     "url": "git+https://github.com/pi-base/core.git"
   },
   "scripts": {
-    "_build": "node ./bin/build",
-    "build": "tsc",
+    "build": "concurrently \"npm run build:declarations\" \"npm run build:module\"",
     "build:declarations": "tsc --emitDeclarationOnly",
+    "build:module": "esbuild src/index.ts --bundle --format=esm --outdir=dist --minify",
     "build:watch": "node ./bin/build --watch",
     "build:declarations:watch": "tsc --watch --emitDeclarationOnly",
     "codegen": "peggy --format es src/Formula/Grammar.pegjs"

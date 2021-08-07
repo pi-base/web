@@ -23,6 +23,7 @@
     "@types/node": "^16.4.11",
     "@typescript-eslint/parser": "^4.29.0",
     "@zeit/ncc": "^0.20.5",
+    "concurrently": "^6.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-jest": "^24.4.0",
     "husky": ">=7",

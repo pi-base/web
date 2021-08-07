@@ -43,7 +43,7 @@ const tsTest = {
 module.exports = {
   ...js,
   // FIXME: don't ignore cypress files
-  ignorePatterns: ['*.d.ts', '**/cypress/**/*.ts'],
+  ignorePatterns: ['*.d.ts', '**/cypress/**/*.ts', '**/rollup.config.js'],
   extends: ['eslint:recommended', 'plugin:prettier/recommended'],
   overrides: [ts, tsTest],
 }
