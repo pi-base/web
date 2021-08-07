@@ -13,12 +13,14 @@
 		"validate": "svelte-check"
 	},
 	"dependencies": {
-		"@pi-base/core": "^0.3.0",
+		"@pi-base/core": "file:../core",
 		"@sentry/browser": "^5.27.4",
 		"bootstrap": "^4.5.3",
 		"fromnow": "^3.0.1",
 		"fuse.js": "^6.4.1",
-		"svelte-routing": "^1.4.2"
+		"svelte-routing": "^1.4.2",
+		"unified": "^10.1.0",
+		"unist-util-visit": "^4.0.0"
 	},
 	"devDependencies": {
 		"@rollup/plugin-commonjs": "^14.0.0",

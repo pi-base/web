@@ -15,7 +15,6 @@
     "test:watch": "npm run test -- --watchAll"
   },
   "devDependencies": {
-    "@pi-base/dev": "^0.1.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/glob": "^7.1.4",
@@ -25,7 +24,9 @@
     "@zeit/ncc": "^0.20.5",
     "concurrently": "^6.2.0",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "husky": ">=7",
     "jest": "^27.0.6",
     "jest-circus": "^27.0.6",
