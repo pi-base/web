@@ -1,9 +1,10 @@
+import { beforeEach, afterAll, expect, it } from 'vitest'
 import * as cp from 'child_process'
 import * as path from 'path'
 import * as fs from 'fs'
 
-const main = path.join(__dirname, '..', 'lib', 'main.js')
-const repo = path.join(__dirname, '__tests__', 'repo')
+const main = path.join(__dirname, '..', 'src', 'main.ts')
+const repo = path.join(__dirname, '..', 'test', 'repo')
 const out = path.join(repo, 'out.json')
 
 // Note: this runs lib/main.js, which it expects to be compiled and current
@@ -11,7 +12,7 @@ const out = path.join(repo, 'out.json')
 function run(dir: string): { output: string; error: boolean } {
   try {
     const output = cp
-      .execSync(`node ${main}`, {
+      .execSync(`node_modules/.bin/ts-node --esm ${main}`, {
         env: {
           GITHUB_REF: 'refs/heads/test',
           GITHUB_SHA: 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
@@ -22,7 +23,7 @@ function run(dir: string): { output: string; error: boolean } {
       .toString()
 
     return { output, error: false }
-  } catch (e) {
+  } catch (e: any) {
     return {
       output: `${e.stdout.toString()}\n${e.stderr.toString()}`,
       error: true,
@@ -40,7 +41,11 @@ beforeEach(cleanup)
 afterAll(cleanup)
 
 it('builds a bundle', () => {
-  run('valid')
+  const { output, error } = run('valid')
+  expect(error).toBe(false)
+  expect(output).toContain(
+    `::debug::Compiling repo=${repo}/valid to out=${out}`
+  )
 
   const bundle = JSON.parse(fs.readFileSync(out).toString())
 

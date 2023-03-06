@@ -1,6 +1,7 @@
+import { describe, expect, it } from 'vitest'
 import path from 'path'
 
-import { readFile, readFiles } from './fs'
+import { readFile, readFiles } from './fs.js'
 
 describe('readFile', () => {
   it('resolves to the file contents', async () => {
