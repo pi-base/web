@@ -1,4 +1,4 @@
-import * as yaml from 'yaml-front-matter'
+import yaml from 'yaml-front-matter'
 
 import { Bundle, Property, formula as Formula } from '@pi-base/core'
 

@@ -1,4 +1,5 @@
 import { Version } from '@pi-base/core'
+import { resolve } from 'node:path'
 
 import { readFile } from './fs.js'
 
@@ -7,8 +8,8 @@ function refName(raw: string) {
   return match && match[1]
 }
 
-export async function find() {
-  let version = await fromRepo()
+export async function find(root = '.') {
+  let version = await fromRepo(root)
   if (version) {
     return version
   }
@@ -21,8 +22,8 @@ export async function find() {
   throw new Error('Could not determine bundle version')
 }
 
-async function fromRepo(): Promise<Version | undefined> {
-  const contents = await readFile('.git/HEAD').catch(() => { })
+async function fromRepo(root = '.'): Promise<Version | undefined> {
+  const contents = await readFile(resolve(root, '.git', 'HEAD')).catch(() => { })
   if (!contents) {
     return
   }
@@ -30,7 +31,7 @@ async function fromRepo(): Promise<Version | undefined> {
   const head = refName(contents)
 
   if (head) {
-    const sha = await readFile(`.git/refs/heads/${head}`)
+    const sha = await readFile(resolve(root, '.git', 'refs', 'heads', head))
     return {
       ref: head,
       sha: sha.trim(),
