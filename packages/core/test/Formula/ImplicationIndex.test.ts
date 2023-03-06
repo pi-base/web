@@ -1,5 +1,6 @@
-import { atom, or } from '../Formula'
-import { index } from '../__test__'
+import { describe, expect, it } from 'vitest'
+import { atom, or } from '../../src/Formula'
+import { index } from '..'
 
 describe('ImplicationIndex', () => {
   const theorems = index(

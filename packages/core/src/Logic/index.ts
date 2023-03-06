@@ -1,11 +1,11 @@
-export { default as ImplicationIndex } from './ImplicationIndex'
-export { Derivations } from './Derivations'
-export { Contradiction, Proof } from './Prover'
+export { default as ImplicationIndex } from './ImplicationIndex.js'
+export { Derivations } from './Derivations.js'
+export { Contradiction, Proof } from './Prover.js'
 
-import { Formula, negate } from '../Formula'
-import ImplicationIndex from './ImplicationIndex'
-import Prover, { Contradiction, Proof, Result } from './Prover'
-import { Id } from './Types'
+import { Formula, negate } from '../Formula.js'
+import ImplicationIndex from './ImplicationIndex.js'
+import Prover, { Contradiction, Proof, Result } from './Prover.js'
+import { Id } from './Types.js'
 
 // Given a collection of implications and a collection of traits for an object,
 // find either the collection of derivable traits, or a contradiction

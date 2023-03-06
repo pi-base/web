@@ -1,4 +1,4 @@
-import { Id } from './Types'
+import { Id } from './Types.js'
 
 type Evidence<TheoremId = Id, PropertyId = Id> = [TheoremId, PropertyId[]]
 

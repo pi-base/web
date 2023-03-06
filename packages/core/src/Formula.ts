@@ -1,8 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { parse as _parse } from './Formula/Grammar.pegjs'
+import { parse as _parse } from './Formula/Grammar.js'
 
-import { union } from './Util'
+import { union } from './Util.js'
 
 export interface Atom<P> {
   kind: 'atom'

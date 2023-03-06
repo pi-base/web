@@ -1,5 +1,5 @@
-import { Id as BaseId } from './Id'
-import { Record } from './Record'
+import { Id as BaseId } from './Id.js'
+import { Record } from './Record.js'
 
 export type Proof<Id = BaseId> = {
   theorems: Id[]

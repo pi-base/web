@@ -1,15 +1,16 @@
+import { beforeAll, expect, it } from 'vitest'
 import fs from 'fs/promises'
 
-import { ImplicationIndex, proveTheorem } from '..'
-import { Bundle, deserialize } from '../Bundle'
-import { and, atom } from '../Formula'
+import { ImplicationIndex, proveTheorem } from '../src'
+import { Bundle, deserialize } from '../src/Bundle'
+import { and, atom } from '../src/Formula'
 
 let bundle: Bundle
 let theorems: ImplicationIndex
 
 beforeAll(async () => {
   const serialized = await fs.readFile(
-    './src/__test__/fixtures/bundle.min.json',
+    './test/fixtures/bundle.min.json',
   )
   bundle = deserialize(JSON.parse(serialized.toString()))
   theorems = new ImplicationIndex(

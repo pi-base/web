@@ -1,13 +1,13 @@
-#!/usr/bin/env node
-
 import chalk from 'chalk'
 
-import load from './load'
-import listen from './watch/listen'
-import { boot } from './watch/server'
+import load from './load.js'
+import listen from './watch/listen.js'
+import { boot } from './watch/server.js'
 
 const port = 3141
 const root = process.cwd()
+
+const { cyan, green, red, yellow } = chalk
 
 const log = console.log.bind(console)
 
@@ -18,33 +18,35 @@ async function build() {
     const { bundle, errors } = await load('.')
 
     if (!bundle) {
-      log(chalk.red('Build failed'))
+      log(red('Build failed'))
     } else if (errors) {
-      log(chalk.yellow('Build finished with errors'))
+      log(yellow('Build finished with errors'))
     } else {
-      log(chalk.green('Build finished'))
+      log(green('Build finished'))
     }
 
     if (errors) {
       log('')
-      errors.forEach((messages, path) => {
-        log(chalk.yellow(path))
-        messages.forEach((message) => log(`* ${message}`))
+      for (const [path, messages] of errors) {
+        log(yellow(path))
+        for (const message of messages) {
+          log(`* ${message}`)
+        }
         log('')
-      })
+      }
     }
 
     setState({ bundle, errors })
-  } catch (e) {
-    log(chalk.red('Error'), e.message)
+  } catch (e: any) {
+    log(red('Error'), e.message)
   }
 }
 
-log(`Watching ${chalk.cyan(root)} for changes.`)
-log(`Press ${chalk.cyan('CTRL-C')} to exit.`)
+log(`Watching ${cyan(root)} for changes.`)
+log(`Press ${cyan('CTRL-C')} to exit.`)
 
 listen(root, (path: string) => {
-  log(`${chalk.cyan(path)} changed. Re-compiling.`)
+  log(`${cyan(path)} changed. Re-compiling.`)
   build()
 })
 

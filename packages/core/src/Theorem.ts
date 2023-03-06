@@ -1,5 +1,5 @@
-import { Record } from './Record'
-import { Formula } from './Formula'
+import { Record } from './Record.js'
+import { Formula } from './Formula.js'
 
 export type Theorem = Record & {
   when: Formula<string>

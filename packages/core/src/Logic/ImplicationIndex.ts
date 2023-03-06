@@ -1,7 +1,7 @@
-import { properties } from '../Formula'
-import { union } from '../Util'
+import { properties } from '../Formula.js'
+import { union } from '../Util.js'
 
-import { Id, Implication } from './Types'
+import { Id, Implication } from './Types.js'
 
 export default class ImplicationIndex<
   TheoremId = Id,

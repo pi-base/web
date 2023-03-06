@@ -1,7 +1,8 @@
-import { and, atom, or } from './Formula'
-import { Contradiction, Derivations, deduceTraits, proveTheorem } from './Logic'
-import ImplicationIndex from './Logic/ImplicationIndex'
-import { index, recordToMap } from './__test__'
+import { beforeEach, describe, expect, it } from 'vitest'
+import { and, atom, or } from '../src/Formula'
+import { Contradiction, Derivations, deduceTraits, proveTheorem } from '../src/Logic'
+import ImplicationIndex from '../src/Logic/ImplicationIndex'
+import { index, recordToMap } from '.'
 
 describe('deduceTraits', () => {
   let contradiction: Contradiction<number> | undefined

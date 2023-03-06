@@ -1,6 +1,6 @@
 import { Version } from '@pi-base/core'
 
-import { readFile } from './fs'
+import { readFile } from './fs.js'
 
 function refName(raw: string) {
   const match = /refs\/heads\/([^\n]+)/.exec(raw)
@@ -22,7 +22,7 @@ export async function find() {
 }
 
 async function fromRepo(): Promise<Version | undefined> {
-  const contents = await readFile('.git/HEAD').catch(() => {})
+  const contents = await readFile('.git/HEAD').catch(() => { })
   if (!contents) {
     return
   }

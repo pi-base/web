@@ -1,6 +1,7 @@
-import type { Node } from 'unist'
-import visit from 'unist-util-visit'
-import Parser from './Parser'
+import { expect, it } from 'vitest'
+import { Node } from 'unist'
+import { visit } from 'unist-util-visit'
+import Parser from '../src/Parser'
 
 function parse(input: string) {
   const parser = Parser()

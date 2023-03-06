@@ -1,9 +1,8 @@
-import { Bundle, Version } from '@pi-base/core'
-import * as B from '@pi-base/core/lib/Bundle'
+import { Version, bundle as B } from '@pi-base/core'
 
-import { File, readFiles } from './fs'
-import * as Validations from './validations'
-import { find as findVersion } from './version'
+import { File, readFiles } from './fs.js'
+import * as Validations from './validations.js'
+import { find as findVersion } from './version.js'
 
 export function rootDirectories(repo: string) {
   return [`${repo}/properties`, `${repo}/spaces`, `${repo}/theorems`]
@@ -12,7 +11,7 @@ export function rootDirectories(repo: string) {
 export default async function load(
   repo: string,
 ): Promise<{
-  bundle?: Bundle
+  bundle?: B.Bundle
   errors?: Map<string, string[]>
 }> {
   return validate({
@@ -37,7 +36,7 @@ export function validate({
   traits?: File[]
   version: Version
 }) {
-  let bundle: Bundle | undefined
+  let bundle: B.Bundle | undefined
 
   try {
     bundle = B.deserialize({
@@ -85,8 +84,8 @@ function checkAll<I, O>(
 function format({
   value,
   errors,
-}: Validations.Result<Bundle>): {
-  bundle?: Bundle
+}: Validations.Result<B.Bundle>): {
+  bundle?: B.Bundle
   errors?: Map<string, string[]>
 } {
   if (errors.length > 0) {

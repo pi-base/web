@@ -1,5 +1,5 @@
-import { Implication } from './Types'
-import ImplicationIndex from './ImplicationIndex'
+import { Implication } from './Types.js'
+import ImplicationIndex from './ImplicationIndex.js'
 
 export default class Queue<
   TheoremId,

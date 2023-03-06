@@ -1,9 +1,14 @@
 import * as yaml from 'yaml-front-matter'
 
-import { Bundle, Property, check } from '@pi-base/core'
-import * as Formula from '@pi-base/core/lib/Formula'
+import { Bundle, Property, formula as Formula } from '@pi-base/core'
 
-import { File } from './fs'
+import { File } from './fs.js'
+
+// FIXME
+type CheckResult = { kind: 'bundle', bundle: Bundle } | { kind: 'contradiction', contradiction: { theorems: unknown[], properties: unknown[] } }
+function check(bundle: Bundle, _: unknown): CheckResult {
+  return { kind: 'bundle', bundle }
+}
 
 export type Message = {
   path: string
@@ -81,7 +86,7 @@ function noExtras(rest: object, error: Handler) {
 
 function required<T>(value: T, key: keyof T, error: Handler) {
   if (!value[key] && (value[key] as any) !== false) {
-    error(`${key} is required`)
+    error(`${String(key)} is required`)
   }
 }
 

@@ -1,5 +1,5 @@
-import { Formula } from '../Formula'
-import { ImplicationIndex } from '../Logic'
+import { Formula } from '../src/Formula'
+import { ImplicationIndex } from '../src/Logic'
 
 export function recordToMap<Value>(
   record: Record<string, Value>,

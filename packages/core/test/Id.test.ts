@@ -1,4 +1,5 @@
-import { format, toInt, trim } from './Id'
+import { describe, expect, it } from 'vitest'
+import { format, toInt, trim } from '../src/Id'
 
 describe('format', () => {
   it('pads the given character', () => {

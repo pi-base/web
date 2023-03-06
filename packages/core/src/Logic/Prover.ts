@@ -6,13 +6,13 @@ import {
   evaluate,
   negate,
   properties,
-} from '../Formula'
-import ImplicationIndex from './ImplicationIndex'
-import Queue from './Queue'
-import { Id, Implication } from './Types'
-import { Derivations, Proof } from './Derivations'
+} from '../Formula.js'
+import ImplicationIndex from './ImplicationIndex.js'
+import Queue from './Queue.js'
+import { Id, Implication } from './Types.js'
+import { Derivations, Proof } from './Derivations.js'
 
-export type { Proof } from './Derivations'
+export type { Proof } from './Derivations.js'
 
 // TODO: is it deduction, or derivation
 
@@ -22,9 +22,9 @@ export type Contradiction<TheoremId = Id, PropertyId = Id> = Proof<
 >
 export type Result<TheoremId = Id, PropertyId = Id> =
   | {
-      kind: 'contradiction'
-      contradiction: Contradiction<TheoremId, PropertyId>
-    }
+    kind: 'contradiction'
+    contradiction: Contradiction<TheoremId, PropertyId>
+  }
   | { kind: 'derivations'; derivations: Derivations<TheoremId, PropertyId> }
 
 export default class Prover<
@@ -149,9 +149,9 @@ export default class Prover<
       (
         acc:
           | {
-              falses: Formula<PropertyId>[]
-              unknown: Formula<PropertyId> | undefined
-            }
+            falses: Formula<PropertyId>[]
+            unknown: Formula<PropertyId> | undefined
+          }
           | undefined,
         sf: Formula<PropertyId>,
       ) => {

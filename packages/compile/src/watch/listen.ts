@@ -1,6 +1,6 @@
 import chokidar from 'chokidar'
 
-import { rootDirectories } from '../load'
+import { rootDirectories } from '../load.js'
 
 export default function listen(repo: string, onChange: (path: string) => void) {
   chokidar

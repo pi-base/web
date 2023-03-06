@@ -1,4 +1,5 @@
-import * as F from './Formula'
+import { describe, expect, it } from 'vitest'
+import * as F from '../src/Formula'
 import {
   Formula,
   and,
@@ -11,7 +12,7 @@ import {
   properties,
   render,
   toJSON,
-} from './Formula'
+} from '../src/Formula'
 
 const compound: Formula<string> = and(
   atom('compact', true),

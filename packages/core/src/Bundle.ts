@@ -1,8 +1,8 @@
-import { Id, traitId } from './Id'
-import { Property } from './Property'
-import { Space } from './Space'
-import { Theorem } from './Theorem'
-import { Trait } from './Trait'
+import { Id, traitId } from './Id.js'
+import { Property } from './Property.js'
+import { Space } from './Space.js'
+import { Theorem } from './Theorem.js'
+import { Trait } from './Trait.js'
 
 export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 

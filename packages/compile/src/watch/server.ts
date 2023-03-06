@@ -1,17 +1,19 @@
 import chalk from 'chalk'
 import cors from 'cors'
-import express, { NextFunction, Request, Response } from 'express'
+import express, { Express, NextFunction, Request, Response } from 'express'
 
-import { Bundle, bundle } from '@pi-base/core'
+import { bundle } from '@pi-base/core'
 
 type State = {
-  bundle: Bundle | undefined
+  bundle: bundle.Bundle | undefined
   errors: Map<string, string[]> | undefined
 }
 
 type Logger = (message: string, ...args: any[]) => void
 
-export function boot({ log, port }: { log: Logger; port: number }) {
+const { cyan } = chalk
+
+export function boot({ log, port }: { log: Logger; port: number }): { app: Express, setState: (updates: Partial<State>) => void } {
   let state: State = { bundle: undefined, errors: undefined }
 
   function setState(updates: Partial<State>) {
@@ -27,7 +29,7 @@ export function boot({ log, port }: { log: Logger; port: number }) {
   )
 
   app.use((req: Request, _, next: NextFunction) => {
-    log(`${chalk.cyan(req.method)} ${req.originalUrl}`)
+    log(`${cyan(req.method)} ${req.originalUrl}`)
     next()
   })
 
@@ -42,7 +44,7 @@ export function boot({ log, port }: { log: Logger; port: number }) {
   })
 
   app.listen(port, () => {
-    log(`Server started on port ${chalk.cyan(port)}.`)
+    log(`Server started on port ${cyan(port)}.`)
   })
 
   return {

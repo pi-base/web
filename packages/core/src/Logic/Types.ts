@@ -1,4 +1,4 @@
-import type { Formula } from '../Formula'
+import type { Formula } from '../Formula.js'
 
 export type Id = string
 

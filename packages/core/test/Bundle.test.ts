@@ -1,7 +1,8 @@
-import { Bundle, deserialize, serialize } from './Bundle'
-import { Theorem } from './Theorem'
+import { describe, expect, it } from 'vitest'
+import { Bundle, deserialize, serialize } from '../src/Bundle'
+import { Theorem } from '../src/Theorem'
 
-import { property, space, trait } from './testUtils'
+import { property, space, trait } from '../src/testUtils'
 
 describe('Bundle', () => {
   describe('serialization', () => {

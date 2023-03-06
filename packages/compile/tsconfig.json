@@ -1,6 +1,22 @@
 {
-  "extends": "@pi-base/dev/tsconfig.shared.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noImplicitAny": true,
+    "outDir": "dist/esm",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext"
+  },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "test"
   ]
 }

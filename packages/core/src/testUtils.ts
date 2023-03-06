@@ -1,5 +1,5 @@
-import { Formula, Property, Space, Theorem, Trait } from './index'
-export { and, atom, or } from './Formula'
+import { Formula, Property, Space, Theorem, Trait } from './index.js'
+export { and, atom, or } from './Formula.js'
 
 export function property({
   uid,

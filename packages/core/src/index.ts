@@ -1,20 +1,21 @@
-export { Formula, And, Atom, Or } from './Formula'
-export { default as Parser } from './Parser'
-export { Property } from './Property'
+export { type Bundle } from './Bundle.js'
+export { type Formula, type And, type Atom, type Or } from './Formula.js'
+export { default as Parser } from './Parser.js'
+export { type Property } from './Property.js'
 export {
   ImplicationIndex,
   deduceTraits,
   disproveFormula,
   proveTheorem,
-} from './Logic'
-export { Space } from './Space'
-export { Theorem } from './Theorem'
-export { Trait } from './Trait'
-export { Version } from './Bundle'
+} from './Logic/index.js'
+export { type Space } from './Space.js'
+export { type Theorem } from './Theorem.js'
+export { type Trait } from './Trait.js'
+export { type Version } from './Bundle.js'
 
-export * as bundle from './Bundle'
-export * as formula from './Formula'
-export * as Id from './Id'
-export * as Ref from './Ref'
+export * as bundle from './Bundle.js'
+export * as formula from './Formula.js'
+export * as Id from './Id.js'
+export * as Ref from './Ref.js'
 
-export * as TestUtils from './testUtils'
+export * as TestUtils from './testUtils.js'

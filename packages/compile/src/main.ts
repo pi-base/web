@@ -1,9 +1,9 @@
 import * as core from '@actions/core'
 import * as fs from 'fs'
 import * as process from 'process'
-import * as B from '@pi-base/core/lib/Bundle'
+import { bundle as B } from '@pi-base/core'
 
-import load from './load'
+import load from './load.js'
 
 function error(file: string, message: string) {
   console.log(`::error file=${file}::${message}`)
