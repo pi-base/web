@@ -36,7 +36,8 @@
     "chokidar": "^3.5.3",
     "glob": "^8.0.3",
     "js-yaml": "^4.1.0",
-    "yaml-front-matter": "^4.1.1"
+    "yaml-front-matter": "^4.1.1",
+    "zod": "^3.21.3"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

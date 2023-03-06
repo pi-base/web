@@ -1,6 +1,7 @@
+import { z } from 'zod'
 import yaml from 'yaml-front-matter'
 
-import { Bundle, Property, formula as Formula } from '@pi-base/core'
+import { Bundle, Property, formula as Formula, schemas } from '@pi-base/core'
 
 import { File } from './fs.js'
 
@@ -118,14 +119,14 @@ export function property(input: File): Result<Property> {
       ...rest
     } = loadFront(input.contents)
 
-    const property = {
+    const property = schemas.property.parse({
       counterexamples_id,
       uid: String(uid).trim(),
       name: String(name).trim(),
       aliases,
       refs,
       description: String(description).trim(),
-    }
+    })
 
     if (!input.path.endsWith(paths.property(uid))) {
       error(`path does not match uid=${uid}`)
@@ -154,7 +155,7 @@ export function space(input: File) {
       ...rest
     } = loadFront(input.contents)
 
-    const space = {
+    const space = schemas.space.parse({
       uid: String(uid).trim(),
       counterexamples_id,
       name: String(name).trim(),
@@ -162,7 +163,7 @@ export function space(input: File) {
       aliases,
       refs,
       ambiguous_construction,
-    }
+    })
 
     if (!input.path.endsWith(paths.space(uid))) {
       error(`path does not match uid=${uid}`)
@@ -190,7 +191,7 @@ export function theorem(input: File) {
       ...rest
     } = loadFront(input.contents)
 
-    const theorem = {
+    const theorem = schemas.theorem.parse({
       counterexamples_id,
       uid: String(uid).trim(),
       when: when && Formula.fromJSON(when),
@@ -198,7 +199,7 @@ export function theorem(input: File) {
       description: String(description).trim(),
       refs,
       converse,
-    }
+    })
 
     if (!input.path.endsWith(paths.theorem(uid))) {
       error(`path does not match uid=${uid}`)
@@ -227,7 +228,7 @@ export function trait(input: File) {
       ...rest
     } = loadFront(input.contents)
 
-    const trait = {
+    const trait = schemas.trait(z.string()).parse({
       uid: String(uid).trim(),
       space: String(space).trim(),
       property: String(property).trim(),
@@ -235,7 +236,7 @@ export function trait(input: File) {
       counterexamples_id,
       refs,
       description,
-    }
+    })
 
     if (!input.path.endsWith(paths.trait({ space, property }))) {
       error(`path does not match space=${space} and property=${property}`)

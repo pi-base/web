@@ -1,8 +1,9 @@
+import { z } from 'zod'
 import { Id, traitId } from './Id.js'
-import { Property } from './Property.js'
-import { Space } from './Space.js'
-import { Theorem } from './Theorem.js'
-import { Trait } from './Trait.js'
+import { Property, propertySchema } from './Property.js'
+import { Space, spaceSchema } from './Space.js'
+import { Theorem, theoremSchema } from './Theorem.js'
+import { Trait, traitSchema } from './Trait.js'
 
 export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 
@@ -19,25 +20,29 @@ export type Bundle = {
   version: Version
 }
 
-export type Serialized = {
-  properties: Property[]
-  spaces: Space[]
-  theorems: Theorem[]
-  traits: Trait<Id>[]
-  version: Version
-}
+export const serializedSchema = z.object({
+  properties: z.array(propertySchema),
+  spaces: z.array(spaceSchema),
+  theorems: z.array(theoremSchema),
+  traits: z.array(traitSchema(z.string())),
+  version: z.object({ ref: z.string(), sha: z.string() })
+})
+
+export type Serialized = z.infer<typeof serializedSchema>
 
 export function serialize(bundle: Bundle): Serialized {
-  return {
+  return serializedSchema.parse({
     properties: [...bundle.properties.values()],
     spaces: [...bundle.spaces.values()],
     theorems: [...bundle.theorems.values()],
     traits: [...bundle.traits.values()],
     version: bundle.version,
-  }
+  })
 }
 
-export function deserialize(serialized: Serialized): Bundle {
+export function deserialize(data: unknown): Bundle {
+  const serialized = serializedSchema.parse(data)
+
   return {
     properties: indexBy(serialized.properties, (p) => p.uid),
     spaces: indexBy(serialized.spaces, (s) => s.uid),

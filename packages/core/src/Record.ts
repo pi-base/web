@@ -1,8 +1,11 @@
-import { Ref } from './Ref.js'
+import { refSchema } from './Ref.js'
+import { z } from 'zod'
 
-export type Record = {
-  uid: string
-  counterexamples_id: string | undefined
-  description: string
-  refs: Ref[]
-}
+export const recordSchema = z.object({
+  uid: z.string(),
+  counterexamples_id: z.number().optional().nullable(),
+  description: z.string(),
+  refs: z.array(refSchema)
+})
+
+export type Record = z.infer<typeof recordSchema>
