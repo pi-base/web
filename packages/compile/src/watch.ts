@@ -14,7 +14,7 @@ import { boot } from './watch/server.js'
 
 const dir = dirname(fileURLToPath(import.meta.url))
 const root = resolve(dir, '..', '..', '..')
-const data = process.env.DATA_WORKSPACE || resolve(root, '..', 'data')
+const data = process.env.DATA_WORKSPACE || resolve(root, '.data')
 
 const port = Number(process.env.PORT || '3141')
 

@@ -4,7 +4,7 @@
   "postAttachCommand": {
     "compile": "pnpm run --filter compile dev"
   },
-  "postCreateCommand": "git clone https://github.com/pi-base/data.git /workspaces/data",
+  "postCreateCommand": "git clone https://github.com/pi-base/data.git .data",
   "customizations": {
     "codespaces": {
       "openFiles": [
