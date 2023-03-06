@@ -1,0 +1,17 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "codespaces": {
+      "repositories": {
+        "pi-base/data": {
+          "permissions": {
+            "contents": "read"
+          }
+        }
+      }
+    }
+  },
+  "postCreateCommand": "git clone git@github.com:pi-base/data.git /workspaces/data"
+}
