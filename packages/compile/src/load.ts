@@ -19,7 +19,7 @@ export default async function load(
     spaces: await readFiles(`${repo}/spaces/*/README.md`),
     theorems: await readFiles(`${repo}/theorems/*.md`),
     traits: await readFiles(`${repo}/spaces/*/properties/*.md`),
-    version: await findVersion(),
+    version: await findVersion(repo),
   })
 }
 

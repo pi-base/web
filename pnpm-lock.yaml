@@ -60,11 +60,9 @@ importers:
   packages/core:
     specifiers:
       '@types/unist': ^2.0.3
-      js-yaml: ^4.1.0
       peggy: ^2.0.1
       remark: ^14.0.2
       remark-rehype: ^10.1.0
-      rollup-plugin-peggy: ^3.0.0
       ts-pegjs: ^2.1.0
       unified: ^10.1.2
       unist-util-visit: ^4.1.1
@@ -75,9 +73,7 @@ importers:
       unist-util-visit: 4.1.1
     devDependencies:
       '@types/unist': 2.0.6
-      js-yaml: 4.1.0
       peggy: 2.0.1
-      rollup-plugin-peggy: 3.0.0
       ts-pegjs: 2.1.0_peggy@2.0.1
 
   packages/viewer:
@@ -1763,6 +1759,7 @@ packages:
 
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+    dev: false
 
   /arr-diff/4.0.0:
     resolution: {integrity: sha512-YVIQ82gZPGBebQV/a8dar4AitzCQs0jjXwMPZllpXMaGjXPYVUawSxQrRsjhjupyVxEvbHgUmIhKVlND+j02kA==}
@@ -5008,6 +5005,7 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
+    dev: false
 
   /jsbn/0.1.1:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}
@@ -6230,12 +6228,6 @@ packages:
     resolution: {integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==}
     dev: true
 
-  /peggy/1.2.0:
-    resolution: {integrity: sha512-PQ+NKpAobImfMprYQtc4Egmyi29bidRGEX0kKjCU5uuW09s0Cthwqhfy7mLkwcB4VcgacE5L/ZjruD/kOPCUUw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: true
-
   /peggy/2.0.1:
     resolution: {integrity: sha512-mBqfmdUAOVn7RILpXTbcRBhLfTR4Go0SresSnivGDdRylBOyVFJncFiVyCNNpPWq8HmgeRleXHs/Go4o8kQVXA==}
     engines: {node: '>=10'}
@@ -6802,13 +6794,6 @@ packages:
     resolution: {integrity: sha512-4kCrKPTJ6sK4/gLL/U5QzVT8cxJcofO0OU74tnB19F40cmuAKSzH5/siithxlofFEjwvw1YAhPmbvGNA6jEroA==}
     dependencies:
       rollup-plugin-inject: 3.0.2
-    dev: true
-
-  /rollup-plugin-peggy/3.0.0:
-    resolution: {integrity: sha512-nRfWeob8fAnXFgaEi6F0nW7dRVkglQtSdpQmynUAFZRSfM6069k0dC+Hgc+OKt9C9Qz1uEjywpO5g5dC44uOhw==}
-    dependencies:
-      peggy: 1.2.0
-      rollup-pluginutils: 2.8.2
     dev: true
 
   /rollup-plugin-svelte/6.1.1_himpnf5456wzehbj5dj5u7v4ri:

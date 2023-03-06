@@ -1,9 +1,12 @@
 {
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node",
+  "onCreateCommand": "pnpm install && pnpm run --filter core build",
+  "postCreateCommand": "git clone https://github.com/pi-base/data.git /workspaces/data",
   "customizations": {
     "codespaces": {
+      "openFiles": [
+        "doc/codespaces/welcome.md"
+      ],
       "repositories": {
         "pi-base/data": {
           "permissions": {
@@ -11,7 +14,10 @@
           }
         }
       }
+    },
+    "vscode": {
+      "extensions": [],
+      "settings": {}
     }
-  },
-  "postCreateCommand": "git clone git@github.com:pi-base/data.git /workspaces/data"
+  }
 }
