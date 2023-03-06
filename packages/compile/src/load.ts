@@ -10,6 +10,7 @@ export function rootDirectories(repo: string) {
 
 export default async function load(
   repo: string,
+  version?: Version
 ): Promise<{
   bundle?: B.Bundle
   errors?: Map<string, string[]>
@@ -19,7 +20,7 @@ export default async function load(
     spaces: await readFiles(`${repo}/spaces/*/README.md`),
     theorems: await readFiles(`${repo}/theorems/*.md`),
     traits: await readFiles(`${repo}/spaces/*/properties/*.md`),
-    version: await findVersion(repo),
+    version: version || await findVersion(repo),
   })
 }
 
