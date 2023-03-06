@@ -33,11 +33,14 @@ export function boot({ log, port }: { log: Logger; port: number }): { app: Expre
     next()
   })
 
-  app.get('/refs/heads/:branch', (_, res: Response) => {
+  function view(_: Request, res: Response) {
     // n.b. we're not currently verifying params.branch matches
     res.setHeader('ETag', state.bundle ? state.bundle.version.sha : 'unknown')
-    res.json(state.bundle && bundle.serialize(state.bundle))
-  })
+    res.json(state.bundle ? bundle.serialize(state.bundle) : { message: "The bundle is not available", errors: state.errors })
+  }
+
+  app.get('/', view)
+  app.get('/refs/heads/:branch', view)
 
   app.get('/errors', (_, res: Response) => {
     res.json(state.errors)
