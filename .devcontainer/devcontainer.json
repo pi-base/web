@@ -9,14 +9,7 @@
     "codespaces": {
       "openFiles": [
         "doc/codespaces/welcome.md"
-      ],
-      "repositories": {
-        "pi-base/data": {
-          "permissions": {
-            "contents": "read"
-          }
-        }
-      }
+      ]
     },
     "vscode": {
       "extensions": [],
