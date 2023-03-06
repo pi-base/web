@@ -1,6 +1,9 @@
 {
   "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node",
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
+  "postAttachCommand": {
+    "compile": "pnpm run --filter compile dev"
+  },
   "postCreateCommand": "git clone https://github.com/pi-base/data.git /workspaces/data",
   "customizations": {
     "codespaces": {

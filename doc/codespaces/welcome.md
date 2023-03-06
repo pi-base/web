@@ -2,20 +2,24 @@
 
 # Compiling a bundle locally
 
-```bash
-# Start a server that listens for changes to /workspaces/data, builds a bundle
-# and serves it compatibly with the production S3 backend.
-/workspaces/web $ pnpm run --filter compile dev
-```
+Your codespace starts a `compile process` process which watches
+`/workspaces/data` and serves its contents at `localhost:3141/refs/heads/(:branch)`,
+consistent with the production S3 API.
 
-Verify that the server is working by opening another terminal in the codespace
-and running
+Once the server has started and the first build has finished, you can verify the
+result by running
 
 ```bash
 $ curl -s localhost:3141/refs/heads/master | jq '.version'
 ```
 
 ## Troubleshooting
+
+### Starting the compile process manually
+
+```bash
+/workspaces/web $ pnpm run --filter compile dev
+```
 
 ### Cannot find module '@pi-base/core'
 
