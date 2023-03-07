@@ -1,8 +1,9 @@
-import { TraitsArgs, and, atom, traits } from '../__test__'
+import { describe, expect, it } from 'vitest'
+import { type TraitsArgs, and, atom, traits } from '../__test__'
 import { writable } from 'svelte/store'
 
 import type { Collection, Property } from '../models'
-import create, { Search } from './search'
+import create, { type Search } from './search'
 import { read } from '../util'
 
 let properties: Collection<Property>

@@ -1,6 +1,7 @@
-import { Readable, get, readable } from 'svelte/store'
+import { beforeEach, expect, it } from 'vitest'
+import { get, readable } from 'svelte/store'
 
-import list, { Store } from './list'
+import list, { type Store } from './list'
 
 type Item = { name: string; value: number }
 const items: Item[] = [
@@ -14,7 +15,7 @@ let store: Store<{ name: string; value: number }>
 
 beforeEach(() => {
   store = list(
-    readable(items, () => {}),
+    readable(items, () => { }),
     {
       weights: {
         name: 1,
@@ -24,7 +25,7 @@ beforeEach(() => {
 })
 
 function values() {
-  return get<Item[], Readable<Item[]>>(store).map(i => i.value)
+  return get<Item[]>(store).map(i => i.value)
 }
 
 it('has the expected values', () => {

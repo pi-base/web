@@ -1,7 +1,7 @@
 export type { Context } from './context/types'
 
 import { getContext, setContext } from 'svelte'
-import { Readable, derived } from 'svelte/store'
+import { type Readable, derived } from 'svelte/store'
 import { formula as F } from '@pi-base/core'
 
 import type { Context } from './context/types'
@@ -9,8 +9,8 @@ import { trace } from './debug'
 import * as Errors from './errors'
 import * as Gateway from './gateway'
 import { Id } from './models'
-import { Local, local } from './repositories'
-import { Prestore, Store, create } from './stores'
+import { type Local, local } from './repositories'
+import { type Prestore, type Store, create } from './stores'
 import * as Typeset from './stores/typeset'
 import { subscribeUntil } from './util'
 

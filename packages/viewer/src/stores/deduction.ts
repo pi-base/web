@@ -1,4 +1,4 @@
-import { Readable, writable } from 'svelte/store'
+import { type Readable, writable } from 'svelte/store'
 import {
   ImplicationIndex,
   deduceTraits,

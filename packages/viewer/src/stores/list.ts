@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { Readable, Writable, derived, writable } from 'svelte/store'
+import { type Readable, type Writable, derived, writable } from 'svelte/store'
 
 import * as sort from './sort'
 import urlSearchParam from './urlSearchParam'

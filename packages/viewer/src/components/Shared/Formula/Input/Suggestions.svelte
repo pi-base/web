@@ -13,7 +13,8 @@
     <li
       class="list-group-item {i === selected ? 'active' : ''}"
       on:mouseover={() => onHover(i)}
-      on:click={() => onClick(i)}>
+      on:click={() => onClick(i)}
+    >
       <Typeset body={property.name} />
     </li>
   {/each}

@@ -1,7 +1,7 @@
 import { formula as F } from '@pi-base/core'
 
 import Collection from './Collection'
-import { Property, Theorem, SerializedTheorem } from '../models'
+import { type Property, Theorem, type SerializedTheorem } from '../models'
 
 export default class Theorems {
   static build(

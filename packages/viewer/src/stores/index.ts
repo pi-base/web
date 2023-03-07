@@ -1,14 +1,14 @@
 export { default as list } from './list'
 export { default as search } from './search'
 
-import { Readable, Writable, get, writable } from 'svelte/store'
+import { type Readable, type Writable, get, writable } from 'svelte/store'
 import {
   Collection,
-  Property,
-  SerializedTheorem,
-  Space,
+  type Property,
+  type SerializedTheorem,
+  type Space,
   Theorems,
-  Trait,
+  type Trait,
   Traits,
 } from '../models'
 import * as Deduction from './deduction'

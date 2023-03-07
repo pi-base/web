@@ -1,4 +1,4 @@
-import { Id, Property, Space, Theorem } from '../models'
+import { Id, type Property, type Space, Theorem } from '../models'
 
 export type Finder<T> = {
   find(id: number): T | null

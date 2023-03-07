@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { atom, property, theorem } from '../__test__'
 
 import Collection from './Collection'

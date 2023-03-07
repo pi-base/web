@@ -1,4 +1,4 @@
-<script type="ts">
+<script lang="ts">
   import context from '../context'
   import { contributingUrl, mainBranch } from '../constants'
 

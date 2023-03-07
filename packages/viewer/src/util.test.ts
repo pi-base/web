@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { writable } from 'svelte/store'
 
 import { eachTick, read, subscribeUntil } from './util'

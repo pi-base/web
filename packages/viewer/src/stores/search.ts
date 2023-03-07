@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { Readable, derived, writable } from 'svelte/store'
+import { type Readable, derived, writable } from 'svelte/store'
 
 import type { Collection, Formula, Property, Space, Traits } from '../models'
 import { read } from '../util'

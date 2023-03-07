@@ -1,3 +1,4 @@
+import { expect, it } from 'vitest'
 import link from './externalLinks'
 
 const providers = ['doi', 'mr', 'wikipedia', 'mathse', 'mo']

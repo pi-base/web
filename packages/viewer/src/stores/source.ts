@@ -1,4 +1,4 @@
-import { Readable, writable } from 'svelte/store'
+import { type Readable, writable } from 'svelte/store'
 import { bundle } from '@pi-base/core'
 
 import { mainBranch } from '../constants'

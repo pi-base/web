@@ -1,4 +1,4 @@
-import { Readable, derived, writable } from 'svelte/store'
+import { type Readable, derived, writable } from 'svelte/store'
 import { read } from '../util'
 
 export type State<T> = (
@@ -37,7 +37,7 @@ export function create<T>(
     try {
       const value = await run()
       store.set({ kind: 'fetched', value, at: new Date() })
-    } catch (error) {
+    } catch (error: any) {
       console.error(error)
       store.set({ kind: 'error', error, at: new Date() })
     }

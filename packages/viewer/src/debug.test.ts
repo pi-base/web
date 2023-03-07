@@ -1,4 +1,5 @@
-import { Event, trace } from './debug'
+import { describe, expect, it } from 'vitest'
+import { type Event, trace } from './debug'
 
 describe('trace', () => {
   it('logs for every event', () => {

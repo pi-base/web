@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { atom, property, space, theorem } from '../__test__'
 import { Collection, Theorems } from '../models'
 

@@ -1,4 +1,4 @@
-import { Readable, get } from 'svelte/store'
+import { type Readable, get } from 'svelte/store'
 
 type Halt = () => void
 
