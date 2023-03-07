@@ -77,14 +77,7 @@ export async function fetch(
     return
   }
 
-  // TODO: use a schema definition to handle validation failures
-  // eslint-disable-next-line
-  const json = await response.json()
-  const deserialized = deserialize(json)
-
-  if (JSON.stringify(serialize(deserialized)) != JSON.stringify(json)) {
-    throw new Error('Data serialization failure')
-  }
+  const deserialized = deserialize(await response.json())
 
   return {
     bundle: deserialized,
