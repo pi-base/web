@@ -21,7 +21,7 @@ $ curl -s localhost:3141/refs/heads/master | jq '.version'
 npm run build
 
 # serve assets and expose them externally
-npm run start --host
+npm run start -- --host
 ```
 
 ## Troubleshooting
