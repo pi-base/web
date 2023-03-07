@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 // Ref describes the structure of existing bundled data
 export const refSchema = z.intersection(
-  // TODO: name presumably shouldn't be optional, but T000216 needs to be fixed
+  // TODO: name presumably shouldn't be optional, but T000275 needs to be fixed
   z.object({ name: z.string().optional() }),
   z.union([
     z.object({ doi: z.string() }),
