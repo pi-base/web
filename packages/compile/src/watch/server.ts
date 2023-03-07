@@ -47,7 +47,7 @@ export function boot({ log, port }: { log: Logger; port: number }): { app: Expre
   })
 
   app.listen(port, () => {
-    log(`Server started on port ${cyan(port)}.`)
+    log(`Server running at http://localhost:${cyan(port)}.`)
   })
 
   return {
