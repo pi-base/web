@@ -13,6 +13,17 @@ result by running
 $ curl -s localhost:3141/refs/heads/master | jq '.version'
 ```
 
+# Running the viewer
+
+```bash
+# in packages/viewer
+# compile .js and .css assets
+npm run build
+
+# serve assets and expose them externally
+npm run start --host
+```
+
 ## Troubleshooting
 
 ### Starting the compile process manually
