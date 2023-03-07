@@ -29,12 +29,13 @@
     "remark": "^14.0.2",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2",
+    "unist-util-is": "^5.2.1",
     "unist-util-visit": "^4.1.2",
     "zod": "^3.21.3"
   },
   "devDependencies": {
     "@types/unist": "^2.0.3",
-    "peggy": "^3.0.1",
+    "peggy": "^2.0.1",
     "ts-pegjs": "^3.1.0"
   }
 }

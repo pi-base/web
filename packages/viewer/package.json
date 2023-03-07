@@ -17,16 +17,19 @@
   "dependencies": {
     "@pi-base/core": "workspace:0.4.0",
     "@sentry/browser": "^7.41.0",
-    "bootstrap": "^5.2.3",
+    "bootstrap": "^4.6.2",
     "fromnow": "^3.0.1",
     "fuse.js": "^6.4.1",
     "hast-to-hyperscript": "^10.0.3",
     "hyperscript": "^2.0.2",
+    "jquery": "1.9.1",
+    "popper.js": "^1.16.1",
     "rehype-katex": "^6.0.2",
     "remark-rehype": "^10.1.0",
     "sirv-cli": "^2.0.2",
     "svelte-routing": "^1.4.2",
     "unified": "^10.1.2",
+    "unist-util-is": "^5.2.1",
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
