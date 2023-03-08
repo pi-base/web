@@ -63,7 +63,7 @@
         </td>
         <td>
           {#if !trait.asserted}
-            <Value value={true} />
+            <Value value={true} icon="robot" />
           {/if}
         </td>
       </tr>
