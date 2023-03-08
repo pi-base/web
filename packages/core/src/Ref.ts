@@ -2,13 +2,14 @@ import { z } from 'zod'
 
 // Ref describes the structure of existing bundled data
 export const refSchema = z.intersection(
-  z.object({ name: z.string() }),
+  // TODO: name presumably shouldn't be optional, but T000275 needs to be fixed
+  z.object({ name: z.string().optional() }),
   z.union([
     z.object({ doi: z.string() }),
     z.object({ wikipedia: z.string() }),
     z.object({ mr: z.string() }),
-    z.object({ mathse: z.string() }),
-    z.object({ mo: z.string() }),
+    z.object({ mathse: z.number() }),
+    z.object({ mo: z.number() }),
   ])
 )
 export type Ref = z.infer<typeof refSchema>
@@ -31,8 +32,8 @@ export function tag(ref: Ref): TaggedRef {
   } else if ('mr' in ref) {
     return { kind: 'mr', id: ref.mr, name }
   } else if ('mathse' in ref) {
-    return { kind: 'mathse', id: ref.mathse, name }
+    return { kind: 'mathse', id: String(ref.mathse), name }
   } else {
-    return { kind: 'mo', id: ref.mo, name }
+    return { kind: 'mo', id: String(ref.mo), name }
   }
 }
