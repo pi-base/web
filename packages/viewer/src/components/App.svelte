@@ -31,7 +31,5 @@
 <Router>
   <Nav />
   <Status />
-  <main class="container">
-    <Routes />
-  </main>
+  <Routes />
 </Router>

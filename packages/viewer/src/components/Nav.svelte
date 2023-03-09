@@ -12,7 +12,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-{bg} bg-{bg}">
   <div class="container">
-    <span class="navbar-brand"> <a href="/">π-Base</a> </span>
+    <a class="navbar-brand" href="/">π-Base</a>
 
     <div class="navbar-nav mr-auto">
       <Link to="/spaces">Spaces</Link>
