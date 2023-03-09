@@ -29,16 +29,16 @@
   })
 </script>
 
-<section class="status">
-  {#if progress}
+{#if progress}
+  <section class="status">
     <div class="progress">
       <div
         class="progress-bar"
         role="progressbar"
         style="width: {progress}%"
         aria-valuenow={checked}
-        aria-valuemin="0"
+        aria-valuemin={0}
         aria-valuemax={total} />
     </div>
-  {/if}
-</section>
+  </section>
+{/if}

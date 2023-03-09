@@ -1,5 +1,8 @@
 {
   "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node",
+  "containerEnv": {
+    "DATA_WORKSPACE": "/workspaces/web/data"
+  },
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
   "postAttachCommand": {
     "compile": "pnpm run --filter compile dev"
@@ -7,7 +10,7 @@
   "forwardPorts": [
     8080
   ],
-  "postCreateCommand": "git clone https://github.com/pi-base/data.git /workspaces/data",
+  "postCreateCommand": "git clone https://github.com/pi-base/data.git",
   "customizations": {
     "codespaces": {
       "openFiles": [

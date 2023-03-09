@@ -6,80 +6,84 @@
 
 <div class="wide jumbotron home-jumbotron">
   <div class="container">
-    <h1>π-Base</h1>
-    <p>a community database of topological counterexamples</p>
-    <p>
-      ➜ Search by property, such as
-      <Link
-        to="/spaces?formula=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable">
-        non-metric continua
-      </Link>
-    </p>
-    <p>
-      ➜ Find spaces by name, such as
-      <Link to="/spaces?text=compactification">compactifications</Link>
-    </p>
-    <p>
-      ➜ View counterexamples to the converse of a theorem, such as
-      <Link to="/theorems/T000112">T₅ ⇒ T₄</Link>
-    </p>
+    <h1 class="display-4">π-Base</h1>
+    <p class="lead">a community database of topological counterexamples</p>
+    <div class="ml-3 mt-4">
+      <p>
+        ➜ Search spaces by name/description:
+        <a href="/spaces?text=compactification" class="text-info">compactifications</a>
+      </p>
+      <p>
+        ➜ Search spaces by properties:
+        <a 
+          href="/spaces?formula=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable" 
+          class="text-info"
+          >non-metric continua</a>
+      </p>
+      <p class="mb-0">
+        ➜ Find counterexamples:
+        <a 
+          href="/theorems/T000057" 
+          class="text-info"
+          >first countable spaces need not be pseudometrizable</a>
+      </p>
+    </div>
   </div>
 </div>
 
-<h2>Contributing</h2>
-<p>
-  The π-Base relies on volunteers like yourself to submit new spaces,
-  properties, and theorems. More information may be found on our
-  <a href={contributingUrl}>Contributing</a>
-  page.
-</p>
-<p>
-  π-Base’s
-  <a href="https://github.com/pi-base/data">data</a>
-  and
-  <a href="https://github.com/pi-base/viewer">source code</a>
-  are available on GitHub. Code contributions are welcomed as well!
-</p>
-<h2>About Us</h2>
-<p>
-  The π-Base was founded in 2014 by
-  <a href="https://github.com/jamesdabbs">James Dabbs</a>, who continues to
-  maintain the project and serve as its main developer.
-</p>
-<p>
-  <a href="https://github.com/stevenclontz">Steven Clontz</a>
-  joined the project in 2017, serving as its lead mathematical editor.
-</p>
-<h2>Acknowledgements</h2>
-<p>
-  Many people have contributed to this project, and all contributions are
-  appreciated, but a few individuals deserve special recognition:
-</p>
-<ul>
-  <li>
-    <a href="http://www.montevallo.edu/staff-bio/scott-varagona/">Scott Varagona</a>
-    for his heroic work entering data into the database
-  </li>
-  <li>
-    Our graduate advisor,
-    <a href="http://www.auburn.edu/~gruengf/">Gary Gruenhage</a>
-    for all his support and guidance
-  </li>
-  <li>
-    <a href="http://austinmohr.com/home/">Austin Mohr</a>
-    for his work using the π-Base as a pedagogical tool, and all his invaluable
-    feedback
-  </li>
-  <li>
-    The
-    <a href="https://www.southalabama.edu/">University of South Alabama</a>{' '}
-    Faculty Development Program for providing funding to host the π-Base server.
-  </li>
-  <li>
-    Steen and Seebach for writing
-    <a
-      href="http://www.amazon.com/Counterexamples-Topology-Dover-Books-Mathematics/dp/048668735X">
-      Counterexamples in Topology</a>
-    in the first place and inspiring this project.
-  </li>
-</ul>
+
+<main class="container">
+  <blockquote class="blockquote text-center mt-5 mb-5">
+    <p class="mb-0">Topology is a dense forest of counterexamples. A usable map of the forest is a fine thing.</p>
+    <footer class="blockquote-footer">
+      Paraphrased from Mary Ellen Rudin's review of
+      <cite title="Counterexamples in Topology">Counterexamples in Topology</cite>
+    </footer>
+  </blockquote>
+  <hr>
+  <h3>Contributing</h3>
+  <p>
+    π-Base's data and software are open-sourced on <a href="https://github.com/pi-base/">GitHub</a>.
+    We rely on <a href="https://github.com/pi-base/data/graphs/contributors">volunteers like yourself</a>
+    to <a href={contributingUrl}>contribute</a> new spaces, properties, and theorems.
+  </p>
+  <h3>About Us</h3>
+  <p>
+    The π-Base was founded in 2014 by its lead maintainer
+    <a href="https://github.com/jamesdabbs">James Dabbs</a>.
+    π-Base's lead mathematical editor and contributing software
+    developer <a href="https://clontz.org">Steven Clontz</a>
+    joined the project in 2017.
+  </p>
+  <h3>Special Acknowledgements</h3>
+  <p>
+    Many people have contributed to this project,
+    but a few individuals and organizations deserve particular recognition:
+  </p>
+  <ul>
+    <li>
+      Steen and Seebach for writing the inspiration for this project,
+      <a
+        href="https://en.wikipedia.org/wiki/Counterexamples_in_Topology">
+        <cite>Counterexamples in Topology</cite></a>.
+    </li>
+    <li>
+      <a href="http://www.montevallo.edu/staff-bio/scott-varagona/">Scott Varagona</a>
+      for his heroic work serializing <cite>Counterexamples</cite> into the first
+      version of the π-Base.
+    </li>
+    <li>
+      Steven and James' graduate advisor,
+      <a href="http://www.auburn.edu/~gruengf/">Gary Gruenhage</a>,
+      for all his support and guidance.
+    </li>
+    <li>
+      <a href="http://austinmohr.com/home/">Austin Mohr</a>
+      for his work and feedback using the π-Base as a pedagogical tool.
+    </li>
+    <li>
+      Funding from the <a href="https://www.southalabama.edu/">University of South Alabama</a>
+      Faculty Development Council (2017-2018).
+    </li>
+  </ul>
+</main>
