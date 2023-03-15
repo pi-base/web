@@ -14,17 +14,23 @@
 <table class="table">
   <thead>
     <tr>
-      <td />
+      <th>Id</th>
+      <th>Name</th>
       {#each properties as property (property.id)}
-        <td>
+        <th>
           <Link.Property {property} />
-        </td>
+        </th>
       {/each}
     </tr>
   </thead>
   <tbody>
     {#each spaces as space (space.id)}
       <tr>
+        <td>
+          <Link.Space {space}>
+            {space.id}
+          </Link.Space>
+        </td>
         <td>
           <Link.Space {space} />
         </td>

@@ -9,13 +9,19 @@
   export let results: Space[]
 </script>
 
-Spaces
-{#if text}matching <code>{text}</code>{/if}
-{#if text && formula}and{/if}
-{#if formula}
-  satisfying
-  <Formula value={formula} />
-{/if}
+<p>
+  {#if text || formula}
+    Spaces
+    {#if text}matching <code>{text}</code>{/if}
+    {#if text && formula}and{/if}
+    {#if formula}
+      satisfying
+      <Formula value={formula} />
+    {/if}
+  {:else}
+    All spaces
+  {/if}
+</p>
 
 <Table
   spaces={results}

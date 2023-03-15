@@ -48,13 +48,13 @@
         raw={rawFormula}
         suggest={$suggest}
         {formula} />
+      <div class="mt-3">
+        <Examples select={selectExample} />
+      </div>
     </div>
   </div>
   <div class="col-8">
-    {#if $text || $formula}
-      <Results text={$text} formula={$formula} />
-    {:else}
-      <Examples select={selectExample} />
-    {/if}
+    <Results text={$text} formula={$formula} />
   </div>
 </div>
+
