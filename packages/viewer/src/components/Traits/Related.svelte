@@ -38,9 +38,9 @@
       type="button"
       on:click={toggleDeduced}>
       {#if showDeduced}
-        Showing <Icons.Robot/>
+        Hide <Icons.Robot/>
       {:else}
-        Hiding <Icons.Robot/>
+        Show <Icons.Robot/>
       {/if}
     </button>
   </div>
