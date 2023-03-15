@@ -34,18 +34,18 @@
     <Typeset body={space.description} />
   </section>
 
-  <Tabs.Tabs initial="theorems">
+  <Tabs.Tabs initial="properties">
     <Tabs.Nav>
-      <Tabs.Link to="theorems">Theorems</Tabs.Link>
       <Tabs.Link to="properties">Properties</Tabs.Link>
+      <Tabs.Link to="theorems">Theorems</Tabs.Link>
       <Tabs.Link to="references">References</Tabs.Link>
     </Tabs.Nav>
 
-    <Tabs.Tab path="theorems">
-      <Counterexamples {space} />
-    </Tabs.Tab>
     <Tabs.Tab path="properties">
       <Properties {space} />
+    </Tabs.Tab>
+    <Tabs.Tab path="theorems">
+      <Counterexamples {space} />
     </Tabs.Tab>
     <Tabs.Tab path="references">
       <References references={space.refs} />
