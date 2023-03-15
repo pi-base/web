@@ -10,6 +10,7 @@
   } from '../Shared'
   import context from '../../context'
   import Proof from './Proof.svelte'
+  import { Robot } from '../Shared/Icons'
 
   export let spaceId: string
   export let propertyId: string
@@ -36,6 +37,9 @@
   <Title title={`${space.name}: ${property.name}`} />
 
   <h1>
+    {#if proof}
+      <Robot/>
+    {/if}
     <Link.Space {space} />
     is
     {trait.value ? '' : 'not'}

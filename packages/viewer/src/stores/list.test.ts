@@ -9,6 +9,7 @@ const items: Item[] = [
   { name: 'Twelve', value: 12 },
   { name: 'One', value: 1 },
   { name: 'Three', value: 3 },
+  { name: 'Eight', value: 8 },
 ]
 
 let store: Store<{ name: string; value: number }>
@@ -34,10 +35,10 @@ it('has the expected values', () => {
 
 it('can sort', () => {
   store.sort('name')()
-  expect(values()).toEqual([1, 3, 12, 2])
+  expect(values()).toEqual([8, 1, 3, 12, 2])
 
   store.sort('value')()
-  expect(values()).toEqual([1, 2, 3, 12])
+  expect(values()).toEqual([1, 2, 3, 8, 12])
 })
 
 it('can filter', () => {

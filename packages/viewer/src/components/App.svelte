@@ -33,3 +33,9 @@
   <Status />
   <Routes />
 </Router>
+
+<style global>
+  svg {
+    fill:currentColor
+  }
+</style>
