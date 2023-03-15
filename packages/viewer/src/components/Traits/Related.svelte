@@ -37,7 +37,11 @@
       class="btn btn-outline-secondary {showDeduced ? 'active' : ''}"
       type="button"
       on:click={toggleDeduced}>
-      Deduced
+      {#if showDeduced}
+        Showing <Icons.Robot/>
+      {:else}
+        Hiding <Icons.Robot/>
+      {/if}
     </button>
   </div>
 </div>
@@ -47,7 +51,7 @@
     <tr>
       <th>{label}</th>
       <th>Value</th>
-      <th>Deduced</th>
+      <th>Source</th>
     </tr>
   </thead>
   <tbody>
@@ -57,14 +61,14 @@
           <slot {space} {property} />
         </td>
         <td>
-          <Link.Trait {space} {property}>
-            <Value value={trait.value} />
-          </Link.Trait>
+            <Link.Trait {space} {property}>
+              <Value value={trait.value} />
+            </Link.Trait>
         </td>
         <td>
-          {#if !trait.asserted}
-            <Value value={true} icon="robot" />
-          {/if}
+          <Link.Trait {space} {property}>
+            <Value value={trait.asserted} icon="user" />
+          </Link.Trait>
         </td>
       </tr>
     {/each}

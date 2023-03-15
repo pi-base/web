@@ -1,18 +1,22 @@
 <script lang="ts">
   export let value: boolean | undefined
-  export let icon: "check" | "robot" = "check"
+  export let icon: "check" | "user" = "check"
 
-  import { Check, Question, X, Robot } from '../Shared/Icons'
+  import { Check, Question, X, Robot, User } from '../Shared/Icons'
 </script>
 
 {#if value}
-  {#if icon === "robot"}
-    <Robot />
+  {#if icon === "user"}
+    <User />
   {:else}
     <Check />
   {/if}
-{:else if value === undefined}
+{:else if value === false}
+  {#if icon === "user"}
+    <Robot />
+  {:else}
+    <X />
+  {/if}
+{:else}<!-- value === undefined -->
   <Question />
-{:else}
-  <X />
 {/if}
