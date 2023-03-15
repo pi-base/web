@@ -9,7 +9,7 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>When</th>
+      <th>If</th>
       <th>Then</th>
     </tr>
   </thead>
