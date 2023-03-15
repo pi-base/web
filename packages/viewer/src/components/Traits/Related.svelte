@@ -49,6 +49,7 @@
 <table class="table">
   <thead>
     <tr>
+      <th>Id</th>
       <th>{label}</th>
       <th>Value</th>
       <th>Source</th>
@@ -57,6 +58,11 @@
   <tbody>
     {#each filtered as [space, property, trait] ([space.id, property.id])}
       <tr>
+        <td>
+          <Link.Trait {space} {property}>
+            {property.id}
+          </Link.Trait>
+        </td>
         <td>
           <slot {space} {property} />
         </td>

@@ -9,7 +9,7 @@
   export let traits: [Property, Trait][]
 </script>
 
-Automatically deduced from the following
+Automatically deduced from the following:
 <div class="row">
   <div class="col">
     <h5>Properties</h5>
