@@ -10,6 +10,4 @@
   }
 </script>
 
-<Related label="Space" {related} let:space>
-  <Link.Space {space} />
-</Related>
+<Related {related} show="space"/>

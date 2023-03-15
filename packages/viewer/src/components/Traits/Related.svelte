@@ -5,7 +5,7 @@
   import context from '../../context'
   import type { Property, Space, Trait, Traits } from '../../models'
 
-  export let label: string
+  export let show: "space"|"property"
   export let related: (traits: Traits) => [Space, Property, Trait][]
 
   const { traits } = context()
@@ -50,7 +50,7 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>{label}</th>
+      <th>{#if show==="space"}Space{:else}Property{/if}</th>
       <th>Value</th>
       <th>Source</th>
     </tr>
@@ -58,14 +58,29 @@
   <tbody>
     {#each filtered as [space, property, trait] ([space.id, property.id])}
       <tr>
-        <td>
-          <Link.Trait {space} {property}>
-            {property.id}
-          </Link.Trait>
-        </td>
-        <td>
-          <slot {space} {property} />
-        </td>
+        {#if show === 'space'}
+          <td>
+            <Link.Trait {space} {property}>
+              {trait.space}
+            </Link.Trait>
+          </td>
+          <td>
+            <Link.Trait {space} {property}>
+              {space.name}
+            </Link.Trait>
+          </td>
+        {:else}
+          <td>
+            <Link.Trait {space} {property}>
+              {trait.property}
+            </Link.Trait>
+          </td>
+          <td>
+            <Link.Trait {space} {property}>
+              {property.name}
+            </Link.Trait>
+          </td>
+        {/if}
         <td>
             <Link.Trait {space} {property}>
               <Value value={trait.value} />
