@@ -9,7 +9,7 @@
   export let results: Space[]
 </script>
 
-Spaces
+{results.length} spaces
 {#if text}matching <code>{text}</code>{/if}
 {#if text && formula}and{/if}
 {#if formula}
@@ -18,5 +18,5 @@ Spaces
 {/if}
 
 <Table
-  spaces={results}
+  spaces={results.sort((a,b) => a.id-b.id)}
   properties={formula ? [...F.properties(formula)] : []} />
