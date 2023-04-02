@@ -10,6 +10,7 @@
   import Nav from './Nav.svelte'
   import Routes from './Routes.svelte'
   import Status from './Status.svelte'
+  import Footer from './Footer.svelte'
 
   export let showDev: boolean
   export let errorHandler: Errors.Handler
@@ -32,6 +33,7 @@
   <Nav />
   <Status />
   <Routes />
+  <Footer />
 </Router>
 
 <style global>
