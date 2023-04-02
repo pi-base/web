@@ -51,8 +51,8 @@
   <p>
     The π-Base was founded in 2014 by its lead maintainer
     <a href="https://github.com/jamesdabbs">James Dabbs</a>.
-    π-Base's lead mathematical editor and contributing software
-    developer <a href="https://clontz.org">Steven Clontz</a>
+    π-Base's lead mathematical editor and contributing research software
+    engineer <a href="https://clontz.org">Steven Clontz</a>
     joined the project in 2017.
   </p>
   <h3>Special Acknowledgements</h3>
