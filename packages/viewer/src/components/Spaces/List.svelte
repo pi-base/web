@@ -6,8 +6,6 @@
 
   import { Filter, Link, Title, Typeset } from '../Shared'
 
-  export let hideFilter = false;
-
   const index = list(
     derived(context().spaces, (ss) => ss.all),
     {
@@ -19,9 +17,7 @@
 
 <Title title="Spaces" />
 
-{#if !hideFilter}
-  <Filter filter={index.filter} />
-{/if}
+<Filter filter={index.filter} />
 
 <table class="table">
   <thead>

@@ -59,7 +59,4 @@
       <Examples select={selectExample} />
     {/if}
   </div>
-  {#if !$text && !$formula}
-    <List hideFilter />
-  {/if}
 </div>

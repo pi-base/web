@@ -16,6 +16,7 @@
     <Link brand to="/">π-Base</Link>
 
     <div class="navbar-nav mr-auto">
+      <Link to="/explore">Explore</Link>
       <Link to="/spaces">Spaces</Link>
       <Link to="/properties">Properties</Link>
       <Link to="/theorems">Theorems</Link>
