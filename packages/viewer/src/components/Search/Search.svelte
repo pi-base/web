@@ -6,6 +6,8 @@
   import Examples from './Examples.svelte'
   import FormulaInput from '../Shared/Formula/Input'
   import Results from './Results.svelte'
+  import List from '../Spaces/List.svelte'
+  import Age from '../Shared/Age.svelte'
 
   const text = writable('')
   const rawFormula = writable('')
@@ -57,4 +59,7 @@
       <Examples select={selectExample} />
     {/if}
   </div>
+  {#if !$text && !$formula}
+    <List hideFilter />
+  {/if}
 </div>
