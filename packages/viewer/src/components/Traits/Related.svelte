@@ -5,7 +5,7 @@
   import context from '../../context'
   import type { Property, Space, Trait, Traits } from '../../models'
 
-  export let label: string
+  export let mode: "spaces"|"properties"
   export let related: (traits: Traits) => [Space, Property, Trait][]
 
   const { traits } = context()
@@ -50,7 +50,7 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>{label}</th>
+      <th>{#if mode="spaces"}Space{:else}Property{/if}</th>
       <th>Value</th>
       <th>Source</th>
     </tr>
@@ -60,11 +60,13 @@
       <tr>
         <td>
           <Link.Trait {space} {property}>
-            {property.id}
+            {#if mode="spaces"}{space.id}{:else}{property.id}{/if}
           </Link.Trait>
         </td>
         <td>
-          <slot {space} {property} />
+          <Link.Trait {space} {property}>
+            {#if mode="spaces"}{space.name}{:else}{property.name}{/if}
+          </Link.Trait>
         </td>
         <td>
             <Link.Trait {space} {property}>
