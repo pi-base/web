@@ -50,7 +50,7 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>{#if mode="spaces"}Space{:else}Property{/if}</th>
+      <th>{#if mode==="spaces"}Space{:else}Property{/if}</th>
       <th>Value</th>
       <th>Source</th>
     </tr>
@@ -60,12 +60,12 @@
       <tr>
         <td>
           <Link.Trait {space} {property}>
-            {#if mode="spaces"}{space.id}{:else}{property.id}{/if}
+            {#if mode==="spaces"}{space.id}{:else}{property.id}{/if}
           </Link.Trait>
         </td>
         <td>
           <Link.Trait {space} {property}>
-            {#if mode="spaces"}{space.name}{:else}{property.name}{/if}
+            {#if mode==="spaces"}{space.name}{:else}{property.name}{/if}
           </Link.Trait>
         </td>
         <td>
