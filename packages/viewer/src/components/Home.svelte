@@ -55,6 +55,21 @@
     engineer <a href="https://clontz.org">Steven Clontz</a>
     joined the project in 2017.
   </p>
+  <h3>Other Mathematical Databases</h3>
+  <p>
+    Integer sequences: <a href="https://oeis.org/">OEIS</a> |
+    L-functions and modular forms: <a href="https://www.lmfdb.org/citation">LMFDB</a> |
+    Rings and modules: <a href="https://ringtheory.herokuapp.com/">DaRT</a> |
+    Graphs: <a href="https://houseofgraphs.org/">HoG</a>
+  </p>
+  <p>
+    And many more:
+    <a href="https://mathdb.mathhub.info/">Catalogue of Mathematical Datasets</a>
+  </p>
+  <p>
+    The π-Base software was designed to support any category of objects/properties/theorems.
+    If you're interested in adapting π-Base for use in your field, reach out to us on GitHub.
+  </p>
   <h3>Special Acknowledgements</h3>
   <p>
     Many people have contributed to this project,
