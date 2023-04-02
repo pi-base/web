@@ -79,7 +79,9 @@
     </li>
     <li>
       <a href="http://austinmohr.com/home/">Austin Mohr</a>
-      for his work and feedback using the π-Base as a pedagogical tool.
+      for his work and feedback using the π-Base as a pedagogical tool
+      and promoting us on
+      <a href="https://math.stackexchange.com">Math.StackExchange</a>.
     </li>
     <li>
       Funding from the <a href="https://www.southalabama.edu/">University of South Alabama</a>
