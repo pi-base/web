@@ -30,10 +30,10 @@
 </script>
 
 {#if progress}
-  <section class="status">
-    <div class="progress">
+  <section class="status" style="height: 3px;">
+    <div class="progress" style="height: 3px;">
       <div
-        class="progress-bar"
+        class="progress-bar bg-info"
         role="progressbar"
         style="width: {progress}%"
         aria-valuenow={checked}
