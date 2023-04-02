@@ -22,7 +22,7 @@
   <thead>
     <tr>
       <th on:click={index.sort('id')}>Id</th>
-      <th>When</th>
+      <th>If</th>
       <th>Then</th>
       <th>Description</th>
     </tr>
