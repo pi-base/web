@@ -11,21 +11,21 @@
     <div class="ml-3 mt-4">
       <p>
         ➜ Search spaces by name/description:
-        <a href="/spaces?text=compactification" class="text-info">compactifications</a>
+        <Link to="/spaces?text=compactification" class="text-info">compactifications</Link>
       </p>
       <p>
         ➜ Search spaces by properties:
-        <a 
-          href="/spaces?formula=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable" 
+        <Link
+          to="/spaces?formula=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable" 
           class="text-info"
-          >non-metric continua</a>
+          >non-metric continua</Link>
       </p>
       <p class="mb-0">
         ➜ Find counterexamples:
-        <a 
-          href="/theorems/T000057" 
+        <Link 
+          to="/theorems/T000057" 
           class="text-info"
-          >first countable spaces need not be pseudometrizable</a>
+          >first countable spaces need not be locally pseudometrizable</Link>
       </p>
     </div>
   </div>
