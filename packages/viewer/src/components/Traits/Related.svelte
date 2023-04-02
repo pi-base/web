@@ -11,7 +11,7 @@
   const { traits } = context()
 
   let filter = ''
-  let showDeduced = false
+  let showDeduced = true
 
   function toggleDeduced() {
     showDeduced = !showDeduced
@@ -34,7 +34,7 @@
   <input placeholder="Filter" class="form-control" bind:value={filter} />
   <div class="input-group-append">
     <button
-      class="btn btn-outline-secondary {showDeduced ? 'active' : ''}"
+      class="btn btn-outline-secondary {!showDeduced ? 'active' : ''}"
       type="button"
       on:click={toggleDeduced}>
       {#if showDeduced}
