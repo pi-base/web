@@ -44,7 +44,8 @@ export default {
 	},
 	plugins: [
 		replace({
-			__buildVersion__: process.env.CIRCLE_SHA1 || 'dev',
+			__buildVersion__: process.env.CF_PAGES_COMMIT_SHA || 'unknown',
+			__buildBranch__: process.env.CF_PAGES_BRANCH || 'main',
 		}),
 		css({ output: 'vendor.css' }),
 		copy({

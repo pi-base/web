@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser'
-import { buildVersion } from './constants'
+import { build } from './constants'
 
 type Meta = Record<string, unknown>
 
@@ -12,7 +12,7 @@ export function log(): Handler {
 }
 
 export function sentry(dsn: string): Handler {
-  const release = `pi-base@${buildVersion}`
+  const release = `pi-base@${build.version}`
 
   Sentry.init({ dsn, release })
 
