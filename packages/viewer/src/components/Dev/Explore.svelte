@@ -11,6 +11,7 @@
   }
 </script>
 
+<h4>Entities</h4>
 <table class="table">
   <tbody>
     <tr>

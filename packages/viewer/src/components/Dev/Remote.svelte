@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { buildVersion } from '../../constants'
+  import { build } from '../../constants'
   import context from '../../context'
   import { state } from '../../stores/sync'
 
@@ -11,18 +11,36 @@
   $: currentSha = $status?.sha
 </script>
 
+<h4>Viewer</h4>
 <table class="table">
   <tr>
-    <th>Build</th>
-    <td><code>{buildVersion}</code></td>
+    <th>Branch</th>
+    <td>
+      <a href={`https://github.com/pi-base/web/tree/${build.branch}`}>
+        {build.branch}
+      </a>
+    </td>
   </tr>
+  <tr>
+    <th>SHA</th>
+    <td>
+      <a href={`https://github.com/pi-base/web/tree/${build.version}`}>
+        {build.version}
+      </a>
+    </td>
+  </tr>
+</table>
+
+<h4>Data</h4>
+<table class="table">
   <tr>
     <th>Host</th>
     <td>
       <input
         class="form-control"
         value={$source.host}
-        on:blur={(e) => source.setHost(e.currentTarget.value)} />
+        on:blur={e => source.setHost(e.currentTarget.value)}
+      />
     </td>
   </tr>
   <tr>
@@ -31,7 +49,8 @@
       <input
         class="form-control"
         value={$source.branch}
-        on:blur={(e) => source.checkout(e.currentTarget.value)} />
+        on:blur={e => source.checkout(e.currentTarget.value)}
+      />
     </td>
   </tr>
   <tr>
