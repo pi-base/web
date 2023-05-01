@@ -1,6 +1,9 @@
 {
   "name": "pi-base",
   "private": true,
+  "scripts": {
+    "build": "./bin/build"
+  },
   "devDependencies": {
     "@types/node": "^18.11.9",
     "nodemon": "^2.0.20",
