@@ -1,39 +1,34 @@
 import { expect, it } from 'vitest'
-import { Node } from 'unist'
-import { visit } from 'unist-util-visit'
-import Parser from '../src/Parser'
+import { parser } from '../src/Parser'
 
-function parse(input: string) {
-  const parser = Parser()
-  return parser.runSync(parser.parse(input))
+async function parse(input: string) {
+  const file = await parser().process(input)
+  return String(file)
 }
 
-it.skip('parses a citation', () => {
-  const parsed = parse('{{doi:123}}')
-
-  expect(deposition(parsed)).toEqual({
-    type: 'root',
-    children: [
-      {
-        type: 'paragraph',
-        children: [
-          {
-            type: 'citation',
-            citation: 'doi:123',
-            data: {
-              hName: 'citation',
-              hProperties: {
-                citation: 'doi:123',
-              },
-            },
-          },
-        ],
-      },
-    ],
-  })
+it('parses a citation', async () => {
+  expect(
+    await parse('{{doi:123}}')
+  ).toEqual('<external-link kind="doi" id="123"></external-link>')
 })
 
-it.skip('parses a complex example', () => {
+it('parses an internal link', async () => {
+  expect(
+    await parse('{S123}')
+  ).toEqual(
+    '<internal-link kind="space" id="123"></internal-link>'
+  )
+})
+
+it('parses an internal link', async () => {
+  expect(
+    await parse('{S123}')
+  ).toEqual(
+    '<internal-link kind="space" id="123"></internal-link>'
+  )
+})
+
+it('parses a complex example', async () => {
   const example = `Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
 
 This is a list of links
@@ -47,10 +42,5 @@ This is a list of links
 * {{mathse:123}}
 * {{mo:123}}`
 
-  expect(parse(example)).toMatchSnapshot()
+  expect(await parse(example)).toMatchSnapshot()
 })
-
-function deposition(tree: Node) {
-  visit(tree, (node) => delete node['position'])
-  return tree
-}

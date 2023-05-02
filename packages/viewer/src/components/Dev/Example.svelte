@@ -42,7 +42,7 @@ This is a list of links
     <tr>
       <th>External Links</th>
       <td>
-        <code>{'{{<provider>:<id>}'}</code>
+        <code>{'{{<provider>:<id>}}'}</code>
         - e.g.
         <code>{'{{doi:123}}'}</code>.
 

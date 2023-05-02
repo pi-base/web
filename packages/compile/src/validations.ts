@@ -228,7 +228,7 @@ export function trait(input: File) {
       ...rest
     } = loadFront(input.contents)
 
-    const trait = schemas.trait(z.string()).parse({
+    const trait: Trait<string> = schemas.trait(z.string()).parse({
       uid: String(uid).trim(),
       space: String(space).trim(),
       property: String(property).trim(),

@@ -1,18 +1,20 @@
 <script lang="ts">
-  import context from '../../context'
+  import { onMount } from 'svelte'
+  import { render as renderer } from './render-utils'
 
   export let body: string
-  export let truncated = false
 
-  const { typeset } = context()
+  let container: HTMLElement
 
-  let html = ''
-  $: setTimeout(
-    () => $typeset(body, truncated).then((result) => (html = result)),
-    0,
-  )
+  async function render(text: string) {
+    if (container) {
+      container.innerHTML = await renderer(text)
+    }
+  }
+
+  onMount(() => render(body))
+
+  $: render(body)
 </script>
 
-{#if html}
-  {@html html}
-{:else if body}{body}{/if}
+<span bind:this={container} />
