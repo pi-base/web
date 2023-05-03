@@ -5,7 +5,9 @@
   },
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
   "postAttachCommand": {
-    "compile": "pnpm run --filter compile dev"
+    "compile": "pnpm run --filter compile dev",
+    "viewer:build": "pnpm run --filter viewer dev",
+    "viewer:serve": "pnpm run --filter viewer start --dev --host"
   },
   "forwardPorts": [
     8080
@@ -14,7 +16,7 @@
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "doc/codespaces/welcome.md"
+        "README.md"
       ],
       "repositories": {
         "pi-base/data": {

@@ -13,6 +13,7 @@ import copy from 'rollup-plugin-copy';
 import { spawn } from 'node:child_process';
 
 const production = !process.env.ROLLUP_WATCH;
+const codespaces = process.env.CODESPACES === 'true';
 
 function serve() {
 	let server;
@@ -23,7 +24,10 @@ function serve() {
 
 	return {
 		writeBundle() {
-			if (server) return;
+			// In a codespace, we run the various watcher processes in the
+			// background
+			if (server || codespaces) { return };
+
 			server = spawn('npm', ['run', 'start', '--', '--dev'], {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
