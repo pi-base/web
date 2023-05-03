@@ -3,7 +3,7 @@
 Shortly after your codespace starts, you should see three running background
 processes –
 
-- `compile` – watches `/workspaces/data` and serves its contents at
+- `compile` – watches `/workspaces/web/data` and serves its contents at
   `localhost:3141/refs/heads/(:branch)`, consistent with the production S3 API.
 - `viewer:build` – watches `/workspaces/web/packages/viewer`, and rebuilds the  
   viewer on change.
