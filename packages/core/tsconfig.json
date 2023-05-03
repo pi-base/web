@@ -3,7 +3,7 @@
     "declaration": true,
     "declarationDir": "dist/types",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "Node",
     "noImplicitAny": true,
     "outDir": "dist/esm",
     "preserveConstEnums": true,
