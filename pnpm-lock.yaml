@@ -47,8 +47,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1
       zod:
-        specifier: ^3.21.3
-        version: 3.21.3
+        specifier: 3.20.1
+        version: 3.20.1
     devDependencies:
       '@types/cors':
         specifier: ^2.8.12
@@ -5042,10 +5042,6 @@ packages:
 
   /zod@3.20.1:
     resolution: {integrity: sha512-At2YngeqktnHk6L9vf6Sdt7IGcRFziasf7JyQfKwxMd2rOWIUvURP6oLUTW6N0WKQ5bcIdI+IZ3+uGZCCcQcQg==}
-    dev: false
-
-  /zod@3.21.3:
-    resolution: {integrity: sha512-tz1QgJomEhMTQhOBvQxnnrTo8q77EjpGLlaWicCoEEkMzScuONzDkJKIHr83CS89fGY24iGCStj2ZOCHpPOEyA==}
     dev: false
 
   /zwitch@2.0.4:
