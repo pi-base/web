@@ -41,10 +41,8 @@ jobs:
         working-directory: packages/core
         run: pnpm build
 
-      - name: Test core
-        working-directory: packages/core
-        run: pnpm test
+      - name: Build rest
+        run: pnpm --filter compile --filter viewer run build
 
-      - name: Build viewer
-        working-directory: packages/viewer
-        run: pnpm build
+      - name: Run all tests
+        run: pnpm --recursive run test
