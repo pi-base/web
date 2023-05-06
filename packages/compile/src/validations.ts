@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import yaml from 'yaml-front-matter'
 
-import { Bundle, Property, formula as Formula, schemas } from '@pi-base/core'
+import { Bundle, Property, Trait, formula as Formula, schemas } from '@pi-base/core'
 
 import { File } from './fs.js'
 
@@ -228,7 +228,7 @@ export function trait(input: File) {
       ...rest
     } = loadFront(input.contents)
 
-    const trait: Trait<string> = schemas.trait(z.string()).parse({
+    const trait = schemas.trait<string>(z.string()).parse({
       uid: String(uid).trim(),
       space: String(space).trim(),
       property: String(property).trim(),

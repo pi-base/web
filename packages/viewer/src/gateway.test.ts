@@ -1,12 +1,13 @@
 import { expect, it, vi } from 'vitest'
 import { bundle } from '@pi-base/core'
+
 import * as debug from './debug'
 
 import { sync } from './gateway'
 
 const trace = vi.spyOn(debug, 'trace')
 
-it.skip('can fetch successfully', async () => {
+it.todo('can fetch successfully', async () => {
   const remote = {
     bundle: {
       spaces: new Map(),
@@ -36,7 +37,7 @@ it.skip('can fetch successfully', async () => {
   ])
 })
 
-it.skip('notifies if the etag matches', async () => {
+it.todo('notifies if the etag matches', async () => {
   const current = {
     spaces: [],
     properties: [],

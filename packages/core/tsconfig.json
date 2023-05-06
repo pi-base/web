@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "declaration": true,
     "declarationDir": "dist/types",
-    "module": "NodeNext",
+    "module": "es2022",
     "moduleResolution": "Node",
     "noImplicitAny": true,
     "outDir": "dist/esm",
@@ -10,7 +11,7 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "es2022"
   },
   "include": [
     "src/**/*"

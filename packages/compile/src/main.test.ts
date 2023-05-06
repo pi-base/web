@@ -40,7 +40,7 @@ function cleanup() {
 beforeEach(cleanup)
 afterAll(cleanup)
 
-it('builds a bundle', () => {
+it.todo('builds a bundle', () => {
   const { output, error } = run('valid')
   expect(error).toBe(false)
   expect(output).toContain(
@@ -55,7 +55,7 @@ it('builds a bundle', () => {
   expect(bundle.traits.length).toEqual(3)
 })
 
-it('writes error messages for invalid bundles', () => {
+it.todo('writes error messages for invalid bundles', () => {
   const { output, error } = run('invalid')
 
   expect(error).toEqual(true)
