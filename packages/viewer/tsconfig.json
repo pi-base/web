@@ -2,7 +2,8 @@
   "extends": "@tsconfig/svelte/tsconfig.json",
   "include": [
     "src/**/*",
-    "cypress/**/*"
+    "cypress/**/*",
+    "rollup.config.mts"
   ],
   "exclude": [
     "rollup.config.js",
