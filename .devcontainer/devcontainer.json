@@ -5,16 +5,17 @@
   },
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
   "postAttachCommand": {
-    "compile": "pnpm run --filter compile dev"
+    "compile": "pnpm run --filter compile dev",
+    "viewer": "pnpm run --filter viewer dev --host"
   },
   "forwardPorts": [
-    8080
+    5173
   ],
   "postCreateCommand": "git clone https://github.com/pi-base/data.git",
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "doc/codespaces/welcome.md"
+        "README.md"
       ],
       "repositories": {
         "pi-base/data": {
@@ -25,7 +26,9 @@
       }
     },
     "vscode": {
-      "extensions": [],
+      "extensions": [
+        "svelte.svelte-vscode"
+      ],
       "settings": {}
     }
   }

@@ -5,7 +5,6 @@
     "cypress/**/*"
   ],
   "exclude": [
-    "rollup.config.js",
     "node_modules/*",
     "__sapper__/*",
     "public/*"
@@ -16,11 +15,13 @@
     "strict": true,
     "types": [
       "node",
-      "cypress"
+      "cypress",
+      "vite/client"
     ],
     "typeRoots": [
       "src/types",
       "node_modules/@types"
     ],
+    "module": "es2022"
   }
 }

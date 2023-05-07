@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Link } from 'svelte-routing'
+  import Cite from './Shared/Cite.svelte'
 
   import { contributingUrl } from '../constants'
 </script>
@@ -104,3 +105,4 @@
     </li>
   </ul>
 </main>
+<Cite/>

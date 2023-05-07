@@ -8,6 +8,7 @@
   import Results from './Results.svelte'
   import List from '../Spaces/List.svelte'
   import Age from '../Shared/Age.svelte'
+  import Cite from '../Shared/Cite.svelte'
 
   const text = writable('')
   const rawFormula = writable('')
@@ -30,6 +31,13 @@
 
   urlSearchParam('text', text)
   urlSearchParam('formula', rawFormula)
+
+  let title:string
+  $: if ($rawFormula.length > 0) {
+    title = `π-Base, Search for \`${$rawFormula}\``
+  } else {
+    title = "π-Base, Explore"
+  }
 </script>
 
 <div class="row">
@@ -51,6 +59,7 @@
         suggest={$suggest}
         {formula} />
     </div>
+    <Cite {title}/>
   </div>
   <div class="col-8">
     {#if $text || $formula}
