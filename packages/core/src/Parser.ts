@@ -19,6 +19,13 @@ export type Options = {
   truncate?: boolean
 }
 
+function trace() {
+  return (tree: Node) => {
+    console.log(tree)
+    return tree
+  }
+}
+
 /**
  * Full parser chain translating Markdown to HTML, including rendering math and
  * custom π-base syntax extensions.
