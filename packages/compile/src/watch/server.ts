@@ -13,7 +13,10 @@ type Logger = (message: string, ...args: any[]) => void
 
 const { cyan } = chalk
 
-export function boot({ log, port }: { log: Logger; port: number }): { app: Express, setState: (updates: Partial<State>) => void } {
+export function boot({ log, port }: { log: Logger; port: number }): {
+  app: Express
+  setState: (updates: Partial<State>) => void
+} {
   let state: State = { bundle: undefined, errors: undefined }
 
   function setState(updates: Partial<State>) {
@@ -36,7 +39,11 @@ export function boot({ log, port }: { log: Logger; port: number }): { app: Expre
   function view(_: Request, res: Response) {
     // n.b. we're not currently verifying params.branch matches
     res.setHeader('ETag', state.bundle ? state.bundle.version.sha : 'unknown')
-    res.json(state.bundle ? bundle.serialize(state.bundle) : { message: "The bundle is not available", errors: state.errors })
+    res.json(
+      state.bundle
+        ? bundle.serialize(state.bundle)
+        : { message: 'The bundle is not available', errors: state.errors },
+    )
   }
 
   app.get('/', view)

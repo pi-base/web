@@ -9,9 +9,7 @@ let bundle: Bundle
 let theorems: ImplicationIndex
 
 beforeAll(async () => {
-  const serialized = await fs.readFile(
-    './test/fixtures/bundle.min.json',
-  )
+  const serialized = await fs.readFile('./test/fixtures/bundle.min.json')
   bundle = deserialize(JSON.parse(serialized.toString()))
   theorems = new ImplicationIndex(
     [...bundle.theorems.values()].map(({ uid, when, then }) => ({

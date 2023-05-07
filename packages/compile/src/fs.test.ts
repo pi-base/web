@@ -26,7 +26,7 @@ describe('readFiles', () => {
   it('resolves to the file contents', async () => {
     const contents = await readFiles(path.join(__dirname, '**', '*.test.ts'))
 
-    const file = contents.find((file) => file.path == __filename)
+    const file = contents.find(file => file.path == __filename)
     expect(file!.contents).toContain('Zndrsplt')
   })
 

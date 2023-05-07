@@ -25,7 +25,7 @@ export const serializedSchema = z.object({
   spaces: z.array(spaceSchema),
   theorems: z.array(theoremSchema),
   traits: z.array(traitSchema(z.string())),
-  version: z.object({ ref: z.string(), sha: z.string() })
+  version: z.object({ ref: z.string(), sha: z.string() }),
 })
 
 export type Serialized = z.infer<typeof serializedSchema>
@@ -44,9 +44,9 @@ export function deserialize(data: unknown): Bundle {
   const serialized = serializedSchema.parse(data)
 
   return {
-    properties: indexBy(serialized.properties, (p) => p.uid),
-    spaces: indexBy(serialized.spaces, (s) => s.uid),
-    theorems: indexBy(serialized.theorems, (t) => t.uid),
+    properties: indexBy(serialized.properties, p => p.uid),
+    spaces: indexBy(serialized.spaces, s => s.uid),
+    theorems: indexBy(serialized.theorems, t => t.uid),
     traits: indexBy(serialized.traits, traitId),
     version: serialized.version,
   }

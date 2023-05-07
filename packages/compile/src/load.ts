@@ -10,7 +10,7 @@ export function rootDirectories(repo: string) {
 
 export default async function load(
   repo: string,
-  version?: Version
+  version?: Version,
 ): Promise<{
   bundle?: B.Bundle
   errors?: Map<string, string[]>
@@ -20,7 +20,7 @@ export default async function load(
     spaces: await readFiles(`${repo}/spaces/*/README.md`),
     theorems: await readFiles(`${repo}/theorems/*.md`),
     traits: await readFiles(`${repo}/spaces/*/properties/*.md`),
-    version: version || await findVersion(repo),
+    version: version || (await findVersion(repo)),
   })
 }
 
@@ -82,10 +82,7 @@ function checkAll<I, O>(
   return result.value
 }
 
-function format({
-  value,
-  errors,
-}: Validations.Result<B.Bundle>): {
+function format({ value, errors }: Validations.Result<B.Bundle>): {
   bundle?: B.Bundle
   errors?: Map<string, string[]>
 } {

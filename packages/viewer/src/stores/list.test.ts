@@ -16,7 +16,7 @@ let store: Store<{ name: string; value: number }>
 
 beforeEach(() => {
   store = list(
-    readable(items, () => { }),
+    readable(items, () => {}),
     {
       weights: {
         name: 1,

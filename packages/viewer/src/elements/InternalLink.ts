@@ -9,6 +9,8 @@ export class InternalLink extends HTMLElement {
     const id = this.getAttribute('id')
 
     // FIXME – lookup name from global context and correct the href
-    this.attachShadow({ mode: 'open' }).innerHTML = `<a href="http://example.com/${kind}">${kind}${id}</a>`
+    this.attachShadow({
+      mode: 'open',
+    }).innerHTML = `<a href="http://example.com/${kind}">${kind}${id}</a>`
   }
 }

@@ -14,7 +14,7 @@ describe('ImplicationIndex', () => {
 
   describe('withProperty', () => {
     function idsWithProperty(property: string) {
-      return [...theorems.withProperty(property)].map((t) => t.id).sort()
+      return [...theorems.withProperty(property)].map(t => t.id).sort()
     }
 
     it('finds by property name', () => {

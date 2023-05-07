@@ -12,4 +12,4 @@ describe('Loading', () => {
   })
 })
 
-export { }
+export {}

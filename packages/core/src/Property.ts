@@ -6,7 +6,7 @@ export const propertySchema = z.intersection(
     name: z.string(),
     aliases: z.array(z.string()),
   }),
-  recordSchema
+  recordSchema,
 )
 
 export type Property = z.infer<typeof propertySchema>

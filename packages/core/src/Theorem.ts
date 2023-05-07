@@ -6,9 +6,9 @@ export const theoremSchema = z.intersection(
   z.object({
     when: formulaSchema(z.string()),
     then: formulaSchema(z.string()),
-    converse: z.array(z.string()).optional().nullable()
+    converse: z.array(z.string()).optional().nullable(),
   }),
-  recordSchema
+  recordSchema,
 )
 
 export type Theorem = z.infer<typeof theoremSchema>

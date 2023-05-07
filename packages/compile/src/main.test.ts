@@ -44,7 +44,7 @@ it.todo('builds a bundle', () => {
   const { output, error } = run('valid')
   expect(error).toBe(false)
   expect(output).toContain(
-    `::debug::Compiling repo=${repo}/valid to out=${out}`
+    `::debug::Compiling repo=${repo}/valid to out=${out}`,
   )
 
   const bundle = JSON.parse(fs.readFileSync(out).toString())

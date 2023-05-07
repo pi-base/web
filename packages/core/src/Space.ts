@@ -5,9 +5,9 @@ export const spaceSchema = z.intersection(
   z.object({
     name: z.string(),
     aliases: z.array(z.string()),
-    ambiguous_construction: z.boolean().optional()
+    ambiguous_construction: z.boolean().optional(),
   }),
-  recordSchema
+  recordSchema,
 )
 
 export type Space = z.infer<typeof spaceSchema>

@@ -71,7 +71,7 @@ describe('Formula', () => {
   describe('map', () => {
     it('maps over entire atoms', () => {
       const result = F.map(
-        (term) => atom(term.property.slice(0, 2), !term.value),
+        term => atom(term.property.slice(0, 2), !term.value),
         compound,
       )
 
@@ -81,7 +81,7 @@ describe('Formula', () => {
 
   describe('mapProperty', () => {
     it('only maps over properties', () => {
-      const result = F.mapProperty((property) => property.slice(0, 2), compound)
+      const result = F.mapProperty(property => property.slice(0, 2), compound)
 
       expect(render_(result)).toEqual('(co ∧ (co ∨ ¬se) ∧ ¬fi)')
     })
@@ -178,7 +178,7 @@ describe('serialization', () => {
     compound,
   ]
 
-  formulae.forEach((formula) => {
+  formulae.forEach(formula => {
     it(`roundtrips ${render_(formula)}`, () => {
       expect(fromJSON(toJSON(formula))).toEqual(formula)
     })

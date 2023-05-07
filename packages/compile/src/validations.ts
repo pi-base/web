@@ -1,12 +1,23 @@
 import { z } from 'zod'
 import yaml from 'yaml-front-matter'
 
-import { Bundle, Property, Trait, formula as Formula, schemas } from '@pi-base/core'
+import {
+  Bundle,
+  Property,
+  Trait,
+  formula as Formula,
+  schemas,
+} from '@pi-base/core'
 
 import { File } from './fs.js'
 
 // FIXME
-type CheckResult = { kind: 'bundle', bundle: Bundle } | { kind: 'contradiction', contradiction: { theorems: unknown[], properties: unknown[] } }
+type CheckResult =
+  | { kind: 'bundle'; bundle: Bundle }
+  | {
+      kind: 'contradiction'
+      contradiction: { theorems: unknown[]; properties: unknown[] }
+    }
 function check(bundle: Bundle, _: unknown): CheckResult {
   return { kind: 'bundle', bundle }
 }
@@ -37,7 +48,7 @@ export function all<I, O>(
 ): Result<O[]> {
   const out: Result<O[]> = { value: [], errors: [] }
 
-  inputs.forEach((input) => {
+  inputs.forEach(input => {
     const { value, errors } = validator(input)
     if (value && out.value) {
       out.value.push(value)
@@ -69,7 +80,7 @@ function duplicated<T>(values: T[]) {
   const seen = new Set<T>()
   const dupes = new Set<T>()
 
-  values.forEach((value) => {
+  values.forEach(value => {
     if (seen.has(value)) {
       dupes.add(value)
     }
@@ -107,7 +118,7 @@ const paths = {
 }
 
 export function property(input: File): Result<Property> {
-  return validate(input.path, (error) => {
+  return validate(input.path, error => {
     const {
       counterexamples_id,
       uid = '',
@@ -142,7 +153,7 @@ export function property(input: File): Result<Property> {
 }
 
 export function space(input: File) {
-  return validate(input.path, (error) => {
+  return validate(input.path, error => {
     const {
       counterexamples_id,
       uid = '',
@@ -179,7 +190,7 @@ export function space(input: File) {
 }
 
 export function theorem(input: File) {
-  return validate(input.path, (error) => {
+  return validate(input.path, error => {
     const {
       counterexamples_id,
       uid = '',
@@ -216,7 +227,7 @@ export function theorem(input: File) {
 }
 
 export function trait(input: File) {
-  return validate(input.path, (error) => {
+  return validate(input.path, error => {
     const {
       uid = '',
       counterexamples_id,
@@ -253,22 +264,22 @@ export function trait(input: File) {
 }
 
 export function bundle(bundle: Bundle): Result<Bundle> {
-  return validate('', (error) => {
+  return validate('', error => {
     const duplicatePropertyNames = duplicated(
-      Array.from(bundle.properties.values()).map((s) => s.name),
+      Array.from(bundle.properties.values()).map(s => s.name),
     )
     if (duplicatePropertyNames.length > 0) {
       error(`Duplicate property names: ${duplicatePropertyNames}`)
     }
 
     const duplicateSpaceNames = duplicated(
-      Array.from(bundle.spaces.values()).map((s) => s.name),
+      Array.from(bundle.spaces.values()).map(s => s.name),
     )
     if (duplicateSpaceNames.length > 0) {
       error(`Duplicate space names: ${duplicateSpaceNames}`)
     }
 
-    bundle.traits.forEach((trait) => {
+    bundle.traits.forEach(trait => {
       const errorKey = paths.trait(trait)
 
       if (!bundle.properties.has(trait.property)) {
@@ -279,23 +290,23 @@ export function bundle(bundle: Bundle): Result<Bundle> {
       }
     })
 
-    bundle.theorems.forEach((theorem) => {
+    bundle.theorems.forEach(theorem => {
       const key = paths.theorem(theorem.uid)
 
-      Formula.properties(theorem.when).forEach((id) => {
+      Formula.properties(theorem.when).forEach(id => {
         if (!bundle.properties.has(id)) {
           error(`if references unknown property=${id}`, key)
         }
       })
 
-      Formula.properties(theorem.then).forEach((id) => {
+      Formula.properties(theorem.then).forEach(id => {
         if (!bundle.properties.has(id)) {
           error(`then references unknown property=${id}`, key)
         }
       })
 
       if (theorem.converse) {
-        theorem.converse.forEach((id) => {
+        theorem.converse.forEach(id => {
           if (!bundle.theorems.has(id)) {
             error(`converse references unknown theorem=${id}`, key)
           }

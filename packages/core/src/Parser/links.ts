@@ -2,23 +2,18 @@ import type {
   CompileContext,
   Extension as FromMarkdownExtension,
 } from 'mdast-util-from-markdown'
-import type {
-  Code,
-  Construct,
-  Token,
-  Tokenizer,
-} from 'micromark-util-types'
+import type { Code, Construct, Token, Tokenizer } from 'micromark-util-types'
 import type { Plugin, Processor } from 'unified'
 
 /**
  * Extends the Markdown parser, adding support for
  *
- * external links 
- * 
+ * external links
+ *
  *    input: {{doi:123}}
  *    output:
- * 
- *    { 
+ *
+ *    {
  *      type: 'externalLink',
  *      data: {
  *        hName: 'external-link',
@@ -28,13 +23,13 @@ import type { Plugin, Processor } from 'unified'
  *        }
  *      }
  *    }
- * 
+ *
  * internal links
- * 
+ *
  *    input: {S123}
  *    output:
- * 
- *    { 
+ *
+ *    {
  *      type: 'internalLink',
  *      data: {
  *        hName: 'internal-link',
@@ -44,7 +39,7 @@ import type { Plugin, Processor } from 'unified'
  *        }
  *      }
  *    }
- * 
+ *
  *
  * See https://github.com/micromark/micromark#creating-a-micromark-extension
  */
@@ -73,7 +68,7 @@ function prefixKind(code: Code) {
 }
 
 const tokenize: Tokenizer = (effects, ok, nok) => {
-  /* The tokenizer is a state machine that starts in the `start` state, 
+  /* The tokenizer is a state machine that starts in the `start` state,
    * accumulating text and transitioning as described above the other states
    * below.
    */
@@ -183,8 +178,8 @@ function enterExternalLink(this: CompileContext, token: Token) {
       type: 'externalLink',
       data: {
         hName: 'external-link',
-        hProperties: {}
-      }
+        hProperties: {},
+      },
     } as any,
     token,
   )
@@ -224,8 +219,8 @@ function enterInternalLink(this: CompileContext, token: Token) {
         hName: 'internal-link',
         hProperties: {
           kind: (token as any).kind,
-        }
-      }
+        },
+      },
     },
     token,
   )
@@ -276,8 +271,8 @@ export const links: Plugin = function (this: Processor) {
   add('fromMarkdownExtensions', fromMarkdown)
 
   function add(field: string, value: unknown) {
-    const list = data[field] ? data[field] : (data[field] = []);
+    const list = data[field] ? data[field] : (data[field] = [])
 
-    (list as unknown[]).push(value)
+    ;(list as unknown[]).push(value)
   }
 }

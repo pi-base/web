@@ -10,7 +10,7 @@ export const refSchema = z.intersection(
     z.object({ mr: z.number() }),
     z.object({ mathse: z.number() }),
     z.object({ mo: z.number() }),
-  ])
+  ]),
 )
 export type Ref = z.infer<typeof refSchema>
 
