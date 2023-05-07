@@ -1,26 +1,32 @@
 import { expect, it } from 'vitest'
 import { parser } from '../src/Parser'
 
+function link([kind, id]: [unknown, unknown]) {
+  return {
+    href: `${kind}://${id}`,
+    title: `${id}`,
+  }
+}
+
 async function parse(input: string) {
-  const file = await parser().process(input)
+  const file = await parser({
+    link: {
+      internal: link,
+      external: link,
+    },
+  }).process(input)
   return String(file)
 }
 
 it('parses a citation', async () => {
   expect(await parse('{{doi:123}}')).toEqual(
-    '<external-link kind="doi" id="123"></external-link>',
+    '<a href="doi://123" title="123" class="external-link">123</a>',
   )
 })
 
 it('parses an internal link', async () => {
   expect(await parse('{S123}')).toEqual(
-    '<internal-link kind="space" id="123"></internal-link>',
-  )
-})
-
-it('parses an internal link', async () => {
-  expect(await parse('{S123}')).toEqual(
-    '<internal-link kind="space" id="123"></internal-link>',
+    '<a href="S://123" title="123" class="internal-link">123</a>',
   )
 })
 

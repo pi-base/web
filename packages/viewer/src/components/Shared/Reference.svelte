@@ -8,5 +8,5 @@
 </script>
 
 {#if value}
-  <a href={value.href}>{value.label}</a>
+  <a href={value.href}>{value.title}</a>
 {:else}Invalid reference: <code>{JSON.stringify(reference)}</code>{/if}
