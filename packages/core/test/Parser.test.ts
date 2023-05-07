@@ -7,24 +7,20 @@ async function parse(input: string) {
 }
 
 it('parses a citation', async () => {
-  expect(
-    await parse('{{doi:123}}')
-  ).toEqual('<external-link kind="doi" id="123"></external-link>')
-})
-
-it('parses an internal link', async () => {
-  expect(
-    await parse('{S123}')
-  ).toEqual(
-    '<internal-link kind="space" id="123"></internal-link>'
+  expect(await parse('{{doi:123}}')).toEqual(
+    '<external-link kind="doi" id="123"></external-link>',
   )
 })
 
 it('parses an internal link', async () => {
-  expect(
-    await parse('{S123}')
-  ).toEqual(
-    '<internal-link kind="space" id="123"></internal-link>'
+  expect(await parse('{S123}')).toEqual(
+    '<internal-link kind="space" id="123"></internal-link>',
+  )
+})
+
+it('parses an internal link', async () => {
+  expect(await parse('{S123}')).toEqual(
+    '<internal-link kind="space" id="123"></internal-link>',
   )
 })
 

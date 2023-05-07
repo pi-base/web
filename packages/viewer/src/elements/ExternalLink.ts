@@ -13,7 +13,9 @@ export class ExternalLink extends HTMLElement {
     const result = kind && id && format({ kind, id })
     if (result) {
       const { href, label } = result
-      this.attachShadow({ mode: 'open' }).innerHTML = `<a href="${href}">${label}</a>`
+      this.attachShadow({
+        mode: 'open',
+      }).innerHTML = `<a href="${href}">${label}</a>`
     }
   }
 }

@@ -22,17 +22,14 @@ export default function link(linkers: Linkers) {
         // if (!linker) {
         //   return
         // }
-
         // const link = linker(node.properties as Record<string, unknown>)
         // if (!link) {
         //   return
         // } else if (typeof link === 'string') {
         //   node.tagName = 'code'
-
         //   node.children = [{ type: 'text', value: link }]
         // } else {
         //   const { href, label } = link
-
         //   node.tagName = 'a'
         //   node.properties = { href }
         //   node.children = [{ type: 'text', value: label }]

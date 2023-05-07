@@ -13,7 +13,9 @@ import { unnest } from './Parser/unnest.js'
  * Full parser chain translating Markdown to HTML, including rendering math and
  * custom π-base syntax extensions.
  */
-export function parser(link = true): Processor<Node<Data>, Node<Data>, Node<Data>, void> {
+export function parser(
+  link = true,
+): Processor<Node<Data>, Node<Data>, Node<Data>, void> {
   return unified()
     .use(remarkParse)
     .use(link ? links : () => x => x) // FIXME

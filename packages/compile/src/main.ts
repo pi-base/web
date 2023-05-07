@@ -20,7 +20,7 @@ async function run(): Promise<void> {
 
   if (errors) {
     errors.forEach((messages, path) => {
-      messages.forEach((message) => {
+      messages.forEach(message => {
         error(path, message)
       })
     })
@@ -38,7 +38,7 @@ function error(file: string, message: string) {
   console.log(`::error file=${file}::${message}`)
 }
 
-run().catch((err) => {
+run().catch(err => {
   core.setFailed(err.message)
   core.error(err.message)
 })

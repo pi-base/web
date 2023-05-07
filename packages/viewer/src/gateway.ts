@@ -1,6 +1,12 @@
 import * as pb from '@pi-base/core'
 
-import { Id, type Property, type Space, type SerializedTheorem, type Trait } from './models'
+import {
+  Id,
+  type Property,
+  type Space,
+  type SerializedTheorem,
+  type Trait,
+} from './models'
 import { trace } from './debug'
 
 export type Sync = (

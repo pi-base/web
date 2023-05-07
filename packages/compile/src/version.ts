@@ -23,7 +23,7 @@ export async function find(root = '.') {
 }
 
 async function fromRepo(root = '.'): Promise<Version | undefined> {
-  const contents = await readFile(resolve(root, '.git', 'HEAD')).catch(() => { })
+  const contents = await readFile(resolve(root, '.git', 'HEAD')).catch(() => {})
   if (!contents) {
     return
   }

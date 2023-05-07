@@ -3,7 +3,8 @@ import { ExternalLink } from './elements/ExternalLink'
 import { InternalLink } from './elements/InternalLink'
 import * as errors from './errors'
 
-const dev = window.location.host.match(/(dev(elopment)?[.-]|localhost)/) !== null
+const dev =
+  window.location.host.match(/(dev(elopment)?[.-]|localhost)/) !== null
 
 customElements.define('external-link', ExternalLink)
 customElements.define('internal-link', InternalLink)

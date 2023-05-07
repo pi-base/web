@@ -6,7 +6,8 @@ import heredoc from 'tsheredoc'
 import load, { rootDirectories, validate } from './load.js'
 import { Version } from '@pi-base/core'
 
-const doc: (value: TemplateStringsArray, ...values: any[]) => string = heredoc as any
+const doc: (value: TemplateStringsArray, ...values: any[]) => string =
+  heredoc as any
 
 const repo = path.join(__dirname, '..', 'test', 'repo')
 
@@ -25,7 +26,10 @@ describe('load', () => {
   })
 
   it('validates', async () => {
-    const { errors = new Map() } = await load(path.join(repo, 'invalid'), version)
+    const { errors = new Map() } = await load(
+      path.join(repo, 'invalid'),
+      version,
+    )
 
     expect(errors.get('theorems/T000001.md')).toContain(
       'if references unknown property=P100016',

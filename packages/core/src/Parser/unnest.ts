@@ -5,24 +5,24 @@ type Tree = Node & { children?: Tree[] }
 
 /**
  * Many default parsers create an AST that looks like
- * 
+ *
  *     root:
  *       children:
  *         - type: paragraph
  *           children:
  *             - type: singleton
- * 
+ *
  * which renders as <p><singleton/></p>. This transformer removes the wrapping
- * <p/> node 
- * 
+ * <p/> node
+ *
  *     root:
  *       children:
  *         - type: singleton
- * 
+ *
  * to allow for inline-only <singleton/> elements.
  */
 export const unnest = () => {
-  const transformer: Transformer<Tree> = (tree) => {
+  const transformer: Transformer<Tree> = tree => {
     if (
       tree &&
       tree.children?.length === 1 &&

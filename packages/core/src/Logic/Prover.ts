@@ -22,9 +22,9 @@ export type Contradiction<TheoremId = Id, PropertyId = Id> = Proof<
 >
 export type Result<TheoremId = Id, PropertyId = Id> =
   | {
-    kind: 'contradiction'
-    contradiction: Contradiction<TheoremId, PropertyId>
-  }
+      kind: 'contradiction'
+      contradiction: Contradiction<TheoremId, PropertyId>
+    }
   | { kind: 'derivations'; derivations: Derivations<TheoremId, PropertyId> }
 
 export default class Prover<
@@ -33,7 +33,7 @@ export default class Prover<
   Theorem extends Implication<TheoremId, PropertyId> = Implication<
     TheoremId,
     PropertyId
-  >
+  >,
 > {
   private traits: Map<PropertyId, boolean>
   private derivations: Derivations<TheoremId, PropertyId>
@@ -149,9 +149,9 @@ export default class Prover<
       (
         acc:
           | {
-            falses: Formula<PropertyId>[]
-            unknown: Formula<PropertyId> | undefined
-          }
+              falses: Formula<PropertyId>[]
+              unknown: Formula<PropertyId> | undefined
+            }
           | undefined,
         sf: Formula<PropertyId>,
       ) => {

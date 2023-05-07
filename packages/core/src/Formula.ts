@@ -3,34 +3,33 @@ import { parse as _parse } from './Formula/Grammar.js'
 
 import { union } from './Util.js'
 
-type F<P>
-  = { kind: 'atom', property: P, value: boolean }
-  | { kind: 'or', subs: F<P>[] }
-  | { kind: 'and', subs: F<P>[] }
+type F<P> =
+  | { kind: 'atom'; property: P; value: boolean }
+  | { kind: 'or'; subs: F<P>[] }
+  | { kind: 'and'; subs: F<P>[] }
 
 function atomSchema<P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> {
   return z.object({
     kind: z.literal('atom'),
     property: p,
-    value: z.boolean()
+    value: z.boolean(),
   }) as any
 }
 
-const andSchema = <P>(p: z.ZodSchema<P>) => z.object({
-  kind: z.literal('and'),
-  subs: z.array(z.lazy(() => formulaSchema(p)))
-})
+const andSchema = <P>(p: z.ZodSchema<P>) =>
+  z.object({
+    kind: z.literal('and'),
+    subs: z.array(z.lazy(() => formulaSchema(p))),
+  })
 
-const orSchema = <P>(p: z.ZodSchema<P>) => z.object({
-  kind: z.literal('or'),
-  subs: z.array(z.lazy(() => formulaSchema(p)))
-})
+const orSchema = <P>(p: z.ZodSchema<P>) =>
+  z.object({
+    kind: z.literal('or'),
+    subs: z.array(z.lazy(() => formulaSchema(p))),
+  })
 
-export const formulaSchema = <P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> => z.union([
-  atomSchema(p),
-  andSchema(p),
-  orSchema(p)
-])
+export const formulaSchema = <P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> =>
+  z.union([atomSchema(p), andSchema(p), orSchema(p)])
 
 export interface Atom<P> {
   kind: 'atom'
@@ -78,9 +77,9 @@ export function render<T>(f: Formula<T>, term: (t: T) => string): string {
       const name = term(f.property)
       return f.value ? name : '¬' + name
     case 'and':
-      return '(' + f.subs.map((sf) => render(sf, term)).join(' ∧ ') + ')'
+      return '(' + f.subs.map(sf => render(sf, term)).join(' ∧ ') + ')'
     case 'or':
-      return '(' + f.subs.map((sf) => render(sf, term)).join(' ∨ ') + ')'
+      return '(' + f.subs.map(sf => render(sf, term)).join(' ∨ ') + ')'
   }
 }
 
@@ -105,7 +104,7 @@ export function map<P, Q>(
     default:
       return {
         ...formula,
-        subs: formula.subs.map((sub) => map(func, sub)),
+        subs: formula.subs.map(sub => map(func, sub)),
       }
   }
 }
@@ -138,7 +137,7 @@ export function evaluate<T>(
       return undefined
     case 'and':
       result = true // by default
-      f.subs.forEach((sub) => {
+      f.subs.forEach(sub => {
         if (result === false) {
           return
         }
@@ -154,7 +153,7 @@ export function evaluate<T>(
       return result
     case 'or':
       result = false
-      f.subs.forEach((sub) => {
+      f.subs.forEach(sub => {
         if (result === true) {
           return
         }

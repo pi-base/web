@@ -31,5 +31,5 @@ export const schemas = {
   property: propertySchema,
   space: spaceSchema,
   theorem: theoremSchema,
-  trait: traitSchema
+  trait: traitSchema,
 }

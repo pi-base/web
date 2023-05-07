@@ -4,7 +4,7 @@ import ImplicationIndex from './ImplicationIndex.js'
 export default class Queue<
   TheoremId,
   PropertyId,
-  Theorem extends Implication<TheoremId, PropertyId>
+  Theorem extends Implication<TheoremId, PropertyId>,
 > {
   private index: ImplicationIndex<TheoremId, PropertyId, Theorem>
   private queue: Set<Theorem>
@@ -15,7 +15,7 @@ export default class Queue<
   }
 
   mark(property: PropertyId): void {
-    this.index.withProperty(property).forEach((i) => this.queue.add(i))
+    this.index.withProperty(property).forEach(i => this.queue.add(i))
   }
 
   shift(): Theorem | undefined {
