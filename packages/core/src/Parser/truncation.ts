@@ -1,11 +1,7 @@
-import type * as unist from 'unist'
+import { Root, Content } from 'mdast'
+import { Transformer } from 'unified'
 
-type Node = unist.Node & {
-  children?: Node[]
-  value?: string
-}
-
-function gather(nodes: Node[], to: number) {
+function gather(nodes: Content[], to: number) {
   let length = 0
   const acc = []
 
@@ -37,10 +33,18 @@ function gather(nodes: Node[], to: number) {
   return acc
 }
 
-export default function truncate(to = 100) {
-  return function transformer(tree: Node) {
-    const node = (tree.children || [])[0] || {}
+export function truncation(to = 100): Transformer<Root, Root> {
+  return function transformer(tree: Root) {
+    const node = tree.children[0] || {}
 
-    return { ...node, children: gather(node.children || [], to) }
+    if ('children' in node) {
+      return {
+        ...node,
+        type: 'root',
+        children: gather(node.children, to),
+      } as Root
+    } else {
+      return { ...node, type: 'root' } as Root
+    }
   }
 }

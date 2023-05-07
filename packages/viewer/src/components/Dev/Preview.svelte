@@ -19,15 +19,17 @@
           type="checkbox"
           bind:checked={truncated}
           class="form-check-input"
-          id="truncated" />
+          id="truncated"
+        />
         <label class="form-check-label" for="truncated"> Truncated </label>
       </div>
     </div>
 
     <Example
-      set={(value) => {
+      set={value => {
         body = value
-      }} />
+      }}
+    />
   </div>
   <div class="col-sm">
     <Typeset {body} {truncated} />

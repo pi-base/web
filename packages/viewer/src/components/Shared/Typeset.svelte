@@ -3,18 +3,19 @@
   import { render as renderer } from './render-utils'
 
   export let body: string
+  export let truncated = false
 
   let container: HTMLElement
 
-  async function render(text: string) {
+  async function render(text: string, truncated_: boolean) {
     if (container) {
-      container.innerHTML = await renderer(text)
+      container.innerHTML = await renderer(text, truncated_)
     }
   }
 
-  onMount(() => render(body))
+  onMount(() => render(body, truncated))
 
-  $: render(body)
+  $: render(body, truncated)
 </script>
 
 <span bind:this={container} />

@@ -4,6 +4,9 @@ import type {
 } from 'mdast-util-from-markdown'
 import type { Code, Construct, Token, Tokenizer } from 'micromark-util-types'
 import type { Plugin, Processor } from 'unified'
+import createDebug from 'debug'
+
+const debug = createDebug('pi-base:links')
 
 /**
  * Extends the Markdown parser, adding support for
@@ -68,6 +71,7 @@ function prefixKind(code: Code) {
 }
 
 const tokenize: Tokenizer = (effects, ok, nok) => {
+  debug('start tokenize')
   /* The tokenizer is a state machine that starts in the `start` state,
    * accumulating text and transitioning as described above the other states
    * below.
@@ -76,6 +80,8 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
 
   /* Consumes the single starting { */
   function start(code: Code) {
+    debug('start %s', code)
+    effects.enter('linkMarker')
     effects.consume(code)
 
     return internalOrExternal
@@ -87,8 +93,10 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
    *   character [PST]
    */
   function internalOrExternal(code: Code) {
+    debug('intenalOrExternal %s', code)
     if (code === leftBrace) {
       effects.consume(code)
+      effects.exit('linkMarker')
 
       effects.enter('externalLink')
       effects.enter('externalKind')
@@ -96,7 +104,10 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
       return externalKind
     }
 
+    effects.exit('linkMarker')
+    effects.enter('internalKind')
     effects.consume(code)
+    effects.exit('internalKind')
     const kind = prefixKind(code)
     if (kind) {
       effects.enter('internalLink', { kind })
@@ -109,6 +120,7 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
 
   /* Consume word characters up to a :, then transition to externalId */
   function externalKind(code: Code) {
+    debug('externalKind %s', code)
     if (code === cr || code === lf || code === crlf || code === eof) {
       return nok(code)
     }
@@ -116,7 +128,9 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
     if (code === colon) {
       effects.exit('chunkString')
       effects.exit('externalKind')
+      effects.enter('externalSeparator')
       effects.consume(code)
+      effects.exit('externalSeparator')
       effects.enter('externalId')
       effects.enter('chunkString', { contentType: 'string' })
       return externalId
@@ -128,6 +142,7 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
 
   /* Consume word characters up to a }, then finalize */
   function internalId(code: Code) {
+    debug('internalId %s', code)
     if (code === cr || code === lf || code === crlf || code === eof) {
       return nok(code)
     }
@@ -135,6 +150,7 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
     if (code === rightBrace) {
       effects.exit('chunkString')
       effects.exit('internalLink')
+      effects.enter('linkMarker')
       return close(code)
     }
 
@@ -144,6 +160,7 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
 
   /* Consume word characters up to a }, then finalize */
   function externalId(code: Code) {
+    debug('externalId %s', code)
     if (code === cr || code === lf || code === crlf || code === eof) {
       return nok(code)
     }
@@ -152,6 +169,7 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
       effects.exit('chunkString')
       effects.exit('externalId')
       effects.exit('externalLink')
+      effects.enter('linkMarker')
       return close(code)
     }
 
@@ -161,10 +179,12 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
 
   /* Consume any leftover }s */
   function close(code: Code) {
+    debug('close %s', code)
     if (code === rightBrace) {
       effects.consume(code)
       return close
     }
+    effects.exit('linkMarker')
     return ok(code)
   }
 }

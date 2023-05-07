@@ -8,19 +8,31 @@ import rehypeStringify from 'rehype-stringify'
 
 import { links } from './Parser/links.js'
 import { unnest } from './Parser/unnest.js'
+import { truncation } from './Parser/truncation.js'
+
+function noOp() {
+  return (tree: Node) => tree
+}
+
+export type Options = {
+  link?: boolean
+  truncate?: boolean
+}
 
 /**
  * Full parser chain translating Markdown to HTML, including rendering math and
  * custom π-base syntax extensions.
  */
-export function parser(
+export function parser({
   link = true,
-): Processor<Node<Data>, Node<Data>, Node<Data>, void> {
+  truncate = false,
+}: Partial<Options> = {}): Processor<Node<Data>, Node<Data>, Node<Data>, void> {
   return unified()
     .use(remarkParse)
-    .use(link ? links : () => x => x) // FIXME
+    .use(link ? links : noOp)
     .use(unnest)
     .use(remarkMath)
+    .use(truncate ? truncation : noOp)
     .use(remarkRehype)
     .use(rehypeKatex)
     .use(rehypeStringify)
