@@ -18,10 +18,3 @@ pnpm run build
 
 cd ../viewer
 pnpm run build
-
-# Temporarily copy vite's default output to the current Cloudflare Pages 
-# previously configured directory.
-#
-# TODO: remove this after re-pointing Cloudflare's config.
-rm -rf public
-cp -r dist public
