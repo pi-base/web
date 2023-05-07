@@ -27,9 +27,15 @@
     },
     "vscode": {
       "extensions": [
+        "esbenp.prettier-vscode",
         "svelte.svelte-vscode"
       ],
-      "settings": {}
+      "settings": {
+        "editor.formatOnSave": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
     }
   }
 }
