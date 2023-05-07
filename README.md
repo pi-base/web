@@ -5,9 +5,8 @@ processes –
 
 - `compile` – watches `/workspaces/web/data` and serves its contents at
   `localhost:3141/refs/heads/(:branch)`, consistent with the production S3 API.
-- `viewer:build` – watches `/workspaces/web/packages/viewer`, and rebuilds the  
-  viewer on change.
-- `viewer:serve` – serves the built viewer on the network
+- `viewer` – watches and servers `/workspaces/web/packages/viewer`, rebuilding
+  and reloading on changes.
 
 Note that changes to `packages/core` do not currently automatically trigger a 
 rebuild of the package and its dependencies.

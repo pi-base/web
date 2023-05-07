@@ -3,6 +3,9 @@
 # This scripts is primarily used during Cloudflare deploys, to generate the 
 # static assets that are served by Cloudflare.
 
+export VITE_BRANCH=$CF_PAGES_BRANCH 
+export VITE_VERSION=$CF_PAGES_COMMIT_SHA
+
 # Cloudflare does not include pnpm in their build image, so we need to install
 # it ourselves, and make sure it installs packages somewhere that Cloudflare caches.
 #
@@ -15,3 +18,10 @@ pnpm run build
 
 cd ../viewer
 pnpm run build
+
+# Temporarily copy vite's default output to the current Cloudflare Pages 
+# previously configured directory.
+#
+# TODO: remove this after re-pointing Cloudflare's config.
+rm -rf public
+cp -r dist public
