@@ -26,7 +26,7 @@
     "popper.js": "^1.16.1",
     "rehype-katex": "^6.0.2",
     "remark-rehype": "^10.1.0",
-    "svelte-routing": "^1.4.2",
+    "svelte-routing": "^1.8.5",
     "unified": "^10.1.2",
     "unist-util-is": "^5.2.1",
     "unist-util-visit": "^4.1.2"
