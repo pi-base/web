@@ -9,9 +9,9 @@ import { trace } from './debug'
 import * as Errors from './errors'
 import * as Gateway from './gateway'
 import { Id } from './models'
+import { renderer } from './parser'
 import { type Local, local } from './repositories'
 import { type Prestore, type Store, create } from './stores'
-import * as Typeset from './stores/typeset'
 import { subscribeUntil } from './util'
 
 export type Config = {
@@ -41,13 +41,13 @@ export function initialize({
   errorHandler = Errors.log(),
   gateway = Gateway.sync,
   showDev = false,
-  typesetter = Typeset.typesetter,
+  typesetter = renderer,
 }: {
   db?: Local<Prestore>
   errorHandler?: Errors.Handler
   gateway?: Gateway.Sync
   showDev?: boolean
-  typesetter?: Typeset.Builder
+  typesetter?: typeof renderer
 } = {}): Context {
   const pre = db.load()
   const store = create(pre, gateway)

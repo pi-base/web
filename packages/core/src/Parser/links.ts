@@ -6,45 +6,16 @@ import type { Code, Construct, Token, Tokenizer } from 'micromark-util-types'
 import type { Plugin, Processor } from 'unified'
 import createDebug from 'debug'
 
+import { ExternalLinkNode, InternalLinkNode } from './types'
+
 const debug = createDebug('pi-base:links')
 
 /**
- * Extends the Markdown parser, adding support for
+ * Extends the Markdown parser, adding support for tokenizing {internal} and
+ * {{external}} links into InternalLinkNode and ExternalLinkNode tokens.
  *
- * external links
- *
- *    input: {{doi:123}}
- *    output:
- *
- *    {
- *      type: 'externalLink',
- *      data: {
- *        hName: 'external-link',
- *        hProperties: {
- *          kind: 'doi',
- *          id: '123'
- *        }
- *      }
- *    }
- *
- * internal links
- *
- *    input: {S123}
- *    output:
- *
- *    {
- *      type: 'internalLink',
- *      data: {
- *        hName: 'internal-link',
- *        hProperties: {
- *          kind: 'space',
- *          id: '123'
- *        }
- *      }
- *    }
- *
- *
- * See https://github.com/micromark/micromark#creating-a-micromark-extension
+ * See https://github.com/micromark/micromark#creating-a-micromark-extension for
+ * details on the micromark extension API.
  */
 const cr = -5
 const lf = -4
@@ -58,13 +29,13 @@ function prefixKind(code: Code) {
   switch (code) {
     case 80: // P
     case 112: // p
-      return 'property'
+      return 'P'
     case 83: // S
     case 115: // s
-      return 'space'
+      return 'S'
     case 84: // T
     case 116: // t
-      return 'theorem'
+      return 'T'
     default:
       return null
   }
@@ -191,16 +162,20 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
 
 /**
  * Helpers for compiling emitted tokens into AST nodes
+ *
+ * The `as` castings here aren't ideal, but the MDAST types are very rigid and
+ * expect a closed enum of Node types. The underlying implementation appears to
+ * support `enter`ing other shapes of nodes, but we should be careful about this
+ * breaking in dependency updates.
+ *
+ * TODO: improve error handling throughout here (i.e. don't silently ignore
+ * typechecking errors)
  */
 function enterExternalLink(this: CompileContext, token: Token) {
-  this.enter(
+  this.enter<any>(
     {
       type: 'externalLink',
-      data: {
-        hName: 'external-link',
-        hProperties: {},
-      },
-    } as any,
+    } as Omit<ExternalLinkNode, 'id' | 'kind'>,
     token,
   )
   this.buffer()
@@ -212,8 +187,10 @@ function enterExternalKind(this: CompileContext, _token: Token) {
 
 function exitExternalKind(this: CompileContext, _token: Token) {
   const kind = this.resume()
-  const node: any = this.stack[this.stack.length - 2]
-  node.data.hProperties.kind = kind
+  const node: unknown = this.stack[this.stack.length - 2]
+  if (isExternalLink(node) && isExternalKind(kind)) {
+    node.kind = kind
+  }
 }
 
 function enterExternalId(this: CompileContext, _token: Token) {
@@ -222,8 +199,10 @@ function enterExternalId(this: CompileContext, _token: Token) {
 
 function exitExternalId(this: CompileContext, _token: Token) {
   const id = this.resume()
-  const node: any = this.stack[this.stack.length - 2]
-  node.data.hProperties.id = id
+  const node: unknown = this.stack[this.stack.length - 2]
+  if (isExternalLink(node)) {
+    node.id = id
+  }
 }
 
 function exitExternalLink(this: CompileContext, token: Token) {
@@ -235,13 +214,8 @@ function enterInternalLink(this: CompileContext, token: Token) {
   this.enter<any>(
     {
       type: 'internalLink',
-      data: {
-        hName: 'internal-link',
-        hProperties: {
-          kind: (token as any).kind,
-        },
-      },
-    },
+      kind: (token as any).kind,
+    } as Omit<InternalLinkNode, 'id'>,
     token,
   )
   this.buffer()
@@ -249,10 +223,10 @@ function enterInternalLink(this: CompileContext, token: Token) {
 
 function exitInternalLink(this: CompileContext, token: Token) {
   const id = this.resume()
-  const node = this.exit(token)
-
-  const data: any = node.data
-  data.hProperties.id = id
+  const node: unknown = this.exit(token)
+  if (isInternalLink(node)) {
+    node.id = id
+  }
 }
 
 /**
@@ -282,6 +256,18 @@ const fromMarkdown: FromMarkdownExtension = {
     externalLink: exitExternalLink,
     internalLink: exitInternalLink,
   },
+}
+
+function isExternalLink(node: any): node is ExternalLinkNode {
+  return node && node.type === 'externalLink'
+}
+
+function isExternalKind(kind: any): kind is ExternalLinkNode['kind'] {
+  return kind && ['doi', 'wikipedia', 'mr', 'mathse', 'mo'].includes(kind)
+}
+
+function isInternalLink(node: any): node is InternalLinkNode {
+  return node && node.type === 'internalLink'
 }
 
 export const links: Plugin = function (this: Processor) {

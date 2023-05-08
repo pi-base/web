@@ -1,3 +1,7 @@
+import createDebug from 'debug'
+
+export const debug = createDebug('pi-base:viewer')
+
 export type Event =
   | { event: 'remote_fetch_started'; host: string; branch: string }
   | { event: 'remote_fetch_complete'; result: unknown }
@@ -6,7 +10,7 @@ export type Event =
   | { event: 'set_host'; host: string }
   | { event: 'build_typesetter' }
 
-export function trace(payload: Event, log = console.log) {
+export function trace(payload: Event, log = debug) {
   const { event, ...rest } = payload
 
   switch (event) {

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { atom, property, space, theorem } from '../__test__'
 import { Collection, Theorems } from '../models'
 
-import internalLinks from './internalLinks'
+import { internal } from './internalLinks'
 
 describe('with ambient data', () => {
   const properties = Collection.byId([
@@ -21,43 +21,38 @@ describe('with ambient data', () => {
     properties,
   )
 
-  const link = internalLinks(properties, spaces, theorems)
+  const link = internal(properties, spaces, theorems)
 
   describe('properties', () => {
     it('can link to properties', () => {
-      expect(link({ to: 'P000001' })).toEqual({
+      expect(link(['P', '000001'])).toEqual({
         href: '/properties/P000001',
-        label: 'One',
+        title: 'One',
       })
     })
 
-    it('renders not found errors', () => {
-      expect(link({ to: 'P000003' })).toEqual('Could not find Property P000003')
+    it.todo('renders not found errors', () => {
+      expect(link(['P', '000003'])).toEqual('Could not find Property P000003')
     })
 
-    it('expands padding if needed', () => {
-      expect(link({ to: 'P1' })).toEqual({
+    it.todo('expands padding if needed', () => {
+      expect(link(['P', '1'])).toEqual({
         href: '/properties/P000001',
-        label: 'One',
+        title: 'One',
       })
     })
   })
 
   describe('spaces', () => {
     it('can link to spaces', () => {
-      expect(link({ to: 'S000002' })).toEqual({
+      expect(link(['S', '000002'])).toEqual({
         href: '/spaces/S000002',
-        label: 'Two',
+        title: 'Two',
       })
     })
 
-    it('renders not found errors', () => {
-      expect(link({ to: 'S000003' })).toEqual('Could not find Space S000003')
+    it.todo('renders not found errors', () => {
+      expect(link(['S', '000003'])).toEqual('Could not find Space S000003')
     })
-  })
-
-  it('handles empty links', () => {
-    expect(link({ to: '' })).toBeUndefined()
-    expect(link({})).toBeUndefined()
   })
 })

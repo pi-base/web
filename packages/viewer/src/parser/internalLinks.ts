@@ -1,58 +1,31 @@
-import { Id, type Property, type Space, Theorem } from '../models'
+import type { Property, Space, Theorem } from '../models'
+import type { Finder } from './types'
 
-export type Finder<T> = {
-  find(id: number): T | null
-}
-
-export default function internalLinks(
+export function internal(
   properties: Finder<Property>,
   spaces: Finder<Space>,
   theorems: Finder<Theorem>,
 ) {
-  return function linker({ to }: { to?: string }) {
-    const trimmed = (to || '').trim()
-    if (!trimmed) {
-      return
-    }
-
-    const tagged = Id.tag(trimmed)
-    switch (tagged?.kind) {
-      case 'space':
-        const space = spaces.find(tagged.id)
-        if (space) {
-          return {
-            href: `/spaces/${Id.format('S', space.id)}`,
-            label: space.name,
-          }
-        } else {
-          return `Could not find Space ${to}`
+  return function linker([kind, id]: ['S' | 'P' | 'T', string]) {
+    switch (kind) {
+      case 'S':
+        const space = spaces.find(Number(id))
+        return {
+          href: `/spaces/S${id}`,
+          title: space ? space.name : `S${id}`,
         }
-
-      case 'property':
-        const property = properties.find(tagged.id)
-        if (property) {
-          return {
-            href: `/properties/${Id.format('P', property.id)}`,
-            label: property.name,
-          }
-        } else {
-          return `Could not find Property ${to}`
+      case 'P':
+        const property = properties.find(Number(id))
+        return {
+          href: `/properties/P${id}`,
+          title: property ? property.name : `P${id}`,
         }
-
-      case 'theorem':
-        const theorem = theorems.find(tagged.id)
-        if (theorem) {
-          const uid = Id.format('T', theorem.id)
-          return {
-            href: `/theorems/${uid}`,
-            label: `Theorem ${uid}`,
-          }
-        } else {
-          return `Could not find Theorem ${to}`
+      case 'T':
+        const theorem = theorems.find(Number(id))
+        return {
+          href: `/theorems/T${id}`,
+          title: theorem ? theorem.name : `T${id}`,
         }
-
-      default:
-        return `Could not parse ${to} as an ID`
     }
   }
 }

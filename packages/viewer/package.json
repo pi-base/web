@@ -18,6 +18,7 @@
     "@pi-base/core": "workspace:0.4.0",
     "@sentry/browser": "^7.41.0",
     "bootstrap": "^4.6.2",
+    "debug": "^4.3.4",
     "fromnow": "^3.0.1",
     "fuse.js": "^6.4.1",
     "hast-to-hyperscript": "^10.0.3",
@@ -34,6 +35,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.2.0",
     "@tsconfig/svelte": "^3.0.0",
+    "@types/debug": "^4.1.7",
     "@types/hyperscript": "0.0.4",
     "@types/katex": "^0.16.0",
     "@types/page": "^1.8.0",

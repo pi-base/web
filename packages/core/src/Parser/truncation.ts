@@ -1,6 +1,9 @@
 import { Root, Content } from 'mdast'
 import { Transformer } from 'unified'
 
+/**
+ * Collapses long descriptions down to a reasonable preview, adding an ellipsis.
+ */
 function gather(nodes: Content[], to: number) {
   let length = 0
   const acc = []

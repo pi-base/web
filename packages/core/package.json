@@ -23,10 +23,12 @@
   "scripts": {
     "build:peg": "peggy --plugin ./node_modules/ts-pegjs/src/tspegjs -o src/Formula/Grammar.ts --cache src/Formula/Grammar.pegjs",
     "build": "pnpm build:peg && tsc",
+    "dev": "pnpm build:peg && tsc --watch",
     "test": "vitest"
   },
   "dependencies": {
     "debug": "^4.3.4",
+    "hast": "^1.0.0",
     "mdast": "^3.0.0",
     "micromark-util-types": "^1.0.2",
     "rehype-katex": "^6.0.2",
@@ -42,6 +44,7 @@
   },
   "devDependencies": {
     "@types/debug": "^4.1.7",
+    "@types/hast": "^2.3.4",
     "@types/mdast": "^3.0.11",
     "@types/unist": "^2.0.3",
     "hast-util-to-html": "^8.0.4",

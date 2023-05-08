@@ -1,9 +1,8 @@
-export default function externalLinks({ citation }: { citation?: string }) {
-  if (!citation) {
-    return
-  }
+import type { Ref } from '@pi-base/core'
 
-  const [kind, id] = citation.split(':', 2)
+type ExternalLinkKind = Ref.TaggedRef['kind']
+
+export function external([kind, id]: [ExternalLinkKind, string]) {
   return format({ kind, id })
 }
 
@@ -12,32 +11,32 @@ export function format({
   id,
   name,
 }: {
-  kind: string
+  kind: ExternalLinkKind
   id: string
   name?: string
-}): { href: string; label: string } | undefined {
+}) {
   switch (kind) {
     case 'doi':
-      return { href: `https://doi.org/${id}`, label: name || `DOI ${id}` }
+      return { href: `https://doi.org/${id}`, title: name || `DOI ${id}` }
     case 'mr':
       return {
         href: `https://mathscinet.ams.org/mathscinet-getitem?mr=${id}`,
-        label: name || `MR ${id}`,
+        title: name || `MR ${id}`,
       }
     case 'wikipedia':
       return {
         href: `https://en.wikipedia.org/wiki/${id}`,
-        label: name || `Wikipedia ${id}`,
+        title: name || `Wikipedia ${id}`,
       }
     case 'mathse':
       return {
         href: `https://math.stackexchange.com/questions/${id}`,
-        label: name || `Math StackExchange ${id}`,
+        title: name || `Math StackExchange ${id}`,
       }
     case 'mo':
       return {
         href: `https://mathoverflow.net/questions/${id}`,
-        label: name || `MathOverflow ${id}`,
+        title: name || `MathOverflow ${id}`,
       }
   }
 }
