@@ -24,13 +24,15 @@
     "build:peg": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs -o src/Formula/Grammar.ts --cache src/Formula/Grammar.pegjs",
     "build": "pnpm build:peg && tsc",
     "dev": "pnpm build:peg && tsc --watch",
-    "test": "vitest"
+    "test": "vitest",
+    "test:cov": "vitest --coverage"
   },
   "dependencies": {
     "debug": "^4.3.4",
     "micromark-util-types": "^1.0.2",
     "rehype-katex": "^6.0.3",
     "rehype-stringify": "^9.0.3",
+    "rehype-truncate": "^1.2.2",
     "remark": "^14.0.2",
     "remark-math": "^5.1.1",
     "remark-parse": "^10.0.1",
