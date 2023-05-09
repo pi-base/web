@@ -21,7 +21,7 @@
     "url": "git+https://github.com/pi-base/web.git"
   },
   "scripts": {
-    "build:peg": "peggy --plugin ./node_modules/ts-pegjs/src/tspegjs -o src/Formula/Grammar.ts --cache src/Formula/Grammar.pegjs",
+    "build:peg": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs -o src/Formula/Grammar.ts --cache src/Formula/Grammar.pegjs",
     "build": "pnpm build:peg && tsc",
     "dev": "pnpm build:peg && tsc --watch",
     "test": "vitest"
@@ -47,7 +47,7 @@
     "@types/unist": "^2.0.6",
     "hast-util-to-html": "^8.0.4",
     "mdast-util-from-markdown": "^1.3.0",
-    "peggy": "^2.0.1",
-    "ts-pegjs": "^3.1.0"
+    "peggy": "^3.0.2",
+    "ts-pegjs": "^4.1.0"
   }
 }

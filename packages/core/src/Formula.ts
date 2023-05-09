@@ -187,7 +187,7 @@ export function parse(q?: string): Formula<string> | undefined {
     }
   }
 
-  return fromJSON(parsed)
+  return fromJSON(parsed as any)
 }
 
 type Serialized =
