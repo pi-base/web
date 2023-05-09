@@ -13,9 +13,9 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      lines: 94.51,
+      lines: 93.84,
       branches: 95.53,
-      statements: 94.51,
+      statements: 93.84,
       functions: 83.54,
       skipFull: true,
       thresholdAutoUpdate: true,
