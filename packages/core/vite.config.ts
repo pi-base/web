@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import path from 'path'
 
 export default defineConfig({
@@ -10,5 +10,16 @@ export default defineConfig({
       formats: ['es'],
     },
     outDir: './dist',
+  },
+  test: {
+    coverage: {
+      lines: 94.1,
+      branches: 94.08,
+      statements: 94.1,
+      functions: 83.54,
+      skipFull: true,
+      thresholdAutoUpdate: true,
+      exclude: ['src/Formula/Grammar.ts'],
+    },
   },
 })
