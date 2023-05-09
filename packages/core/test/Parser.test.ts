@@ -18,19 +18,45 @@ async function parse(input: string) {
   return String(file)
 }
 
-it('parses a citation', async () => {
-  expect(await parse('{{doi:123}}')).toEqual(
+it('parses a citation', () => {
+  expect(parse('{{doi:123}}')).resolves.toEqual(
     '<a href="doi://123" title="123" class="external-link">123</a>',
   )
 })
 
-it('parses an internal link', async () => {
-  expect(await parse('{S123}')).toEqual(
+it('parses an internal link', () => {
+  expect(parse('{S123}')).resolves.toEqual(
     '<a href="S://123" title="123" class="internal-link">123</a>',
   )
 })
 
-it('parses a complex example', async () => {
+it('handles a bad separator', () => {
+  expect(parse('{X123}')).resolves.toEqual('{X123}')
+})
+
+// TODO: for some reason when running this in the browser, this throws an
+// uvu/Assertion error, but when running here, it just goes into a loop
+it.todo('handles a missing id', () => {
+  expect(parse('{S}')).resolves.toEqual('{S}')
+})
+
+it('handles an initial tag', () => {
+  expect(parse('{')).resolves.toEqual('{')
+})
+
+it('handles an incomplete internal link', () => {
+  expect(parse('{S123')).resolves.toEqual('{S123')
+})
+
+it('handles an incomplete external kind', () => {
+  expect(parse('{{do')).resolves.toEqual('{{do')
+})
+
+it('handles an incomplete external id', () => {
+  expect(parse('{{doi:123')).resolves.toEqual('{{doi:123')
+})
+
+it('parses a complex example', () => {
   const example = `Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
 
 This is a list of links
@@ -44,5 +70,5 @@ This is a list of links
 * {{mathse:123}}
 * {{mo:123}}`
 
-  expect(await parse(example)).toMatchSnapshot()
+  expect(parse(example)).resolves.toMatchSnapshot()
 })

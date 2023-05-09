@@ -122,7 +122,7 @@ const tokenize: Tokenizer = (effects, ok, nok) => {
       effects.exit('chunkString')
       effects.exit('internalLink')
       effects.enter('linkMarker')
-      return close(code)
+      return close
     }
 
     effects.consume(code)
