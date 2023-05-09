@@ -4,13 +4,13 @@ import remarkParse from 'remark-parse'
 import remarkMath from 'remark-math'
 import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
+import rehypeTruncate from 'rehype-truncate'
 import rehypeStringify from 'rehype-stringify'
 
 import { Linkers } from './Parser/types.js'
 import { links } from './Parser/links.js'
 import { references } from './Parser/references.js'
 import { unnest } from './Parser/unnest.js'
-import { truncation } from './Parser/truncation.js'
 
 export type Options = {
   link: Linkers
@@ -51,13 +51,16 @@ export function parser({
       .use(unnest)
       // Parse $ and $$ blocks in text as math
       .use(remarkMath)
-      // Optionally trim mdast to a minimal preview
-      // TODO: explore replacing this with https://github.com/luk707/rehype-truncate
-      .use(truncate ? truncation : noOp)
       // Convert standard mdast nodes to hast
       .use(remarkRehype)
       // Convert math nodes to hast
       .use(rehypeKatex)
+      // Optionally trim mdast to a minimal preview
+      .use(rehypeTruncate, {
+        maxChars: 100,
+        disable: !truncate,
+        ignoreTags: ['math', 'inline-math'],
+      })
       // Render hast to HTML string
       .use(rehypeStringify)
   )

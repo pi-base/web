@@ -92,6 +92,9 @@ importers:
       rehype-stringify:
         specifier: ^9.0.3
         version: 9.0.3
+      rehype-truncate:
+        specifier: ^1.2.2
+        version: 1.2.2
       remark:
         specifier: ^14.0.2
         version: 14.0.2
@@ -3417,6 +3420,10 @@ packages:
       '@types/hast': 2.3.4
       hast-util-to-html: 8.0.4
       unified: 10.1.2
+    dev: false
+
+  /rehype-truncate@1.2.2:
+    resolution: {integrity: sha512-zj2FxxC3rm8bg6loesMdS/+BuGpp89mu+12VsJrBzN5kKgOxKwtawscQXElyt2BnxU2pG3hkoyb3Euc3Q7F38A==}
     dev: false
 
   /remark-math@5.1.1:
