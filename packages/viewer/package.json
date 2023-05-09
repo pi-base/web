@@ -24,7 +24,6 @@
     "hast-to-hyperscript": "^10.0.3",
     "hyperscript": "^2.0.2",
     "jquery": "1.9.1",
-    "popper.js": "^1.16.1",
     "rehype-katex": "^6.0.2",
     "remark-rehype": "^10.1.0",
     "svelte-routing": "^1.4.2",
@@ -45,9 +44,6 @@
     "svelte-check": "^1.0.0",
     "svelte-preprocess": "^5.0.1",
     "tslib": "^2.5.0",
-    "typescript": "^4.9.5",
-    "vite": "^4.3.5",
-    "vitest": "^0.29.2",
     "wait-on": "^7.0.1"
   }
 }
