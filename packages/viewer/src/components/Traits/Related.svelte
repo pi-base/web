@@ -4,8 +4,9 @@
   import { Value } from '../Traits'
   import context from '../../context'
   import type { Property, Space, Trait, Traits } from '../../models'
+  import Typeset from '../Shared/Typeset.svelte'
 
-  export let mode: "spaces"|"properties"
+  export let mode: 'spaces' | 'properties'
   export let related: (traits: Traits) => [Space, Property, Trait][]
 
   const { traits } = context()
@@ -19,7 +20,7 @@
 
   $: all = related($traits)
   $: index = new Fuse(all, { keys: ['0.name'] })
-  $: searched = filter ? index.search(filter).map((r) => r.item) : all
+  $: searched = filter ? index.search(filter).map(r => r.item) : all
   $: filtered = searched.filter(
     ([_space, _property, t]) => showDeduced || t.asserted,
   )
@@ -36,11 +37,12 @@
     <button
       class="btn btn-outline-secondary {!showDeduced ? 'active' : ''}"
       type="button"
-      on:click={toggleDeduced}>
+      on:click={toggleDeduced}
+    >
       {#if showDeduced}
-        Showing <Icons.Robot/>
+        Showing <Icons.Robot />
       {:else}
-        Hiding <Icons.Robot/>
+        Hiding <Icons.Robot />
       {/if}
     </button>
   </div>
@@ -50,7 +52,9 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th>{#if mode==="spaces"}Space{:else}Property{/if}</th>
+      <th
+        >{#if mode === 'spaces'}Space{:else}Property{/if}</th
+      >
       <th>Value</th>
       <th>Source</th>
     </tr>
@@ -60,18 +64,18 @@
       <tr>
         <td>
           <Link.Trait {space} {property}>
-            {#if mode==="spaces"}{space.id}{:else}{property.id}{/if}
+            {#if mode === 'spaces'}{space.id}{:else}{property.id}{/if}
           </Link.Trait>
         </td>
         <td>
           <Link.Trait {space} {property}>
-            {#if mode==="spaces"}{space.name}{:else}{property.name}{/if}
+            <Typeset body={mode === 'spaces' ? space.name : property.name} />
           </Link.Trait>
         </td>
         <td>
-            <Link.Trait {space} {property}>
-              <Value value={trait.value} />
-            </Link.Trait>
+          <Link.Trait {space} {property}>
+            <Value value={trait.value} />
+          </Link.Trait>
         </td>
         <td>
           <Link.Trait {space} {property}>
