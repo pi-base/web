@@ -1,3 +1,5 @@
+import { isLegacy } from '../constants'
+
 beforeEach(() => {
   cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
 })
@@ -27,7 +29,9 @@ it('derives multi-step proofs', () => {
 it('derives proofs of converses', () => {
   cy.visit('/theorems/T000010') // (Extremally disconnected + Metrizable) => Discrete
 
-  cy.contains(/The converse.*follows from/)
+  cy.contains(
+    isLegacy ? /The converse.*holds, by/ : /The converse.*follows from/,
+  )
 
   cy.contains('85') // Discrete => Completely metrizable
   cy.contains('77') // Completely metrizable => metrizable
