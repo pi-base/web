@@ -44,3 +44,7 @@ rebuild it with.
 ```bash
 /workspaces/web $ pnpm run --filter core build
 ```
+
+# Copyright and License
+
+Copyright 2014-2023 James Dabbs, [licensed for free public use](./LICENSE.md).
