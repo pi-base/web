@@ -5,6 +5,7 @@ export default defineConfig({
   chromeWebSecurity: false,
   e2e: {
     baseUrl: 'http://localhost:5173',
+    experimentalRunAllSpecs: true,
     specPattern: 'cypress/e2e/**/*.{ts,tsx}',
     supportFile: false,
   },

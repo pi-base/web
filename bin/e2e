@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function run() {
+    url=$(getUrl "$1")
+    echo "$url"
+
+    # wait for up to 5 minutes for the site to be available
+    for i in {1..30}; do
+        status=$(curl --write-out %{http_code} --silent --output /dev/null https://$url)
+        if [ "$status" -eq 200 ]; then
+            break
+        fi
+        sleep 10
+    done
+
+    pnpm --filter viewer run cy:run --config baseUrl=https://$url
+}
+
+function getUrl() {
+    if [ "$1" == "production" ]; then
+        echo "topology.pi-base.org"
+    elif [ -n "$1" ]; then
+        echo "$1.topology.pages.dev"
+    else
+        sha=$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')
+        echo "$sha.topology.pages.dev"
+    fi
+}
+
+run "$@"

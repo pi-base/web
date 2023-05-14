@@ -1,34 +1,43 @@
-// FIXME: unskip
-describe.skip('with a working remote', () => {
+import { isLegacy } from '../constants'
+
+const { search, formulaParam } = isLegacy
+  ? { search: '/spaces', formulaParam: 'q' }
+  : { search: '/explore', formulaParam: 'formula' }
+
+describe('with a working remote', () => {
   beforeEach(() => {
     cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
   })
 
   it('searches by text and formula', () => {
-    cy.visit('/spaces')
+    cy.visit(search)
 
     cy.get('input[name="text"]').type('plank')
-    cy.get('input[name="formula"]').type('metacom')
+    cy.get(`input[name="${formulaParam}"]`).type('metacom')
 
     cy.url()
       .should('include', 'text=plank')
-      .should('include', 'formula=metacom')
+      .should('include', `${formulaParam}=metacom`)
 
     cy.contains('Dieudonné plank')
   })
 
   it('indicates when search is impossible', () => {
-    cy.visit('/spaces')
+    cy.visit(search)
 
-    cy.get('input[name="formula"]').type('discrete + ~metrizable')
+    cy.get(`input[name="${formulaParam}"]`).type('discrete + ~metrizable')
 
-    cy.contains(/Discrete.*∧.*¬.*Metrizable.*\).*is impossible by/)
+    cy.contains(
+      isLegacy
+        ? /is impossible by/
+        : /Discrete.*∧.*¬.*Metrizable.*\).*is impossible by/,
+    )
     cy.contains('85').click()
     cy.contains('Discrete ⇒ Completely metrizable')
   })
 
   it('can follow an example search', () => {
-    cy.visit('/spaces')
+    cy.visit(search)
 
     cy.contains('compact + connected + t_2 + ~metrizable').click()
 
