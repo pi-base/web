@@ -1,8 +1,6 @@
 import { isLegacy } from '../constants'
 
-const { search, formulaParam } = isLegacy
-  ? { search: '/spaces', formulaParam: 'q' }
-  : { search: '/explore', formulaParam: 'formula' }
+const search = '/spaces'
 
 describe('with a working remote', () => {
   beforeEach(() => {
@@ -13,19 +11,26 @@ describe('with a working remote', () => {
     cy.visit(search)
 
     cy.get('input[name="text"]').type('plank')
-    cy.get(`input[name="${formulaParam}"]`).type('metacom')
+    cy.get('input[name="q"]').type('metacom')
 
-    cy.url()
-      .should('include', 'text=plank')
-      .should('include', `${formulaParam}=metacom`)
+    cy.url().should('include', 'text=plank').should('include', 'q=metacom')
 
     cy.contains('Dieudonné plank')
+  })
+
+  // This is important to preserve backwards-compatible URLs that have been
+  // published to MathExchange &c.
+  it('loads from query params', () => {
+    const query = '~metrizable + compact'
+    cy.visit(`${search}?q=${query.replace('+', '%2B')}&text=square`)
+
+    cy.contains('Alexandroff square')
   })
 
   it('indicates when search is impossible', () => {
     cy.visit(search)
 
-    cy.get(`input[name="${formulaParam}"]`).type('discrete + ~metrizable')
+    cy.get('input[name="q"]').type('discrete + ~metrizable')
 
     cy.contains(
       isLegacy

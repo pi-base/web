@@ -6,8 +6,6 @@
   import Examples from './Examples.svelte'
   import FormulaInput from '../Shared/Formula/Input'
   import Results from './Results.svelte'
-  import List from '../Spaces/List.svelte'
-  import Age from '../Shared/Age.svelte'
   import Cite from '../Shared/Cite.svelte'
 
   const text = writable('')
@@ -30,13 +28,13 @@
   }
 
   urlSearchParam('text', text)
-  urlSearchParam('formula', rawFormula)
+  urlSearchParam('q', rawFormula)
 
-  let title:string
+  let title: string
   $: if ($rawFormula.length > 0) {
     title = `π-Base, Search for \`${$rawFormula}\``
   } else {
-    title = "π-Base, Explore"
+    title = 'π-Base, Explore'
   }
 </script>
 
@@ -48,18 +46,20 @@
         class="form-control"
         name="text"
         placeholder="e.g. plank"
-        bind:value={$text} />
+        bind:value={$text}
+      />
     </div>
     <div class="form-group">
       <label class="form-label" for="formula">Filter by Formula</label>
       <FormulaInput
-        name="formula"
+        name="q"
         placeholder="e.g. compact + metrizable"
         raw={rawFormula}
         suggest={$suggest}
-        {formula} />
+        {formula}
+      />
     </div>
-    <Cite {title}/>
+    <Cite {title} />
   </div>
   <div class="col-8">
     {#if $text || $formula}

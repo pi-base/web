@@ -1,7 +1,7 @@
 <script lang="ts">
   import context from '../context'
   import { contributingUrl, mainBranch } from '../constants'
-  import Branch from './Shared/Icons/Branch.svelte';
+  import Branch from './Shared/Icons/Branch.svelte'
 
   import Link from './Nav/Link.svelte'
 
@@ -16,8 +16,8 @@
     <Link brand to="/">π-Base</Link>
 
     <div class="navbar-nav mr-auto">
-      <Link to="/explore">Explore</Link>
-      <Link to="/spaces">Spaces</Link>
+      <Link to="/spaces">Explore</Link>
+      <Link to="/spaces/all">Spaces</Link>
       <Link to="/properties">Properties</Link>
       <Link to="/theorems">Theorems</Link>
     </div>
@@ -25,7 +25,7 @@
     <div class="navbar-nav">
       <Link to="/dev">
         {#if showDev || !onMain}
-          <Branch/> {$source.branch}
+          <Branch /> {$source.branch}
         {:else}
           Advanced
         {/if}
