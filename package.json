@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "build": "./bin/build",
-    "lint": "prettier --write --plugin-search-dir=. '**/*.{ts,js,svelte,yaml}'",
-    "lint:check": "prettier --check --plugin-search-dir=. '**/*.{ts,js,svelte,yaml}'"
+    "lint": "prettier --write '**/*.{ts,js,svelte,yaml}'",
+    "lint:check": "prettier --check '**/*.{ts,js,svelte,yaml}'"
   },
   "devDependencies": {
     "@types/node": "^18.16.6",
