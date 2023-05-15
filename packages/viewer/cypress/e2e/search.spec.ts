@@ -1,6 +1,6 @@
 import { isLegacy } from '../constants'
 
-const { search } = isLegacy ? { search: '/spaces' } : { search: '/explore' }
+const search = '/spaces'
 
 describe('with a working remote', () => {
   beforeEach(() => {
@@ -16,6 +16,15 @@ describe('with a working remote', () => {
     cy.url().should('include', 'text=plank').should('include', 'q=metacom')
 
     cy.contains('Dieudonné plank')
+  })
+
+  // This is important to preserve backwards-compatible URLs that have been
+  // published to MathExchange &c.
+  it('loads from query params', () => {
+    const query = '~metrizable + compact'
+    cy.visit(`${search}?q=${query.replace('+', '%2B')}&text=square`)
+
+    cy.contains('Alexandroff square')
   })
 
   it('indicates when search is impossible', () => {

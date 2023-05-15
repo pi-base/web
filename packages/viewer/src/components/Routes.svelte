@@ -13,9 +13,12 @@
 <Route path="/" component={Home} />
 <main class="container">
   <div class="mt-3">
-    <Route path="/explore" component={Search} />
-    <Route path="/spaces" component={Spaces.List} />
-    <Route path="/spaces/:spaceId/properties/:propertyId" component={Traits.Show} />
+    <Route path="/spaces" component={Search} />
+    <Route path="/spaces/all" component={Spaces.List} />
+    <Route
+      path="/spaces/:spaceId/properties/:propertyId"
+      component={Traits.Show}
+    />
     <Route path="/spaces/:id/*" component={Spaces.Show} />
     <Route path="/properties" component={Properties.List} />
     <Route path="/properties/:id/*" component={Properties.Show} />
