@@ -24,7 +24,9 @@
     <p>
       If this is a bug, please help out by
       <a
-        href="https://github.com/pi-base/viewer/issues/new?title=Could not find {location.pathname + location.search}&body=If possible, add a description of how you got to this page, and what you'd expect to find here.">
+        href="https://github.com/pi-base/web/issues/new?title=Could not find {location.pathname +
+          location.search}&body=If possible, add a description of how you got to this page, and what you'd expect to find here."
+      >
         reporting it
       </a>.
     </p>
