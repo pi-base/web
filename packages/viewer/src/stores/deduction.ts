@@ -95,7 +95,20 @@ export function create(
     }))
 
     const checked = read(store).checked
-    const unchecked: Space[] = []
+
+    // HACK: there's a subtle timing issue where the first space is checked
+    // before the store's traits have been updated, causing deduction to fail
+    // to derive any traits. Adding a non-existent space is a hacky way of
+    // deferring the first real space's check until the store is ready.
+    const unchecked: Space[] = [
+      {
+        id: 0,
+        name: 'FIXME',
+        description: 'FIXME',
+        aliases: [],
+        refs: [],
+      },
+    ]
     allSpaces.forEach(s => {
       if (!checked.has(s.id)) {
         unchecked.push(s)

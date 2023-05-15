@@ -4,6 +4,12 @@ beforeEach(() => {
   cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
 })
 
+it('finds proofs for the first space', () => {
+  cy.visit('/spaces/S000001')
+
+  cy.contains('Completely Hausdorff')
+})
+
 it('shows derived proofs', () => {
   cy.visit('/spaces/S000154/properties/P000001')
 
