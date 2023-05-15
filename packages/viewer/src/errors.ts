@@ -5,16 +5,18 @@ type Meta = Record<string, unknown>
 
 export type Handler = (error: Error, meta?: Meta) => void
 
+type Environment = 'production' | 'deploy-preview' | 'dev'
+
 export function log(): Handler {
   return function handle(error: Error, meta: Meta = {}) {
     console.error(error, meta)
   }
 }
 
-export function sentry(dsn: string): Handler {
+export function sentry(dsn: string, environment: Environment): Handler {
   const release = `pi-base@${build.version}`
 
-  Sentry.init({ dsn, release })
+  Sentry.init({ dsn, release, environment })
 
   return function handle(error: Error, meta: Meta = {}) {
     Sentry.withScope(scope => {
