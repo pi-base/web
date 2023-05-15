@@ -1,4 +1,4 @@
-;<svg
+<svg
   width="2em"
   height="2em"
   viewBox="0 0 16 16"
