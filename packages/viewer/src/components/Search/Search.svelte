@@ -59,7 +59,7 @@
         {formula}
       />
     </div>
-    <Cite {title} />
+    {#key $rawFormula}<Cite {title} />{/key}
   </div>
   <div class="col-8">
     {#if $text || $formula}
