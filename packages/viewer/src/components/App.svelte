@@ -38,6 +38,6 @@
 
 <style global>
   svg {
-    fill:currentColor
+    fill: currentColor;
   }
 </style>

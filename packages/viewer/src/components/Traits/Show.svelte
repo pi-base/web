@@ -19,7 +19,7 @@
 
   const loading = load(
     traits,
-    (ts) =>
+    ts =>
       ts.lookup({
         spaceId,
         propertyId,
@@ -38,7 +38,7 @@
 
   <h1>
     {#if proof}
-      <Robot/>
+      <Robot />
     {/if}
     <Link.Space {space} />
     is

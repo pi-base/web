@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  let url = ``;
-  onMount(() => url = window.location.href);
-  export let title: string|undefined = undefined;
+  import { onMount } from 'svelte'
+  let url = ``
+  onMount(() => (url = window.location.href))
+  export let title: string | undefined = undefined
 </script>
 
 <div class="text-center p-2">
@@ -13,7 +13,8 @@
       {#if title}
         <cite>{title}.</cite>
       {:else}
-        <cite>π-Base, a community database of topological counterexamples.</cite>
+        <cite>π-Base, a community database of topological counterexamples.</cite
+        >
       {/if}
       Available at: {url}
       (Accessed: {new Date().toISOString().split('T')[0]}).

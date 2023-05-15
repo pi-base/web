@@ -9,4 +9,4 @@
   }
 </script>
 
-<Related mode="spaces" {related}/>
+<Related mode="spaces" {related} />
