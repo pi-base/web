@@ -1,5 +1,4 @@
 module.exports = {
-  parser: 'typescript',
   arrowParens: 'avoid',
   endOfLine: 'lf',
   trailingComma: 'all',
@@ -7,4 +6,5 @@ module.exports = {
   semi: false,
   singleQuote: true,
   useTabs: false,
+  plugins: ['prettier-plugin-svelte'],
 }

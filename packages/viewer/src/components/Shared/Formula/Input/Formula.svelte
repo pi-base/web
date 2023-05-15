@@ -38,12 +38,14 @@
   {name}
   {placeholder}
   bind:value={$raw}
-  on:keydown={handleKeyDown} />
+  on:keydown={handleKeyDown}
+/>
 
 {#if suggest && $store.suggest}
   <Suggestions
     suggestions={$store.suggestions}
     selected={$store.selected}
     onHover={store.setSelected}
-    onClick={store.expand} />
+    onClick={store.expand}
+  />
 {/if}

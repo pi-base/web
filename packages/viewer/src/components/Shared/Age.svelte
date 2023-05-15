@@ -4,12 +4,12 @@
 
   export let date: Date
 
-  $: age = readable('', (set) => {
+  $: age = readable('', set => {
     set(fromNow(date, { suffix: true }))
 
     const interval = setInterval(
       () => set(fromNow(date, { suffix: true })),
-      30 * 1000
+      30 * 1000,
     )
 
     return () => clearInterval(interval)

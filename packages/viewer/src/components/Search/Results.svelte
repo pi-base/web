@@ -12,7 +12,7 @@
   const store = search({ spaces, traits })
 
   let results: Space[]
-  store.subscribe((r) => (results = r))
+  store.subscribe(r => (results = r))
 
   $: store.search({ text, formula })
 </script>

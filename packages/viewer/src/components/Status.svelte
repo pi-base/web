@@ -9,7 +9,7 @@
 
   let timeout: NodeJS.Timeout
 
-  deduction.subscribe((state) => {
+  deduction.subscribe(state => {
     checked = state.checked.size
     total = state.all.size
 
@@ -38,7 +38,8 @@
         style="width: {progress}%"
         aria-valuenow={checked}
         aria-valuemin={0}
-        aria-valuemax={total} />
+        aria-valuemax={total}
+      />
     </div>
   </section>
 {/if}

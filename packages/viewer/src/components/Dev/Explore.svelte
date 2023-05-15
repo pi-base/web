@@ -36,7 +36,8 @@
         <Link
           type="button"
           getProps={() => ({ class: 'btn btn-outline-dark' })}
-          to="/dev/preview">
+          to="/dev/preview"
+        >
           Editor Preview
         </Link>
         <button type="button" class="btn btn-outline-dark" on:click={reset}>
