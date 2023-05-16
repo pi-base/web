@@ -1,5 +1,5 @@
 name: e2e
-on: 
+on:
   pull_request:
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8.x.x
-  
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash

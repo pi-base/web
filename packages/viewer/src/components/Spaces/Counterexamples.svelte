@@ -8,7 +8,7 @@
 
   const { theorems, traits } = context()
 
-  $: results = $theorems.all.filter((t) =>
+  $: results = $theorems.all.filter(t =>
     $traits.isCounterexample(t.converse, space),
   )
 </script>

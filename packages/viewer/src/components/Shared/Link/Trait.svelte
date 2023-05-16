@@ -8,6 +8,10 @@
 </script>
 
 <Link
-  to="/spaces/{Id.format('S', space.id)}/properties/{Id.format('P', property.id)}">
+  to="/spaces/{Id.format('S', space.id)}/properties/{Id.format(
+    'P',
+    property.id,
+  )}"
+>
   <slot />
 </Link>

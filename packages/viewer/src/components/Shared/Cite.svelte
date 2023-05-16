@@ -18,7 +18,8 @@
       {#if title}
         <cite>{title}.</cite>
       {:else}
-        <cite>π-Base, a community database of topological counterexamples.</cite>
+        <cite>π-Base, a community database of topological counterexamples.</cite
+        >
       {/if}
       Available at: {url}
       (Accessed: {new Date().toISOString().split('T')[0]}).

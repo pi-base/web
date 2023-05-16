@@ -7,7 +7,7 @@
   import { Filter, Link, Title, Typeset } from '../Shared'
 
   const index = list(
-    derived(context().properties, (ps) => ps.all),
+    derived(context().properties, ps => ps.all),
     {
       weights: { name: 0.7, aliases: 0.7, description: 0.3 },
       queryParam: 'filter',

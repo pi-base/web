@@ -9,4 +9,4 @@
   }
 </script>
 
-<Related mode="properties" {related}/>
+<Related mode="properties" {related} />

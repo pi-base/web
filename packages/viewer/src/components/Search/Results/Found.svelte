@@ -18,5 +18,6 @@
 {/if}
 
 <Table
-  spaces={results.sort((a,b) => a.id-b.id)}
-  properties={formula ? [...F.properties(formula)] : []} />
+  spaces={results.sort((a, b) => a.id - b.id)}
+  properties={formula ? [...F.properties(formula)] : []}
+/>

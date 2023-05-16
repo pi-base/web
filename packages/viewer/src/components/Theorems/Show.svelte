@@ -14,7 +14,7 @@
   export let id: string
 
   const ctx = context()
-  const load = ctx.load(ctx.theorems, (t) => t.find(id))
+  const load = ctx.load(ctx.theorems, t => t.find(id))
 </script>
 
 {#await load}
