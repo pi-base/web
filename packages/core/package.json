@@ -24,8 +24,9 @@
     "build:peg": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs -o src/Formula/Grammar.ts --cache src/Formula/Grammar.pegjs",
     "build": "pnpm build:peg && tsc",
     "dev": "pnpm build:peg && tsc --watch",
-    "test": "vitest",
-    "test:cov": "vitest --coverage"
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "debug": "^4.3.4",

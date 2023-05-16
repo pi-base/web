@@ -26,8 +26,9 @@
     "build": "tsc",
     "dev": "nodemon",
     "start": "ts-node --esm src/watch.ts",
-    "test": "vitest",
-    "test:cov": "vitest --coverage"
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",

@@ -4,7 +4,9 @@
   "scripts": {
     "build": "./bin/build",
     "lint": "prettier --write '**/*.{ts,js,svelte,yaml}'",
-    "lint:check": "prettier --check '**/*.{ts,js,svelte,yaml}'"
+    "lint:check": "prettier --check '**/*.{ts,js,svelte,yaml}'",
+    "test": "pnpm run --recursive test",
+    "test:cov": "pnpm run --recursive test:cov"
   },
   "devDependencies": {
     "@types/node": "^18.16.6",

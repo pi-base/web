@@ -9,8 +9,9 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "vite",
-    "test": "vitest",
-    "test:cov": "vitest --coverage",
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "test:watch": "vitest",
     "tsc": "tsc --noEmit",
     "validate": "svelte-check"
   },

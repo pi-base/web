@@ -6,6 +6,7 @@
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
   "postAttachCommand": {
     "compile": "pnpm run --filter compile dev",
+    "core": "pnpm run --filter core dev",
     "viewer": "pnpm run --filter viewer dev --host"
   },
   "forwardPorts": [
@@ -15,7 +16,7 @@
   "customizations": {
     "codespaces": {
       "openFiles": [
-        "README.md"
+        "doc/codespace/welcome.md"
       ],
       "repositories": {
         "pi-base/data": {
