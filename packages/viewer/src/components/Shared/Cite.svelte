@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import CopyButton from './CopyButton.svelte';
-  let url = "";
-  let markdown = ""
-  export let title: string|undefined = undefined;
+  import { onMount } from 'svelte'
+  import CopyButton from './CopyButton.svelte'
+  let url = ''
+  let markdown = ''
+  export let title: string | undefined = undefined
   onMount(() => {
     url = window.location.href
     markdown = `[${title}](${url})`
-  });
+  })
 </script>
 
 <div class="text-center p-2">
