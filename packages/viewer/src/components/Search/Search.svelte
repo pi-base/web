@@ -32,9 +32,17 @@
 
   let title: string
   $: if ($rawFormula.length > 0) {
-    title = `π-Base, Search for \`${$rawFormula}\``
+    if ($text.length > 0) {
+      title = `π-Base, Search for \`${$rawFormula}\` matching \`${$text}\``
+    } else {
+      title = `π-Base, Search for \`${$rawFormula}\``
+    }
   } else {
-    title = 'π-Base, Explore'
+    if ($text.length > 0) {
+      title = `π-Base, Search matching \`${$text}\``
+    } else {
+      title = 'π-Base, Explore'
+    }
   }
 </script>
 
@@ -59,7 +67,7 @@
         {formula}
       />
     </div>
-    {#key $rawFormula}<Cite {title} />{/key}
+    {#key [$rawFormula, $text]}<Cite {title} />{/key}
   </div>
   <div class="col-8">
     {#if $text || $formula}
