@@ -1,53 +1,58 @@
 import { beforeEach, afterAll, expect, it } from 'vitest'
-import * as cp from 'child_process'
-import * as path from 'path'
-import * as fs from 'fs'
+import { spawnSync } from 'node:child_process'
+import { readFile, stat, unlink } from 'node:fs/promises'
+import { join } from 'node:path'
 
-const main = path.join(__dirname, '..', 'src', 'main.ts')
-const repo = path.join(__dirname, '..', 'test', 'repo')
-const out = path.join(repo, 'out.json')
+const main = join(__dirname, '..', 'src', 'main.ts')
+const repo = join(__dirname, '..', 'test', 'repo')
+const out = join(repo, 'out.json')
 
-// Note: this runs lib/main.js, which it expects to be compiled and current
-// You may need to manually run `yarn build`
-function run(dir: string): { output: string; error: boolean } {
-  try {
-    const output = cp
-      .execSync(`node_modules/.bin/ts-node --esm ${main}`, {
-        env: {
-          GITHUB_REF: 'refs/heads/test',
-          GITHUB_SHA: 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
-          GITHUB_WORKSPACE: path.join(repo, dir),
-          INPUT_OUT: out,
-        },
-      })
-      .toString()
+async function run(dir: string) {
+  const { stdout, stderr, error, status } = spawnSync(
+    'pnpm',
+    ['exec', 'ts-node', '--esm', main],
+    {
+      env: {
+        GITHUB_REF: 'refs/heads/test',
+        GITHUB_SHA: 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
+        GITHUB_WORKSPACE: join(repo, dir),
+        INPUT_OUT: out,
+        PATH: process.env.PATH,
+      },
+    },
+  )
 
-    return { output, error: false }
-  } catch (e: any) {
+  if (error) {
+    throw error
+  }
+
+  if (status !== 0) {
     return {
-      output: `${e.stdout.toString()}\n${e.stderr.toString()}`,
+      output: `${stdout}\n${stderr}`,
       error: true,
     }
   }
+
+  return { output: stdout.toString(), error: false }
 }
 
-function cleanup() {
-  if (fs.existsSync(out)) {
-    fs.unlinkSync(out)
+async function cleanup() {
+  if (await exists(out)) {
+    await unlink(out)
   }
 }
 
 beforeEach(cleanup)
 afterAll(cleanup)
 
-it.todo('builds a bundle', () => {
-  const { output, error } = run('valid')
-  expect(error).toBe(false)
+it('builds a bundle', async () => {
+  const { output, error } = await run('valid')
   expect(output).toContain(
     `::debug::Compiling repo=${repo}/valid to out=${out}`,
   )
+  expect(error).toBe(false)
 
-  const bundle = JSON.parse(fs.readFileSync(out).toString())
+  const bundle = JSON.parse((await readFile(out)).toString())
 
   expect(bundle.properties.length).toEqual(3)
   expect(bundle.spaces.length).toEqual(2)
@@ -55,12 +60,24 @@ it.todo('builds a bundle', () => {
   expect(bundle.traits.length).toEqual(3)
 })
 
-it.todo('writes error messages for invalid bundles', () => {
-  const { output, error } = run('invalid')
+it('writes error messages for invalid bundles', async () => {
+  const { output, error } = await run('invalid')
 
   expect(error).toEqual(true)
-  expect(fs.existsSync(out)).toEqual(false)
+  expect(await exists(out)).toEqual(false)
   expect(output).toContain(
     '::error file=theorems/T000001.md::if references unknown property=P100016',
   )
 })
+
+async function exists(path: string) {
+  try {
+    await stat(path)
+    return true
+  } catch (e: any) {
+    if (e.code === 'ENOENT') {
+      return false
+    }
+    throw e
+  }
+}
