@@ -1,49 +1,15 @@
-🎉 Welcome to your Codespace
+[![test](https://github.com/pi-base/web/actions/workflows/test.yaml/badge.svg)](https://github.com/pi-base/web/actions/workflows/test.yaml)
+[![e2e](https://github.com/pi-base/web/actions/workflows/e2e.yaml/badge.svg)](https://github.com/pi-base/web/actions/workflows/e2e.yaml)
 
-Shortly after your codespace starts, you should see three running background
-processes –
+Software monorepo for the [π-base](https://topology.pi-base.org) project.
 
-- `compile` – watches `/workspaces/web/data` and serves its contents at
-  `localhost:3141/refs/heads/(:branch)`, consistent with the production S3 API.
-- `viewer` – watches and servers `/workspaces/web/packages/viewer`, rebuilding
-  and reloading on changes.
+🔗s
 
-Note that changes to `packages/core` do not currently automatically trigger a 
-rebuild of the package and its dependencies.
+- [π-base data](https://github.com/pi-base/data)
 
-# Usage
+# Documentation
 
-## Viewing the Web UI
-
-As the viewer starts up, you may see an `Open in Browser` popup. You can always
-access the browser preview by going to the `Ports` tab, and clicking the 
-`Open in Browser` globe icon for port `8080`.
-
-## Checking Compiled Data
-
-In a console run
-
-```bash
-$ curl -s localhost:3141/refs/heads/master | jq '.version'
-```
-
-## Troubleshooting
-
-### Starting the compile process manually
-
-```bash
-/workspaces/web $ pnpm run --filter compile dev
-```
-
-### Cannot find module '@pi-base/core'
-
-The `@pi-base/core` package is expected to be built and available in the local
-workspace. It should be pre-built when the workspace is created, but you can
-rebuild it with.
-
-```bash
-/workspaces/web $ pnpm run --filter core build
-```
+Various guides are available in the [`doc`](./doc/) directory.
 
 # Copyright and License
 
