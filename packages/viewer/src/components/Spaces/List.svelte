@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { derived } from 'svelte/store'
+  import { derived, type Readable } from 'svelte/store'
 
-  import context from '../../context'
   import { list } from '../../stores'
 
   import { Filter, Link, Title, Typeset } from '../Shared'
+  import type { Collection, Space } from 'src/models'
+
+  export let spaces: Readable<Collection<Space>>
 
   const index = list(
-    derived(context().spaces, ss => ss.all),
+    derived(spaces, ss => ss.all),
     {
       weights: { name: 0.7, aliases: 0.7, description: 0.3 },
       queryParam: 'filter',

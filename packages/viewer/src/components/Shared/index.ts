@@ -1,5 +1,4 @@
 export * as Icons from './Icons'
-export * as Tabs from './Tabs/index'
 
 export { default as Age } from './Age.svelte'
 export { default as Aliases } from './Aliases.svelte'

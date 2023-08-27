@@ -4,12 +4,12 @@ import remarkParse from 'remark-parse'
 import remarkMath from 'remark-math'
 import remarkRehype from 'remark-rehype'
 import rehypeKatex from 'rehype-katex'
-import rehypeTruncate from 'rehype-truncate'
 import rehypeStringify from 'rehype-stringify'
 
 import { Linkers } from './Parser/types.js'
 import { links } from './Parser/links.js'
 import { references } from './Parser/references.js'
+import { truncate as truncator } from './Parser/truncate.js'
 import { unnest } from './Parser/unnest.js'
 
 export type Options = {
@@ -56,7 +56,7 @@ export function parser({
       // Convert math nodes to hast
       .use(rehypeKatex)
       // Optionally trim mdast to a minimal preview
-      .use(rehypeTruncate, {
+      .use(truncator, {
         maxChars: 100,
         disable: !truncate,
         ignoreTags: ['math', 'inline-math'],

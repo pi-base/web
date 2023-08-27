@@ -44,7 +44,7 @@ export function subscribeUntil<S>(
     const unsubscribe = store.subscribe(state => {
       if (condition(state)) {
         resolve()
-        unsubscribe()
+        unsubscribe && unsubscribe()
       }
     })
   })

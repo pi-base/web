@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Link } from 'svelte-routing'
   import Cite from './Shared/Cite.svelte'
 
   import { contributingUrl } from '../constants'
@@ -12,21 +11,21 @@
     <div class="ml-3 mt-4">
       <p>
         ➜ Search spaces by name/description:
-        <Link to="/spaces?text=compactification" class="text-info"
-          >compactifications</Link
+        <a href="/spaces?text=compactification" class="text-info"
+          >compactifications</a
         >
       </p>
       <p>
         ➜ Search spaces by properties:
-        <Link
-          to="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
-          class="text-info">non-metric continua</Link
+        <a
+          href="/spaces?q=compact%20%2B%20connected%20%2B%20t_2%20%2B%20~metrizable"
+          class="text-info">non-metric continua</a
         >
       </p>
       <p class="mb-0">
         ➜ Find counterexamples:
-        <Link to="/theorems/T000057" class="text-info"
-          >first countable spaces need not be locally pseudometrizable</Link
+        <a href="/theorems/T000057" class="text-info"
+          >first countable spaces need not be locally pseudometrizable</a
         >
       </p>
     </div>

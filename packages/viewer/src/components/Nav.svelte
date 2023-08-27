@@ -3,8 +3,6 @@
   import { contributingUrl, mainBranch } from '../constants'
   import Branch from './Shared/Icons/Branch.svelte'
 
-  import Link from './Nav/Link.svelte'
-
   const { showDev, source } = context()
 
   $: onMain = $source.branch === mainBranch
@@ -13,23 +11,23 @@
 
 <nav class="navbar navbar-expand-lg navbar-{bg} bg-{bg}">
   <div class="container">
-    <Link brand to="/">π-Base</Link>
+    <a class="navbar-brand" href="/">π-Base</a>
 
     <div class="navbar-nav mr-auto">
-      <Link to="/spaces">Explore</Link>
-      <Link to="/spaces/all">Spaces</Link>
-      <Link to="/properties">Properties</Link>
-      <Link to="/theorems">Theorems</Link>
+      <a class="nav-link" href="/spaces">Explore</a>
+      <a class="nav-link" href="/spaces/all">Spaces</a>
+      <a class="nav-link" href="/properties">Properties</a>
+      <a class="nav-link" href="/theorems">Theorems</a>
     </div>
 
     <div class="navbar-nav">
-      <Link to="/dev">
+      <a class="nav-link" href="/dev">
         {#if showDev || !onMain}
           <Branch /> {$source.branch}
         {:else}
           Advanced
         {/if}
-      </Link>
+      </a>
       <a class="nav-link" href={contributingUrl}>Contribute</a>
     </div>
   </div>

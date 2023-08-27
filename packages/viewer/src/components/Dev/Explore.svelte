@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Link } from 'svelte-routing'
   import context from '../../context'
   import Log from './Log.svelte'
 
@@ -33,13 +32,9 @@
     <tr>
       <td colspan="2">
         <Log>Log to Console</Log>
-        <Link
-          type="button"
-          getProps={() => ({ class: 'btn btn-outline-dark' })}
-          to="/dev/preview"
-        >
+        <a type="button" class="btn btn-outline-dark" href="/dev/preview">
           Editor Preview
-        </Link>
+        </a>
         <button type="button" class="btn btn-outline-dark" on:click={reset}>
           Reset
         </button>

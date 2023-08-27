@@ -1,56 +1,19 @@
 <script lang="ts">
-  import context from '../../context'
-  import {
-    Aliases,
-    Loading,
-    NotFound,
-    References,
-    Tabs,
-    Title,
-    Typeset,
-  } from '../Shared'
-  import Counterexamples from './Counterexamples.svelte'
-  import Properties from './Properties.svelte'
+  import type { Space } from 'src/models'
+  import { Aliases, Title, Typeset } from '../Shared'
 
-  export let id: string
-
-  const ctx = context()
-  const load = ctx.load(ctx.spaces, s => s.find(id))
+  export let space: Space
 </script>
 
-{#await load}
-  <Loading />
-{:then space}
-  <Title title={space.name} />
+<Title title={space.name} />
 
-  <h1>
-    <Typeset body={space.name} />
-    {#if space?.aliases}
-      <Aliases aliases={space.aliases} />
-    {/if}
-  </h1>
+<h1>
+  <Typeset body={space.name} />
+  {#if space?.aliases}
+    <Aliases aliases={space.aliases} />
+  {/if}
+</h1>
 
-  <section class="description">
-    <Typeset body={space.description} />
-  </section>
-
-  <Tabs.Tabs initial="properties">
-    <Tabs.Nav>
-      <Tabs.Link to="properties">Properties</Tabs.Link>
-      <Tabs.Link to="theorems">Theorems</Tabs.Link>
-      <Tabs.Link to="references">References</Tabs.Link>
-    </Tabs.Nav>
-
-    <Tabs.Tab path="properties">
-      <Properties {space} />
-    </Tabs.Tab>
-    <Tabs.Tab path="theorems">
-      <Counterexamples {space} />
-    </Tabs.Tab>
-    <Tabs.Tab path="references">
-      <References references={space.refs} />
-    </Tabs.Tab>
-  </Tabs.Tabs>
-{:catch}
-  <NotFound>Could not find space {id}</NotFound>
-{/await}
+<section class="description">
+  <Typeset body={space.description} />
+</section>

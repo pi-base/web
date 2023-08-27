@@ -24,26 +24,26 @@ export type Result = {
   sha: string
 }
 
-export const sync: Sync = async (
-  host: string,
-  branch: string,
-  etag?: string,
-) => {
-  trace({ event: 'remote_fetch_started', host, branch })
-  const result = await pb.bundle.fetch({ host, branch, etag })
+export function sync(
+  fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
+): Sync {
+  return async (host: string, branch: string, etag?: string) => {
+    trace({ event: 'remote_fetch_started', host, branch })
+    const result = await pb.bundle.fetch({ host, branch, etag, fetch })
 
-  if (result) {
-    trace({ event: 'remote_fetch_complete', result })
-    return {
-      spaces: transform(space, result.bundle.spaces),
-      properties: transform(property, result.bundle.properties),
-      traits: transform(trait, result.bundle.traits),
-      theorems: transform(theorem, result.bundle.theorems),
-      etag: result.etag,
-      sha: result.bundle.version.sha,
+    if (result) {
+      trace({ event: 'remote_fetch_complete', result })
+      return {
+        spaces: transform(space, result.bundle.spaces),
+        properties: transform(property, result.bundle.properties),
+        traits: transform(trait, result.bundle.traits),
+        theorems: transform(theorem, result.bundle.theorems),
+        etag: result.etag,
+        sha: result.bundle.version.sha,
+      }
+    } else if (etag) {
+      trace({ event: 'bundle_unchanged', etag })
     }
-  } else if (etag) {
-    trace({ event: 'bundle_unchanged', etag })
   }
 }
 

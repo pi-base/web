@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { derived } from 'svelte/store'
-  import context from '../../context'
+  import { derived, type Readable } from 'svelte/store'
   import { list } from '../../stores'
 
   import { Filter, Formula, Link, Title, Typeset } from '../Shared'
+  import type { Theorems } from 'src/models'
+
+  export let theorems: Readable<Theorems>
 
   const index = list(
-    derived(context().theorems, ts => ts.all),
+    derived(theorems, ts => ts.all),
     {
       weights: { name: 0.7, description: 0.3 },
       queryParam: 'filter',

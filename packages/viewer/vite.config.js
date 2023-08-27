@@ -1,19 +1,15 @@
+import { sveltekit } from '@sveltejs/kit/vite'
 import { defineConfig } from 'vitest/config'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import sveltePreprocess from 'svelte-preprocess'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    svelte({
-      preprocess: [sveltePreprocess({ typescript: true })],
-    }),
-  ],
+  plugins: [sveltekit()],
   test: {
+    include: ['src/**/*.{test,spec}.{js,ts}'],
     coverage: {
-      lines: 80.17,
+      lines: 79.91,
       branches: 87.84,
-      statements: 80.17,
+      statements: 79.91,
       functions: 80.61,
       skipFull: true,
       thresholdAutoUpdate: true,

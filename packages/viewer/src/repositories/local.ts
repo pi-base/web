@@ -19,9 +19,29 @@ export type Local<T> = {
   subscribe(source: Source<T>): void
 }
 
+const nullStorage: Storage = {
+  getItem: () => null,
+  setItem: () => {},
+  length: 0,
+  clear: () => {},
+  key: () => null,
+  removeItem: () => {},
+}
+
+let defaultStorage = nullStorage
+try {
+  localStorage.setItem('__storage_test__', '1')
+  localStorage.removeItem('__storage_test__')
+
+  defaultStorage = localStorage
+} catch (e) {
+  // localStorage is not available, use nullStorage
+}
+
 function build<T extends Record<string, unknown>>(
   { serializers, initial }: Spec<T>,
-  storage = localStorage,
+  // storage = localStorage,
+  storage = defaultStorage,
   prefix = 'pi-base',
   timeout = 1000,
 ): Local<T> {

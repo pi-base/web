@@ -1,3 +1,4 @@
+import { browser } from '$app/environment'
 import { onMount } from 'svelte'
 import type { Writable } from 'svelte/store'
 
@@ -7,6 +8,10 @@ export default function urlSearchParam(
   name: string,
   { subscribe, set }: Writable<string>,
 ) {
+  if (!browser) {
+    return
+  }
+
   function parse() {
     return new URL(location.href).searchParams
   }
