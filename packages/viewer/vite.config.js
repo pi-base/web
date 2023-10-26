@@ -7,10 +7,10 @@ export default defineConfig({
   test: {
     include: ['src/**/*.{test,spec}.{js,ts}'],
     coverage: {
-      lines: 79.91,
-      branches: 87.84,
-      statements: 79.91,
-      functions: 80.61,
+      lines: 80.01,
+      branches: 87.97,
+      statements: 80.01,
+      functions: 81,
       skipFull: true,
       thresholdAutoUpdate: true,
     },

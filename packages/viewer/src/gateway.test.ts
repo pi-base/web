@@ -21,7 +21,7 @@ it.todo('can fetch successfully', async () => {
 
   vi.spyOn(bundle, 'fetch').mockImplementation(async () => remote)
 
-  const result = await sync('example', 'test')
+  const result = await sync(fetch)('example', 'test')
 
   expect(result).toEqual({
     spaces: [],
@@ -49,7 +49,7 @@ it.todo('notifies if the etag matches', async () => {
 
   vi.spyOn(bundle, 'fetch').mockImplementation(async () => undefined)
 
-  const result = await sync('example', 'test', current.etag)
+  const result = await sync(fetch)('example', 'test', current.etag)
 
   expect(result).toEqual(undefined)
   expect(trace.mock.calls).toEqual([

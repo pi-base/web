@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { goto } from '$app/navigation'
-  import context from '../../context'
+  import context from '@/context'
 
   export let body: string
   export let truncated = false

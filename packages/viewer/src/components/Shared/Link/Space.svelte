@@ -1,6 +1,6 @@
 <script lang="ts">
   import Typeset from '../Typeset.svelte'
-  import { Id } from '../../../models'
+  import { Id } from '@/models'
 
   export let space: { id: number; name: string }
 </script>

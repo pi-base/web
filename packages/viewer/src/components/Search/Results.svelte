@@ -1,7 +1,7 @@
 <script lang="ts">
-  import context from '../../context'
-  import { search } from '../../stores'
-  import type { Formula, Property, Space } from '../../models'
+  import context from '@/context'
+  import { search } from '@/stores'
+  import type { Formula, Property, Space } from '@/models'
   import Found from './Results/Found.svelte'
   import NotFound from './Results/NotFound.svelte'
 

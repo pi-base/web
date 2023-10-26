@@ -1,8 +1,8 @@
 <script lang="ts">
-  import context from '../../../context'
-  import { Formula } from '../../Shared'
-  import type { Formula as F, Property } from '../../../models'
-  import { disprove } from '../../../stores/deduction'
+  import context from '@/context'
+  import { Formula } from '@/components/Shared'
+  import type { Formula as F, Property } from '@/models'
+  import { disprove } from '@/stores/deduction'
   import Disprovable from './Disprovable.svelte'
 
   export let text: string | undefined

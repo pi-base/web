@@ -1,9 +1,8 @@
 <script lang="ts">
   import type { Atom } from '@pi-base/core'
 
-  import Link from '../Link'
-  import Typeset from '../Typeset.svelte'
-  import type { Property } from '../../../models'
+  import { Link, Typeset } from '@/components/Shared'
+  import type { Property } from '@/models'
 
   export let value: Atom<Property>
   export let link: boolean = true

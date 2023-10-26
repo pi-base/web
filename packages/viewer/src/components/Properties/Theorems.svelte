@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Table as Theorems } from '../Theorems'
-  import type { Property } from '../../models'
-  import context from '../../context'
+  import type { Property } from '@/models'
+  import context from '@/context'
 
   export let property: Property
 

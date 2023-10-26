@@ -1,10 +1,9 @@
 <script lang="ts">
   import Fuse from 'fuse.js'
-  import { Icons, Link } from '../Shared'
+  import { Icons, Link, Typeset } from '../Shared'
   import { Value } from '../Traits'
-  import context from '../../context'
-  import type { Property, Space, Trait, Traits } from '../../models'
-  import Typeset from '../Shared/Typeset.svelte'
+  import context from '@/context'
+  import type { Property, Space, Trait, Traits } from '@/models'
 
   export let mode: 'spaces' | 'properties'
   export let related: (traits: Traits) => [Space, Property, Trait][]

@@ -2,7 +2,7 @@
   import { Link } from '../Shared'
   import { Table as Theorems } from '../Theorems'
   import Value from './Value.svelte'
-  import type { Property, Space, Theorem, Trait } from '../../models'
+  import type { Property, Space, Theorem, Trait } from '@/models'
 
   export let space: Space
   export let theorems: Theorem[]

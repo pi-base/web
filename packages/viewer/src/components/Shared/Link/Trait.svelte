@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { Property, Space } from '../../../models'
-  import { Id } from '../../../models'
+  import { type Property, type Space, Id } from '@/models'
 
   export let property: Property
   export let space: Space

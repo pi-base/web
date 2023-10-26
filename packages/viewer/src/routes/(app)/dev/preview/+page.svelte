@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Preview } from '../../../../components/Dev'
+  import { Preview } from '@/components/Dev'
 </script>
 
 <Preview />

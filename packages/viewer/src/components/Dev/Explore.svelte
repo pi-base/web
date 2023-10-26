@@ -1,5 +1,5 @@
 <script lang="ts">
-  import context from '../../context'
+  import context from '@/context'
   import Log from './Log.svelte'
 
   const { spaces, properties, theorems, traits } = context()

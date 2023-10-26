@@ -8,7 +8,7 @@
     Title,
     Typeset,
   } from '../Shared'
-  import context from '../../context'
+  import context from '@/context'
   import Proof from './Proof.svelte'
   import { Robot } from '../Shared/Icons'
 

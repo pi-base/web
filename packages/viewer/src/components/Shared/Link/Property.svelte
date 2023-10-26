@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Typeset from '../Typeset.svelte'
-  import { Id } from '../../../models'
+  import { Typeset } from '@/components/Shared'
+  import { Id } from '@/models'
 
   export let property: { id: number; name: string }
 </script>

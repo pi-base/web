@@ -43,7 +43,7 @@
     "@types/unist": "^2.0.9",
     "cypress": "^12.17.4",
     "svelte": "^3.59.2",
-    "svelte-check": "^1.6.0",
+    "svelte-check": "^3.5.2",
     "svelte-preprocess": "^5.0.4",
     "tslib": "^2.6.2"
   }

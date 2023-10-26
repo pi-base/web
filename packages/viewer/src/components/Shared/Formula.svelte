@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Formula, Property } from '../../models'
+  import type { Formula, Property } from '@/models'
 
   import Atom from './Formula/Atom.svelte'
   import Compound from './Formula/Compound.svelte'

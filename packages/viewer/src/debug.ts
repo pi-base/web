@@ -10,7 +10,9 @@ export type Event =
   | { event: 'set_host'; host: string }
   | { event: 'build_typesetter' }
 
-export function trace(payload: Event, log = debug) {
+type Logger = (message: string, ...args: unknown[]) => any
+
+export function trace(payload: Event, log: Logger = debug) {
   const { event, ...rest } = payload
 
   switch (event) {

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { And, Or } from '@pi-base/core'
 
-  import type { Property } from '../../../models'
+  import type { Property } from '@/models'
 
   import Formula from '../Formula.svelte'
 

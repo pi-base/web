@@ -1,7 +1,7 @@
 <script lang="ts">
   import { derived, type Readable } from 'svelte/store'
 
-  import { list } from '../../stores'
+  import { list } from '@/stores'
 
   import { Filter, Link, Title, Typeset } from '../Shared'
   import type { Collection, Property } from 'src/models'

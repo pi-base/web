@@ -17,6 +17,9 @@
 {#each examples as { label, search } (label)}
   <article>
     <h5>{label}</h5>
-    <pre class="example" on:click={() => select(search)}>{search}</pre>
+    <pre
+      class="example"
+      on:click={() => select(search)}
+      on:keydown={() => select(search)}>{search}</pre>
   </article>
 {/each}

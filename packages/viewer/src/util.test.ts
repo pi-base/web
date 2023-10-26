@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { writable } from 'svelte/store'
 
-import { eachTick, read, subscribeUntil } from './util'
+import { capitalize, eachTick, read, subscribeUntil } from './util'
 
 describe('eachTick', () => {
   it('iterates through a list', async () => {
@@ -46,5 +46,11 @@ describe('subscribeUntil', () => {
     store.set(10)
     await wait
     expect(done).toEqual(true)
+  })
+})
+
+describe('capitalize', () => {
+  it('capitalizes the first letter', () => {
+    expect(capitalize('hello')).toEqual('Hello')
   })
 })

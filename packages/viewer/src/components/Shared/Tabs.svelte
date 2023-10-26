@@ -1,8 +1,5 @@
-<script lang="ts">
+<script lang="ts" generics="Tab extends string">
   import { capitalize } from '@/util'
-
-  type T = $$Generic
-  type Tab = T & string
 
   export let tabs: readonly Tab[]
   export let tab: Tab

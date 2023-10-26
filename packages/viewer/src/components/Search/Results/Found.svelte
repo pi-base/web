@@ -1,8 +1,8 @@
 <script lang="ts">
   import { formula as F } from '@pi-base/core'
-  import { Formula } from '../../Shared'
-  import { Table } from '../../Traits'
-  import type { Property, Space } from '../../../models'
+  import { Formula } from '@/components/Shared'
+  import { Table } from '@/components/Traits'
+  import type { Property, Space } from '@/models'
 
   export let text: string | undefined
   export let formula: F.Formula<Property> | undefined

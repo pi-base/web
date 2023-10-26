@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Theorem } from '../../models'
+  import type { Theorem } from '@/models'
   import { Formula, Link } from '../Shared'
 
   export let theorems: Theorem[] = []

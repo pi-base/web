@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { Formula } from '../../Shared'
-  import { Table as Theorems } from '../../Theorems'
-  import type { Formula as F, Property, Theorem } from '../../../models'
+  import { Formula } from '@/components/Shared'
+  import { Table as Theorems } from '@/components/Theorems'
+  import type { Formula as F, Property, Theorem } from '@/models'
 
   export let formula: F<Property>
   export let proof: Theorem[] | 'tautology'
