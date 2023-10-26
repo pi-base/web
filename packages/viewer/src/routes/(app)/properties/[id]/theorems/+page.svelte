@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Theorems from '../../../../../components/Properties/Theorems.svelte'
+  import { Show } from '@/components/Properties'
   import type { PageData } from './$types'
 
   export let data: PageData
 </script>
 
-<Theorems property={data.property} />
+<Show property={data.property} tab="theorems" />

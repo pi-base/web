@@ -1,13 +1,14 @@
 <script lang="ts">
   import type { Space } from 'src/models'
-  import { Aliases, References, Title, Typeset } from '../Shared'
+  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
-  import { capitalize } from '@/util'
 
   export let space: Space
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
+
+  const tabs = ['properties', 'theorems', 'references'] as const
 </script>
 
 <Title title={space.name} />
@@ -23,18 +24,9 @@
   <Typeset body={space.description} />
 </section>
 
-<ul class="nav nav-tabs">
-  {#each ['properties', 'theorems', 'references'] as name}
-    <li class="nav-item">
-      <a
-        class={`nav-link ${name === tab ? 'active' : ''}`}
-        href={rel ? `${rel}/${name}` : name}>{capitalize(name)}</a
-      >
-    </li>
-  {/each}
-</ul>
+<Tabs {tabs} {tab} {rel} />
 
-{#if tab === 'properties' || !tab}
+{#if tab === 'properties'}
   <Properties {space} />
 {:else if tab === 'theorems'}
   <Counterexamples {space} />

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Converse from '../../../../../components/Theorems/Converse.svelte'
+  import { Show } from '@/components/Theorems'
   import type { PageData } from './$types'
 
   export let data: PageData
 </script>
 
-<Converse theorem={data.theorem} />
+<Show theorem={data.theorem} tab="converse" />

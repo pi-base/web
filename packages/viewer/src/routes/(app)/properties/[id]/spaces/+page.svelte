@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Spaces from '../../../../../components/Properties/Spaces.svelte'
+  import { Show } from '@/components/Properties'
   import type { PageData } from './$types'
 
   export let data: PageData
 </script>
 
-<Spaces property={data.property} />
+<Show property={data.property} tab="spaces" />

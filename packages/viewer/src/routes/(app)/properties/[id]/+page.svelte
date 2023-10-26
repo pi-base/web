@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Default from './spaces/+page.svelte'
+  import { Show } from '@/components/Properties'
   import type { PageData } from './$types'
+  import { page } from '$app/stores'
 
   export let data: PageData
 </script>
 
-<Default {data} />
+<Show property={data.property} tab="spaces" rel={$page.url.pathname} />

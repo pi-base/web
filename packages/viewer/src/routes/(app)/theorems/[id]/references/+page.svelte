@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { References } from '../../../../../components/Shared'
+  import { Show } from '@/components/Theorems'
   import type { PageData } from './$types'
 
   export let data: PageData
 </script>
 
-<References references={data.theorem.refs} />
+<Show theorem={data.theorem} tab="references" />

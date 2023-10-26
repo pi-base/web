@@ -1,9 +1,14 @@
 <script lang="ts">
   import type { Theorem } from 'src/models'
-  import { Title, Typeset } from '../Shared'
+  import { References, Tabs, Title, Typeset } from '../Shared'
   import Name from './Name.svelte'
+  import Converse from './Converse.svelte'
 
   export let theorem: Theorem
+  export let tab: 'converse' | 'references'
+  export let rel: string | undefined = undefined
+
+  const tabs = ['converse', 'references'] as const
 </script>
 
 <Title title={theorem.name} />
@@ -15,3 +20,11 @@
 <section class="description">
   <Typeset body={theorem.description} />
 </section>
+
+<Tabs {tabs} {tab} {rel} />
+
+{#if tab === 'converse'}
+  <Converse {theorem} />
+{:else if tab === 'references'}
+  <References references={theorem.refs} />
+{/if}

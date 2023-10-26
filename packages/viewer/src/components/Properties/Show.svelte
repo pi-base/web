@@ -1,8 +1,14 @@
 <script lang="ts">
   import type { Property } from 'src/models'
-  import { Aliases, Title, Typeset } from '../Shared'
+  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import Spaces from './Spaces.svelte'
+  import Theorems from './Theorems.svelte'
 
   export let property: Property
+  export let tab: 'spaces' | 'theorems' | 'references'
+  export let rel: string | undefined = undefined
+
+  const tabs = ['spaces', 'theorems', 'references'] as const
 </script>
 
 <Title title={property.name} />
@@ -17,3 +23,13 @@
 <section class="description">
   <Typeset body={property.description} />
 </section>
+
+<Tabs {tabs} {tab} {rel} />
+
+{#if tab === 'spaces'}
+  <Spaces {property} />
+{:else if tab === 'theorems'}
+  <Theorems {property} />
+{:else if tab === 'references'}
+  <References references={property.refs} />
+{/if}
