@@ -11,7 +11,6 @@ import type {
   DeducedTrait,
   Formula,
   Property,
-  Proof,
   Space,
   Theorem,
   Theorems,

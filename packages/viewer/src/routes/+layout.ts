@@ -5,7 +5,10 @@ import { sync } from '../gateway'
 
 export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
   const dev = host.match(/(dev(elopment)?[.-]|localhost)/) !== null
-  const errorEnv = ['topology.pi-base.org', 'topology.pages.dev'].includes(host)
+  const errorEnv: errors.Environment = [
+    'topology.pi-base.org',
+    'topology.pages.dev',
+  ].includes(host)
     ? 'production'
     : host.includes('pages.dev')
     ? 'deploy-preview'
@@ -13,10 +16,7 @@ export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
 
   const errorHandler = dev
     ? errors.log()
-    : errors.sentry(
-        'https://0fa430dd1dc347e2a82c413d8e3acb75@o397472.ingest.sentry.io/5251960',
-        errorEnv,
-      )
+    : errors.sentry({ environment: errorEnv })
 
   const context = initialize({
     showDev: dev,

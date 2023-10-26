@@ -17,6 +17,9 @@ const config = {
         exclude: ['<all>'],
       },
     }),
+    alias: {
+      '@': './src',
+    },
     files: {
       assets: 'public',
     },

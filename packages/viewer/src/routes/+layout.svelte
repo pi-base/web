@@ -3,11 +3,11 @@
 
   import type { LayoutData } from './$types'
 
-  import { set } from '../context'
+  import { set } from '@/context'
 
-  import Nav from '../components/Nav.svelte'
-  import Status from '../components/Status.svelte'
-  import Footer from '../components/Footer.svelte'
+  import Nav from '@/components/Nav.svelte'
+  import Status from '@/components/Status.svelte'
+  import Footer from '@/components/Footer.svelte'
 
   export let data: LayoutData
 
