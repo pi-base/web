@@ -6,6 +6,7 @@ Software monorepo for the [π-base](https://topology.pi-base.org) project.
 🔗s
 
 - [π-base data](https://github.com/pi-base/data)
+- Error monitoring - [Sentry](https://james-dabbs.sentry.io/projects/pi-base/?project=5251960&statsPeriod=30d)
 
 # Documentation
 
