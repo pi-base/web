@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { References } from '../../../../../components/Shared'
+  import { Show } from '@/components/Spaces'
   import type { PageData } from './$types'
 
   export let data: PageData
 </script>
 
-<References references={data.space.refs} />
+<Show space={data.space} tab="references" />

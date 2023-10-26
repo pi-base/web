@@ -1,8 +1,8 @@
 <script lang="ts">
-  import Counterexamples from '../../../../../components/Spaces/Counterexamples.svelte'
+  import { Show } from '@/components/Spaces'
   import type { PageData } from './$types'
 
   export let data: PageData
 </script>
 
-<Counterexamples space={data.space} />
+<Show space={data.space} tab="theorems" />
