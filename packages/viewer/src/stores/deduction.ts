@@ -30,7 +30,7 @@ export type State = {
 
 export type Store = Readable<State> & {
   checked(spaceId: number): Promise<void>
-  run(): void
+  run(reset?: boolean): void
   prove(theorem: Theorem): Theorem[] | 'tautology' | null
 }
 
@@ -87,7 +87,11 @@ export function create(
     setTimeout(run, 0)
   })
 
-  function run() {
+  function run(reset = false) {
+    if (reset) {
+      store.set(initialize(read(spaces)))
+    }
+
     const allSpaces = read(spaces).all
 
     store.update(s => ({

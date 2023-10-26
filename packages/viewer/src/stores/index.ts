@@ -81,6 +81,8 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
     if (result) {
       set(result.properties, result.spaces, result.theorems, result.traits)
 
+      deduction.run(true)
+
       return {
         etag: result.etag,
         sha: result.sha,
