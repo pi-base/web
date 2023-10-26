@@ -17,14 +17,14 @@
   },
   "dependencies": {
     "@pi-base/core": "workspace:*",
-    "@sentry/browser": "^7.51.2",
+    "@sentry/browser": "^7.75.1",
     "bootstrap": "^4.6.2",
     "debug": "^4.3.4",
     "fromnow": "^3.0.1",
     "fuse.js": "^6.6.2",
     "hast-to-hyperscript": "^10.0.3",
     "hyperscript": "^2.0.2",
-    "jquery": "1.9.1",
+    "jquery": "1.12.4",
     "rehype-katex": "^6.0.3",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2",
@@ -32,19 +32,19 @@
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
-    "@sveltejs/adapter-cloudflare": "^2.3.2",
-    "@sveltejs/kit": "^1.22.6",
-    "@sveltejs/vite-plugin-svelte": "^2.2.0",
+    "@sveltejs/adapter-cloudflare": "^2.3.3",
+    "@sveltejs/kit": "^1.27.1",
+    "@sveltejs/vite-plugin-svelte": "^2.4.6",
     "@tsconfig/svelte": "^3.0.0",
-    "@types/debug": "^4.1.7",
-    "@types/hyperscript": "0.0.4",
-    "@types/katex": "^0.16.0",
-    "@types/page": "^1.11.6",
-    "@types/unist": "^2.0.6",
-    "cypress": "^12.12.0",
-    "svelte": "^3.59.1",
+    "@types/debug": "^4.1.10",
+    "@types/hyperscript": "0.0.6",
+    "@types/katex": "^0.16.5",
+    "@types/page": "^1.11.8",
+    "@types/unist": "^2.0.9",
+    "cypress": "^12.17.4",
+    "svelte": "^3.59.2",
     "svelte-check": "^1.6.0",
-    "svelte-preprocess": "^5.0.3",
-    "tslib": "^2.5.0"
+    "svelte-preprocess": "^5.0.4",
+    "tslib": "^2.6.2"
   }
 }
