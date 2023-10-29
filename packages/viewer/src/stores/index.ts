@@ -1,21 +1,22 @@
-export { default as list } from './list'
-export { default as search } from './search'
-
-import { type Readable, type Writable, get, writable } from 'svelte/store'
+import { defaultHost, mainBranch } from '@/constants'
+import type * as Gateway from '@/gateway'
 import {
   Collection,
+  Theorems,
+  Traits,
   type Property,
   type SerializedTheorem,
   type Space,
-  Theorems,
   type Trait,
-  Traits,
-} from '../models'
+} from '@/models'
+import { read } from '@/util'
+import { get, writable, type Readable, type Writable } from 'svelte/store'
 import * as Deduction from './deduction'
 import * as Source from './source'
 import * as Sync from './sync'
-import type * as Gateway from '../gateway'
-import { read } from '../util'
+
+export { default as list } from './list'
+export { default as search } from './search'
 
 export type Meta = {
   etag?: string
@@ -42,12 +43,25 @@ export type Store = {
   deduction: Deduction.Store
 }
 
-export function create(pre: Prestore, gateway: Gateway.Sync): Store {
+export function create(
+  pre: Prestore,
+  gateway: Gateway.Sync,
+  {
+    host = defaultHost,
+    branch = mainBranch,
+  }: {
+    host?: string
+    branch?: string
+  } = {},
+): Store {
   const spaces = writable(Collection.empty<Space>())
   const properties = writable(Collection.empty<Property>())
   const theorems = writable(new Theorems())
   const traits = writable(new Traits())
-  const source = Source.create()
+  const source = Source.create({
+    host,
+    branch,
+  })
   const sync = Sync.create(refresh, pre.sync)
 
   const deduction = Deduction.create(

@@ -1,14 +1,13 @@
-import { isLegacy } from '../constants'
+import { deduce, isLegacy, setup } from '../support'
+
+beforeEach(setup)
 
 const search = '/spaces'
 
 describe('with a working remote', () => {
-  beforeEach(() => {
-    cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
-  })
-
   it('searches by text and formula', () => {
     cy.visit(search)
+    deduce()
 
     cy.get('input[name="text"]').type('plank')
     cy.get('input[name="q"]').type('metacom')
@@ -23,14 +22,21 @@ describe('with a working remote', () => {
   it('loads from query params', () => {
     const query = '~metrizable + compact'
     cy.visit(`${search}?q=${query.replace('+', '%2B')}&text=square`)
+    deduce()
+
+    cy.get('.status .progress').should('not.exist')
 
     cy.contains('Alexandroff square')
   })
 
   it('indicates when search is impossible', () => {
     cy.visit(search)
+    deduce()
 
-    cy.get('input[name="q"]').type('discrete + ~metrizable')
+    cy.get('input[name="q"]').type('discrete + ~metrizable', {
+      delay: 0,
+      force: true,
+    })
 
     cy.contains(
       isLegacy
@@ -43,6 +49,7 @@ describe('with a working remote', () => {
 
   it('can follow an example search', () => {
     cy.visit(search)
+    deduce()
 
     cy.contains('compact + connected + t_2 + ~metrizable').click()
 
@@ -53,6 +60,7 @@ describe('with a working remote', () => {
 
   it('can follow formula links from the home page', () => {
     cy.visit('/')
+    deduce()
 
     cy.contains('non-metric continua').click()
 
@@ -61,11 +69,10 @@ describe('with a working remote', () => {
 
   it('can follow text links from the home page', () => {
     cy.visit('/')
+    deduce()
 
     cy.contains('compactifications').click()
 
     cy.contains('One Point Compactification')
   })
 })
-
-export {}

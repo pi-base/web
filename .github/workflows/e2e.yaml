@@ -43,10 +43,24 @@ jobs:
         working-directory: packages/core
         run: pnpm build
 
+      - name: Build viewer
+        working-directory: packages/viewer
+        run: |
+          VITE_BUNDLE_HOST=http://localhost:4173 pnpm run build
+
+      - name: Copy fixtures
+        working-directory: packages/viewer
+        # The viewer build is configured to load data from the local server's
+        # static assets, so we populate the main branch location with fixture
+        # data, for deterministic testing.
+        run: |
+          mkdir -p dist/refs/heads
+          cp cypress/fixtures/main.min.json dist/refs/heads/main.json
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
           build: echo "Start runs build"
-          command: pnpm --filter viewer run cy:run
-          start: pnpm --filter viewer run dev
+          command: pnpm --filter viewer run cy:run --config baseUrl=http://localhost:4173
+          start: pnpm --filter viewer run preview

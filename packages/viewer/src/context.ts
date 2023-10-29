@@ -39,18 +39,20 @@ function project(store: Store) {
 export function initialize({
   db = local(),
   errorHandler = Errors.log(),
+  host,
   gateway,
   showDev = false,
   typesetter = renderer,
 }: {
   db?: Local<Prestore>
   errorHandler?: Errors.Handler
+  host?: string
   gateway: Gateway.Sync
   showDev?: boolean
   typesetter?: typeof renderer
 }): Context {
   const pre = db.load()
-  const store = create(pre, gateway)
+  const store = create(pre, gateway, { host })
 
   db.subscribe(project(store))
 
@@ -79,17 +81,17 @@ export function initialize({
     until: Promise<unknown> = loaded(),
   ): Promise<T> {
     return new Promise((resolve, reject) => {
-      const unsubscribe = s.subscribe(state => {
+      var unsubscribe = s.subscribe(state => {
         const found = lookup(state)
         if (found) {
           resolve(found)
-          unsubscribe()
+          unsubscribe && unsubscribe()
         }
       })
 
       until.then(() => {
         reject()
-        unsubscribe()
+        unsubscribe && unsubscribe()
       })
     })
   }

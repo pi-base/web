@@ -1,7 +1,6 @@
 import { type Readable, writable } from 'svelte/store'
-import { bundle } from '@pi-base/core'
 
-import { mainBranch } from '../constants'
+import { defaultHost, mainBranch } from '../constants'
 import { trace } from '../debug'
 import type { Source } from '../types'
 
@@ -14,10 +13,10 @@ export interface Store extends Readable<Source> {
 
 export const initial: Source = {
   branch: mainBranch,
-  host: bundle.defaultHost,
+  host: defaultHost,
 }
 
-export function create(source?: Source): Store {
+export function create(source: Source): Store {
   const store = writable<Source>(source || initial)
 
   const { subscribe, update } = store
