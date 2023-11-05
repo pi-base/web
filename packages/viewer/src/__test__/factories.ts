@@ -8,7 +8,7 @@ import {
   type Space,
   type Trait,
   Traits,
-} from '../models'
+} from '@/models'
 
 export const and = TestUtils.and
 export const atom = TestUtils.atom

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import context from '../context'
-  import { contributingUrl, mainBranch } from '../constants'
+  import context from '@/context'
+  import { contributingUrl, mainBranch } from '@/constants'
   import Branch from './Shared/Icons/Branch.svelte'
 
   const { showDev, source } = context()

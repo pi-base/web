@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { atom, property, space, trait } from '../__test__'
+import { atom, property, space, trait } from '@/__test__'
 
 import Collection from './Collection'
 import Traits from './Traits'

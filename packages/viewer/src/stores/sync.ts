@@ -1,5 +1,5 @@
 import { type Readable, derived, writable } from 'svelte/store'
-import { read } from '../util'
+import { read } from '@/util'
 
 export type State<T> = (
   | { kind: 'initializing' }

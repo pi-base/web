@@ -1,4 +1,4 @@
-import type { Property, Space, Theorem } from '../models'
+import type { Property, Space, Theorem } from '@/models'
 import type { Finder } from './types'
 
 export function internal(

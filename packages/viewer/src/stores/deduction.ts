@@ -16,8 +16,8 @@ import type {
   Theorems,
   Trait,
   Traits,
-} from '../models'
-import { eachTick, read, subscribeUntil } from '../util'
+} from '@/models'
+import { eachTick, read, subscribeUntil } from '@/util'
 
 export type State = {
   checked: Set<number>

@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit'
 
-import type { Property } from '../../../../models'
+import type { Property } from '@/models'
 import type { LayoutLoad } from './$types'
 
 export const load: LayoutLoad = async function ({ params, parent }) {

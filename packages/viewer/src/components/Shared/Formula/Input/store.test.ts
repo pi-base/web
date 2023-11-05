@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { type Writable, get, writable } from 'svelte/store'
-import { Collection, type Formula, type Property } from '../../../../models'
+import { Collection, type Formula, type Property } from '@/models'
 
 import { type Store, type State, create } from './store'
-import { atom, property } from '../../../../__test__'
+import { atom, property } from '@/__test__'
 
 describe('create', () => {
   let raw: Writable<string>

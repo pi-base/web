@@ -1,6 +1,6 @@
-import type { Ref, Trait } from '../models'
-import type { Prestore } from '../stores'
-import type { State as Deduction } from '../stores/deduction'
+import type { Ref, Trait } from '@/models'
+import type { Prestore } from '@/stores'
+import type { State as Deduction } from '@/stores/deduction'
 
 type Serializer<T> = [
   (value: T) => string, // serializer

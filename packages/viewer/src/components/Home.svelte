@@ -1,7 +1,7 @@
 <script lang="ts">
   import Cite from './Shared/Cite.svelte'
 
-  import { contributingUrl } from '../constants'
+  import { contributingUrl } from '@/constants'
 </script>
 
 <div class="wide jumbotron home-jumbotron">

@@ -1,6 +1,6 @@
 import type { Readable } from 'svelte/store'
 
-import type { Prestore } from '../stores'
+import type { Prestore } from '@/stores'
 import initial from './initial'
 
 import { type Serializers, prestore } from './serializers'

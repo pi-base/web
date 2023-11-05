@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { atom, property, space, theorem } from '../__test__'
-import { Collection, Theorems } from '../models'
+import { atom, property, space, theorem } from '@/__test__'
+import { Collection, Theorems } from '@/models'
 
 import { internal } from './internalLinks'
 

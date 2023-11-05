@@ -1,8 +1,8 @@
 import { type Readable, writable } from 'svelte/store'
 
-import { defaultHost, mainBranch } from '../constants'
-import { trace } from '../debug'
-import type { Source } from '../types'
+import { defaultHost, mainBranch } from '@/constants'
+import { trace } from '@/debug'
+import type { Source } from '@/types'
 
 export type State = Source
 

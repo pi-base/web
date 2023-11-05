@@ -10,7 +10,7 @@ import type {
   Theorem,
   Theorems,
   Trait,
-} from '../models'
+} from '@/models'
 
 export default class Traits {
   private traits: Map<string, Trait>
