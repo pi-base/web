@@ -1,5 +1,4 @@
 export * as Icons from './Icons'
-export * as Tabs from './Tabs/index'
 
 export { default as Age } from './Age.svelte'
 export { default as Aliases } from './Aliases.svelte'
@@ -10,5 +9,6 @@ export { default as Link } from './Link'
 export { default as Loading } from './Loading.svelte'
 export { default as NotFound } from './NotFound.svelte'
 export { default as References } from './References.svelte'
+export { default as Tabs } from './Tabs.svelte'
 export { default as Title } from './Title.svelte'
 export { default as Typeset } from './Typeset.svelte'

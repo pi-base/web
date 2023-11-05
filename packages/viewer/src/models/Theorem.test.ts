@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { and, atom, property, theorem } from '../__test__'
-import { Collection, type Property } from '../models'
+import { and, atom, property, theorem } from '@/__test__'
+import { Collection, type Property } from '@/models'
 
 import Theorem from './Theorem'
 

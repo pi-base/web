@@ -12,6 +12,7 @@
     "@types/node": "^18.16.6",
     "@vitest/coverage-c8": "^0.29.8",
     "nodemon": "^2.0.22",
+    "npm-check-updates": "^16.14.6",
     "prettier": "^2.8.8",
     "prettier-plugin-svelte": "^2.10.0",
     "ts-node": "^10.9.1",

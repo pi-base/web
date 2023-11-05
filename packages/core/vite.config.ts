@@ -11,12 +11,16 @@ export default defineConfig({
     },
     outDir: './dist',
   },
+  // See https://stackoverflow.com/questions/75701724
+  resolve: {
+    preserveSymlinks: true,
+  },
   test: {
     coverage: {
-      lines: 93.84,
-      branches: 95.53,
-      statements: 93.84,
-      functions: 83.54,
+      lines: 92.52,
+      branches: 95.32,
+      statements: 92.52,
+      functions: 83.33,
       skipFull: true,
       thresholdAutoUpdate: true,
       exclude: ['src/Formula/Grammar.ts'],

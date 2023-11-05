@@ -1,8 +1,6 @@
-import { isLegacy } from '../constants'
+import { isLegacy, setup } from '../support'
 
-beforeEach(() => {
-  cy.intercept({ hostname: /pi-base-bundles/ }, { fixture: 'main.min.json' })
-})
+beforeEach(setup)
 
 it('finds proofs for the first space', () => {
   cy.visit('/spaces/S000001')

@@ -1,56 +1,35 @@
 <script lang="ts">
-  import context from '../../context'
-  import {
-    Aliases,
-    Loading,
-    NotFound,
-    References,
-    Tabs,
-    Title,
-    Typeset,
-  } from '../Shared'
+  import type { Property } from 'src/models'
+  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
-  export let id: string
+  export let property: Property
+  export let tab: 'spaces' | 'theorems' | 'references'
+  export let rel: string | undefined = undefined
 
-  const ctx = context()
-  const load = ctx.load(ctx.properties, p => p.find(id))
+  const tabs = ['spaces', 'theorems', 'references'] as const
 </script>
 
-{#await load}
-  <Loading />
-{:then property}
-  <Title title={property.name} />
+<Title title={property.name} />
 
-  <h1>
-    <Typeset body={property.name} />
-    {#if property?.aliases}
-      <Aliases aliases={property.aliases} />
-    {/if}
-  </h1>
+<h1>
+  <Typeset body={property.name} />
+  {#if property?.aliases}
+    <Aliases aliases={property.aliases} />
+  {/if}
+</h1>
 
-  <section class="description">
-    <Typeset body={property.description} />
-  </section>
+<section class="description">
+  <Typeset body={property.description} />
+</section>
 
-  <Tabs.Tabs initial="spaces">
-    <Tabs.Nav>
-      <Tabs.Link to="spaces">Spaces</Tabs.Link>
-      <Tabs.Link to="theorems">Theorems</Tabs.Link>
-      <Tabs.Link to="references">References</Tabs.Link>
-    </Tabs.Nav>
+<Tabs {tabs} {tab} {rel} />
 
-    <Tabs.Tab path="spaces">
-      <Spaces {property} />
-    </Tabs.Tab>
-    <Tabs.Tab path="theorems">
-      <Theorems {property} />
-    </Tabs.Tab>
-    <Tabs.Tab path="references">
-      <References references={property.refs} />
-    </Tabs.Tab>
-  </Tabs.Tabs>
-{:catch}
-  <NotFound>Could not find property {id}</NotFound>
-{/await}
+{#if tab === 'spaces'}
+  <Spaces {property} />
+{:else if tab === 'theorems'}
+  <Theorems {property} />
+{:else if tab === 'references'}
+  <References references={property.refs} />
+{/if}

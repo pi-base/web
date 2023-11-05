@@ -3,8 +3,8 @@ import { type Readable, type Writable, writable } from 'svelte/store'
 
 import { formula as F } from '@pi-base/core'
 
-import type { Collection, Formula, Property } from '../../../../models'
-import { read } from '../../../../util'
+import type { Collection, Formula, Property } from '@/models'
+import { read } from '@/util'
 
 export type State = {
   suggest: boolean

@@ -56,6 +56,7 @@ type FetchOpts = {
   branch: string
   host?: string
   etag?: string
+  fetch?: (input: RequestInfo, init?: RequestInit) => Promise<Response>
 }
 
 export function bundleUrl({ branch, host = defaultHost }: FetchOpts): string {
@@ -69,7 +70,8 @@ export async function fetch(
   if (opts.etag) {
     headers.append('If-None-Match', opts.etag)
   }
-  const response = await window.fetch(bundleUrl(opts), {
+  const fetch = opts.fetch || window.fetch
+  const response = await fetch(bundleUrl(opts), {
     method: 'GET',
     headers,
   })

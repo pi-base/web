@@ -1,6 +1,6 @@
 import type { Readable } from 'svelte/store'
-import type { Store } from '../stores'
-import type * as Errors from '../errors'
+import type { Store } from '@/stores'
+import type * as Errors from '@/errors'
 
 export type Context = Store & {
   showDev: boolean

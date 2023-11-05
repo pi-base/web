@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Related } from '../Traits'
-  import type { Property, Space, Trait, Traits } from '../../models'
+  import type { Property, Space, Trait, Traits } from '@/models'
 
   export let property: Property
 

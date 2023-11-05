@@ -2,7 +2,7 @@ import { formula as F } from '@pi-base/core'
 
 import Collection from './Collection'
 import { default as Theorem } from './Theorem'
-import type { Property, SerializedTheorem } from '../types'
+import type { Property, SerializedTheorem } from '@/types'
 
 export default class Theorems {
   static build(

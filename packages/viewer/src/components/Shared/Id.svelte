@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Id } from '../../models'
+  import { Id } from '@/models'
 
   export let uid: string
   export let trim = true

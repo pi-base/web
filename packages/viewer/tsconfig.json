@@ -1,16 +1,21 @@
 {
-  "extends": "@tsconfig/svelte/tsconfig.json",
+  "extends": "./.svelte-kit/tsconfig.json",
   "include": [
     "src/**/*",
     "cypress/**/*"
   ],
   "exclude": [
     "node_modules/*",
-    "__sapper__/*",
     "public/*"
   ],
   "compilerOptions": {
     "baseUrl": ".",
+		"forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"],
+    },
     "sourceMap": true,
     "strict": true,
     "types": [
@@ -22,6 +27,6 @@
       "src/types",
       "node_modules/@types"
     ],
-    "module": "es2022"
+    "module": "es2022",
   }
 }

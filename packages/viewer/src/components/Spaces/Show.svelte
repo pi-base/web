@@ -1,56 +1,35 @@
 <script lang="ts">
-  import context from '../../context'
-  import {
-    Aliases,
-    Loading,
-    NotFound,
-    References,
-    Tabs,
-    Title,
-    Typeset,
-  } from '../Shared'
+  import type { Space } from 'src/models'
+  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
 
-  export let id: string
+  export let space: Space
+  export let tab: 'properties' | 'theorems' | 'references'
+  export let rel: string | undefined = undefined
 
-  const ctx = context()
-  const load = ctx.load(ctx.spaces, s => s.find(id))
+  const tabs = ['properties', 'theorems', 'references'] as const
 </script>
 
-{#await load}
-  <Loading />
-{:then space}
-  <Title title={space.name} />
+<Title title={space.name} />
 
-  <h1>
-    <Typeset body={space.name} />
-    {#if space?.aliases}
-      <Aliases aliases={space.aliases} />
-    {/if}
-  </h1>
+<h1>
+  <Typeset body={space.name} />
+  {#if space?.aliases}
+    <Aliases aliases={space.aliases} />
+  {/if}
+</h1>
 
-  <section class="description">
-    <Typeset body={space.description} />
-  </section>
+<section class="description">
+  <Typeset body={space.description} />
+</section>
 
-  <Tabs.Tabs initial="properties">
-    <Tabs.Nav>
-      <Tabs.Link to="properties">Properties</Tabs.Link>
-      <Tabs.Link to="theorems">Theorems</Tabs.Link>
-      <Tabs.Link to="references">References</Tabs.Link>
-    </Tabs.Nav>
+<Tabs {tabs} {tab} {rel} />
 
-    <Tabs.Tab path="properties">
-      <Properties {space} />
-    </Tabs.Tab>
-    <Tabs.Tab path="theorems">
-      <Counterexamples {space} />
-    </Tabs.Tab>
-    <Tabs.Tab path="references">
-      <References references={space.refs} />
-    </Tabs.Tab>
-  </Tabs.Tabs>
-{:catch}
-  <NotFound>Could not find space {id}</NotFound>
-{/await}
+{#if tab === 'properties'}
+  <Properties {space} />
+{:else if tab === 'theorems'}
+  <Counterexamples {space} />
+{:else if tab === 'references'}
+  <References references={space.refs} />
+{/if}

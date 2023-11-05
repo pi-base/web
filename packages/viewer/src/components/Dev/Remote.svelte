@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { build } from '../../constants'
-  import context from '../../context'
-  import { state } from '../../stores/sync'
+  import { build } from '@/constants'
+  import context from '@/context'
+  import { state } from '@/stores/sync'
 
   import Sync from './Sync.svelte'
 

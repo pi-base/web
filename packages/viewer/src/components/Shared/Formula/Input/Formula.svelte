@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Writable } from 'svelte/store'
 
-  import context from '../../../../context'
-  import type { Formula, Property } from '../../../../models'
+  import context from '@/context'
+  import type { Formula, Property } from '@/models'
 
   import { create } from './store'
   import Suggestions from './Suggestions.svelte'

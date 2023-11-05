@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { navigate } from 'svelte-routing'
-  import context from '../../context'
+  import { goto } from '$app/navigation'
+  import context from '@/context'
 
   export let body: string
   export let truncated = false
@@ -35,7 +35,7 @@
       link.setAttribute('_wired', 'true')
       link.addEventListener('click', e => {
         e.preventDefault()
-        navigate((e.target as HTMLAnchorElement).href)
+        goto((e.target as HTMLAnchorElement).href)
       })
     }
   }

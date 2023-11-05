@@ -1,8 +1,7 @@
 <script lang="ts">
-  import context from '../../context'
+  import context from '@/context'
 
-  import Age from '../Shared/Age.svelte'
-  import { Repeat } from '../Shared/Icons'
+  import { Age, Icons } from '../Shared'
 
   const { sync } = context()
 
@@ -11,16 +10,16 @@
 
 {#if state.kind === 'fetching'}
   <button type="button" class="btn" disabled>
-    <Repeat rotate={true} />
+    <Icons.Repeat rotate={true} />
   </button>
 {:else if state.kind === 'fetched'}
   <button type="button" class="btn" on:click={sync.sync}>
-    <Repeat />
+    <Icons.Repeat />
   </button>
   <Age date={state.at} />
 {:else if state.kind === 'error'}
   <button type="button" class="btn" on:click={sync.sync}>
-    <Repeat />
+    <Icons.Repeat />
   </button>
   Error
   <code>{state.error}</code>

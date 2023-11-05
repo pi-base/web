@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import context from '../../context'
+  import context from '@/context'
 
   const { errorHandler } = context()
 

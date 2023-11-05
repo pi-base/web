@@ -1,6 +1,6 @@
 import { parser } from '@pi-base/core'
 
-import type { Property, Space, Theorem } from '../models'
+import type { Property, Space, Theorem } from '@/models'
 import type { Finder } from './types'
 import { internal } from './internalLinks'
 import { external } from './externalLinks'

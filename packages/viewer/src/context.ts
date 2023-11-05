@@ -7,7 +7,7 @@ import { formula as F } from '@pi-base/core'
 import type { Context } from './context/types'
 import { trace } from './debug'
 import * as Errors from './errors'
-import * as Gateway from './gateway'
+import type * as Gateway from './gateway'
 import { Id } from './models'
 import { renderer } from './parser'
 import { type Local, local } from './repositories'
@@ -39,18 +39,20 @@ function project(store: Store) {
 export function initialize({
   db = local(),
   errorHandler = Errors.log(),
-  gateway = Gateway.sync,
+  host,
+  gateway,
   showDev = false,
   typesetter = renderer,
 }: {
   db?: Local<Prestore>
   errorHandler?: Errors.Handler
-  gateway?: Gateway.Sync
+  host?: string
+  gateway: Gateway.Sync
   showDev?: boolean
   typesetter?: typeof renderer
-} = {}): Context {
+}): Context {
   const pre = db.load()
-  const store = create(pre, gateway)
+  const store = create(pre, gateway, { host })
 
   db.subscribe(project(store))
 
@@ -79,17 +81,17 @@ export function initialize({
     until: Promise<unknown> = loaded(),
   ): Promise<T> {
     return new Promise((resolve, reject) => {
-      const unsubscribe = s.subscribe(state => {
+      var unsubscribe = s.subscribe(state => {
         const found = lookup(state)
         if (found) {
           resolve(found)
-          unsubscribe()
+          unsubscribe && unsubscribe()
         }
       })
 
       until.then(() => {
         reject()
-        unsubscribe()
+        unsubscribe && unsubscribe()
       })
     })
   }

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import context from '../../context'
-  import type { Space } from '../../models'
+  import context from '@/context'
+  import type { Space } from '@/models'
   import { Typeset } from '../Shared'
   import { Table } from '../Theorems'
 

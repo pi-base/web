@@ -1,6 +1,6 @@
 <script lang="ts">
-  import context from '../../context'
-  import type { Space, Theorem } from '../../models'
+  import context from '@/context'
+  import type { Space, Theorem } from '@/models'
   import { Table as Traits } from '../Traits'
   import Name from './Name.svelte'
   import Theorems from './Table.svelte'

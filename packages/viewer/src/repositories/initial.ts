@@ -1,6 +1,6 @@
-import type { Prestore } from '../stores'
-import * as Deduction from '../stores/deduction'
-import * as Src from '../stores/source'
+import type { Prestore } from '@/stores'
+import * as Deduction from '@/stores/deduction'
+import * as Src from '@/stores/source'
 
 const initial: Prestore = {
   properties: [],

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Ref } from '@pi-base/core'
-  import { format } from '../../parser/externalLinks'
+  import { format } from '@/parser/externalLinks'
 
   export let reference: Ref.Ref
 
