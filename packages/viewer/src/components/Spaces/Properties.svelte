@@ -10,9 +10,7 @@
   }
 </script>
 
-<Related {related}>
-  <span slot="title">Property</span>
-
+<Related mode="properties" {related}>
   <Link.Property slot="id" let:property {property}>{property.id}</Link.Property>
 
   <Link.Property slot="name" let:property {property} />

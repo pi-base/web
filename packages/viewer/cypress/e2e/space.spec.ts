@@ -19,3 +19,14 @@ it('links to traits', () => {
 
   cy.location('pathname').should('eq', '/spaces/S000004/properties/P000010')
 })
+
+it('filters traits', () => {
+  cy.visit('spaces/S000004/properties')
+  deduce()
+
+  cy.get('[placeholder=Filter]').type('comp')
+
+  cy.get('.related-traits > tbody > tr')
+    .first()
+    .should('have.text', '16 Compact   ')
+})

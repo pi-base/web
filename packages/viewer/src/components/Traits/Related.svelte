@@ -4,8 +4,10 @@
   import { Value } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
+  import { capitalize } from '@/util'
 
   export let related: (traits: Traits) => [Space, Property, Trait][]
+  export let mode: 'spaces' | 'properties'
 
   const { traits } = context()
 
@@ -17,7 +19,10 @@
   }
 
   $: all = related($traits)
-  $: index = new Fuse(all, { keys: ['0.name'] })
+  // all has type [Space, Property, Trait][]
+  // we need to index names in different positions depending on which kind we
+  // are displaying
+  $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
   $: searched = filter ? index.search(filter).map(r => r.item) : all
   $: filtered = searched.filter(
     ([_space, _property, t]) => showDeduced || t.asserted,
@@ -46,11 +51,11 @@
   </div>
 </div>
 
-<table class="table">
+<table class="table related-traits">
   <thead>
     <tr>
       <th>Id</th>
-      <th><slot name="title" /></th>
+      <th>{capitalize(mode)}</th>
       <th>Value</th>
       <th>Source</th>
     </tr>
