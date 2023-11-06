@@ -4,7 +4,7 @@
   import Atom from './Formula/Atom.svelte'
   import Compound from './Formula/Compound.svelte'
 
-  export let value: Formula<Property>
+  export let value: Formula<Property, null>
   export let link = true
 </script>
 
