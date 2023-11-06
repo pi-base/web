@@ -1,11 +1,10 @@
 <script lang="ts">
   import Fuse from 'fuse.js'
-  import { Icons, Link, Typeset } from '../Shared'
+  import { Icons, Link } from '../Shared'
   import { Value } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
 
-  export let mode: 'spaces' | 'properties'
   export let related: (traits: Traits) => [Space, Property, Trait][]
 
   const { traits } = context()
@@ -51,9 +50,7 @@
   <thead>
     <tr>
       <th>Id</th>
-      <th
-        >{#if mode === 'spaces'}Space{:else}Property{/if}</th
-      >
+      <th><slot name="title" /></th>
       <th>Value</th>
       <th>Source</th>
     </tr>
@@ -62,14 +59,10 @@
     {#each filtered as [space, property, trait] ([space.id, property.id])}
       <tr>
         <td>
-          <Link.Trait {space} {property}>
-            {#if mode === 'spaces'}{space.id}{:else}{property.id}{/if}
-          </Link.Trait>
+          <slot name="id" {space} {property} />
         </td>
         <td>
-          <Link.Trait {space} {property}>
-            <Typeset body={mode === 'spaces' ? space.name : property.name} />
-          </Link.Trait>
+          <slot name="name" {space} {property} />
         </td>
         <td>
           <Link.Trait {space} {property}>
