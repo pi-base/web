@@ -10,9 +10,7 @@
   }
 </script>
 
-<Related {related}>
-  <span slot="title">Space</span>
-
+<Related mode="spaces" {related}>
   <Link.Space slot="id" let:space {space}>{space.id}</Link.Space>
 
   <Link.Space slot="name" let:space {space} />
