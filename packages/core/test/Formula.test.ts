@@ -1,22 +1,25 @@
 import { describe, expect, it } from 'vitest'
-import * as F from '../src/Formula'
 import {
   Formula,
+  Or,
   and,
   atom,
+  compact,
   evaluate,
   fromJSON,
   negate,
   or,
+  map,
+  mapProperty,
   parse,
   properties,
   render,
   toJSON,
 } from '../src/Formula'
 
-const compound: Formula<string> = and(
-  atom('compact', true),
-  or(atom('connected', true), atom('separable', false)),
+const compound = and<string>(
+  atom('compact'),
+  or(atom('connected'), atom('separable', false)),
   atom('first countable', false),
 )
 
@@ -28,7 +31,7 @@ describe('Formula', () => {
       const f = compound
 
       expect(f.subs[0]).toEqual(atom('compact'))
-      expect((f.subs[1] as F.Or<string>).subs[1]).toEqual(
+      expect((f.subs[1] as Or<string>).subs[1]).toEqual(
         atom('separable', false),
       )
     })
@@ -70,8 +73,8 @@ describe('Formula', () => {
 
   describe('map', () => {
     it('maps over entire atoms', () => {
-      const result = F.map(
-        term => atom(term.property.slice(0, 2), !term.value),
+      const result = map(
+        term => atom<string>(term.property.slice(0, 2), !term.value),
         compound,
       )
 
@@ -81,9 +84,17 @@ describe('Formula', () => {
 
   describe('mapProperty', () => {
     it('only maps over properties', () => {
-      const result = F.mapProperty(property => property.slice(0, 2), compound)
+      const result = mapProperty(property => property.slice(0, 2), compound)
 
       expect(render_(result)).toEqual('(co ∧ (co ∨ ¬se) ∧ ¬fi)')
+    })
+  })
+
+  describe('compact', () => {
+    it('preserves null-valued atoms', () => {
+      const f = and(atom('A'), atom('B', null), atom('C', false))
+
+      expect(compact(f)).toEqual(f)
     })
   })
 
@@ -109,13 +120,21 @@ describe('Formula', () => {
       expect(evaluate(compound, traits)).toEqual(false)
     })
 
-    it('is undefined if a sub is undefined', () => {
-      const traits = new Map([
-        ['compact', true],
-        ['first countable', false],
-      ])
+    const traits = new Map([
+      ['compact', true],
+      ['first countable', false],
+    ])
 
+    it('is undefined if a sub is undefined', () => {
       expect(evaluate(compound, traits)).toEqual(undefined)
+    })
+
+    it('can match null', () => {
+      expect(evaluate(parse('?other')!, traits)).toEqual(true)
+    })
+
+    it('can fail to match null', () => {
+      expect(evaluate(parse('?compact')!, traits)).toEqual(false)
     })
   })
 })
@@ -135,6 +154,10 @@ describe('parsing', () => {
     expect(parse('not compact')).toEqual(atom('compact', false))
   })
 
+  it('can mark properties unknown', () => {
+    expect(parse('?compact')).toEqual(atom('compact', null))
+  })
+
   it('inserts parens', () => {
     expect(parse('compact + connected + ~t_2')).toEqual(
       and(atom('compact', true), atom('connected', true), atom('t_2', false)),
@@ -142,9 +165,7 @@ describe('parsing', () => {
   })
 
   it('allows parens', () => {
-    expect(F.parse('(foo + bar)')).toEqual(
-      F.and(F.atom('foo', true), F.atom('bar', true)),
-    )
+    expect(parse('(foo + bar)')).toEqual(and(atom('foo'), atom('bar')))
   })
 
   it('handles errors with parens', () => {
@@ -183,4 +204,15 @@ describe('serialization', () => {
       expect(fromJSON(toJSON(formula))).toEqual(formula)
     })
   })
+
+  it('throws when given multiple keys', () => {
+    expect(() =>
+      fromJSON({
+        P1: true,
+        P2: false,
+      }),
+    ).toThrowError('cast')
+  })
+
+  it('throws when given multiple keys', () => {})
 })
