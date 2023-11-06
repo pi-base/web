@@ -50,9 +50,9 @@
     <Proof {space} {...proof} />
   {:else if meta}
     <section class="description">
-      <Typeset body={space.description} />
+      <Typeset body={meta.description} />
     </section>
-
+    <h3>References</h3>
     <References references={meta.refs} />
   {/if}
 {:catch}
