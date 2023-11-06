@@ -12,7 +12,9 @@ describe('with a working remote', () => {
     cy.get('input[name="text"]').type('plank')
     cy.get('input[name="q"]').type('metacom')
 
-    cy.url().should('include', 'text=plank').should('include', 'q=metacom')
+    cy.location('search')
+      .should('include', 'text=plank')
+      .should('include', 'q=metacom')
 
     cy.contains('Dieudonné plank')
   })

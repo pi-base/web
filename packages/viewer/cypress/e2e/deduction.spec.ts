@@ -15,7 +15,7 @@ it('shows derived proofs', () => {
   cy.contains('T1')
   cy.contains('119').click()
 
-  cy.url().should('match', new RegExp('/theorems/T000119$'))
+  cy.location('pathname').should('eq', '/theorems/T000119')
 })
 
 it('derives multi-step proofs', () => {

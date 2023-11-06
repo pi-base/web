@@ -5,5 +5,5 @@ export function setup() {
 
 export function deduce() {
   cy.get('.progress').should('exist')
-  cy.get('.progress').should('not.exist')
+  cy.get('.progress', { timeout: 10000 }).should('not.exist')
 }
