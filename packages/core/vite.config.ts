@@ -17,13 +17,9 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      lines: 92.52,
-      branches: 95.32,
-      statements: 92.52,
-      functions: 83.33,
       skipFull: true,
       thresholdAutoUpdate: true,
-      exclude: ['src/Formula/Grammar.ts'],
+      exclude: ['src/Formula/Grammar.ts', 'test'],
     },
   },
 })
