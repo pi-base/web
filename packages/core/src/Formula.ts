@@ -31,37 +31,40 @@ const orSchema = <P>(p: z.ZodSchema<P>) =>
 export const formulaSchema = <P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> =>
   z.union([atomSchema(p), andSchema(p), orSchema(p)])
 
-export interface Atom<P> {
+export interface Atom<P, X = never> {
   kind: 'atom'
   property: P
-  value: boolean
+  value: boolean | X
 }
 
-export interface And<P> {
+export interface And<P, X = never> {
   kind: 'and'
-  subs: Formula<P>[]
+  subs: Formula<P, X>[]
 }
 
-export interface Or<P> {
+export interface Or<P, X = never> {
   kind: 'or'
-  subs: Formula<P>[]
+  subs: Formula<P, X>[]
 }
 
-export type Formula<P> = And<P> | Or<P> | Atom<P>
+export type Formula<P, X = never> = And<P, X> | Or<P, X> | Atom<P, X>
 
-export function and<P>(...subs: Formula<P>[]): And<P> {
+export function and<P, X = never>(...subs: Formula<P, X>[]): And<P, X> {
   return { kind: 'and', subs: subs }
 }
 
-export function or<P>(...subs: Formula<P>[]): Or<P> {
+export function or<P, X = never>(...subs: Formula<P, X>[]): Or<P, X> {
   return { kind: 'or', subs: subs }
 }
 
-export function atom<P>(p: P, v = true): Atom<P> {
-  return { kind: 'atom', property: p, value: v }
+export function atom<P, X = never>(
+  property: P,
+  value: boolean | X = true,
+): Atom<P, X> {
+  return { kind: 'atom', property, value }
 }
 
-export function properties<P>(f: Formula<P>): Set<P> {
+export function properties<P, X>(f: Formula<P, X>): Set<P> {
   switch (f.kind) {
     case 'atom':
       return new Set([f.property])
@@ -94,10 +97,10 @@ export function negate<P>(formula: Formula<P>): Formula<P> {
   }
 }
 
-export function map<P, Q>(
-  func: (p: Atom<P>) => Atom<Q>,
-  formula: Formula<P>,
-): Formula<Q> {
+export function map<P, Q, X = never>(
+  func: (p: Atom<P, X>) => Atom<Q, X>,
+  formula: Formula<P, X>,
+): Formula<Q, X> {
   switch (formula.kind) {
     case 'atom':
       return func(formula)
@@ -109,32 +112,38 @@ export function map<P, Q>(
   }
 }
 
-export function mapProperty<P, Q>(
+export function mapProperty<P, Q, X = never>(
   func: (p: P) => Q,
-  formula: Formula<P>,
-): Formula<Q> {
-  function mapAtom(a: Atom<P>): Atom<Q> {
+  formula: Formula<P, X>,
+): Formula<Q, X> {
+  function mapAtom(a: Atom<P, X>): Atom<Q, X> {
     return { ...a, property: func(a.property) }
   }
-  return map<P, Q>(mapAtom, formula)
+  return map<P, Q, X>(mapAtom, formula)
 }
 
-export function compact<P>(f: Formula<P | undefined>): Formula<P> | undefined {
-  return properties(f).has(undefined) ? undefined : (f as Formula<P>)
+export function compact<P, X>(
+  f: Formula<P | undefined, X>,
+): Formula<P, X> | undefined {
+  return properties(f).has(undefined) ? undefined : (f as Formula<P, X>)
 }
 
-export function evaluate<T>(
-  f: Formula<T>,
+export function evaluate<T, V extends boolean | null = boolean>(
+  f: Formula<T, V>,
   traits: Map<T, boolean>,
 ): boolean | undefined {
   let result: boolean | undefined
 
   switch (f.kind) {
     case 'atom':
-      if (traits.has(f.property)) {
-        return traits.get(f.property) === f.value
+      const known = traits.has(f.property)
+      if (f.value === null) {
+        return !known
       }
-      return undefined
+      if (!known) {
+        return undefined
+      }
+      return traits.get(f.property) === f.value
     case 'and':
       result = true // by default
       f.subs.forEach(sub => {
@@ -170,7 +179,7 @@ export function evaluate<T>(
   }
 }
 
-export function parse(q?: string): Formula<string> | undefined {
+export function parse(q?: string): Formula<string, null> | undefined {
   if (!q) {
     return
   }
@@ -190,19 +199,19 @@ export function parse(q?: string): Formula<string> | undefined {
   return fromJSON(parsed as any)
 }
 
-type Serialized =
+type Serialized<X = never> =
   | { and: Serialized[] }
   | { or: Serialized[] }
-  | { property: string; value: boolean }
-  | Record<string, boolean>
+  | { property: string; value: boolean | X }
+  | Record<string, boolean | X>
 
-export function fromJSON(json: Serialized): Formula<string> {
+export function fromJSON(json: Serialized): Formula<string, null> {
   if ('and' in json && typeof json.and === 'object') {
-    return and<string>(...json.and.map(fromJSON))
+    return and<string, null>(...json.and.map(fromJSON))
   } else if ('or' in json && typeof json.or === 'object') {
-    return or<string>(...json.or.map(fromJSON))
+    return or<string, null>(...json.or.map(fromJSON))
   } else if ('property' in json && typeof json.property === 'string') {
-    return atom<string>(json.property, json.value)
+    return atom<string, null>(json.property, json.value)
   }
 
   const entries = Object.entries(json)
@@ -214,7 +223,7 @@ export function fromJSON(json: Serialized): Formula<string> {
     throw `cannot cast object with non-boolean value`
   }
 
-  return atom<string>(...entries[0])
+  return atom<string, null>(...entries[0])
 }
 
 export function toJSON(f: Formula<string>): Serialized {

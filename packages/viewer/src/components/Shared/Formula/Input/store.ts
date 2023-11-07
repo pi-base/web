@@ -25,7 +25,7 @@ export function create({
   limit = 10,
 }: {
   raw: Writable<string>
-  formula: Writable<Formula<Property> | undefined>
+  formula: Writable<Formula<Property, null> | undefined>
   properties: Readable<Collection<Property>>
   limit?: number
 }): Store {
@@ -103,7 +103,7 @@ export function create({
 function resolve(
   index: Fuse<Property>,
   str: string,
-): Formula<Property> | undefined {
+): Formula<Property, null> | undefined {
   const parsed = F.parse(str)
   if (!parsed) {
     return

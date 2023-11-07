@@ -13,7 +13,7 @@ Or = _ "(" _ head:Formula tail:(_ Disjunction _ Formula)+ _ ")" _ {
 Atom = mod:Modifier? _ prop:Property {
   let value;
   if (mod === '?') {
-    value = undefined
+    value = null
   } else if (mod) {
     value = false
   } else {

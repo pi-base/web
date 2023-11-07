@@ -5,7 +5,7 @@
 
   import Formula from '../Formula.svelte'
 
-  export let value: And<Property> | Or<Property>
+  export let value: And<Property, null> | Or<Property, null>
   export let link = true
 
   $: connector = value.kind === 'and' ? '∧' : '∨'
