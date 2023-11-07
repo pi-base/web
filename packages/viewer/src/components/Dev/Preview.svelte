@@ -11,7 +11,12 @@
 <div class="row">
   <div class="col-sm">
     <div class="input-group">
-      <textarea bind:value={body} class="form-control" {rows} />
+      <textarea
+        bind:value={body}
+        class="form-control"
+        data-testid="input"
+        {rows}
+      />
     </div>
     <div class="input-group">
       <div class="form-check">
@@ -31,7 +36,7 @@
       }}
     />
   </div>
-  <div class="col-sm">
+  <div class="col-sm" data-testid="output">
     <Typeset {body} {truncated} />
   </div>
 </div>

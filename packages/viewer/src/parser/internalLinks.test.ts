@@ -55,4 +55,13 @@ describe('with ambient data', () => {
       expect(link(['S', '000003'])).toEqual('Could not find Space S000003')
     })
   })
+
+  describe('traits', () => {
+    it('can link to traits', () => {
+      expect(link(['S', '000001|P000002'])).toEqual({
+        href: '/spaces/S000001/properties/P000002',
+        title: 'S000001 | Two',
+      })
+    })
+  })
 })
