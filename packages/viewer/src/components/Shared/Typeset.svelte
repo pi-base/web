@@ -15,7 +15,18 @@
       return
     }
 
-    container.innerHTML = await $typeset(text, truncated_)
+    try {
+      container.innerHTML = await $typeset(text, truncated_)
+    } catch (e: any) {
+      // FIXME: this is a kludgey fix for the fact that the {id} parser throws
+      // assertion errors on incomplete / unbalanced sets of {}s. The better fix
+      // is to make it more robust.
+      if (e?.name === 'Assertion') {
+        console.warn(e)
+      } else {
+        throw e
+      }
+    }
 
     /**
      * We're adding "real" <a/> tags to the DOM, even for parsed internal

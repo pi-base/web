@@ -8,6 +8,7 @@ This is a list of links
 * {S000123}
 * {P000123}
 * {T000123}
+* {S000123|P000123}
 * {{doi:123}}
 * {{mr:123}}
 * {{wikipedia:123}}
@@ -37,6 +38,9 @@ This is a list of links
         - e.g.
         <code>{'{S000001}'}</code>
         for space 1
+        <br />
+        <code>{'{S000001|P000002}'}</code>
+        for space 1's value of property 2
       </td>
     </tr>
     <tr>

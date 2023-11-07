@@ -9,6 +9,20 @@ export function internal(
   return function linker([kind, id]: ['S' | 'P' | 'T', string]) {
     switch (kind) {
       case 'S':
+        // Support e.g. {S001|P002} as a link to the trait
+        const match = /(?<sid>\d+)\|P(?<pid>\d+)/.exec(id)
+        if (match?.groups) {
+          const { sid, pid } = match.groups
+          const space = spaces.find(Number(sid))
+          const property = properties.find(Number(pid))
+          return {
+            href: `/spaces/S${sid}/properties/P${pid}`,
+            title: `${space ? space.name : 'S' + sid} | ${
+              property ? property.name : 'P' + pid
+            }`,
+          }
+        }
+
         const space = spaces.find(Number(id))
         return {
           href: `/spaces/S${id}`,
