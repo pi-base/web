@@ -61,10 +61,10 @@ export function initialize({
   }
 
   const typeset = derived(
-    [store.properties, store.spaces, store.theorems],
-    ([properties, spaces, theorems]) => {
+    [store.properties, store.spaces, store.theorems, store.traits],
+    ([properties, spaces, theorems, traits]) => {
       trace({ event: 'build_typesetter' })
-      return typesetter(properties, spaces, theorems)
+      return typesetter(properties, spaces, theorems, traits)
     },
   )
 
