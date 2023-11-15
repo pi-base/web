@@ -4,7 +4,7 @@
   import { Link, Typeset } from '@/components/Shared'
   import type { Property } from '@/models'
 
-  export let value: Atom<Property, null>
+  export let value: Atom<Property>
   export let link: boolean = true
 </script>
 

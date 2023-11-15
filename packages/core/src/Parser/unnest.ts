@@ -1,37 +1,18 @@
-import { Node } from 'unist'
+import { Root } from 'hast'
 import { Transformer } from 'unified'
 
-type Tree = Node & { children?: Tree[] }
-
 /**
- * Many default parsers create an AST that looks like
- *
- *     root:
- *       children:
- *         - type: paragraph
- *           children:
- *             - type: singleton
- *
- * which renders as <p><singleton/></p>. This transformer removes the wrapping
- * <p/> node
- *
- *     root:
- *       children:
- *         - type: singleton
- *
- * to allow for inline-only <singleton/> elements.
+ * Simplifies outer wrapping nodes of ASTs, and
+ * ensures that they render an inline / non-block
+ * elvel elements.
  */
 export const unnest = () => {
-  const transformer: Transformer<Tree> = tree => {
-    if (
-      tree &&
-      tree.children?.length === 1 &&
-      tree.children[0].type === 'paragraph' &&
-      tree.children[0].children?.length === 1
-    ) {
-      return {
-        ...tree,
-        children: tree.children[0].children,
+  const transformer: Transformer<Root> = tree => {
+    if (tree && tree.children?.length === 1 && 'tagName' in tree.children[0]) {
+      tree.children = tree.children[0].children
+
+      if ('tagName' in tree.children[0] && tree.children[0].tagName === 'p') {
+        tree.children[0].tagName = 'span'
       }
     }
 
