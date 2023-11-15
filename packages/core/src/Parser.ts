@@ -47,14 +47,14 @@ export function parser({
       // Convert {internal} and {{external}} mdast nodes to standard mdast link
       // nodes, using passed down linkers to generate href and title
       .use(references(link))
-      // Automatically remove outermost paragraph wrapper
-      .use(unnest)
       // Parse $ and $$ blocks in text as math
       .use(remarkMath)
       // Convert standard mdast nodes to hast
       .use(remarkRehype)
       // Convert math nodes to hast
       .use(rehypeKatex)
+      // Automatically remove outermost paragraph wrapper
+      .use(unnest)
       // Optionally trim mdast to a minimal preview
       .use(truncator, {
         maxChars: 100,
@@ -70,7 +70,7 @@ export function parser({
  * Utility plugin. Use noOp(true) to log the current syntax tree at this point
  * in the chain.
  */
-function noOp(log = false) {
+function noOp({ log = false } = {}) {
   return (tree: Node) => {
     if (log) {
       console.log(tree)
