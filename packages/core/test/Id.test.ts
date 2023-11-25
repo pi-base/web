@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { format, toInt, trim } from '../src/Id'
+import { format, toInt, trim, tag } from '../src/Id'
 
 describe('format', () => {
   it('pads the given character', () => {
@@ -31,18 +31,18 @@ describe('toInt', () => {
 
 describe('trim', () => {
   it('trims down to the numeric content', () => {
-    expect(toInt('T000100')).toEqual(100)
+    expect(trim('T000100')).toEqual(100)
   })
 
   it('does not require leading zeros', () => {
-    expect(toInt('P12')).toEqual(12)
+    expect(trim('P12')).toEqual(12)
   })
 
   it('does not match nonexistent kinds', () => {
-    expect(toInt('Z000100')).toEqual(0)
+    expect(trim('Z000100')).toEqual(0)
   })
 
   it('matches unknown kind', () => {
-    expect(toInt('000123')).toEqual(123)
+    expect(trim('000123')).toEqual(123)
   })
 })
