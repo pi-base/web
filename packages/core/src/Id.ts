@@ -6,12 +6,13 @@ export type Tagged =
   | PropertyId
   | TheoremId
   | { kind: 'trait'; space: number; property: number }
+  | { kind: 'unknown'; id: number }
 
 export type SpaceId = { kind: 'space'; id: number }
 export type PropertyId = { kind: 'property'; id: number }
 export type TheoremId = { kind: 'theorem'; id: number }
 
-const pattern = /^(?<prefix>[spti])0*(?<id>\d+)/i
+const pattern = /^(?<prefix>[spti])?0*(?<id>\d+)/i
 
 export function traitId({ space, property }: TraitId): string {
   return `${space}|${property}`
@@ -33,6 +34,9 @@ export function tag(input: string): Tagged | null {
   }
 
   const id = parseInt(match.groups.id)
+  if (!match.groups.prefix) {
+    return { kind: 'unknown', id }
+  }
   switch (match.groups.prefix.toUpperCase()) {
     case 'S':
       return { kind: 'space', id }
