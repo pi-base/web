@@ -16,25 +16,33 @@ describe('toInt', () => {
     expect(toInt('T000100')).toEqual(100)
   })
 
-  it('does not require a leading prefix', () => {
+  it('does not require leading zeros', () => {
     expect(toInt('P12')).toEqual(12)
   })
 
-  it('does not match unknown types', () => {
+  it('does not match nonexistent kinds', () => {
     expect(toInt('Z000100')).toEqual(0)
+  })
+
+  it('matches unknown kind', () => {
+    expect(toInt('000123')).toEqual(123)
   })
 })
 
 describe('trim', () => {
   it('trims down to the numeric content', () => {
-    expect(trim('T000100')).toEqual('100')
+    expect(toInt('T000100')).toEqual(100)
   })
 
-  it('does not require a leading prefix', () => {
-    expect(trim('P12')).toEqual('12')
+  it('does not require leading zeros', () => {
+    expect(toInt('P12')).toEqual(12)
   })
 
-  it('does not match unknown types', () => {
-    expect(trim('Z000100')).toEqual('Z000100')
+  it('does not match nonexistent kinds', () => {
+    expect(toInt('Z000100')).toEqual(0)
+  })
+
+  it('matches unknown kind', () => {
+    expect(toInt('000123')).toEqual(123)
   })
 })
