@@ -1,6 +1,6 @@
 import { bundle } from '@pi-base/core'
 
-export const mainBranch = 'main'
+export const mainBranch = 'jcd/mathlib' // 'main'
 export const contributingUrl = `https://github.com/pi-base/data/blob/${mainBranch}/CONTRIBUTING.md`
 export const defaultHost = bundle.defaultHost
 
