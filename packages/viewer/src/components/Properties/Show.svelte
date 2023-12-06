@@ -1,8 +1,17 @@
 <script lang="ts">
   import type { Property } from 'src/models'
-  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import {
+    Aliases,
+    Icons,
+    Link,
+    References,
+    Tabs,
+    Title,
+    Typeset,
+  } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
+  import Check from '../Shared/Icons/Check.svelte'
 
   export let property: Property
   export let tab: 'spaces' | 'theorems' | 'references'
@@ -26,18 +35,18 @@
 </h1>
 
 <section class="description">
+  {#if property?.lean}
+    <p>
+      <Icons.Robot />
+      <a href={leanUrl(property.lean)} target="_blank">
+        <code>{property.lean.id}</code>
+        in
+        <code>{property.lean.module}</code>
+      </a>
+    </p>
+  {/if}
   <Typeset body={property.description} />
 </section>
-
-{#if property?.lean}
-  <section>
-    <a href={leanUrl(property.lean)} target="_blank">
-      Formalized in Lean as <code>{property.lean.id}</code>
-      in
-      <code>{property.lean.module}</code>
-    </a>
-  </section>
-{/if}
 
 <Tabs {tabs} {tab} {rel} />
 
