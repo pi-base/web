@@ -17,6 +17,9 @@ export type Bundle = {
   spaces: Map<Id, Space>
   traits: Map<Id, Trait<Id>>
   theorems: Map<Id, Theorem>
+  lean?: {
+    properties: { id: string; module: string }[]
+  }
   version: Version
 }
 
@@ -26,6 +29,16 @@ export const serializedSchema = z.object({
   theorems: z.array(theoremSchema),
   traits: z.array(traitSchema(z.string())),
   version: z.object({ ref: z.string(), sha: z.string() }),
+  lean: z
+    .object({
+      properties: z.array(
+        z.object({
+          id: z.string(),
+          module: z.string(),
+        }),
+      ),
+    })
+    .optional(),
 })
 
 export type Serialized = z.infer<typeof serializedSchema>
@@ -41,14 +54,16 @@ export function serialize(bundle: Bundle): Serialized {
 }
 
 export function deserialize(data: unknown): Bundle {
-  const serialized = serializedSchema.parse(data)
+  const { properties, spaces, theorems, traits, version, lean } =
+    serializedSchema.parse(data)
 
   return {
-    properties: indexBy(serialized.properties, p => p.uid),
-    spaces: indexBy(serialized.spaces, s => s.uid),
-    theorems: indexBy(serialized.theorems, t => t.uid),
-    traits: indexBy(serialized.traits, traitId),
-    version: serialized.version,
+    properties: indexBy(properties, p => p.uid),
+    spaces: indexBy(spaces, s => s.uid),
+    theorems: indexBy(theorems, t => t.uid),
+    traits: indexBy(traits, traitId),
+    lean,
+    version,
   }
 }
 

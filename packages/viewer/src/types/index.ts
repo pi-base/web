@@ -9,6 +9,10 @@ export type Property = {
   aliases: string[]
   description: string
   refs: Ref[]
+  lean?: {
+    id: string
+    module: string
+  }
 }
 
 export type Space = {
