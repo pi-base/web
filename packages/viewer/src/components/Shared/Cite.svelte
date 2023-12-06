@@ -13,7 +13,7 @@
 <div class="text-center p-2">
   <small>
     Cite as:
-    <span class="text-muted">
+    <span class="citation text-muted">
       The pi-Base Community.
       {#if title}
         <cite>{title}.</cite>
@@ -32,3 +32,13 @@
     <CopyButton text={markdown}>Markdown Link</CopyButton>
   </small>
 </div>
+
+<style>
+  .p-2 {
+    overflow: hidden;
+  }
+
+  .p-2:hover {
+    overflow: visible;
+  }
+</style>
