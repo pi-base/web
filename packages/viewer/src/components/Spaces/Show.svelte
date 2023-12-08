@@ -13,6 +13,8 @@
 
 <Title title={space.name} />
 
+<h3>Space S{space.id}</h3>
+
 <h1>
   <Typeset body={space.name} />
   {#if space?.aliases}

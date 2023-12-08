@@ -4,4 +4,8 @@
   export let theorem: { id: number }
 </script>
 
-<a href="/theorems/{Id.format('T', theorem.id)}">{theorem.id}</a>
+<a href="/theorems/{Id.format('T', theorem.id)}">
+  <slot>
+    T{theorem.id}
+  </slot>
+</a>

@@ -36,6 +36,8 @@
 {:then { property, space, trait, proof, meta }}
   <Title title={`${space.name}: ${property.name}`} />
 
+  <h3>Property P{property.id} | Space S{space.id}</h3>
+
   <h1>
     {#if proof}
       <Robot />

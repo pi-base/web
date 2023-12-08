@@ -32,7 +32,7 @@
   {#each $index as theorem (theorem.id)}
     <tr>
       <td>
-        <Link.Theorem {theorem} />
+        <Link.Theorem {theorem}>T{theorem.id}</Link.Theorem>
       </td>
       <td>
         <Formula value={theorem.when} />

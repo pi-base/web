@@ -13,6 +13,8 @@
 
 <Title title={property.name} />
 
+<h3>Property P{property.id}</h3>
+
 <h1>
   <Typeset body={property.name} />
   {#if property?.aliases}

@@ -13,6 +13,8 @@
 
 <Title title={theorem.name} />
 
+<h3>Theorem T{theorem.id}</h3>
+
 <h1>
   <Name {theorem} />
 </h1>

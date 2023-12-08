@@ -32,7 +32,7 @@
   {#each $index as property (property.id)}
     <tr>
       <td>
-        <Link.Property {property}>{property.id}</Link.Property>
+        <Link.Property {property}>P{property.id}</Link.Property>
       </td>
       <td>
         <Typeset body={property.name} />
