@@ -66,9 +66,14 @@
   </p>
   <h3>Community</h3>
   <p>
-    The π-Base is part of the <a href="https://code4math.org" style="font-family:monospace">code4math</a>
-    ommunity. Join the conversation on either the <a href="https://code4math.zulipchat.com/">code4math Zulip</a>
-    or the <a href="https://github.com/orgs/pi-base/discussions">π-Base GitHub Discussion board</a>.
+    The π-Base is part of the 
+    <a href="https://code4math.org" style="font-family:monospace">code4math</a>
+    community. Join the conversation on either the 
+    <a href="https://code4math.zulipchat.com/">code4math Zulip</a>
+    or the 
+    <a href="https://github.com/orgs/pi-base/discussions">
+        π-Base GitHub Discussion board
+    </a>.
   </p>
   <p>
     More databases may be discovered at the
