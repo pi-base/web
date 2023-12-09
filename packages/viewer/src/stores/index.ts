@@ -43,25 +43,12 @@ export type Store = {
   deduction: Deduction.Store
 }
 
-export function create(
-  pre: Prestore,
-  gateway: Gateway.Sync,
-  {
-    host = defaultHost,
-    branch = mainBranch,
-  }: {
-    host?: string
-    branch?: string
-  } = {},
-): Store {
+export function create(pre: Prestore, gateway: Gateway.Sync): Store {
   const spaces = writable(Collection.empty<Space>())
   const properties = writable(Collection.empty<Property>())
   const theorems = writable(new Theorems())
   const traits = writable(new Traits())
-  const source = Source.create({
-    host,
-    branch,
-  })
+  const source = Source.create(pre.source)
   const sync = Sync.create(refresh, pre.sync)
 
   const deduction = Deduction.create(
