@@ -1,10 +1,11 @@
-import type { Property, Space, Theorem } from '@/models'
+import type { Property, Space, Theorem, Traits } from '@/models'
 import type { Finder } from './types'
 
 export function internal(
   properties: Finder<Property>,
   spaces: Finder<Space>,
   theorems: Finder<Theorem>,
+  traits: Traits,
 ) {
   return function linker([kind, id]: ['S' | 'P' | 'T', string]) {
     switch (kind) {
@@ -15,9 +16,16 @@ export function internal(
           const { sid, pid } = match.groups
           const space = spaces.find(Number(sid))
           const property = properties.find(Number(pid))
+          const trait = space && property && traits.find(space, property)
+          const connector =
+            trait?.value === true
+              ? 'is'
+              : trait?.value === false
+              ? 'is not'
+              : '?'
           return {
             href: `/spaces/S${sid}/properties/P${pid}`,
-            title: `${space ? space.name : 'S' + sid} | ${
+            title: `${space ? space.name : 'S' + sid} ${connector} ${
               property ? property.name : 'P' + pid
             }`,
           }

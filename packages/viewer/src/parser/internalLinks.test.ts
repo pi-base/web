@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { atom, property, space, theorem } from '@/__test__'
-import { Collection, Theorems } from '@/models'
+import { atom, property, space, theorem, trait } from '@/__test__'
+import { Collection, Theorems, Traits } from '@/models'
 
 import { internal } from './internalLinks'
 
@@ -9,7 +9,10 @@ describe('with ambient data', () => {
     property({ id: 1, name: 'One' }),
     property({ id: 2, name: 'Two' }),
   ])
-  const spaces = Collection.byId([space({ id: 2, name: 'Two' })])
+  const spaces = Collection.byId([
+    space({ id: 1, name: 'One' }),
+    space({ id: 2, name: 'Two' }),
+  ])
   const theorems: Theorems = Theorems.build(
     [
       theorem({
@@ -20,8 +23,16 @@ describe('with ambient data', () => {
     ],
     properties,
   )
+  const traits = Traits.build(
+    [
+      trait({ space: 1, property: 1, value: true }),
+      trait({ space: 1, property: 2, value: false }),
+    ],
+    spaces,
+    properties,
+  )
 
-  const link = internal(properties, spaces, theorems)
+  const link = internal(properties, spaces, theorems, traits)
 
   describe('properties', () => {
     it('can link to properties', () => {
@@ -58,9 +69,16 @@ describe('with ambient data', () => {
 
   describe('traits', () => {
     it('can link to traits', () => {
+      expect(link(['S', '000001|P000001'])).toEqual({
+        href: '/spaces/S000001/properties/P000001',
+        title: 'One is One',
+      })
+    })
+
+    it('negates the display', () => {
       expect(link(['S', '000001|P000002'])).toEqual({
         href: '/spaces/S000001/properties/P000002',
-        title: 'S000001 | Two',
+        title: 'One is not Two',
       })
     })
   })
