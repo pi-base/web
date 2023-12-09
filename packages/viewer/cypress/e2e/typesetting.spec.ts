@@ -12,6 +12,6 @@ it('renders internal links', () => {
   )
 
   cy.get('[data-testid=output]').contains(
-    'Discrete topology on a two-point set is $T_0$ as noted in Discrete topology on a two-point set | $T_0$',
+    'Discrete topology on a two-point set is $T_0$ as noted in Discrete topology on a two-point set is $T_0$',
   )
 })

@@ -1,18 +1,19 @@
 export type { Context } from './context/types'
 
-import { getContext, setContext } from 'svelte'
-import { type Readable, derived } from 'svelte/store'
 import { formula as F } from '@pi-base/core'
+import { getContext, setContext } from 'svelte'
+import { derived, get, type Readable } from 'svelte/store'
 
-import type { Context } from './context/types'
-import { trace } from './debug'
-import * as Errors from './errors'
-import type * as Gateway from './gateway'
-import { Id } from './models'
-import { renderer } from './parser'
-import { type Local, local } from './repositories'
-import { type Prestore, type Store, create } from './stores'
-import { subscribeUntil } from './util'
+import type { Context } from '@/context/types'
+import { trace } from '@/debug'
+import * as Errors from '@/errors'
+import type * as Gateway from '@/gateway'
+import { Id } from '@/models'
+import { renderer } from '@/parser'
+import { local, type Local } from '@/repositories'
+import { create, type Prestore, type Store } from '@/stores'
+import { type Source } from '@/types'
+import { subscribeUntil } from '@/util'
 
 export type Config = {
   showDevLink: boolean
@@ -39,20 +40,29 @@ function project(store: Store) {
 export function initialize({
   db = local(),
   errorHandler = Errors.log(),
-  host,
+  source = {},
   gateway,
   showDev = false,
   typesetter = renderer,
 }: {
   db?: Local<Prestore>
   errorHandler?: Errors.Handler
-  host?: string
+  source?: Partial<Source>
   gateway: Gateway.Sync
   showDev?: boolean
   typesetter?: typeof renderer
 }): Context {
   const pre = db.load()
-  const store = create(pre, gateway, { host })
+  const store = create(
+    {
+      ...pre,
+      source: {
+        host: source.host || pre.source.host,
+        branch: source.branch || pre.source.branch,
+      },
+    },
+    gateway,
+  )
 
   db.subscribe(project(store))
 
@@ -61,10 +71,10 @@ export function initialize({
   }
 
   const typeset = derived(
-    [store.properties, store.spaces, store.theorems],
-    ([properties, spaces, theorems]) => {
+    [store.properties, store.spaces, store.theorems, store.traits],
+    ([properties, spaces, theorems, traits]) => {
       trace({ event: 'build_typesetter' })
-      return typesetter(properties, spaces, theorems)
+      return typesetter(properties, spaces, theorems, traits)
     },
   )
 
