@@ -66,13 +66,13 @@
   </p>
   <h3>Community</h3>
   <p>
-    The π-Base is part of the 
+    The π-Base is part of the
     <a href="https://code4math.org" style="font-family:monospace">code4math</a>
-    community. Join the conversation on either the 
+    community. Join the conversation on either the
     <a href="https://code4math.zulipchat.com/">code4math Zulip</a>
-    or the 
+    or the
     <a href="https://github.com/orgs/pi-base/discussions">
-        π-Base GitHub Discussion board
+      π-Base GitHub Discussion board
     </a>.
   </p>
   <p>
