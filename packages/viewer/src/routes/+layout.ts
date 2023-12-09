@@ -25,7 +25,9 @@ export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
     showDev: dev,
     errorHandler,
     gateway: sync(fetch),
-    host: bundleHost,
+    source: {
+      host: bundleHost,
+    },
   })
 
   await context.loaded()
