@@ -8,7 +8,11 @@ import { Transformer } from 'unified'
  */
 export const unnest = () => {
   const transformer: Transformer<Root> = tree => {
-    if (tree && tree.children?.length === 1 && 'tagName' in tree.children[0]) {
+    if (tree.children) {
+      tree.children = tree.children.filter(n => n.type !== 'text' || n.value)
+    }
+
+    if (tree?.children.length === 1 && 'tagName' in tree.children[0]) {
       tree.children = tree.children[0].children
 
       if ('tagName' in tree.children[0] && tree.children[0].tagName === 'p') {
