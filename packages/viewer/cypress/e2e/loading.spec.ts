@@ -9,7 +9,7 @@ describe('Loading', () => {
     if (!isLegacy) {
       cy.title().should(
         'eq',
-        'Countably compact ⇒ Weakly Countably Compact | π-Base',
+        'T2: Countably compact ⇒ Weakly Countably Compact | π-Base',
       )
     }
     cy.contains('Countably compact ⇒ Weakly Countably Compact')
