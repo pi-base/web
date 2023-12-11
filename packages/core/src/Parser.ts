@@ -53,14 +53,14 @@ export function parser({
       .use(remarkRehype)
       // Convert math nodes to hast
       .use(rehypeKatex)
-      // Automatically remove outermost paragraph wrapper
-      .use(unnest)
       // Optionally trim mdast to a minimal preview
       .use(truncator, {
         maxChars: 100,
         disable: !truncate,
         ignoreTags: ['math', 'inline-math'],
       })
+      // Automatically remove outermost paragraph wrapper
+      .use(unnest)
       // Render hast to HTML string
       .use(rehypeStringify)
   )
