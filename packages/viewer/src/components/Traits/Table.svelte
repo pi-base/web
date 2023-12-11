@@ -17,9 +17,9 @@
       <th>Id</th>
       <th>Name</th>
       {#each properties as property (property.id)}
-        <td>
+        <th>
           <Link.Property {property} />
-        </td>
+        </th>
       {/each}
     </tr>
   </thead>
