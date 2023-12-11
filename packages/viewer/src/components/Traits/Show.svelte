@@ -34,7 +34,9 @@
 {#await loading}
   <Loading />
 {:then { property, space, trait, proof, meta }}
-  <Title title={`S${space.id}|P${property.id}: ${space.name} | ${property.name}`} />
+  <Title
+    title={`S${space.id}|P${property.id}: ${space.name} | ${property.name}`}
+  />
 
   <h3>Space S{space.id} | Property P{property.id}</h3>
 
