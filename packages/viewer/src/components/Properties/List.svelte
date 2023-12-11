@@ -1,35 +1,24 @@
 <script lang="ts">
-  import { derived, type Readable } from 'svelte/store'
+  import { Filter, Link, Title, Typeset } from '@/components/Shared'
+  import type { Property } from '@/models'
+  import type { Store } from '@/stores/list'
 
-  import { list } from '@/stores'
-
-  import { Filter, Link, Title, Typeset } from '../Shared'
-  import type { Collection, Property } from 'src/models'
-
-  export let properties: Readable<Collection<Property>>
-
-  const index = list(
-    derived(properties, ps => ps.all),
-    {
-      weights: { name: 0.7, aliases: 0.7, description: 0.3 },
-      queryParam: 'filter',
-    },
-  )
+  export let properties: Store<Property>
 </script>
 
 <Title title="Properties" />
 
-<Filter filter={index.filter} />
+<Filter filter={properties.filter} />
 
 <table class="table">
   <thead>
     <tr>
-      <th on:click={index.sort('id')}>Id</th>
-      <th on:click={index.sort('name')}>Name</th>
+      <th on:click={properties.sort('id')}>Id</th>
+      <th on:click={properties.sort('name')}>Name</th>
       <th>Description</th>
     </tr>
   </thead>
-  {#each $index as property (property.id)}
+  {#each $properties as property (property.id)}
     <tr>
       <td>
         <Link.Property {property}>{property.id}</Link.Property>
