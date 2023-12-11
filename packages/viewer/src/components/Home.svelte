@@ -72,12 +72,12 @@
     <a href="https://code4math.zulipchat.com/">code4math Zulip</a>
     or the
     <a href="https://github.com/orgs/pi-base/discussions">
-      π-Base GitHub Discussion board
-    </a>.
+      π-Base GitHub Discussion board</a
+    >.
   </p>
   <p>
     More databases may be discovered at the
-    <a href="https://mathbases.org/">Index of Mathematical DataBases</a>
+    <a href="https://mathbases.org/">Index of Mathematical DataBases</a>.
   </p>
   <h3>Special Acknowledgements</h3>
   <p>
@@ -113,7 +113,7 @@
       Funding from the <a href="https://www.southalabama.edu/"
         >University of South Alabama</a
       >
-      Faculty Development Council (2017-2018).
+      Faculty Development Council from 2017-2018.
     </li>
   </ul>
 </main>
