@@ -1,35 +1,25 @@
 <script lang="ts">
-  import { derived, type Readable } from 'svelte/store'
-  import { list } from '@/stores'
-
   import { Filter, Formula, Link, Title, Typeset } from '../Shared'
-  import type { Theorems } from 'src/models'
+  import type { Theorem } from '@/models'
+  import type { Store } from '@/stores/list'
 
-  export let theorems: Readable<Theorems>
-
-  const index = list(
-    derived(theorems, ts => ts.all),
-    {
-      weights: { name: 0.7, description: 0.3 },
-      queryParam: 'filter',
-    },
-  )
+  export let theorems: Store<Theorem>
 </script>
 
 <Title title="Theorems" />
 
-<Filter filter={index.filter} />
+<Filter filter={theorems.filter} />
 
 <table class="table">
   <thead>
     <tr>
-      <th on:click={index.sort('id')}>Id</th>
+      <th on:click={theorems.sort('id')}>Id</th>
       <th>If</th>
       <th>Then</th>
       <th>Description</th>
     </tr>
   </thead>
-  {#each $index as theorem (theorem.id)}
+  {#each $theorems as theorem (theorem.id)}
     <tr>
       <td>
         <Link.Theorem {theorem}>T{theorem.id}</Link.Theorem>

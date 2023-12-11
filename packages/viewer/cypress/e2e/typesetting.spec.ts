@@ -12,6 +12,8 @@ it('renders internal links', () => {
   )
 
   cy.get('[data-testid=output]').contains(
-    'Discrete topology on a two-point set is $T_0$ as noted in Discrete topology on a two-point set is $T_0$',
+    // The T0T_0T0 rendering here is the text representation of the inner html of katex rendered math.
+    // We're effectively asserting that it _isn't_ still rendered as $T_0$
+    'Discrete topology on a two-point set is T0T_0T0​ as noted in Discrete topology on a two-point set is T0T_0T0​',
   )
 })

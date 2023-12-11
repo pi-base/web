@@ -20,7 +20,7 @@
   //
   // It really feels like we don't have the right architecture for this formula
   // state.
-  const suggest = writable(true)
+  const suggest = writable(false)
   rawFormula.subscribe(_ => ($suggest = true))
   function selectExample(example: string) {
     $rawFormula = example
@@ -28,7 +28,7 @@
   }
 
   urlSearchParam('text', text)
-  urlSearchParam('q', rawFormula)
+  urlSearchParam('q', rawFormula, () => ($suggest = false))
 
   let title: string
   $: if ($rawFormula.length > 0) {

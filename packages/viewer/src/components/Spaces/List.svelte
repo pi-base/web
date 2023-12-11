@@ -1,35 +1,24 @@
 <script lang="ts">
-  import { derived, type Readable } from 'svelte/store'
+  import { Filter, Link, Title, Typeset } from '@/components/Shared'
+  import type { Space } from '@/models'
+  import type { Store } from '@/stores/list'
 
-  import { list } from '@/stores'
-
-  import { Filter, Link, Title, Typeset } from '../Shared'
-  import type { Collection, Space } from 'src/models'
-
-  export let spaces: Readable<Collection<Space>>
-
-  const index = list(
-    derived(spaces, ss => ss.all),
-    {
-      weights: { name: 0.7, aliases: 0.7, description: 0.3 },
-      queryParam: 'filter',
-    },
-  )
+  export let spaces: Store<Space>
 </script>
 
 <Title title="Spaces" />
 
-<Filter filter={index.filter} />
+<Filter filter={spaces.filter} />
 
 <table class="table">
   <thead>
     <tr>
-      <th on:click={index.sort('id')}>Id</th>
-      <th on:click={index.sort('name')}>Name</th>
+      <th on:click={spaces.sort('id')}>Id</th>
+      <th on:click={spaces.sort('name')}>Name</th>
       <th>Description</th>
     </tr>
   </thead>
-  {#each $index as space (space.id)}
+  {#each $spaces as space (space.id)}
     <tr>
       <td>
         <Link.Space {space}>S{space.id}</Link.Space>
