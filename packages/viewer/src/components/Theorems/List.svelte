@@ -16,7 +16,6 @@
       <th on:click={theorems.sort('id')}>Id</th>
       <th>If</th>
       <th>Then</th>
-      <th>Description</th>
     </tr>
   </thead>
   {#each $theorems as theorem (theorem.id)}
@@ -29,9 +28,6 @@
       </td>
       <td>
         <Formula value={theorem.then} />
-      </td>
-      <td>
-        <Typeset body={theorem.description} truncated={true} />
       </td>
     </tr>
   {/each}
