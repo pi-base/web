@@ -13,10 +13,10 @@
 <table class="table">
   <thead>
     <tr>
-      <th on:click={theorems.sort('id')}>Id</th>
-      <th>If</th>
-      <th>Then</th>
-      <th>Description</th>
+      <th style="width: 5%" on:click={theorems.sort('id')}>Id</th>
+      <th style="width: 20%">If</th>
+      <th style="width: 20%">Then</th>
+      <th style="width: 55%">Description</th>
     </tr>
   </thead>
   {#each $theorems as theorem (theorem.id)}

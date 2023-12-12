@@ -13,9 +13,9 @@
 <table class="table">
   <thead>
     <tr>
-      <th on:click={properties.sort('id')}>Id</th>
-      <th on:click={properties.sort('name')}>Name</th>
-      <th>Description</th>
+      <th style="width: 5%" on:click={properties.sort('id')}>Id</th>
+      <th style="width: 20%" on:click={properties.sort('name')}>Name</th>
+      <th style="width: 75%">Description</th>
     </tr>
   </thead>
   {#each $properties as property (property.id)}
