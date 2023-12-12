@@ -5,13 +5,17 @@
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
   import { capitalize } from '@/util'
+  import { writable } from 'svelte/store'
+  import urlSearchParam from '@/stores/urlSearchParam'
 
   export let related: (traits: Traits) => [Space, Property, Trait][]
   export let mode: 'spaces' | 'properties'
 
   const { traits } = context()
 
-  let filter = ''
+  const filter = writable('')
+  urlSearchParam('filter', filter)
+
   let showDeduced = true
 
   function toggleDeduced() {
@@ -23,7 +27,7 @@
   // we need to index names in different positions depending on which kind we
   // are displaying
   $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
-  $: searched = filter ? index.search(filter).map(r => r.item) : all
+  $: searched = $filter ? index.search($filter).map(r => r.item) : all
   $: filtered = searched.filter(
     ([_space, _property, t]) => showDeduced || t.asserted,
   )
@@ -35,7 +39,7 @@
       <Icons.Search />
     </span>
   </div>
-  <input placeholder="Filter" class="form-control" bind:value={filter} />
+  <input placeholder="Filter" class="form-control" bind:value={$filter} />
   <div class="input-group-append">
     <button
       class="btn btn-outline-secondary {!showDeduced ? 'active' : ''}"
@@ -43,9 +47,9 @@
       on:click={toggleDeduced}
     >
       {#if showDeduced}
-        Showing <Icons.Robot />
+        Hide <Icons.Robot />
       {:else}
-        Hiding <Icons.Robot />
+        Show <Icons.Robot />
       {/if}
     </button>
   </div>

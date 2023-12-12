@@ -64,22 +64,20 @@
     <a href="https://clontz.org">Steven Clontz</a>
     joined the project in 2017.
   </p>
-  <h3>Other Mathematical Databases</h3>
+  <h3>Community</h3>
   <p>
-    Integer sequences: <a href="https://oeis.org/">OEIS</a> | L-functions and
-    modular forms: <a href="https://www.lmfdb.org/citation">LMFDB</a> | Rings
-    and modules: <a href="https://ringtheory.herokuapp.com/">DaRT</a> | Graphs:
-    <a href="https://houseofgraphs.org/">HoG</a>
+    The π-Base is part of the
+    <a href="https://code4math.org" style="font-family:monospace">code4math</a>
+    community. Join the conversation on either the
+    <a href="https://code4math.zulipchat.com/">code4math Zulip</a>
+    or the
+    <a href="https://github.com/orgs/pi-base/discussions">
+      π-Base GitHub Discussion board</a
+    >.
   </p>
   <p>
-    And many more:
-    <a href="https://mathdb.mathhub.info/">Catalogue of Mathematical Datasets</a
-    >
-  </p>
-  <p>
-    The π-Base software was designed to support any category of
-    objects/properties/theorems. If you're interested in adapting π-Base for use
-    in your field, reach out to us on GitHub.
+    More databases may be discovered at the
+    <a href="https://mathbases.org/">Index of Mathematical DataBases</a>.
   </p>
   <h3>Special Acknowledgements</h3>
   <p>
@@ -115,7 +113,7 @@
       Funding from the <a href="https://www.southalabama.edu/"
         >University of South Alabama</a
       >
-      Faculty Development Council (2017-2018).
+      Faculty Development Council from 2017-2018.
     </li>
   </ul>
 </main>

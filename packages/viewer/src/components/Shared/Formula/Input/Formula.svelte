@@ -35,6 +35,7 @@
 
 <input
   class="form-control"
+  autocomplete="off"
   {name}
   {placeholder}
   bind:value={$raw}

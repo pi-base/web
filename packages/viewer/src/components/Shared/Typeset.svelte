@@ -43,6 +43,10 @@
         continue
       }
 
+      $typeset(link.innerHTML, false).then(value => {
+        link.innerHTML = value
+      })
+
       link.setAttribute('_wired', 'true')
       link.addEventListener('click', e => {
         e.preventDefault()
