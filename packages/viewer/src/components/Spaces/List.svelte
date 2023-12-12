@@ -21,7 +21,7 @@
   {#each $spaces as space (space.id)}
     <tr>
       <td>
-        <Link.Space {space}>S{space.id}</Link.Space>
+        <Link.Space {space} content="id" />
       </td>
       <td>
         <Typeset body={space.name} />

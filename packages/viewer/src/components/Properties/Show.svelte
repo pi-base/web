@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Property } from 'src/models'
-  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import { Aliases, Link, References, Tabs, Title, Typeset } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
@@ -15,7 +15,7 @@
 
 <Title {title} />
 
-<h3>Property P{property.id}</h3>
+<h3>Property <Link.Property {property} content="idLong" /></h3>
 
 <h1>
   <Typeset body={property.name} />

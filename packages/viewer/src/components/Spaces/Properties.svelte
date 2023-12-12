@@ -11,9 +11,7 @@
 </script>
 
 <Related mode="properties" {related}>
-  <Link.Property slot="id" let:property {property}>
-    P{property.id}
-  </Link.Property>
+  <Link.Property slot="id" let:property {property} content="id" />
 
   <Link.Property slot="name" let:property {property} />
 </Related>

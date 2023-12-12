@@ -21,7 +21,7 @@
   {#each $properties as property (property.id)}
     <tr>
       <td>
-        <Link.Property {property}>P{property.id}</Link.Property>
+        <Link.Property {property} content="id" />
       </td>
       <td>
         <Typeset body={property.name} />

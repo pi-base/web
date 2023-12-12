@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Theorem } from 'src/models'
-  import { References, Tabs, Title, Typeset } from '../Shared'
+  import { Link, References, Tabs, Title, Typeset } from '../Shared'
   import Name from './Name.svelte'
   import Converse from './Converse.svelte'
 
@@ -15,7 +15,7 @@
 
 <Title {title} />
 
-<h3>Theorem T{theorem.id}</h3>
+<h3>Theorem <Link.Theorem {theorem} content="idLong" /></h3>
 
 <h1>
   <Name {theorem} />

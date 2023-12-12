@@ -11,7 +11,7 @@
 </script>
 
 <Related mode="spaces" {related}>
-  <Link.Space slot="id" let:space {space}>S{space.id}</Link.Space>
+  <Link.Space slot="id" let:space {space} content="id" />
 
   <Link.Space slot="name" let:space {space} />
 </Related>

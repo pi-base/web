@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Space } from 'src/models'
-  import { Aliases, References, Tabs, Title, Typeset } from '../Shared'
+  import { Aliases, Link, References, Tabs, Title, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
 
@@ -15,7 +15,7 @@
 
 <Title {title} />
 
-<h3>Space S{space.id}</h3>
+<h3>Space <Link.Space {space} content="idLong" /></h3>
 
 <h1>
   <Typeset body={space.name} />

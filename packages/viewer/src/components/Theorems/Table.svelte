@@ -17,7 +17,7 @@
     {#each theorems as theorem (theorem.id)}
       <tr>
         <td>
-          <Link.Theorem {theorem}>T{theorem.id}</Link.Theorem>
+          <Link.Theorem {theorem} />
         </td>
         <td>
           <Formula value={theorem.when} />

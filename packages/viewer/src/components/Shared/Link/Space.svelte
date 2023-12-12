@@ -3,10 +3,17 @@
   import { Id } from '@/models'
 
   export let space: { id: number; name: string }
+  export let content: 'id' | 'idLong' | 'name' = 'name'
 </script>
 
 <a href="/spaces/{Id.format('S', space.id)}">
   <slot>
-    <Typeset body={space.name} />
+    {#if content === 'name'}
+      <Typeset body={space.name} />
+    {:else if content === 'id'}
+      S{space.id}
+    {:else}
+      {Id.format('S', space.id)}
+    {/if}
   </slot>
 </a>
