@@ -31,11 +31,18 @@ export function sync(
     trace({ event: 'remote_fetch_started', host, branch })
     const result = await pb.bundle.fetch({ host, branch, etag, fetch })
 
+    const propIdx: Record<string, string> = {}
+    if (result?.bundle.lean?.properties) {
+      for (const { id, module } of result.bundle.lean.properties) {
+        propIdx[id] = module
+      }
+    }
+
     if (result) {
       trace({ event: 'remote_fetch_complete', result })
       return {
         spaces: transform(space, result.bundle.spaces),
-        properties: transform(property, result.bundle.properties),
+        properties: transform(property(propIdx), result.bundle.properties),
         traits: transform(trait, result.bundle.traits),
         theorems: transform(theorem, result.bundle.theorems),
         etag: result.etag,
@@ -47,19 +54,28 @@ export function sync(
   }
 }
 
-function property({
-  uid,
-  name,
-  aliases,
-  description,
-  refs,
-}: pb.Property): Property {
-  return {
-    id: Id.toInt(uid),
+function property(propertyIdx: Record<string, string>) {
+  return function ({
+    uid,
     name,
     aliases,
     description,
     refs,
+    mathlib,
+  }: pb.Property): Property {
+    return {
+      id: Id.toInt(uid),
+      name,
+      aliases,
+      description,
+      refs,
+      lean: mathlib
+        ? {
+            id: mathlib,
+            module: propertyIdx[mathlib],
+          }
+        : undefined,
+    }
   }
 }
 

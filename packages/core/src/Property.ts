@@ -5,6 +5,7 @@ export const propertySchema = z.intersection(
   z.object({
     name: z.string(),
     aliases: z.array(z.string()),
+    mathlib: z.string().optional(),
   }),
   recordSchema,
 )
