@@ -8,7 +8,7 @@
   export let tab: 'converse' | 'references'
   export let rel: string | undefined = undefined
 
-  const title = `T${theorem.id}: ${theorem.name}`
+  $: title = `T${theorem.id}: ${theorem.name}`
 
   const tabs = ['converse', 'references'] as const
 </script>
