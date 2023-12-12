@@ -1,4 +1,6 @@
 import { type Readable, get } from 'svelte/store'
+import { Id } from '@pi-base/core'
+import { redirect } from '@sveltejs/kit'
 
 type Halt = () => void
 
@@ -52,4 +54,24 @@ export function subscribeUntil<S>(
 
 export function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+export function normalizeIds(url: URL, ...ids: string[]) {
+  const next = new URL(url)
+  for (const id of ids) {
+    const normalized = Id.normalize(id)
+    if (normalized && normalized !== id) {
+      next.pathname = next.pathname
+        .replace(`/${id}/`, `/${normalized}/`)
+        .replace(new RegExp(`${id}$`), normalized)
+    }
+  }
+  return next
+}
+
+export function normalizeIdRedirect(url: URL, ...ids: string[]) {
+  const next = normalizeIds(url, ...ids)
+  if (next.href !== url.href) {
+    throw redirect(302, next)
+  }
 }

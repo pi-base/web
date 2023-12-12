@@ -1,9 +1,11 @@
-import { error } from '@sveltejs/kit'
-
 import type { Theorem } from '@/models'
+import { normalizeIdRedirect } from '@/util'
+import { error } from '@sveltejs/kit'
 import type { LayoutLoad } from './$types'
 
-export const load: LayoutLoad = async function ({ params, parent }) {
+export const load: LayoutLoad = async function ({ params, parent, url }) {
+  normalizeIdRedirect(url, params.id)
+
   const { theorems } = await parent()
 
   const theorem: Theorem = await new Promise((resolve, reject) => {

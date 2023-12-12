@@ -6,7 +6,7 @@ import type { LayoutLoad } from './$types'
 
 const bundleHost = import.meta.env.VITE_BUNDLE_HOST || defaultHost
 
-export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
+export const load: LayoutLoad = async ({ fetch, url: { host }, route }) => {
   const dev = host.match(/(dev(elopment)?[.-]|localhost)/) !== null
   const errorEnv: errors.Environment = [
     'topology.pi-base.org',

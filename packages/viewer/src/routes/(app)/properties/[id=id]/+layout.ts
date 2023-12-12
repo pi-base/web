@@ -1,9 +1,11 @@
-import { error } from '@sveltejs/kit'
-
 import type { Property } from '@/models'
+import { normalizeIdRedirect } from '@/util'
+import { error } from '@sveltejs/kit'
 import type { LayoutLoad } from './$types'
 
-export const load: LayoutLoad = async function ({ params, parent }) {
+export const load: LayoutLoad = async function ({ params, parent, url }) {
+  normalizeIdRedirect(url, params.id)
+
   const { properties } = await parent()
 
   const property: Property = await new Promise((resolve, reject) => {
