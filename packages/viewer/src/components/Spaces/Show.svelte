@@ -8,7 +8,7 @@
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
 
-  const title = `S${space.id}: ${space.name}`
+  $: title = `S${space.id}: ${space.name}`
 
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
