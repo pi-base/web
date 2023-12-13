@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Theorem } from 'src/models'
-  import { References, Tabs, Title, Typeset } from '../Shared'
+  import { Link, References, Tabs, Title, Typeset } from '../Shared'
   import Name from './Name.svelte'
   import Converse from './Converse.svelte'
 
@@ -8,10 +8,14 @@
   export let tab: 'converse' | 'references'
   export let rel: string | undefined = undefined
 
+  $: title = `T${theorem.id}: ${theorem.name}`
+
   const tabs = ['converse', 'references'] as const
 </script>
 
-<Title title={theorem.name} />
+<Title {title} />
+
+<h3>Theorem <Link.Theorem {theorem} content="idLong" /></h3>
 
 <h1>
   <Name {theorem} />

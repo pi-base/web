@@ -27,7 +27,7 @@
     {#each spaces as space (space.id)}
       <tr>
         <td>
-          <Link.Space {space}>{space.id}</Link.Space>
+          <Link.Space {space}>S{space.id}</Link.Space>
         </td>
         <td>
           <Link.Space {space} />
