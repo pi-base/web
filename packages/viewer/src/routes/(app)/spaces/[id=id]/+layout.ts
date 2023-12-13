@@ -1,9 +1,11 @@
-import { error } from '@sveltejs/kit'
-
 import type { Space } from '@/models'
+import { normalizeIdRedirect } from '@/util'
+import { error } from '@sveltejs/kit'
 import type { LayoutLoad } from './$types'
 
-export const load: LayoutLoad = async function ({ params, parent }) {
+export const load: LayoutLoad = async function ({ params, parent, url }) {
+  normalizeIdRedirect(url, params.id)
+
   const { spaces } = await parent()
 
   const space: Space = await new Promise((resolve, reject) => {

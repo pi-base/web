@@ -6,13 +6,12 @@ export type Tagged =
   | PropertyId
   | TheoremId
   | { kind: 'trait'; space: number; property: number }
-  | { kind: 'unknown'; id: number }
 
 export type SpaceId = { kind: 'space'; id: number }
 export type PropertyId = { kind: 'property'; id: number }
 export type TheoremId = { kind: 'theorem'; id: number }
 
-const pattern = /^(?<prefix>[spti])?0*(?<id>\d+)/i
+const pattern = /^(?<prefix>[spti])0*(?<id>\d+)/i
 
 export function traitId({ space, property }: TraitId): string {
   return `${space}|${property}`
@@ -22,9 +21,18 @@ export function format(prefix: string, number: number): string {
   return `${prefix}${number.toString().padStart(6, '0')}`
 }
 
-export function trim(id: string): string {
+export function normalize(id: string) {
   const match = pattern.exec(id)
-  return match?.groups ? match.groups.id : id
+  if (!match || !match.groups) {
+    return null
+  }
+
+  return format(match.groups.prefix.toUpperCase(), +match.groups.id)
+}
+
+export function trim(id: string): string {
+  const match = /([1-9]\d*)$/.exec(id)
+  return match ? match[1] : id
 }
 
 export function tag(input: string): Tagged | null {
@@ -34,9 +42,6 @@ export function tag(input: string): Tagged | null {
   }
 
   const id = parseInt(match.groups.id)
-  if (!match.groups.prefix) {
-    return { kind: 'unknown', id }
-  }
   switch (match.groups.prefix.toUpperCase()) {
     case 'S':
       return { kind: 'space', id }
@@ -51,10 +56,5 @@ export function tag(input: string): Tagged | null {
 }
 
 export function toInt(id: string): number {
-  const tagged = tag(id)
-  if (tagged === null || tagged.kind === 'trait') {
-    return 0
-  } // TODO: return undefined
-
-  return tagged.id
+  return +trim(id)
 }

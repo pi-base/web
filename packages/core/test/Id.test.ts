@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { format, toInt, trim, tag } from '../src/Id'
+import { format, normalize, toInt, trim, tag } from '../src/Id'
 
 describe('format', () => {
   it('pads the given character', () => {
@@ -20,12 +20,34 @@ describe('toInt', () => {
     expect(toInt('P12')).toEqual(12)
   })
 
-  it('does not match nonexistent kinds', () => {
-    expect(toInt('Z000100')).toEqual(0)
+  it('handles non-existent kinds', () => {
+    expect(toInt('Z000100')).toEqual(100)
   })
 
   it('matches unknown kind', () => {
     expect(toInt('000123')).toEqual(123)
+  })
+})
+
+describe('normalize', () => {
+  it('pads', () => {
+    expect(normalize('T100')).toEqual('T000100')
+  })
+
+  it('capitalizes', () => {
+    expect(normalize('s10')).toEqual('S000010')
+  })
+
+  it('handles leading zeros', () => {
+    expect(normalize('P012')).toEqual('P000012')
+  })
+
+  it('nulls nonexistent kinds', () => {
+    expect(normalize('Z00100')).toEqual(null)
+  })
+
+  it('trims file suffixes', () => {
+    expect(normalize('S000123.md')).toEqual('S000123')
   })
 })
 
@@ -38,8 +60,8 @@ describe('trim', () => {
     expect(trim('P12')).toEqual('12')
   })
 
-  it('returns self for nonexistent kinds', () => {
-    expect(trim('Z000100')).toEqual('Z000100')
+  it('handles nonexistent kinds', () => {
+    expect(trim('Z000100')).toEqual('100')
   })
 
   it('matches unknown kind', () => {
@@ -60,8 +82,8 @@ describe('tag', () => {
     expect(tag('T000100')?.kind).toEqual('theorem')
   })
 
-  it('tags unknowns', () => {
-    expect(tag('000100')?.kind).toEqual('unknown')
+  it('is null if missing a kind', () => {
+    expect(tag('000100')).toEqual(null)
   })
 
   it('is null for nonexistent kinds', () => {

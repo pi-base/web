@@ -1,6 +1,6 @@
 import { parser } from '@pi-base/core'
 
-import type { Property, Space, Theorem } from '@/models'
+import type { Property, Space, Theorem, Traits } from '@/models'
 import type { Finder } from './types'
 import { internal } from './internalLinks'
 import { external } from './externalLinks'
@@ -9,8 +9,12 @@ export function renderer(
   properties: Finder<Property>,
   spaces: Finder<Space>,
   theorems: Finder<Theorem>,
+  traits: Traits,
 ) {
-  const link = { internal: internal(properties, spaces, theorems), external }
+  const link = {
+    internal: internal(properties, spaces, theorems, traits),
+    external,
+  }
 
   const full = parser({
     link,

@@ -8,12 +8,13 @@ function link([kind, id]: [unknown, unknown]) {
   }
 }
 
-async function parse(input: string) {
+async function parse(input: string, { truncate = false } = {}) {
   const file = await parser({
     link: {
       internal: link,
       external: link,
     },
+    truncate,
   }).process(input)
   return String(file)
 }
@@ -88,6 +89,38 @@ it.todo('expands math in linked titles', async () => {
   expect(String(file)).toEqual(
     '<a href="" title="$S_0$" class="internal-link"><span class="math math-inline"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>S</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">S_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:-0.0576em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span></a>',
   )
+})
+
+describe('truncate', () => {
+  it('breaks on newlines', () => {
+    const input = `a first sentence.\n\nand some extra stuff`
+    expect(parse(input)).resolves.toEqual(
+      '<p>a first sentence.</p>\n<p>and some extra stuff</p>',
+    )
+    expect(parse(input, { truncate: true })).resolves.toEqual(
+      'a first sentence.',
+    )
+  })
+
+  it('adds ellipses', () => {
+    expect(
+      parse(
+        'this is a fairly long sentence and it needs to be summarized because it is too long because it just goes on and on and on',
+        { truncate: true },
+      ),
+    ).resolves.toEqual(
+      'this is a fairly long sentence and it needs to be summarized because it is too long because it just …',
+    )
+  })
+
+  it('preserves math', () => {
+    expect(
+      parse(
+        'this is a fairly long sentence and it needs to be summarized because it is too long because it $T_{3\\frac{1}{2}}$ just goes on and on and on',
+        { truncate: true },
+      ),
+    ).resolves.toMatchSnapshot()
+  })
 })
 
 describe('unwrapping', () => {

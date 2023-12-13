@@ -28,11 +28,15 @@ export function truncate({
 
     if (node.type === 'text') {
       foundText += node.value.length
+
       if (foundText >= maxChars) {
         node.value = `${node.value.slice(
           0,
           node.value.length - (foundText - maxChars),
         )}${ellipses}`
+        return maxChars
+      } else if (node.value === '\n') {
+        node.value = ''
         return maxChars
       }
     }

@@ -17,10 +17,10 @@ export default defineConfig({
   },
   test: {
     coverage: {
-      lines: 91.19,
-      branches: 94.07,
-      statements: 91.19,
-      functions: 84.21,
+      lines: 93.19,
+      branches: 94.37,
+      statements: 93.19,
+      functions: 85.06,
       skipFull: true,
       thresholdAutoUpdate: true,
       exclude: ['src/Formula/Grammar.ts', 'test'],
