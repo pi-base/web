@@ -8,8 +8,7 @@
   export let link = true
 </script>
 
-{#if value.kind === 'atom'}
-  <Atom {value} {link} />
-{:else}
-  <Compound {value} {link} />
-{/if}
+{#if value.kind === 'atom'}<Atom {value} {link} />{:else}<Compound
+    {value}
+    {link}
+  />{/if}
