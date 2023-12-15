@@ -6,9 +6,11 @@
 
   export let value: Formula<Property>
   export let link = true
+  export let subformula = false
 </script>
 
 {#if value.kind === 'atom'}<Atom {value} {link} />{:else}<Compound
     {value}
     {link}
+    grouped={subformula}
   />{/if}

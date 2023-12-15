@@ -7,11 +7,15 @@
 
   export let value: And<Property> | Or<Property>
   export let link = true
+  export let grouped = true
 
   $: connector = value.kind === 'and' ? '∧' : '∨'
 </script>
 
-({#each value.subs as f, i}<Formula value={f} {link} />{i ===
-  value.subs.length - 1
+{#if grouped}({/if}{#each value.subs as f, i}<Formula
+    value={f}
+    {link}
+    subformula
+  />{i === value.subs.length - 1
     ? ''
-    : ` ${connector} `}{/each})
+    : ` ${connector} `}{/each}{#if grouped}){/if}
