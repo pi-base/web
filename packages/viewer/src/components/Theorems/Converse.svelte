@@ -18,8 +18,7 @@
   $: proof = deduction.prove(converse)
 </script>
 
-The converse (
-<Name theorem={converse} />)
+The converse (<Name theorem={converse} />)
 {#if counterexamples.length > 0}
   does not hold, as witnessed by
   <Traits spaces={counterexamples} properties={theorem.properties} />
