@@ -43,7 +43,7 @@ describe('with a working remote', () => {
     cy.contains(
       isLegacy
         ? /is impossible by/
-        : /Discrete.*∧.*¬.*Metrizable.*\).*is impossible by/,
+        : /Discrete.*∧.*¬.*Metrizable.*is impossible by/,
     )
     cy.contains('85').click()
     cy.contains('Discrete ⇒ Completely metrizable')
