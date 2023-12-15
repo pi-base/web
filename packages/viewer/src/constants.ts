@@ -1,7 +1,7 @@
 import { bundle } from '@pi-base/core'
 
 export const mainBranch = 'main'
-export const contributingUrl = `https://github.com/pi-base/data/blob/${mainBranch}/CONTRIBUTING.md`
+export const contributingUrl = `https://github.com/pi-base/data/wiki/Contributing`
 export const defaultHost = bundle.defaultHost
 
 export const build = {
