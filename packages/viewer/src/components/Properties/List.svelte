@@ -14,8 +14,8 @@
   <thead>
     <tr>
       <th style="width: 5%" on:click={properties.sort('id')}>Id</th>
-      <th style="width: 20%" on:click={properties.sort('name')}>Name</th>
-      <th style="width: 75%">Description</th>
+      <th style="width: 25%" on:click={properties.sort('name')}>Name</th>
+      <th style="width: 70%">Description</th>
     </tr>
   </thead>
   {#each $properties as property (property.id)}

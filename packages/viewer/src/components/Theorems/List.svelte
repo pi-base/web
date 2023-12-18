@@ -14,9 +14,9 @@
   <thead>
     <tr>
       <th style="width: 5%" on:click={theorems.sort('id')}>Id</th>
-      <th style="width: 20%">If</th>
+      <th style="width: 30%">If</th>
       <th style="width: 20%">Then</th>
-      <th style="width: 55%">Description</th>
+      <th style="width: 45%">Description</th>
     </tr>
   </thead>
   {#each $theorems as theorem (theorem.id)}
