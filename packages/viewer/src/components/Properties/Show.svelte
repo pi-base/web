@@ -10,7 +10,7 @@
 
   $: title = `P${property.id}: ${property.name}`
 
-  const tabs = ['spaces', 'theorems', 'references'] as const
+  const tabs = ['theorems', 'spaces', 'references'] as const
 </script>
 
 <Title {title} />
