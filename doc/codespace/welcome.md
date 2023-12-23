@@ -17,6 +17,8 @@ As the viewer starts up, you may see an `Open in Browser` popup. You can always
 access the browser preview by going to the `Ports` tab, and clicking the
 `Open in Browser` globe icon for port `5173`.
 
+You must also set port `3143` to "Public" uisng the Ports tab.
+
 ## Checking Compiled Data
 
 In a console run
