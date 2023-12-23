@@ -1,13 +1,14 @@
 import { bundle } from '@pi-base/core'
 import { dev } from '$app/environment'
-import { PUBLIC_DATA_URL } from '$env/static/public'
+import * as envPublic from '$env/static/public'
 
 export const mainBranch = 'main'
 export const contributingUrl = `https://github.com/pi-base/data/wiki/Contributing`
-export const defaultHost = dev ? PUBLIC_DATA_URL : bundle.defaultHost
-// import { env } from 'process'
-//env.CODESPACES ?
-//  `https://${env.CODESPACE_NAME}-3141.${env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}` :
+let _defaultHost = bundle.defaultHost
+try {
+  _defaultHost = dev ? envPublic.PUBLIC_DATA_URL : bundle.defaultHost
+} catch {}
+export const defaultHost = _defaultHost
 
 export const build = {
   branch: import.meta.env.VITE_BRANCH || 'unknown',
