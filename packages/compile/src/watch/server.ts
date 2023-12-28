@@ -27,6 +27,7 @@ export function boot({ log, port }: { log: Logger; port: number }): {
 
   app.use(
     cors({
+      origin: '*',
       exposedHeaders: ['ETag'],
     }),
   )
