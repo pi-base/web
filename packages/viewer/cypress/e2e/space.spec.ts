@@ -36,7 +36,7 @@ it('filters traits', () => {
 
   cy.get('.related-traits > tbody > tr')
     .first()
-    .should('have.text', '16 Compact   ')
+    .should('have.text', 'P16 Compact   ')
 })
 
 it('displays trait descriptions', () => {

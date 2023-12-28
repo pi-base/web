@@ -5,4 +5,6 @@
   export let data: PageData
 </script>
 
+<h1>Properties</h1>
+
 <List properties={data.properties} />

@@ -5,4 +5,6 @@
   export let data: PageData
 </script>
 
+<h1>Spaces</h1>
+
 <List spaces={data.spaces} />

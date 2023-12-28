@@ -13,15 +13,15 @@
 <table class="table">
   <thead>
     <tr>
-      <th on:click={spaces.sort('id')}>Id</th>
-      <th on:click={spaces.sort('name')}>Name</th>
-      <th>Description</th>
+      <th style="width: 5%" on:click={spaces.sort('id')}>Id</th>
+      <th style="width: 35%" on:click={spaces.sort('name')}>Name</th>
+      <th style="width: 60%">Description</th>
     </tr>
   </thead>
   {#each $spaces as space (space.id)}
     <tr>
       <td>
-        <Link.Space {space}>{space.id}</Link.Space>
+        <Link.Space {space} content="id" />
       </td>
       <td>
         <Typeset body={space.name} />

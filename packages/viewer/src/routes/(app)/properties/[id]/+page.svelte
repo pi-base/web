@@ -6,4 +6,4 @@
   export let data: PageData
 </script>
 
-<Show property={data.property} tab="spaces" rel={$page.url.pathname} />
+<Show property={data.property} tab="theorems" rel={$page.url.pathname} />

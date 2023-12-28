@@ -6,7 +6,11 @@
   export let data: PageData
 </script>
 
-<Title title={`${data.space.name}: ${data.property.name}`} />
+<h3>Space S{data.space.id} | Property P{data.property.id}</h3>
+
+<Title
+  title={`S${data.space.id}|P${data.property.id}: ${data.space.name} | ${data.property.name}`}
+/>
 
 <h1>
   {#if data.proof}
