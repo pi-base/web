@@ -31,8 +31,9 @@ export function boot({ log, port }: { log: Logger; port: number }): {
     }),
   )
 
-  app.use((req: Request, _, next: NextFunction) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     log(`${cyan(req.method)} ${req.originalUrl}`)
+    res.set('Cache-control', 'no-store')
     next()
   })
 
