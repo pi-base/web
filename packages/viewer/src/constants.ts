@@ -1,19 +1,23 @@
 import { bundle } from '@pi-base/core'
-import { dev } from '$app/environment'
-import * as envPublic from '$env/static/public'
 
-export const mainBranch = 'main'
-export const contributingUrl = `https://github.com/pi-base/data/wiki/Contributing`
-let _defaultHost = bundle.defaultHost
-try {
-  _defaultHost = dev ? envPublic.PUBLIC_DATA_URL : bundle.defaultHost
-} catch {}
-export const defaultHost = _defaultHost
+const {
+  VITE_BUNDLE_HOST = bundle.defaultHost,
+  VITE_BUNDLE_SSE = 'false',
+  VITE_BRANCH = 'unknown',
+  VITE_MAIN_BRANCH = 'main',
+  VITE_VERSION = 'unknown',
+} = import.meta.env
+
+export const mainBranch = VITE_MAIN_BRANCH
+export const defaultHost = VITE_BUNDLE_HOST
 
 export const build = {
-  branch: import.meta.env.VITE_BRANCH || 'unknown',
-  version: import.meta.env.VITE_VERSION || 'unknown',
+  branch: VITE_BRANCH,
+  version: VITE_VERSION,
 }
 
+export const bundleSse = VITE_BUNDLE_SSE === 'true'
+
+export const contributingUrl = `https://github.com/pi-base/data/wiki/Contributing`
 export const sentryIngest =
   'https://0fa430dd1dc347e2a82c413d8e3acb75@o397472.ingest.sentry.io/5251960'

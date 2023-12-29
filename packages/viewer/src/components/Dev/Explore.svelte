@@ -1,13 +1,9 @@
 <script lang="ts">
   import context from '@/context'
   import Log from './Log.svelte'
+  import { reset } from '@/util'
 
   const { spaces, properties, theorems, traits } = context()
-
-  function reset() {
-    localStorage.clear()
-    window.location.reload()
-  }
 </script>
 
 <h4>Entities</h4>
