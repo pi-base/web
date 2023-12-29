@@ -4,33 +4,35 @@ import * as errors from '@/errors'
 import { sync } from '@/gateway'
 import type { LayoutLoad } from './$types'
 
-const bundleHost = import.meta.env.VITE_BUNDLE_HOST || defaultHost
-
 export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
   const dev = host.match(/(dev(elopment)?[.-]|localhost)/) !== null
-  const errorEnv: errors.Environment = [
-    'topology.pi-base.org',
-    'topology.pages.dev',
-  ].includes(host)
-    ? 'production'
-    : host.includes('pages.dev')
-    ? 'deploy-preview'
-    : 'dev'
 
   const errorHandler = dev
     ? errors.log()
-    : errors.sentry({ environment: errorEnv })
+    : errors.sentry({ environment: errorEnv(host) })
 
   const context = initialize({
     showDev: dev,
     errorHandler,
     gateway: sync(fetch),
     source: {
-      host: bundleHost,
+      host: defaultHost,
     },
   })
 
   await context.loaded()
 
   return context
+}
+
+function errorEnv(host: string): errors.Environment {
+  if (['topology.pi-base.org', 'topology.pages.dev'].includes(host)) {
+    return 'production'
+  }
+
+  if (host.includes('pages.dev')) {
+    return 'deploy-preview'
+  }
+
+  return 'dev'
 }

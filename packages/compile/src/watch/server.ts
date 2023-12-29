@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import cors from 'cors'
 import express, { Express, NextFunction, Request, Response } from 'express'
+import sse from 'better-sse'
 
 import { bundle } from '@pi-base/core'
 
@@ -19,8 +20,11 @@ export function boot({ log, port }: { log: Logger; port: number }): {
 } {
   let state: State = { bundle: undefined, errors: undefined }
 
+  const reloadChannel = sse.createChannel()
+
   function setState(updates: Partial<State>) {
     state = { ...state, ...updates }
+    reloadChannel.broadcast({ version: state.bundle?.version }, 'bundle.reload')
   }
 
   const app = express()
@@ -53,6 +57,11 @@ export function boot({ log, port }: { log: Logger; port: number }): {
 
   app.get('/errors', (_, res: Response) => {
     res.json(state.errors)
+  })
+
+  app.get('/sse', async (req, res) => {
+    const session = await sse.createSession(req, res)
+    reloadChannel.register(session)
   })
 
   app.listen(port, () => {

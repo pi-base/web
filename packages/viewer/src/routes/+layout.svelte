@@ -1,9 +1,13 @@
 <script lang="ts">
   import 'bootstrap/dist/css/bootstrap.min.css'
 
+  import { browser } from '$app/environment'
+
   import type { LayoutData } from './$types'
 
+  import { bundleSse, defaultHost } from '@/constants'
   import { set } from '@/context'
+  import { reset } from '@/util'
 
   import Nav from '@/components/Nav.svelte'
   import Status from '@/components/Status.svelte'
@@ -19,6 +23,13 @@
   // so that it doesn't get thrown away and rebuilt when the user happens to
   // navigate to a page without any rendered math.
   data.typeset.subscribe(() => {})
+
+  if (browser && bundleSse) {
+    new EventSource(`${defaultHost}/sse`).addEventListener(
+      'bundle.reload',
+      reset,
+    )
+  }
 </script>
 
 <Nav />
