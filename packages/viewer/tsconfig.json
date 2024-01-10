@@ -10,13 +10,7 @@
     "public/*"
   ],
   "compilerOptions": {
-    "baseUrl": ".",
 		"forceConsistentCasingInFileNames": true,
-    "paths": {
-      "@/*": ["./src/*"],
-      "$lib": ["./src/lib"],
-      "$lib/*": ["./src/lib/*"],
-    },
     "sourceMap": true,
     "strict": true,
     "types": [
