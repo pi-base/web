@@ -31,7 +31,6 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
     "@pi-base/core": "workspace:*",
     "chalk": "^5.2.0",
     "chokidar": "^3.5.3",

@@ -1,44 +1,39 @@
-/**
- * Entry point for running as a Github action, with the local workspace
- * containing the data repository. Set GITHUB_WORKSPACE to use a different
- * data repository.
- */
-import * as core from '@actions/core'
 import * as fs from 'fs'
 import * as process from 'process'
 import { bundle as B } from '@pi-base/core'
 
 import load from './load.js'
 
-async function run(): Promise<void> {
-  const repo: string = process.env.GITHUB_WORKSPACE || '.'
-  const outpath: string = core.getInput('out')
-
-  core.debug(`Compiling repo=${repo} to out=${outpath}`)
+async function run(repo = '.', out = 'bundle.json'): Promise<void> {
+  log(`Compiling repo=${repo} to out=${out}`, 'debug')
 
   const { bundle, errors } = await load(repo)
 
   if (errors) {
     errors.forEach((messages, path) => {
       messages.forEach(message => {
-        error(path, message)
+        log(`file=${path}::${message}`, 'error')
       })
     })
   }
 
   if (errors || !bundle) {
-    core.setFailed('Compilation finished with errors')
-    return
+    log('Compilation finished with errors', 'error')
+    process.exit(1)
   }
 
-  fs.writeFileSync(outpath, JSON.stringify(B.serialize(bundle)))
+  fs.writeFileSync(`${repo}/${out}`, JSON.stringify(B.serialize(bundle)))
 }
 
-function error(file: string, message: string) {
-  console.log(`::error file=${file}::${message}`)
+type Level = 'debug' | 'info' | 'error'
+
+function log(message: string, level: Level = 'info') {
+  console.log(`::${level} ${message}`)
 }
 
-run().catch(err => {
-  core.setFailed(err.message)
-  core.error(err.message)
-})
+function fail(message: string) {
+  log(message, 'error')
+  process.exit(1)
+}
+
+run(...process.argv.slice(2)).catch(err => fail(err.message))
