@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "debug": "^4.3.4",
-    "micromark-util-types": "^1.0.2",
+    "micromark-util-types": "1.0.2",
     "rehype-katex": "^6.0.3",
     "rehype-stringify": "^9.0.3",
     "remark": "^14.0.2",

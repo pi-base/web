@@ -5,18 +5,20 @@ import { join } from 'node:path'
 
 const main = join(__dirname, '..', 'src', 'main.ts')
 const repo = join(__dirname, '..', 'test', 'repo')
-const out = join(repo, 'out.json')
+const out = 'out.json'
 
 async function run(dir: string) {
-  const { stdout, stderr, error, status } = spawnSync('tsx', [main], {
-    env: {
-      GITHUB_REF: 'refs/heads/test',
-      GITHUB_SHA: 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
-      GITHUB_WORKSPACE: join(repo, dir),
-      INPUT_OUT: out,
-      PATH: process.env.PATH,
+  const { stdout, stderr, error, status } = spawnSync(
+    'tsx',
+    [main, join(repo, dir), out],
+    {
+      env: {
+        GITHUB_REF: 'refs/heads/test',
+        GITHUB_SHA: 'c74d99cf46f6ed23e742f2617e9908294b4a608b',
+        PATH: process.env.PATH,
+      },
     },
-  })
+  )
 
   if (error) {
     throw error
@@ -43,12 +45,10 @@ afterAll(cleanup)
 
 it('builds a bundle', async () => {
   const { output, error } = await run('valid')
-  expect(output).toContain(
-    `::debug::Compiling repo=${repo}/valid to out=${out}`,
-  )
+  expect(output).toContain(`::debug Compiling repo=${repo}/valid to out=`)
   expect(error).toBe(false)
 
-  const bundle = JSON.parse((await readFile(out)).toString())
+  const bundle = JSON.parse((await readFile(`${repo}/valid/${out}`)).toString())
 
   expect(bundle.properties.length).toEqual(3)
   expect(bundle.spaces.length).toEqual(2)
