@@ -30,8 +30,8 @@ it('can prove simple implications', () => {
   expect(result).toEqual([
     'T000112', // T5 => T4
     'T000113', // T4 => T3.5
-    'T000114', // T3.5 => Completely Hausdorff
-    'T000086', // Completely Hausdorff => T2.5
+    'T000114', // T3.5 => Functionally Hausdorff
+    'T000086', // Functionally Hausdorff => T2.5
     'T000032', // T2.5 => T2
   ])
 })

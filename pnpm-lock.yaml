@@ -224,8 +224,8 @@ importers:
         specifier: ^2.0.9
         version: 2.0.9
       cypress:
-        specifier: ^13.3.3
-        version: 13.3.3
+        specifier: ^13.6.2
+        version: 13.6.2
       svelte:
         specifier: ^3.59.2
         version: 3.59.2
@@ -1102,7 +1102,7 @@ packages:
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.16.6
+      '@types/node': 18.19.7
     dev: true
     optional: true
 
@@ -1816,8 +1816,8 @@ packages:
       type-fest: 1.4.0
     dev: true
 
-  /cypress@13.3.3:
-    resolution: {integrity: sha512-mbdkojHhKB1xbrj7CrKWHi22uFx9P9vQFiR0sYDZZoK99OMp9/ZYN55TO5pjbXmV7xvCJ4JwBoADXjOJK8aCJw==}
+  /cypress@13.6.2:
+    resolution: {integrity: sha512-TW3bGdPU4BrfvMQYv1z3oMqj71YI4AlgJgnrycicmPZAXtvywVFZW9DAToshO65D97rCWfG/kqMFsYB6Kp91gQ==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
     requiresBuild: true
