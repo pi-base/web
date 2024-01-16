@@ -21,8 +21,8 @@ export function internal(
             trait?.value === true
               ? 'is'
               : trait?.value === false
-              ? 'is not'
-              : '?'
+                ? 'is not'
+                : '?'
           return {
             href: `/spaces/S${sid}/properties/P${pid}`,
             title: `${space ? space.name : 'S' + sid} ${connector} ${

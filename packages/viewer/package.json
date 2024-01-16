@@ -33,12 +33,12 @@
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
-    "@sveltejs/adapter-cloudflare": "^2.3.4",
-    "@sveltejs/kit": "^1.30.3",
-    "@sveltejs/vite-plugin-svelte": "^2.5.3",
-    "@tsconfig/svelte": "^3.0.0",
+    "@sveltejs/adapter-cloudflare": "^3.0.2",
+    "@sveltejs/kit": "^2.3.2",
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "@tsconfig/svelte": "^5.0.2",
     "@types/debug": "^4.1.12",
-    "@types/hyperscript": "0.0.6",
+    "@types/hyperscript": "0.0.7",
     "@types/katex": "^0.16.7",
     "@types/page": "^1.11.9",
     "@types/unist": "^2.0.10",
