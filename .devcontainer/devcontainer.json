@@ -1,5 +1,5 @@
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:20",
   "containerEnv": {
     "DATA_WORKSPACE": "/workspaces/web/data"
   },

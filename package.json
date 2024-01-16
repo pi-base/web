@@ -9,7 +9,7 @@
     "test:cov": "pnpm run --recursive test:cov"
   },
   "devDependencies": {
-    "@types/node": "^18.16.6",
+    "@types/node": "^20.11.3",
     "@vitest/coverage-v8": "^0.34.0",
     "nodemon": "^2.0.22",
     "npm-check-updates": "^16.14.6",
