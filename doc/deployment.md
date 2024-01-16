@@ -1,5 +1,3 @@
-_⚠️ We're actively re-working the infrastructure process. This document describes the new process, which may not be fully real yet. See `Appendix: Legacy` for relevant legacy details._
-
 # Deployment
 
 ## Viewer
@@ -23,20 +21,12 @@ failure notifications.
 
 ## Compiler
 
-_FIXME: the compiler action does not currently have a working deploy process._
+Add a semver tag to trigger the [Publish Images CI step](https://github.com/pi-base/web/actions/workflows/images.yaml), which publishes `ghcr.io/pi-base/compile`. You can either
+
+- create a release directly in the Github UI
+- run `git tag v#.#.#` and `git push --tags`
 
 ## Data
 
 Changes to the data repo invoke the released [compile action](https://github.com/pi-base/data/blob/6cc73f720751910ad4ede8a320c1eeff975ee5c3/.github/workflows/compile.yml#L12),
 and upload the compiled bundles to the `pi-base-bundles` S3 bucket.
-
-# Appendix: Legacy
-
-## Viewer
-
-[topology.pi-base.org](https://topology.pi-base.org/) points to [an AWS CloudFront Distribution](https://us-east-1.console.aws.amazon.com/cloudfront/v3/home?region=us-east-1#/distributions/E13RN2QUM1YTTK)
-in the `pibase` AWS account (`893999385831`), which fronts content in the `pi-base-viewer` S3 bucket. Legacy deploys work by uploading the viewer assets to this bucket.
-
-## Compiler
-
-See [the `pi-base/compiler` repository's notes on publishing](https://github.com/pi-base/compile#publishing).
