@@ -73,3 +73,6 @@ jobs:
           build: echo "Start runs build"
           command: pnpm --filter viewer run cy:run --config baseUrl=http://localhost:4173
           start: pnpm --filter viewer run preview
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

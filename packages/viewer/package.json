@@ -42,7 +42,7 @@
     "@types/katex": "^0.16.5",
     "@types/page": "^1.11.8",
     "@types/unist": "^2.0.9",
-    "cypress": "^13.3.3",
+    "cypress": "^13.6.2",
     "svelte": "^3.59.2",
     "svelte-check": "^3.5.2",
     "svelte-preprocess": "^5.0.4",
