@@ -32,24 +32,24 @@
     "debug": "^4.3.4",
     "micromark-util-types": "1.0.2",
     "rehype-katex": "^6.0.3",
-    "rehype-stringify": "^9.0.3",
-    "remark": "^14.0.2",
+    "rehype-stringify": "^9.0.4",
+    "remark": "^14.0.3",
     "remark-math": "^5.1.1",
-    "remark-parse": "^10.0.1",
+    "remark-parse": "^10.0.2",
     "remark-rehype": "^10.1.0",
     "unified": "^10.1.2",
     "unist-util-is": "^5.2.1",
     "unist-util-visit": "^4.1.2",
-    "zod": "^3.21.4"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.7",
-    "@types/hast": "^2.3.4",
-    "@types/mdast": "^3.0.11",
-    "@types/unist": "^2.0.6",
+    "@types/debug": "^4.1.12",
+    "@types/hast": "^2.3.9",
+    "@types/mdast": "^3.0.15",
+    "@types/unist": "^2.0.10",
     "hast-util-to-html": "^8.0.4",
-    "mdast-util-from-markdown": "^1.3.0",
+    "mdast-util-from-markdown": "1.3.0",
     "peggy": "^3.0.2",
-    "ts-pegjs": "^4.1.0"
+    "ts-pegjs": "^4.2.1"
   }
 }
