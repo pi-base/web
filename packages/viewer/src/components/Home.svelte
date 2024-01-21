@@ -46,6 +46,11 @@
     </footer>
   </blockquote>
   <hr />
+  <p>
+    The π-Base is dedicated to the memory of our friend and mentor
+    Gary Gruehnage (1947-2023).
+  </p>
+  <hr />
   <h3>Contributing</h3>
   <p>
     π-Base's data and software are open-sourced on <a
