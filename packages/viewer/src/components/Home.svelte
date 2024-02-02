@@ -24,8 +24,8 @@
       </p>
       <p class="mb-0">
         ➜ Find counterexamples:
-        <a href="/theorems/T000057" class="text-info"
-          >first countable spaces need not be locally pseudometrizable</a
+        <a href="/theorems/T000021" class="text-info"
+          >spaces with the countable chain condition need not be separable</a
         >
       </p>
     </div>
