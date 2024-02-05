@@ -18,9 +18,7 @@
     <Icons.X />
   {/if}
 {:else}<!-- value === undefined -->
-  {#if icon === 'user'}
-    <Icons.Question />
-  {:else}  
+  {#if icon !== 'user'}
     <Icons.Question />
   {/if}
 {/if}
