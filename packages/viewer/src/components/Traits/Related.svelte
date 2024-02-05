@@ -8,7 +8,7 @@
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
 
-  export let related: (traits: Traits) => [Space, Property, Trait|undefined][]
+  export let related: (traits: Traits) => [Space, Property, Trait | undefined][]
   export let mode: 'spaces' | 'properties'
 
   const { traits } = context()
@@ -34,17 +34,14 @@
     showKnown = !showKnown
   }
 
-
-
-
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
   // we need to index names in different positions depending on which kind we
   // are displaying
   $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
   $: searched = $filter ? index.search($filter).map(r => r.item) : all
-  $: filtered = searched.filter(
-    ([_space, _property, t]) => t? (showKnown && (showDeduced || t.asserted)) : showMissing,
+  $: filtered = searched.filter(([_space, _property, t]) =>
+    t ? showKnown && (showDeduced || t.asserted) : showMissing,
   )
 </script>
 
@@ -56,39 +53,39 @@
   </div>
   <input placeholder="Filter" class="form-control" bind:value={$filter} />
   <div class="input-group-append">
-  <button
-    class="btn btn-outline-secondary {!showKnown ? 'active' : ''}"
-    type="button"
-    on:click={toggleKnown}
-  >
-    {#if showKnown}
-      Hide <Icons.Check /> <Icons.X />
-    {:else}
-      Show <Icons.Check /> <Icons.X />
-    {/if}
-  </button>
-  <button
-  class="btn btn-outline-secondary {!showMissing ? 'active' : ''}"
-  type="button"
-  on:click={toggleMissing}
->
-  {#if showMissing}
-    Hide <Icons.Question />
-  {:else}
-    Show <Icons.Question />
-  {/if}
-  </button>
-  <button
-  class="btn btn-outline-secondary {!showDeduced ? 'active' : ''}"
-  type="button"
-  on:click={toggleDeduced}
->
-  {#if showDeduced}
-    Hide <Icons.Robot />
-  {:else}
-    Show <Icons.Robot />
-  {/if}
-  </button>
+    <button
+      class="btn btn-outline-secondary {!showKnown ? 'active' : ''}"
+      type="button"
+      on:click={toggleKnown}
+    >
+      {#if showKnown}
+        Hide <Icons.Check /> <Icons.X />
+      {:else}
+        Show <Icons.Check /> <Icons.X />
+      {/if}
+    </button>
+    <button
+      class="btn btn-outline-secondary {!showMissing ? 'active' : ''}"
+      type="button"
+      on:click={toggleMissing}
+    >
+      {#if showMissing}
+        Hide <Icons.Question />
+      {:else}
+        Show <Icons.Question />
+      {/if}
+    </button>
+    <button
+      class="btn btn-outline-secondary {!showDeduced ? 'active' : ''}"
+      type="button"
+      on:click={toggleDeduced}
+    >
+      {#if showDeduced}
+        Hide <Icons.Robot />
+      {:else}
+        Show <Icons.Robot />
+      {/if}
+    </button>
   </div>
 </div>
 

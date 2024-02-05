@@ -5,7 +5,7 @@
 
   export let space: Space
 
-  function related(traits: Traits): [Space, Property, Trait|undefined][] {
+  function related(traits: Traits): [Space, Property, Trait | undefined][] {
     return traits.forSpaceAll(space).map(([p, t]) => [space, p, t])
   }
 </script>
