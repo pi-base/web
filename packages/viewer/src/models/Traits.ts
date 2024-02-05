@@ -57,8 +57,16 @@ export default class Traits {
     return this.collect(this.spaces, space => this.find(space, property))
   }
 
+  forPropertyAll(property: Property): [Space, Trait|undefined][] {
+    return this.collectAll(this.spaces, space => this.find(space, property))
+  }
+
   forSpace(space: Space): [Property, Trait][] {
     return this.collect(this.properties, property => this.find(space, property))
+  }
+
+  forSpaceAll(space: Space): [Property, Trait|undefined][] {
+    return this.collectAll(this.properties, property => this.find(space, property))
   }
 
   lookup({
@@ -181,6 +189,18 @@ export default class Traits {
       if (trait) {
         result.push([item, trait])
       }
+    })
+    return result
+  }
+
+  private collectAll<T>(
+    collection: Collection<T>,
+    lookup: (item: T) => Trait | undefined,
+  ): [T, Trait|undefined][] {
+    const result: [T, Trait|undefined][] = []
+    collection.all.forEach(item => {
+      const trait = lookup(item)
+      result.push([item, trait])  
     })
     return result
   }

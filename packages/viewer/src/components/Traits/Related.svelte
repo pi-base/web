@@ -8,7 +8,7 @@
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
 
-  export let related: (traits: Traits) => [Space, Property, Trait][]
+  export let related: (traits: Traits) => [Space, Property, Trait|undefined][]
   export let mode: 'spaces' | 'properties'
 
   const { traits } = context()
@@ -22,6 +22,21 @@
     showDeduced = !showDeduced
   }
 
+  let showMissing = true
+
+  function toggleMissing() {
+    showMissing = !showMissing
+  }
+
+  let showKnown = true
+
+  function toggleKnown() {
+    showKnown = !showKnown
+  }
+
+
+
+
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
   // we need to index names in different positions depending on which kind we
@@ -29,7 +44,7 @@
   $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
   $: searched = $filter ? index.search($filter).map(r => r.item) : all
   $: filtered = searched.filter(
-    ([_space, _property, t]) => showDeduced || t.asserted,
+    ([_space, _property, t]) => t? (showKnown && (showDeduced || t.asserted)) : showMissing,
   )
 </script>
 
@@ -75,12 +90,12 @@
         </td>
         <td>
           <Link.Trait {space} {property}>
-            <Value value={trait.value} />
+            <Value value={trait?.value} />
           </Link.Trait>
         </td>
         <td>
           <Link.Trait {space} {property}>
-            <Value value={trait.asserted} icon="user" />
+            <Value value={trait?.asserted} icon="user" />
           </Link.Trait>
         </td>
       </tr>
