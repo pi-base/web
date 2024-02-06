@@ -22,16 +22,16 @@
     showDeduced = !showDeduced
   }
 
-  let showMissing = true
+  let showMissing = false
 
   function toggleMissing() {
     showMissing = !showMissing
   }
 
-  let showKnown = true
+  let showAsserted = true
 
   function toggleKnown() {
-    showKnown = !showKnown
+    showAsserted = !showAsserted
   }
 
   $: all = related($traits)
@@ -41,7 +41,7 @@
   $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
   $: searched = $filter ? index.search($filter).map(r => r.item) : all
   $: filtered = searched.filter(([_space, _property, t]) =>
-    t ? showKnown && (showDeduced || t.asserted) : showMissing,
+    t ? (t.asserted ? showAsserted : showDeduced) : showMissing,
   )
 </script>
 
@@ -54,25 +54,14 @@
   <input placeholder="Filter" class="form-control" bind:value={$filter} />
   <div class="input-group-append">
     <button
-      class="btn btn-outline-secondary {!showKnown ? 'active' : ''}"
+      class="btn btn-outline-secondary {!showAsserted ? 'active' : ''}"
       type="button"
       on:click={toggleKnown}
     >
-      {#if showKnown}
-        Hide <Icons.Check /> <Icons.X />
+      {#if showAsserted}
+        Hide <Icons.User /> <Icons.X />
       {:else}
-        Show <Icons.Check /> <Icons.X />
-      {/if}
-    </button>
-    <button
-      class="btn btn-outline-secondary {!showMissing ? 'active' : ''}"
-      type="button"
-      on:click={toggleMissing}
-    >
-      {#if showMissing}
-        Hide <Icons.Question />
-      {:else}
-        Show <Icons.Question />
+        Show <Icons.User /> <Icons.X />
       {/if}
     </button>
     <button
@@ -84,6 +73,17 @@
         Hide <Icons.Robot />
       {:else}
         Show <Icons.Robot />
+      {/if}
+    </button>
+    <button
+      class="btn btn-outline-secondary {!showMissing ? 'active' : ''}"
+      type="button"
+      on:click={toggleMissing}
+    >
+      {#if showMissing}
+        Hide <Icons.Question />
+      {:else}
+        Show <Icons.Question />
       {/if}
     </button>
   </div>
