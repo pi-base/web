@@ -59,9 +59,9 @@
       on:click={toggleKnown}
     >
       {#if showAsserted}
-        Hide <Icons.User /> <Icons.X />
+        Hide <Icons.User /> 
       {:else}
-        Show <Icons.User /> <Icons.X />
+        Show <Icons.User /> 
       {/if}
     </button>
     <button
