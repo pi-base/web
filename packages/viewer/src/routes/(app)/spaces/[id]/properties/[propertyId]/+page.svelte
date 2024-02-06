@@ -1,9 +1,10 @@
 <script lang="ts">
   import { Icons, Link, References, Title, Typeset } from '@/components/Shared'
   import { Proof } from '@/components/Traits'
-
+  import Theorems from '@/components/Properties/Theorems.svelte'
   import type { PageData } from './$types'
   export let data: PageData
+  import { contributingUrl } from '@/constants'
 </script>
 
 <h3>Space S{data.space.id} | Property P{data.property.id}</h3>
@@ -15,11 +16,22 @@
 <h1>
   {#if data.proof}
     <Icons.Robot />
+  {:else if data.meta}
+    <Icons.User />
+  {:else}
+    <Icons.Question />
   {/if}
-  <Link.Space space={data.space} />
-  is
-  {data.trait.value ? '' : 'not'}
-  <Link.Property property={data.property} />
+  {#if data.trait}
+    <Link.Space space={data.space} />
+    is
+    {data.trait.value ? '' : 'not'}
+    <Link.Property property={data.property} />
+  {:else}
+    We have insufficient information to determine whether or not
+    <Link.Space space={data.space} />
+    is
+    <Link.Property property={data.property} />
+  {/if}
 </h1>
 
 {#if data.proof}
@@ -30,4 +42,11 @@
   </section>
   <h3>References</h3>
   <References references={data.meta.refs} />
+{:else}
+  Please consider <a href={contributingUrl}>contributing</a> a proof or disproof
+  of this property. Alternatively, contributing a related property may
+  automatically generate a proof. Here are some theorems relating <Link.Property
+    property={data.property}
+  /> to other properties.
+  <Theorems property={data.property} />
 {/if}

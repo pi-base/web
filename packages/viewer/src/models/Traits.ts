@@ -96,7 +96,10 @@ export default class Traits {
 
     const trait = this.find(space, property)
     if (!trait) {
-      return null
+      return {
+        property,
+        space,
+      }
     }
 
     const proof = trait.asserted
