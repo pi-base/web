@@ -16,23 +16,8 @@
   const filter = writable('')
   urlSearchParam('filter', filter)
 
-  let showDeduced = true
-
-  function toggleDeduced() {
-    showDeduced = !showDeduced
-  }
-
-  let showMissing = false
-
-  function toggleMissing() {
-    showMissing = !showMissing
-  }
-
-  let showAsserted = true
-
-  function toggleKnown() {
-    showAsserted = !showAsserted
-  }
+  let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
+  filterMode = 'true'
 
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
@@ -40,9 +25,22 @@
   // are displaying
   $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
   $: searched = $filter ? index.search($filter).map(r => r.item) : all
-  $: filtered = searched.filter(([_space, _property, t]) =>
-    t ? (t.asserted ? showAsserted : showDeduced) : showMissing,
-  )
+  $: filtered = searched.filter(([_space, _property, t]) => {
+    switch (filterMode) {
+      case 'all':
+        return true
+      case 'known':
+        return t
+      case 'asserted':
+        return t?.asserted
+      case 'true':
+        return t?.value
+      case 'false':
+        return t && !t.value
+      case 'missing':
+        return !t
+    }
+  })
 </script>
 
 <div class="input-group">
@@ -54,37 +52,63 @@
   <input placeholder="Filter" class="form-control" bind:value={$filter} />
   <div class="input-group-append">
     <button
-      class="btn btn-outline-secondary {!showAsserted ? 'active' : ''}"
+      class="btn btn-outline-secondary {filterMode !== 'all' ? 'active' : ''}"
       type="button"
-      on:click={toggleKnown}
+      on:click={() => {
+        filterMode = 'all'
+      }}
     >
-      {#if showAsserted}
-        Hide <Icons.User /> 
-      {:else}
-        Show <Icons.User /> 
-      {/if}
+      Show All
     </button>
     <button
-      class="btn btn-outline-secondary {!showDeduced ? 'active' : ''}"
+      class="btn btn-outline-secondary {filterMode !== 'known' ? 'active' : ''}"
       type="button"
-      on:click={toggleDeduced}
+      on:click={() => {
+        filterMode = 'known'
+      }}
     >
-      {#if showDeduced}
-        Hide <Icons.Robot />
-      {:else}
-        Show <Icons.Robot />
-      {/if}
+      Show <Icons.Check />
+      <Icons.X />
     </button>
     <button
-      class="btn btn-outline-secondary {!showMissing ? 'active' : ''}"
+      class="btn btn-outline-secondary {filterMode !== 'asserted'
+        ? 'active'
+        : ''}"
       type="button"
-      on:click={toggleMissing}
+      on:click={() => {
+        filterMode = 'asserted'
+      }}
     >
-      {#if showMissing}
-        Hide <Icons.Question />
-      {:else}
-        Show <Icons.Question />
-      {/if}
+      Show <Icons.User />
+    </button>
+    <button
+      class="btn btn-outline-secondary {filterMode !== 'true' ? 'active' : ''}"
+      type="button"
+      on:click={() => {
+        filterMode = 'true'
+      }}
+    >
+      Show <Icons.Check />
+    </button>
+    <button
+      class="btn btn-outline-secondary {filterMode !== 'false' ? 'active' : ''}"
+      type="button"
+      on:click={() => {
+        filterMode = 'false'
+      }}
+    >
+      Show <Icons.X />
+    </button>
+    <button
+      class="btn btn-outline-secondary {filterMode !== 'missing'
+        ? 'active'
+        : ''}"
+      type="button"
+      on:click={() => {
+        filterMode = 'missing'
+      }}
+    >
+      Show <Icons.Question />
     </button>
   </div>
 </div>
