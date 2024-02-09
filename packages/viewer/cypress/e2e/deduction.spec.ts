@@ -31,13 +31,12 @@ it('derives multi-step proofs', () => {
 })
 
 it('derives proofs of converses', () => {
-  cy.visit('/theorems/T000010') // (Extremally disconnected + Metrizable) => Discrete
+  cy.visit('/theorems/T000099') // (T1 + Normal) => T4
 
   cy.contains(/The converse.*follows from/)
 
-  cy.contains('85') // Discrete => Completely metrizable
-  cy.contains('77') // Completely metrizable => metrizable
-  cy.contains('44') // Discrete => Extremally disconnected
+  cy.contains('335') // T4 => Normal
+  cy.contains('98') // T4 => T1
 })
 
 export {}
