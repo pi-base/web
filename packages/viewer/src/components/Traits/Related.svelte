@@ -17,7 +17,7 @@
   urlSearchParam('filter', filter)
 
   let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
-  filterMode = 'true'
+  filterMode = 'known'
 
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
@@ -67,7 +67,25 @@
         filterMode = 'known'
       }}
     >
-      Show <Icons.Check />
+      <Icons.Check />/
+      <Icons.X />
+    </button>
+    <button
+      class="btn btn-outline-secondary {filterMode !== 'true' ? 'active' : ''}"
+      type="button"
+      on:click={() => {
+        filterMode = 'true'
+      }}
+    >
+      <Icons.Check />
+    </button>
+    <button
+      class="btn btn-outline-secondary {filterMode !== 'false' ? 'active' : ''}"
+      type="button"
+      on:click={() => {
+        filterMode = 'false'
+      }}
+    >
       <Icons.X />
     </button>
     <button
@@ -79,25 +97,7 @@
         filterMode = 'asserted'
       }}
     >
-      Show <Icons.User />
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'true' ? 'active' : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'true'
-      }}
-    >
-      Show <Icons.Check />
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'false' ? 'active' : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'false'
-      }}
-    >
-      Show <Icons.X />
+      <Icons.User />
     </button>
     <button
       class="btn btn-outline-secondary {filterMode !== 'missing'
@@ -108,7 +108,7 @@
         filterMode = 'missing'
       }}
     >
-      Show <Icons.Question />
+      <Icons.Question />
     </button>
   </div>
 </div>
