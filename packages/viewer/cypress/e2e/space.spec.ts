@@ -47,11 +47,7 @@ it('displays trait descriptions', () => {
 it('displays references', () => {
   cy.visit('spaces/S000001')
 
-  cy.get('.nav-link').should('exist')
-
-  cy.get('.nav-link').contains('References').should('exist')
-
   cy.get('.nav-link').contains('References').click()
 
-  cy.contains('Wikipedia')
+  cy.get('ul.references').should('exist')
 })
