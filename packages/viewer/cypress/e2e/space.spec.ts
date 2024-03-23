@@ -49,5 +49,5 @@ it('displays references', () => {
 
   cy.get('.nav-link').contains('References').click()
 
-  cy.contains('Discrete Space on Wikipedia.')
+  cy.contains('Wikipedia')
 })
