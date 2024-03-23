@@ -4,7 +4,7 @@
   import { page } from '$app/stores'
 
   export let data: PageData
-  let rel = $page.url.pathname.replace(/\/$/, "")
+  let rel = $page.url.pathname
 </script>
 
 <Show space={data.space} tab="properties" {rel} />

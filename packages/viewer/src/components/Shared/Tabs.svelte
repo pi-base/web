@@ -11,7 +11,7 @@
     <li class="nav-item">
       <a
         class={`nav-link ${name === tab ? 'active' : ''}`}
-        href={rel ? `${rel}/${name}` : name}>{capitalize(name)}</a
+        href={rel ? `${rel.replace(/\/$/, "")}/${name}` : name}>{capitalize(name)}</a
       >
     </li>
   {/each}
