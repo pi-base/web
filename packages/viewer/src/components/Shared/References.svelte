@@ -5,7 +5,7 @@
   export let references: Ref.Ref[]
 </script>
 
-<ul>
+<ul class="references">
   {#each references as reference, i (i)}
     <li>
       <Reference {reference} />

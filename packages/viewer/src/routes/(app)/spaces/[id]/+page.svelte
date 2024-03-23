@@ -4,6 +4,7 @@
   import { page } from '$app/stores'
 
   export let data: PageData
+  let rel = $page.url.pathname
 </script>
 
-<Show space={data.space} tab="properties" rel={$page.url.pathname} />
+<Show space={data.space} tab="properties" {rel} />
