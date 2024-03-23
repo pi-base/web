@@ -24,8 +24,8 @@
       </p>
       <p class="mb-0">
         ➜ Find counterexamples:
-        <a href="/theorems/T000021" class="text-info"
-          >spaces with the countable chain condition need not be separable</a
+        <a href="/theorems/T000040" class="text-info"
+          >connected spaces need not be path connected</a
         >
       </p>
     </div>
