@@ -12,8 +12,7 @@ it('shows derived proofs', () => {
   cy.visit('/spaces/S000154/properties/P000001')
 
   cy.contains('Fort Space on the Real Numbers')
-  cy.contains('T1')
-  cy.contains('119').click()
+  cy.contains('T119').click()
 
   cy.location('pathname').should('eq', '/theorems/T000119')
 })
