@@ -31,9 +31,9 @@ it('filters traits', () => {
 
   cy.contains('P16')
 
-  cy.get('[placeholder=Filter]').type('comp')
+  cy.get('[placeholder=Filter]').type('compac')
 
-  cy.get('.related-traits > tbody > tr > td').first().should('have.text', 'P16')
+  cy.get('.related-traits > tbody > tr').first().should('have.text', 'P16')
 })
 
 it('displays trait descriptions', () => {
