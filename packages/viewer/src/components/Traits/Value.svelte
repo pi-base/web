@@ -5,20 +5,20 @@
   import { Icons } from '../Shared'
 </script>
 
-{#if value}
-  {#if icon === 'user'}
+{#if icon === 'user'}
+  {#if value === true}
     <Icons.User />
-  {:else}
-    <Icons.Check />
-  {/if}
-{:else if value === false}
-  {#if icon === 'user'}
+  {:else if value === false}
     <Icons.Robot />
-  {:else}
-    <Icons.X />
+  {:else}<!-- value === undefined -->
+    <Icons.Question />
   {/if}
-{:else}<!-- value === undefined -->
-  {#if icon !== 'user'}
+{:else}<!-- icon === "check" -->
+  {#if value === true}
+    <Icons.Check />
+  {:else if value === false}
+    <Icons.X />
+  {:else}<!-- value === undefined -->
     <Icons.Question />
   {/if}
 {/if}

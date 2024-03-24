@@ -4,7 +4,6 @@
   import { Value } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
-  import { capitalize } from '@/util'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
 
