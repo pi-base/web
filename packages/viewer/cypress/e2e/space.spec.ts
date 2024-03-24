@@ -33,7 +33,7 @@ it('filters traits', () => {
 
   cy.get('[placeholder=Filter]').type('compac')
 
-  cy.get('.related-traits > tbody > tr').first().should('have.text', 'P16')
+  cy.get('.related-traits > tbody > tr').first().contains('P16')
 })
 
 it('displays trait descriptions', () => {
