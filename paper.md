@@ -43,7 +43,7 @@ Euclidean spaces $\mathbb R^n$ (e.g.
 [S176 of π-Base](https://topology.pi-base.org/spaces/S000176)), 
 where each vector
 $\vec x\in\mathbb R^n$ has open neighborhoods of the form
-$B_\epsilon(\vec x)=\{\vec y:d(\vec x,\vec y)\lt \epsilon\}$. Then
+$B_\epsilon(\vec x)=\{\vec y:d(\vec x,\vec y)< \epsilon\}$. Then
 a **property** of a topological space is some characteristic defined
 in terms of its open sets; for example, a space is compact
 ([P16 of π-Base](https://topology.pi-base.org/properties/P000016))
