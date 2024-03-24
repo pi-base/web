@@ -19,3 +19,11 @@ be something like
 # In another terminal, for whichever package(s) you're actively developing
 <root>/packages/<package> $ pnpm run dev
 ```
+
+# Upgrading dependencies
+
+To upgrade `package.json` versions to the latest, consider
+
+```bash
+$ pnpm -r exec ncu -ut semver
+```

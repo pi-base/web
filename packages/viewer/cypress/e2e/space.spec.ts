@@ -12,7 +12,6 @@ function clickTraitFor(name: string) {
 
 it('links to properties', () => {
   cy.visit('spaces/S000004/properties')
-  deduce()
 
   cy.contains('Semiregular').click()
 
@@ -21,7 +20,6 @@ it('links to properties', () => {
 
 it('links to traits', () => {
   cy.visit('spaces/S000004/properties')
-  deduce()
 
   clickTraitFor('Semiregular')
 
@@ -30,13 +28,12 @@ it('links to traits', () => {
 
 it('filters traits', () => {
   cy.visit('spaces/S000004/properties')
-  deduce()
+
+  cy.contains('P16')
 
   cy.get('[placeholder=Filter]').type('comp')
 
-  cy.get('.related-traits > tbody > tr')
-    .first()
-    .should('have.text', 'P16 Compact   ')
+  cy.get('.related-traits > tbody > tr > td').first().should('have.text', 'P16')
 })
 
 it('displays trait descriptions', () => {
@@ -44,5 +41,13 @@ it('displays trait descriptions', () => {
 
   clickTraitFor('Discrete')
 
-  cy.contains('By definition of discrete')
+  cy.contains('All subsets of this space are open by definition.')
+})
+
+it('displays references', () => {
+  cy.visit('spaces/S000001')
+
+  cy.get('.nav-link').contains('References').click()
+
+  cy.get('ul.references').should('exist')
 })

@@ -1,7 +1,10 @@
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:18",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:20",
   "containerEnv": {
     "DATA_WORKSPACE": "/workspaces/web/data"
+  },
+  "remoteEnv": {
+    "PUBLIC_DATA_URL": "https://${localEnv:CODESPACE_NAME}-3141.${localEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
   },
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
   "postAttachCommand": {
@@ -9,9 +12,15 @@
     "core": "pnpm run --filter core dev",
     "viewer": "pnpm run --filter viewer dev --host"
   },
-  "forwardPorts": [
-    5173
-  ],
+  "forwardPorts": [3141, 5173],
+  "portsAttributes": {
+    "3141": {
+      "label": "compile"
+    },
+    "5173": {
+      "label": "viewer"
+    }
+  },
   "postCreateCommand": "git clone https://github.com/pi-base/data.git",
   "customizations": {
     "codespaces": {

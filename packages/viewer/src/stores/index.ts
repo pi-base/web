@@ -1,4 +1,3 @@
-import { defaultHost, mainBranch } from '@/constants'
 import type * as Gateway from '@/gateway'
 import {
   Collection,

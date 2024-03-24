@@ -1,4 +1,4 @@
-import { deduce, isLegacy, setup } from '../support'
+import { deduce, setup } from '../support'
 
 beforeEach(setup)
 
@@ -40,11 +40,7 @@ describe('with a working remote', () => {
       force: true,
     })
 
-    cy.contains(
-      isLegacy
-        ? /is impossible by/
-        : /Discrete.*∧.*¬.*Metrizable.*is impossible by/,
-    )
+    cy.contains(/Discrete.*∧.*¬.*Metrizable.*is impossible by/)
     cy.contains('85').click()
     cy.contains('Discrete ⇒ Completely metrizable')
   })
