@@ -43,3 +43,11 @@ it('displays trait descriptions', () => {
 
   cy.contains('All subsets of this space are open by definition.')
 })
+
+it('displays references', () => {
+  cy.visit('spaces/S000001')
+
+  cy.get('.nav-link').contains('References').click()
+
+  cy.get('ul.references').should('exist')
+})

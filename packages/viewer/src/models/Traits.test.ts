@@ -29,8 +29,22 @@ test('forProperty', () => {
   expect(traits.forProperty(p2)).toEqual([[s2, traits.find(s2, p2)]])
 })
 
+test('forPropertyAll', () => {
+  expect(traits.forPropertyAll(p2)).toEqual([
+    [s1, undefined],
+    [s2, traits.find(s2, p2)],
+  ])
+})
+
 test('forSpace', () => {
   expect(traits.forSpace(s1)).toEqual([[p1, traits.find(s1, p1)]])
+})
+
+test('forSpaceAll', () => {
+  expect(traits.forSpaceAll(s1)).toEqual([
+    [p1, traits.find(s1, p1)],
+    [p2, undefined],
+  ])
 })
 
 test('size', () => {

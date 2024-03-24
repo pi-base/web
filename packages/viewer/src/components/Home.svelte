@@ -24,8 +24,8 @@
       </p>
       <p class="mb-0">
         ➜ Find counterexamples:
-        <a href="/theorems/T000057" class="text-info"
-          >first countable spaces need not be locally pseudometrizable</a
+        <a href="/theorems/T000040" class="text-info"
+          >connected spaces need not be path connected</a
         >
       </p>
     </div>
