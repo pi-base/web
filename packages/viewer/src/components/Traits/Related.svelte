@@ -127,7 +127,7 @@
       <tr>
         <td style="text-align:center">
           <Link.Trait {space} {property}>
-            <Value value={trait.value} />
+            <Value value={trait?.value} />
           </Link.Trait>
         </td>
         <td style="text-align:center">
@@ -136,12 +136,7 @@
         <td>
           <slot name="name" {space} {property} />
         </td>
-        <td>
-          <Link.Trait {space} {property}>
-            <Value value={trait?.value} />
-          </Link.Trait>
-        </td>
-        <td>
+        <td style="text-align:center">
           <Link.Trait {space} {property}>
             <Value value={trait?.asserted} icon="user" />
           </Link.Trait>
