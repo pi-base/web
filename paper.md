@@ -74,7 +74,7 @@ known as the *π-Base community database of topological counterexamples*
 hosted at <https://topology.pi-base.org>. Inspired by Steen and Seebach's
 *Counterexamples*, the goals of π-Base were as follows:
 
-1. Provide an interactive version of *Counterexamples* on
+1. Provide an interactive version of *Counterexamples* available on
 the open web.
 2. Track not only spaces and properties, but also
 [theorems](https://topology.pi-base.org/theorems) that
@@ -83,6 +83,9 @@ a small number of assertions.
 3. Extend the content of *Counterexamples* by supporting a 
 community-maintained living database that can
 serve both researchers and students in perpetuity.
+4. Disambiguate topological concepts that go by different
+or conflicting terminology in the literature by assigning
+spaces and properties unique IDs.
 
 Iterations of the π-Base have taken various forms, including
 a modified wiki and later a custom Ruby on Rails application.
@@ -121,7 +124,13 @@ and so on.
 As a client-side application, there is no way to contribute to the
 π-Base through its website. Instead, its contribution workflow is
 offloaded to GitHub's infrastructure using the `pi-base/data`
-repository [@pibasedata].
+repository [@pibasedata]. All "entries" of this database are
+Markdown files with YAML frontmatter. Using this workflow, all
+contributions can be reviewed by community members via GitHub pull 
+requests. GitHub Actions automatically compile each push to the
+repository into the JSON and delivered to AWS S3 to be
+ingested by the π-Base frontend application. In addition to
+reviewing the raw markup in GitHub, JSON...
 
 <!-- # Citations
 
