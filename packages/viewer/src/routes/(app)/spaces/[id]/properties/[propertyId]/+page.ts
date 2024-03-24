@@ -9,6 +9,8 @@ export const load: PageLoad = async function ({
 }) {
   const { load, spaces, properties, theorems, traits, checked } = await parent()
 
+  await checked(spaceId)
+
   return load(
     traits,
     ts =>
