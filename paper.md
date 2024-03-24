@@ -21,18 +21,31 @@ date: 24 March 2024
 bibliography: paper.bib
 ---
 
-# Summary
+# Statement of need
 
 > Topology is a dense forest of counterexamples. A usable map of the forest is a fine thing.
 
 The preceding quote is paraphrased from Mary Ellen Rudin's review
-[@mer:1971] of Counterexamples in Topology [@MR1382863].
+[@mer:1971] of Counterexamples in Topology [@MR1382863]. This text
+became well-known as a convenient handbook of the topological properites
+and counter-examples that would have been considered standard to
+researchers in general and set-theoretic topology active in its date
+of publication (1970).
 
-# Statement of need
+This book was developed as an outcome of
+National Science Foundation REUs (research experiences for undergraduates)
+held in Summers 1967 and 1968. The authors and their students worked
+diligently to survey the field and provide a comprehensive crosslisting
+of over 140 topological spaces and 60 topological properties, summarized
+in the General Reference Chart depicted in \autoref{fig:book-chart}.
+
+![Steen and Seebach's print database of topological spaces and properties.\label{fig:book-chart}](book-chart.png)
+
+# Summary
 
 
 
-# Citations
+<!-- # Citations
 
 Citations to entries in paper.bib should be in
 [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
@@ -53,11 +66,22 @@ Figures can be included like this:
 and referenced from text using \autoref{fig:example}.
 
 Figure sizes can be customized by adding an optional second parameter:
-![Caption for example figure.](figure.png){ width=20% }
+![Caption for example figure.](figure.png){ width=20% } -->
 
 # Acknowledgements
 
-We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project.
+The π-Base would not be of value to mathematics researchers without its
+volunteer community of contributors and reviewers. Particular thanks
+are due to Chris Caruvana, Patrick Rabau, and Lynne Yuenglalp for their
+support of the project in recent years. Additional thanks are due to
+Austin Mohr and Scott Varagona for their prior contributions to early
+iterations of the project.
+
+Funding for the π-Base was provided by an internal University of South
+Alabama faculty development grant.
+
+The π-Base is dedicated to the memory of our friend and mentor
+Gary Gruehange.
+
 
 # References
