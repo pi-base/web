@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@sveltejs/adapter-cloudflare": "^2.3.4",
-    "@sveltejs/kit": "^1.30.3",
+    "@sveltejs/kit": "1.30.0",
     "@sveltejs/vite-plugin-svelte": "^2.5.3",
     "@tsconfig/svelte": "^3.0.0",
     "@types/debug": "^4.1.12",
