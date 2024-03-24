@@ -44,12 +44,13 @@
         >Counterexamples in Topology</cite
       >
     </footer>
+    <p class="mt-3">
+      <small>
+        Dedicated to the memory of our friend and mentor Gary Gruehnage
+        (1947-2023).
+      </small>
+    </p>
   </blockquote>
-  <hr />
-  <p>
-    The π-Base is dedicated to the memory of our friend and mentor
-    Gary Gruehnage (1947-2023).
-  </p>
   <hr />
   <h3>Contributing</h3>
   <p>
