@@ -4,7 +4,6 @@
   fill="currentColor"
   stroke-width="0"
   viewBox="0 0 352 512"
-  style="margin-right: 0.4em;"
   height="1em"
   width="1em"
   xmlns="http://www.w3.org/2000/svg"

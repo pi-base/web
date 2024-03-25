@@ -4,7 +4,6 @@
   import { Value } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
-  import { capitalize } from '@/util'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
 
@@ -116,27 +115,27 @@
 <table class="table related-traits">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>{capitalize(mode)}</th>
-      <th>Value</th>
-      <th>Source</th>
+      <th style="width:5%;text-align:center">Value</th>
+      <th style="width:5%;text-align:center">Id</th>
+      <th style="width:85%">Name</th>
+      <th style="width:5%;text-align:center">Source</th>
     </tr>
   </thead>
   <tbody>
     {#each filtered as [space, property, trait] ([space.id, property.id])}
       <tr>
-        <td>
+        <td style="text-align:center">
+          <Link.Trait {space} {property}>
+            <Value value={trait?.value} />
+          </Link.Trait>
+        </td>
+        <td style="text-align:center">
           <slot name="id" {space} {property} />
         </td>
         <td>
           <slot name="name" {space} {property} />
         </td>
-        <td>
-          <Link.Trait {space} {property}>
-            <Value value={trait?.value} />
-          </Link.Trait>
-        </td>
-        <td>
+        <td style="text-align:center">
           <Link.Trait {space} {property}>
             <Value value={trait?.asserted} icon="user" />
           </Link.Trait>
