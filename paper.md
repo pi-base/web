@@ -6,19 +6,19 @@ tags:
   - mathematics
   - topology
 authors:
-  - name: James Dabbs
-    equal-contrib: true
-    affiliation: 1
   - name: Steven Clontz
     orcid: 0000-0002-4938-4274
     equal-contrib: true
+    affiliation: 1
+  - name: James Dabbs
+    equal-contrib: true
     affiliation: 2
 affiliations:
- - name: Independent Researcher, USA
-   index: 1
  - name: University of South Alabama, USA
+   index: 1
+ - name: Independent Researcher, USA
    index: 2
-date: 24 March 2024
+date: 2024-04-02
 bibliography: paper.bib
 ---
 
