@@ -95,7 +95,7 @@ on its contributions, leading to several errata and undersupported
 claims to be included in the database.
 
 In 2017, Steven Clontz joined the project to serve as its
-lead mathematical editor, and later a co-developer of its
+lead mathematical editor, and later a co-maintainer of its
 software infrastructure. Dabbs and Clontz were both graduate
 students at the same institution in the early 2010s,
 and while Dabbs established a career in software
@@ -124,13 +124,25 @@ and so on.
 As a client-side application, there is no way to contribute to the
 π-Base through its website. Instead, its contribution workflow is
 offloaded to GitHub's infrastructure using the `pi-base/data`
-repository [@pibasedata]. All "entries" of this database are
-Markdown files with YAML frontmatter. Using this workflow, all
+repository [@pibasedata]. Three directories (`properties`, `spaces`,
+and `theorems`) contain Markdown files with YAML frontmatter. Each
+space then has its own `properties` subdirectory containing Markdown/YAML
+files that describe each asserted space/property pair. Each file
+includes the object's ID, name, and a brief definition and/or justification
+as appropriate, with citations to the literature and/or public forums
+that ensure contributions to the π-Base are held to appropriate scrutiny.
+
+Using this workflow, all
 contributions can be reviewed by community members via GitHub pull 
 requests. GitHub Actions automatically compile each push to the
-repository into the JSON and delivered to AWS S3 to be
-ingested by the π-Base frontend application. In addition to
-reviewing the raw markup in GitHub, JSON...
+repository into the aforementioned JSON file, and then deliver it
+to an AWS S3 instance to be ingested by the π-Base frontend application.
+While only the payload of the `main` branch is used as the "official"
+database and made available by default on the hosted
+<https://topology.pi-base.org> application, visitors (and in particular,
+pull request reviewers) may visit the
+[Advanced page](https://topology.pi-base.org/dev) to select any other
+branch of `pi-base/data` to preview any proposed contribution.
 
 <!-- # Citations
 
