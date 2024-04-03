@@ -57,8 +57,6 @@ diligently to survey the field and provide a comprehensive crosslisting
 of over 140 topological spaces and 60 topological properties, summarized
 in the General Reference Chart depicted in \autoref{fig:book-chart}.
 
-![Steen and Seebach's print database of topological spaces and properties.\label{fig:book-chart}](book-chart.png)
-
 Today, the book remains a well-referenced resource by many looking
 for a standard reference for these properties. However, its second
 and final edition was released in 1978, meaning that recent advances
@@ -66,6 +64,8 @@ in the field are not represented in the text. Furthermore, several
 errata remain even in this second edition, an unsurprising outcome from 
 manually authoring a textbook and database tracking over 7200
 space/property pairs.
+
+![Steen and Seebach's print database of topological spaces and properties.\label{fig:book-chart}](book-chart.png)
 
 # Summary
 
