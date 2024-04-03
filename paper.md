@@ -121,7 +121,16 @@ will also be deduced to be normal. Furthermore, any space marked as
 compact and not normal is automatically deduced to be not Hausdorff,
 and so on.
 
-As a client-side application, there is no way to contribute to the
+The decision to refactor π-Base into a client-side application was
+motivated by the desire for sustainability:
+there are no shortage of free web hosts for static HTML/JS applications,
+which due to their simplicity tend to have very reliable uptime, in
+contrast to hosting solutions for server-side applications. It also
+addresses a security concern: the only way to compromise the application
+is to gain access to its deployment workflows, not via the application
+itself.
+
+However, as a client-side application, there is no way to contribute to the
 π-Base through its website. Instead, its contribution workflow is
 offloaded to GitHub's infrastructure using the `pi-base/data`
 repository [@pibasedata]. Three directories (`properties`, `spaces`,
@@ -143,6 +152,21 @@ database and made available by default on the hosted
 pull request reviewers) may visit the
 [Advanced page](https://topology.pi-base.org/dev) to select any other
 branch of `pi-base/data` to preview any proposed contribution.
+
+Using GitHub pull requests brings with it both benefits and compromises.
+GitHub is not a tool used by most mathematicians on a regular basis, so there
+is a need for training for new contributors and reviewers. This also means
+that there's no way to customize the contribution and review process; while
+the π-Base wiki documents the "happy path" for users to contribute and review using
+the browser-based `GitHub.dev` service, there are many features of `GitHub.dev`
+that are not typically relevant to the mathematician contributor/reviewer
+that serve only as a distraction to a Git novice.
+On the other hand, a strong advantage is that there is no overhead for
+maintaining custom software to manage contributions and reviews, and as noted
+earlier, this displaces the security concerns associated with access management
+away from the π-Base team and into the hands of GitHub. And for that subset of
+mathematician users who are already familiar with GitHub, they do arrive
+to the community with an existing knowledge of how to contribute.
 
 While frequently used as a resource to aid scholars
 in searching the literature, π-Base is infrequently cited as a primary
