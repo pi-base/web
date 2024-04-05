@@ -176,7 +176,10 @@ computer tools such as π-Base
 are changing the landscape of mathematics research).
 As such, the impact of the π-Base is perhaps best measured by its 
 frequent citation as an authoritive source on the
-Math.StackExchange [@pibasemathse] and MathOverflow [@pibasemo] forums.
+Math.StackExchange [@pibasemathse] and MathOverflow [@pibasemo] forums,
+with over 2000 visitors visiting
+[topology.pi-base.org](https://topology.pi-base.org) in the 30 days
+leading up to 2024 April 05.
 
 Additionally, recent enhancements to the web inferface now enable the
 discovery of open (to π-Base) questions. As a result, π-Base
