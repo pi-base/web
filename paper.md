@@ -209,7 +209,7 @@ Figure sizes can be customized by adding an optional second parameter:
 
 The π-Base would not be of value to mathematics researchers without its
 volunteer community of contributors and reviewers. Particular thanks
-are due to Chris Caruvana, Patrick Rabau, and Lynne Yuenglalp for their
+are due to Chris Caruvana, Patrick Rabau, and Lynne Yengulalp for their
 support of the project in recent years. Additional thanks are due to
 Austin Mohr and Scott Varagona for their prior contributions to early
 iterations of the project.
@@ -218,7 +218,7 @@ Funding for the π-Base was provided by an internal University of South
 Alabama faculty development grant.
 
 The π-Base is dedicated to the memory of our friend and mentor
-Gary Gruehange.
+Gary Gruenhage.
 
 
 # References
