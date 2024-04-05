@@ -173,8 +173,10 @@ in searching the literature, π-Base is infrequently cited as a primary
 source. As such, the impact of the π-Base is perhaps best measured by its 
 frequent citation as an authoritive source on the
 Math.StackExchange [@pibasemathse] and MathOverflow [@pibasemo] forums.
-Additionally, recent enhancements to the web inferface now make the
-discovery of open (to π-Base) questions, allowing for its use in the
+
+Additionally, recent enhancements to the web inferface now enable the
+discovery of open (to π-Base) questions. As a result, π-Base
+is now a convenient resource for the
 development of problems for student researchers, giving these novice
 mathematicians an opportunity to "contribute" to research infrastrcture by
 way of π-Base, even when results on their own would not be considered "new"
