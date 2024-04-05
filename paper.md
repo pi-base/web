@@ -170,7 +170,11 @@ to the community with an existing knowledge of how to contribute.
 
 While frequently used as a resource to aid scholars
 in searching the literature, π-Base is infrequently cited as a primary
-source. As such, the impact of the π-Base is perhaps best measured by its 
+source
+(a notable exception is @buzzard2022point, a survey of how
+computer tools such as π-Base
+are changing the landscape of mathematics research).
+As such, the impact of the π-Base is perhaps best measured by its 
 frequent citation as an authoritive source on the
 Math.StackExchange [@pibasemathse] and MathOverflow [@pibasemo] forums.
 
