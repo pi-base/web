@@ -47,7 +47,7 @@
 </script>
 
 <div class="row">
-  <div class="col-4">
+  <div class="col-md-4">
     <div class="form-group">
       <label class="form-label" for="text">Filter by Text</label>
       <input
@@ -67,13 +67,15 @@
         {formula}
       />
     </div>
-    {#key [$rawFormula, $text]}<Cite {title} />{/key}
   </div>
-  <div class="col-8">
+  <div class="col-md-8">
     {#if $text || $formula}
       <Results text={$text} formula={$formula} />
     {:else}
       <Examples select={selectExample} />
     {/if}
   </div>
+</div>
+<div>
+  {#key [$rawFormula, $text]}<Cite {title} />{/key}
 </div>
