@@ -13,9 +13,9 @@
     </li>
   {:else}
     <li>
-      No references available. If appropriate,
-      please consider <a href={contributingUrl}>contributing</a> a
-      reference.
+      No references available. If appropriate, please consider <a
+        href={contributingUrl}>contributing</a
+      > a reference.
     </li>
   {/each}
 </ul>
