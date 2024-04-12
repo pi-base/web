@@ -263,7 +263,9 @@ function isExternalLink(node: any): node is ExternalLinkNode {
 }
 
 function isExternalKind(kind: any): kind is ExternalLinkNode['kind'] {
-  return kind && ['doi', 'wikipedia', 'mr', 'mathse', 'mo'].includes(kind)
+  return (
+    kind && ['doi', 'wikipedia', 'mr', 'mathse', 'mo', 'zbmath'].includes(kind)
+  )
 }
 
 function isInternalLink(node: any): node is InternalLinkNode {

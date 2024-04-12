@@ -38,5 +38,10 @@ export function format({
         href: `https://mathoverflow.net/questions/${id}`,
         title: name || `MathOverflow ${id}`,
       }
+    case 'zbmath':
+      return {
+        href: `https://zbmath.org/${id}`,
+        title: name || `zbMATH ${id}`,
+      }
   }
 }
