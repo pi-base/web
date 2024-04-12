@@ -6,8 +6,6 @@
   export let theorems: Store<Theorem>
 </script>
 
-<Title title="Theorems" />
-
 <Filter filter={theorems.filter} />
 
 <table class="table">

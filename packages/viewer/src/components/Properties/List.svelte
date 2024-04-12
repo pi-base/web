@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { Filter, Link, Title, Typeset } from '@/components/Shared'
+  import { Filter, Link, Typeset } from '@/components/Shared'
   import type { Property } from '@/models'
   import type { Store } from '@/stores/list'
 
   export let properties: Store<Property>
 </script>
-
-<Title title="Properties" />
 
 <Filter filter={properties.filter} />
 

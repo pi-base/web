@@ -8,12 +8,8 @@
   export let tab: 'spaces' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
 
-  $: title = `P${property.id}: ${property.name}`
-
   const tabs = ['theorems', 'spaces', 'references'] as const
 </script>
-
-<Title {title} />
 
 <h3>Property <Link.Property {property} content="idLong" /></h3>
 
