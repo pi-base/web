@@ -31,7 +31,7 @@ it('filters traits', () => {
 
   cy.contains('P16')
 
-  cy.get('[placeholder=Filter by name]').type('compac')
+  cy.get('[placeholder="Filter by name"]').type('compac')
 
   cy.get('.related-traits > tbody > tr').first().contains('P16')
 })
