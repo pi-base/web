@@ -50,9 +50,13 @@
         <Icons.Search />
       </span>
     </div>
-    <input placeholder="Filter by name" class="form-control" bind:value={$filter} />
+    <input
+      placeholder="Filter by name"
+      class="form-control"
+      bind:value={$filter}
+    />
     <div class="input-group-append">
-      <FilterButtons bind:filterMode={filterMode}/>
+      <FilterButtons bind:filterMode />
     </div>
   </div>
 </div>
@@ -63,10 +67,14 @@
         <Icons.Search />
       </span>
     </div>
-    <input placeholder="Filter by name" class="form-control" bind:value={$filter} />
+    <input
+      placeholder="Filter by name"
+      class="form-control"
+      bind:value={$filter}
+    />
   </div>
   <div class="btn-group" role="group">
-    <FilterButtons bind:filterMode={filterMode}/>
+    <FilterButtons bind:filterMode />
   </div>
 </div>
 
