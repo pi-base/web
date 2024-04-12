@@ -41,7 +41,7 @@ export function format({
     case 'zbmath':
       return {
         href: `https://zbmath.org/${id}`,
-        title: name || `zbMATH ${id}`
+        title: name || `zbMATH ${id}`,
       }
   }
 }
