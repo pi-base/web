@@ -4,6 +4,7 @@
   import { Value } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
+  import FilterButtons from './FilterButtons.svelte'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
 
@@ -42,73 +43,38 @@
   })
 </script>
 
-<div class="input-group">
-  <div class="input-group-prepend">
-    <span class="input-group-text">
-      <Icons.Search />
-    </span>
+<div class="d-none d-md-block">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        <Icons.Search />
+      </span>
+    </div>
+    <input
+      placeholder="Filter by name"
+      class="form-control"
+      bind:value={$filter}
+    />
+    <div class="input-group-append">
+      <FilterButtons bind:filterMode />
+    </div>
   </div>
-  <input placeholder="Filter" class="form-control" bind:value={$filter} />
-  <div class="input-group-append">
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'all' ? 'active' : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'all'
-      }}
-    >
-      Show All
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'known' ? 'active' : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'known'
-      }}
-    >
-      <Icons.Check />/
-      <Icons.X />
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'true' ? 'active' : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'true'
-      }}
-    >
-      <Icons.Check />
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'false' ? 'active' : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'false'
-      }}
-    >
-      <Icons.X />
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'asserted'
-        ? 'active'
-        : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'asserted'
-      }}
-    >
-      <Icons.User />
-    </button>
-    <button
-      class="btn btn-outline-secondary {filterMode !== 'missing'
-        ? 'active'
-        : ''}"
-      type="button"
-      on:click={() => {
-        filterMode = 'missing'
-      }}
-    >
-      <Icons.Question />
-    </button>
+</div>
+<div class="d-md-none" style="text-align:center">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">
+        <Icons.Search />
+      </span>
+    </div>
+    <input
+      placeholder="Filter by name"
+      class="form-control"
+      bind:value={$filter}
+    />
+  </div>
+  <div class="btn-group" role="group">
+    <FilterButtons bind:filterMode />
   </div>
 </div>
 
