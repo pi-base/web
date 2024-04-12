@@ -6,6 +6,7 @@
 </script>
 
 <a
+  class="text-info"
   href="/spaces/{Id.format('S', space.id)}/properties/{Id.format(
     'P',
     property.id,
