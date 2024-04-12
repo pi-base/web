@@ -8,12 +8,8 @@
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
 
-  $: title = `S${space.id}: ${space.name}`
-
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
-
-<Title {title} />
 
 <h3>Space <Link.Space {space} content="idLong" /></h3>
 

@@ -4,13 +4,13 @@
   import type { PageData } from './$types'
   export let data: PageData
   import { contributingUrl } from '@/constants'
+
+  $: title = `S${data.space.id}|P${data.property.id}: ${data.space.name} | ${data.property.name}`
 </script>
 
 <h3>Space S{data.space.id} | Property P{data.property.id}</h3>
 
-<Title
-  title={`S${data.space.id}|P${data.property.id}: ${data.space.name} | ${data.property.name}`}
-/>
+<Title {title}/>
 
 <h1>
   {#if data.proof}

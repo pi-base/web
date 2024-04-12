@@ -8,12 +8,8 @@
   export let tab: 'converse' | 'references'
   export let rel: string | undefined = undefined
 
-  $: title = `T${theorem.id}: ${theorem.name}`
-
   const tabs = ['converse', 'references'] as const
 </script>
-
-<Title {title} />
 
 <h3>Theorem <Link.Theorem {theorem} content="idLong" /></h3>
 

@@ -6,8 +6,6 @@
   export let spaces: Store<Space>
 </script>
 
-<Title title="Spaces" />
-
 <Filter filter={spaces.filter} />
 
 <table class="table">
