@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Space } from 'src/models'
-  import { Aliases, Link, References, Tabs, Title, Typeset } from '../Shared'
+  import { Aliases, Link, References, Tabs, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
 

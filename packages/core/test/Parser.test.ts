@@ -58,7 +58,8 @@ it('handles an incomplete external id', () => {
 })
 
 it('parses a complex example', () => {
-  const example = `Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
+  const example = `
+Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
 
 This is a list of links
 
@@ -69,7 +70,9 @@ This is a list of links
 * {{mr:123}}
 * {{wikipedia:123}}
 * {{mathse:123}}
-* {{mo:123}}`
+* {{mo:123}}
+* {{zbmath:123}}
+`
 
   expect(parse(example)).resolves.toMatchSnapshot()
 })
