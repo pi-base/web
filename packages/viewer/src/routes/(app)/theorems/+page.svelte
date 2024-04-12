@@ -6,7 +6,7 @@
   export let data: PageData
 </script>
 
-<Title title="Theorems"/>
+<Title title="Theorems" />
 
 <h1>Theorems</h1>
 

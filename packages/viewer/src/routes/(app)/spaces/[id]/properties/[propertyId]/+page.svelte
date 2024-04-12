@@ -10,7 +10,7 @@
 
 <h3>Space S{data.space.id} | Property P{data.property.id}</h3>
 
-<Title {title}/>
+<Title {title} />
 
 <h1>
   {#if data.proof}

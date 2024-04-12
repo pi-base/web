@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Title from '@/components/Shared/Title.svelte';
+  import Title from '@/components/Shared/Title.svelte'
   import { Show } from '@/components/Theorems'
   import type { PageData } from './$types'
 
@@ -8,6 +8,6 @@
   $: title = `S${data.theorem.id}: ${data.theorem.name}`
 </script>
 
-<Title {title}/>
+<Title {title} />
 
 <Show theorem={data.theorem} tab="converse" />

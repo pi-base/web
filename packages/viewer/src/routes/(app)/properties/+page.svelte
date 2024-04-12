@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Title from '@/components/Shared/Title.svelte';
+  import Title from '@/components/Shared/Title.svelte'
   import { List } from '@/components/Properties'
   import type { PageData } from './$types'
 
