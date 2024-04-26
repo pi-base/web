@@ -1,16 +1,20 @@
 {
   "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:20",
+  "features": {
+    "github-cli": "latest"
+  },
   "containerEnv": {
     "DATA_WORKSPACE": "/workspaces/web/data"
   },
   "remoteEnv": {
-    "PUBLIC_DATA_URL": "https://${localEnv:CODESPACE_NAME}-3141.${localEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
+    "VITE_PUBLIC_DATA_URL": "https://${localEnv:CODESPACE_NAME}-3141.${localEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
   },
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
   "postAttachCommand": {
     "compile": "pnpm run --filter compile dev",
     "core": "pnpm run --filter core dev",
-    "viewer": "pnpm run --filter viewer dev --host"
+    "viewer": "pnpm run --filter viewer dev --host --open",
+    "port": "gh codespace ports visibility 3141:public -c $CODESPACE_NAME && exit"
   },
   "forwardPorts": [3141, 5173],
   "portsAttributes": {
