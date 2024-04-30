@@ -2,7 +2,7 @@
   import { build } from '@/constants'
   import context from '@/context'
   import { state } from '@/stores/sync'
-  import { bundle } from '@pi-base/core';
+  import { bundle } from '@pi-base/core'
 
   import Sync from './Sync.svelte'
 
@@ -10,7 +10,10 @@
   const status = state(sync)
 
   $: currentSha = $status?.sha
-  $: dataSource = bundle.bundleUrl({branch:$source.branch,host:$source.host})
+  $: dataSource = bundle.bundleUrl({
+    branch: $source.branch,
+    host: $source.host,
+  })
 </script>
 
 <h4>Viewer</h4>
