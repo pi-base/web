@@ -30,7 +30,7 @@
     <th>SHA</th>
     <td>
       <a href={`https://github.com/pi-base/web/tree/${build.version}`}>
-        {build.version}
+        <code>{build.version}</code>
       </a>
     </td>
   </tr>
@@ -66,7 +66,11 @@
   <tr>
     <th>SHA</th>
     <td>
-      {#if currentSha}<code>{currentSha}</code>{/if}
+      {#if currentSha}
+        <a href={`https://github.com/pi-base/data/tree/${currentSha}`}>
+          <code>{currentSha}</code>
+        </a>
+      {/if}
     </td>
   </tr>
   <tr>
