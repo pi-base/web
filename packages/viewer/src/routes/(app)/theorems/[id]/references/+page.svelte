@@ -5,7 +5,7 @@
 
   export let data: PageData
 
-  $: title = `S${data.theorem.id}: ${data.theorem.name}`
+  $: title = `T${data.theorem.id}: ${data.theorem.name}`
 </script>
 
 <Title {title} />
