@@ -10,7 +10,7 @@ export const refSchema = z.intersection(
     z.object({ mr: z.number() }),
     z.object({ mathse: z.number() }),
     z.object({ mo: z.number() }),
-    z.object({ zbmath: z.string() }),
+    z.object({ zb: z.string() }),
   ]),
 )
 export type Ref = z.infer<typeof refSchema>
@@ -22,7 +22,7 @@ export type TaggedRef =
   | { kind: 'mr'; id: string; name?: string }
   | { kind: 'mathse'; id: string; name?: string }
   | { kind: 'mo'; id: string; name?: string }
-  | { kind: 'zbmath'; id: string; name?: string }
+  | { kind: 'zb'; id: string; name?: string }
 
 export function tag(ref: Ref): TaggedRef {
   const { name } = ref
@@ -38,6 +38,6 @@ export function tag(ref: Ref): TaggedRef {
   } else if ('mo' in ref) {
     return { kind: 'mo', id: String(ref.mo), name }
   } else {
-    return { kind: 'zbmath', id: String(ref.zbmath), name }
+    return { kind: 'zb', id: String(ref.zb), name }
   }
 }

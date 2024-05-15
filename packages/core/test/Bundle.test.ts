@@ -31,7 +31,7 @@ describe('Bundle', () => {
               { name: 'mr', mr: 'mr' },
               { name: 'mathse', mathse: 1 },
               { name: 'mo', mo: 2 },
-              { name: 'zbmath', zbmath: 'zbmath' },
+              { name: 'zb', zb: 'zb' },
             ],
           }),
         ],

@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { external } from './externalLinks'
 
-const providers = ['doi', 'mr', 'wikipedia', 'mathse', 'mo', 'zbmath'] as const
+const providers = ['doi', 'mr', 'wikipedia', 'mathse', 'mo', 'zb'] as const
 
 providers.forEach(provider => {
   it(`parses ${provider} links`, () => {
