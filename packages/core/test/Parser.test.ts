@@ -71,7 +71,7 @@ This is a list of links
 * {{wikipedia:123}}
 * {{mathse:123}}
 * {{mo:123}}
-* {{zbmath:123}}
+* {{zb:123}}
 `
 
   expect(parse(example)).resolves.toMatchSnapshot()
