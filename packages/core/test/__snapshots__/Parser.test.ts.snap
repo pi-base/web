@@ -12,7 +12,7 @@ exports[`parses a complex example 1`] = `
 <li><a href=\\"wikipedia://123\\" title=\\"123\\" class=\\"external-link\\">123</a></li>
 <li><a href=\\"mathse://123\\" title=\\"123\\" class=\\"external-link\\">123</a></li>
 <li><a href=\\"mo://123\\" title=\\"123\\" class=\\"external-link\\">123</a></li>
-<li><a href=\\"zbmath://123\\" title=\\"123\\" class=\\"external-link\\">123</a></li>
+<li><a href=\\"zb://123\\" title=\\"123\\" class=\\"external-link\\">123</a></li>
 </ul>"
 `;
 
