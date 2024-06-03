@@ -11,7 +11,9 @@
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2022"
+    "target": "es2022",
+    // TODO: workaround for https://github.com/vitejs/vite/issues/15714
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"
