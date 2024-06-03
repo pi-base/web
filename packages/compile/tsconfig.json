@@ -4,16 +4,14 @@
     "declaration": true,
     "declarationDir": "dist/types",
     "module": "es2022",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noImplicitAny": true,
     "outDir": "dist/esm",
     "preserveConstEnums": true,
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2022",
-    // TODO: workaround for https://github.com/vitejs/vite/issues/15714
-    "skipLibCheck": true
+    "target": "es2022"
   },
   "include": [
     "src/**/*"
