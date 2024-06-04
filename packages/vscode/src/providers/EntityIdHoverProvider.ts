@@ -15,11 +15,11 @@ export class EntityIdHoverProvider
       return
     }
 
-    const { path, name, description } = entity
+    const { uri, name, description } = entity
 
     return new vscode.Hover(
       new vscode.MarkdownString(
-        [`# [${name}](${path})`, '', description].join('\n'),
+        [`# [${name}](${uri})`, '', description].join('\n'),
       ),
     )
   }
