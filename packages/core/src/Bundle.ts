@@ -6,11 +6,7 @@ import { Space, spaceSchema } from './Space.js'
 import { Theorem, theoremSchema } from './Theorem.js'
 import { Trait, traitSchema } from './Trait.js'
 
-export const defaultHost = import.meta.env?.VITE_PUBLIC_DATA_URL
-  ? import.meta.env.VITE_PUBLIC_DATA_URL
-  : import.meta.env?.DEV
-  ? 'http://localhost:3141'
-  : 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
+export const defaultHost = 'https://pi-base-bundles.s3.us-east-2.amazonaws.com'
 
 export type Version = {
   ref: string

@@ -14,15 +14,19 @@
   },
   "license": "MIT",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
-  "main": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
+  "exports": {
+    "types": "./dist/types/index.d.ts",
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pi-base/web.git"
   },
   "scripts": {
     "build:peg": "peggy --plugin ./node_modules/ts-pegjs/dist/tspegjs -o src/Formula/Grammar.ts --cache src/Formula/Grammar.pegjs",
-    "build": "pnpm build:peg && tsc",
+    "build": "pnpm build:peg && ./bin/build",
     "dev": "pnpm build:peg && tsc --watch",
     "test": "vitest run",
     "test:cov": "vitest run --coverage",
@@ -40,7 +44,7 @@
     "unified": "^10.1.2",
     "unist-util-is": "^5.2.1",
     "unist-util-visit": "^4.1.2",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",

@@ -6,6 +6,20 @@ import { EntityIdLinkProvider } from './providers/EntityIdLinkProvider'
 import { ExternalLinkProvider } from './providers/ExternalLinkProvider'
 import { setupDecorationProvider } from './providers/decorationProvider'
 
+export function activate(context: vscode.ExtensionContext) {
+  findRootFolder().then(uri => {
+    if (uri) {
+      setup(context, uri)
+    } else {
+      console.log(
+        'No data folder found in workspace. Skipping π-base initialization.',
+      )
+    }
+  })
+}
+
+export function deactivate() {}
+
 // TODO: can we target these more narrowly? Notebook type?
 // Note that we need to match file:// and also vscode-vfs:// schemes to work on github.dev
 const selector: vscode.DocumentSelector = {
@@ -13,16 +27,8 @@ const selector: vscode.DocumentSelector = {
   language: 'markdown',
 }
 
-export function activate(context: vscode.ExtensionContext) {
-  // TODO: handle multiple workspace folders (detect the one(s) that contains
-  // the relevant files?)
-  const folders = vscode.workspace.workspaceFolders
-  const basePath = folders && folders[0]
-  if (!basePath) {
-    return
-  }
-
-  const entities = new EntityStore(basePath.uri.fsPath, vscode.workspace.fs)
+function setup(context: vscode.ExtensionContext, baseUri: vscode.Uri) {
+  const entities = new EntityStore(baseUri, vscode.workspace.fs)
 
   context.subscriptions.push(
     vscode.languages.registerHoverProvider(
@@ -46,4 +52,14 @@ export function activate(context: vscode.ExtensionContext) {
   setupDecorationProvider(context, entities)
 }
 
-export function deactivate() {}
+async function findRootFolder() {
+  const expected = ['spaces', 'properties', 'theorems']
+
+  for (const folder of vscode.workspace.workspaceFolders || []) {
+    const files = await vscode.workspace.fs.readDirectory(folder.uri)
+    const names = files.map(([name, _]) => name)
+    if (expected.every(name => names.includes(name))) {
+      return folder.uri
+    }
+  }
+}

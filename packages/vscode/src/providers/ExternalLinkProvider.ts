@@ -1,9 +1,10 @@
 import * as vscode from 'vscode'
 import { matchingRanges } from './BaseEntityProvider'
-import { debug } from '../models/logging'
+import { debug } from '../logging'
 
 type LinkKinds = 'doi' | 'mr' | 'wikipedia' | 'mathse' | 'mo'
 
+// Link external identifiers out to the corresponding authority.
 export class ExternalLinkProvider implements vscode.DocumentLinkProvider {
   provideDocumentLinks(document: vscode.TextDocument) {
     debug('ExternalLinkProvider#provideDocumentLinks')
@@ -28,6 +29,7 @@ export class ExternalLinkProvider implements vscode.DocumentLinkProvider {
   }
 }
 
+// TODO: unify with implementation in viewer
 function format(kind: LinkKinds, id: string) {
   switch (kind) {
     case 'doi':

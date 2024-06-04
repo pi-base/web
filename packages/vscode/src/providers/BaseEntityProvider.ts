@@ -4,6 +4,8 @@ import { EntityStore } from '../models/EntityStore'
 export class BaseEntityProvider {
   constructor(protected readonly entities: EntityStore) {}
 
+  // Attempt to resolve the word at the given {position} in the {document} to a
+  // known entity in the {EntityStore}.
   protected entityAtPosition(
     document: vscode.TextDocument,
     position: vscode.Position,
@@ -14,6 +16,7 @@ export class BaseEntityProvider {
   }
 }
 
+// Extract a collection of Ranges from a document by regex
 export function matchingRanges(
   document: vscode.TextDocument,
   exp: RegExp,

@@ -1,0 +1,12 @@
+#!/bin/bash
+set -exo pipefail
+
+# VSCode extensions can only use CommonJS modules (for now), but we want to 
+# continue using our standard Vite/ESM build process elsewhere. This builds
+# both versions, corresponding to `package.json`'s `exports` field.
+
+tsc --module es2022 --outDir dist/esm/
+echo '{"type": "module"}' > dist/esm/package.json
+
+tsc --module commonjs --outDir dist/cjs/
+echo '{"type": "commonjs"}' > dist/cjs/package.json

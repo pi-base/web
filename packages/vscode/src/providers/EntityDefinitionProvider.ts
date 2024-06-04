@@ -1,7 +1,9 @@
 import * as vscode from 'vscode'
 import { BaseEntityProvider } from './BaseEntityProvider'
-import { debug } from '../models/logging'
+import { debug } from '../logging'
 
+// Support go-to-definition for entity IDs.
+//
 // TODO: also implement a reference provider?
 export class EntityDefinitionProvider
   extends BaseEntityProvider

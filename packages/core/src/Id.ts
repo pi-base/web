@@ -54,3 +54,39 @@ export function toInt(id: string): number {
 
   return tagged.id
 }
+
+// TODO: these were extracted from other parallel-but-divergent implementations
+// and should be unified.
+
+type Pad = '' | '0' | '00' | '000' | '0000' | '00000' | '00000'
+type XId<Prefix extends string> = `${Prefix}${Pad}${number}`
+
+export type SId = XId<'S'>
+export type PId = XId<'P'>
+export type TId = XId<'T'>
+export type SPId = [SId, PId]
+export type EntityId = SId | PId | TId | SPId
+
+export function isSpaceId(token: string): token is SId {
+  return token.match(/^S\d{1,6}$/) !== null
+}
+
+export function isPropertyId(token: string): token is PId {
+  return token.match(/^P\d{1,6}$/) !== null
+}
+
+export function isTheoremId(token: string): token is SId {
+  return token.match(/^T\d{1,6}$/) !== null
+}
+
+export function isTraitId(pair: [string, string]): pair is SPId {
+  return isSpaceId(pair[0]) && isPropertyId(pair[1])
+}
+
+export const idExp = /[PST]\d{1,6}/g
+
+export function normalizeId(id: SId): SId
+export function normalizeId(id: PId): PId
+export function normalizeId(id: string) {
+  return `${id[0]}${id.slice(1).padStart(6, '0')}`
+}

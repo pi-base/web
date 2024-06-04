@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { idExp } from '../models/types'
+import { Id } from '@pi-base/core'
 import { EntityStore } from '../models/EntityStore'
 import { matchingRanges } from './BaseEntityProvider'
 
@@ -15,10 +15,13 @@ export function setupDecorationProvider(
   entities: EntityStore,
 ) {
   let activeEditor = vscode.window.activeTextEditor
+
+  // Trigger an initial update
   if (activeEditor) {
     triggerUpdateDecorations(activeEditor, entities)
   }
 
+  // Update the decorations when the active editor changes
   vscode.window.onDidChangeActiveTextEditor(
     editor => {
       activeEditor = editor
@@ -30,6 +33,8 @@ export function setupDecorationProvider(
     context.subscriptions,
   )
 
+  // On document change, update both the decorations and the contents of the
+  // EntityStore corresponding to that document.
   vscode.workspace.onDidChangeTextDocument(
     event => {
       if (activeEditor && event.document === activeEditor.document) {
@@ -47,13 +52,13 @@ async function triggerUpdateDecorations(
   editor: vscode.TextEditor,
   entities: EntityStore,
 ) {
-  const ranges = matchingRanges(editor.document, idExp)
+  const ranges = matchingRanges(editor.document, Id.idExp)
 
   const decorations: vscode.DecorationOptions[] = []
   for (const [range, match] of ranges) {
     const entity = await entities.lookup(match[0])
     if (!entity) {
-      return
+      continue
     }
 
     decorations.push({
