@@ -4,7 +4,7 @@ Utilities for viewing and editing the π-base data repository in VSCode.
 
 ## Publishing
 
-Run `pnpm publish` to publish. (`prepublish` handles bundling with `pnpm`, which is otherwise unsupported by `vsce`.)
+Run `pnpm run publish` to publish. (`prepublish` handles bundling with `pnpm`, which is otherwise unsupported by `vsce`.)
 
 <!--TODO
 ## Features

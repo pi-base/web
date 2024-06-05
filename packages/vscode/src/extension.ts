@@ -5,11 +5,17 @@ import { EntityIdHoverProvider } from './providers/EntityIdHoverProvider'
 import { EntityIdLinkProvider } from './providers/EntityIdLinkProvider'
 import { ExternalLinkProvider } from './providers/ExternalLinkProvider'
 import { setupDecorationProvider } from './providers/decorationProvider'
+import debug from 'debug'
 
 export function activate(context: vscode.ExtensionContext) {
   findRootFolder().then(uri => {
     if (uri) {
-      setup(context, uri)
+      try {
+        debug('Initializing π-base extension')
+        setup(context, uri)
+      } catch (error) {
+        console.error('Failed to initialize π-base extension', error)
+      }
     } else {
       console.log(
         'No data folder found in workspace. Skipping π-base initialization.',

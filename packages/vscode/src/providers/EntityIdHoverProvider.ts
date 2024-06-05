@@ -17,10 +17,21 @@ export class EntityIdHoverProvider
 
     const { uri, name, description } = entity
 
-    return new vscode.Hover(
-      new vscode.MarkdownString(
-        [`# [${name}](${uri})`, '', description].join('\n'),
-      ),
-    )
+    // Hover text only supports an allow list of schemes (https://github.com/microsoft/vscode/issues/153277), which
+    // doesn't include the `vscode-vfs` scheme used by github.dev, so we instead use a command link to open the file.
+    //
+    // See also
+    // - https://code.visualstudio.com/api/extension-guides/command
+    // - https://code.visualstudio.com/api/references/commands
+    const openCommand = `command:vscode.open?${encodeURIComponent(
+      JSON.stringify([uri]),
+    )}`
+    const nameLink = new vscode.MarkdownString(`# [${name}](${openCommand})`)
+    nameLink.isTrusted = true
+
+    return new vscode.Hover([
+      nameLink,
+      new vscode.MarkdownString(`\n\n${description}`),
+    ])
   }
 }

@@ -10,7 +10,7 @@
   "homepage": "https://topology.pi-base.org/",
   "license": "ISC",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
-  "version": "0.0.13",
+  "version": "0.0.16",
   "repository": {
     "type": "git",
     "url": "https://github.com/pi-base/web.git"
