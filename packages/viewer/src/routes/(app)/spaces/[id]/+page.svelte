@@ -10,6 +10,6 @@
   $: title = `S${data.space.id}: ${data.space.name}`
 </script>
 
-<Title {title} />
+{#key title}<Title {title} />{/key}
 
 <Show space={data.space} tab="properties" {rel} />
