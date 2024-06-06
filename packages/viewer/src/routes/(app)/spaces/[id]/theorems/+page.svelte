@@ -7,6 +7,6 @@
   $: title = `S${data.space.id}: ${data.space.name}`
 </script>
 
-{#key title}<Title {title} />{/key}
+<Title {title} />
 
 <Show space={data.space} tab="theorems" />

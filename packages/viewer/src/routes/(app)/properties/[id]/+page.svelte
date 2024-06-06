@@ -9,6 +9,6 @@
   $: title = `P${data.property.id}: ${data.property.name}`
 </script>
 
-{#key title}<Title {title} />{/key}
+<Title {title} />
 
 <Show property={data.property} tab="theorems" rel={$page.url.pathname} />

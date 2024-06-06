@@ -8,6 +8,6 @@
   $: title = `T${data.theorem.id}: ${data.theorem.name}`
 </script>
 
-{#key title}<Title {title} />{/key}
+<Title {title} />
 
 <Show theorem={data.theorem} tab="converse" />
