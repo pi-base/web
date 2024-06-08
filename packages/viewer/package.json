@@ -5,7 +5,7 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build --logLevel warn",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "dev": "vite",
