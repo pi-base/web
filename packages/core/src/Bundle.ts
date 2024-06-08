@@ -1,4 +1,3 @@
-/// <reference types="vite/client" />
 import { z } from 'zod'
 import { Id, traitId } from './Id.js'
 import { Property, propertySchema } from './Property.js'

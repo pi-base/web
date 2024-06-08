@@ -10,14 +10,17 @@
 
 <ul class="list-group suggestions">
   {#each suggestions as property, i (property.id)}
-    <li
-      class="list-group-item {i === selected ? 'active' : ''}"
-      on:mouseover={() => onHover(i)}
-      on:focus={() => onHover(i)}
-      on:click={() => onClick(i)}
-      on:keydown={() => onClick(i)}
-    >
-      <Typeset body={property.name} />
+    <li class="list-group-item {i === selected ? 'active' : ''}">
+      <div
+        role="button"
+        tabindex={i}
+        on:mouseover={() => onHover(i)}
+        on:focus={() => onHover(i)}
+        on:click={() => onClick(i)}
+        on:keydown={() => onClick(i)}
+      >
+        <Typeset body={property.name} />
+      </div>
     </li>
   {/each}
 </ul>
