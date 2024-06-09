@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Property } from 'src/models'
-  import { Aliases, Link, References, Tabs, Title, Typeset } from '../Shared'
+  import type { Property } from '@/models'
+  import { Aliases, Link, References, Tabs, Typeset } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
