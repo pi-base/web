@@ -1,12 +1,6 @@
 import * as pb from '@pi-base/core'
 
-import {
-  Id,
-  type Property,
-  type Space,
-  type SerializedTheorem,
-  type Trait,
-} from './models'
+import { Id, type Property, type Space, type Trait } from './models'
 import { trace } from './debug'
 
 export type Sync = (
@@ -18,7 +12,7 @@ export type Sync = (
 export type Result = {
   spaces: Space[]
   properties: Property[]
-  theorems: SerializedTheorem[]
+  theorems: pb.SerializedTheorem[]
   traits: Trait[]
   etag: string
   sha: string
@@ -90,7 +84,7 @@ function theorem({
   then,
   description,
   refs,
-}: pb.Theorem): SerializedTheorem {
+}: pb.Theorem): pb.SerializedTheorem {
   return {
     id: Id.toInt(uid),
     when: pb.formula.mapProperty(Id.toInt, when),
