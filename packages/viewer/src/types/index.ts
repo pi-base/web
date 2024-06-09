@@ -41,14 +41,6 @@ export type DeducedTrait = {
 
 export type Trait = AssertedTrait | DeducedTrait
 
-export type SerializedTheorem = {
-  id: number
-  when: Formula<number>
-  then: Formula<number>
-  description: string
-  refs: Ref[]
-}
-
 export type SerializedProof = {
   properties: number[]
   theorems: number[]
