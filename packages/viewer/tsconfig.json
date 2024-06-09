@@ -2,7 +2,6 @@
   "extends": "./.svelte-kit/tsconfig.json",
   "include": [
     "src/**/*",
-    "cypress/**/*",
     ".svelte-kit/ambient.d.ts"
   ],
   "exclude": [
@@ -13,11 +12,6 @@
 		"forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "strict": true,
-    "types": [
-      "node",
-      "cypress",
-      "vite/client"
-    ],
     "typeRoots": [
       "src/types",
       "node_modules/@types"
