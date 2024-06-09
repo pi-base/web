@@ -24,6 +24,8 @@ export type TaggedRef =
   | { kind: 'mo'; id: string; name?: string }
   | { kind: 'zb'; id: string; name?: string }
 
+export type Kind = TaggedRef['kind']
+
 export function tag(ref: Ref): TaggedRef {
   const { name } = ref
 
@@ -39,5 +41,44 @@ export function tag(ref: Ref): TaggedRef {
     return { kind: 'mo', id: String(ref.mo), name }
   } else {
     return { kind: 'zb', id: String(ref.zb), name }
+  }
+}
+
+type FormatInput = { kind: Kind; id: string; name?: string } | Ref
+
+export function format(input: FormatInput) {
+  if ('kind' in input) {
+    const { kind, id, name } = input
+    switch (kind) {
+      case 'doi':
+        return { href: `https://doi.org/${id}`, title: name || `DOI ${id}` }
+      case 'mr':
+        return {
+          href: `https://mathscinet.ams.org/mathscinet-getitem?mr=${id}`,
+          title: name || `MR ${id}`,
+        }
+      case 'wikipedia':
+        return {
+          href: `https://en.wikipedia.org/wiki/${id}`,
+          title: name || `Wikipedia ${id}`,
+        }
+      case 'mathse':
+        return {
+          href: `https://math.stackexchange.com/questions/${id}`,
+          title: name || `Math StackExchange ${id}`,
+        }
+      case 'mo':
+        return {
+          href: `https://mathoverflow.net/questions/${id}`,
+          title: name || `MathOverflow ${id}`,
+        }
+      case 'zb':
+        return {
+          href: `https://zbmath.org/${id}`,
+          title: name || `zbMATH ${id}`,
+        }
+    }
+  } else {
+    return format(tag(input))
   }
 }
