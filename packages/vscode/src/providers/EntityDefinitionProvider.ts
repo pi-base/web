@@ -1,10 +1,7 @@
 import * as vscode from 'vscode'
 import { BaseEntityProvider } from './BaseEntityProvider'
-import { debug } from '../logging'
 
 // Support go-to-definition for entity IDs.
-//
-// TODO: also implement a reference provider?
 export class EntityDefinitionProvider
   extends BaseEntityProvider
   implements vscode.DefinitionProvider
@@ -14,7 +11,11 @@ export class EntityDefinitionProvider
     position: vscode.Position,
   ) {
     const entity = await this.entityAtPosition(document, position)
-    debug('EntityDefinitionProvider#provideDefinition', { entity, position })
+    this.telemetry.trace('EntityDefinitionProvider#provideDefinition', {
+      path: document.fileName,
+      position,
+      entity,
+    })
 
     if (!entity) {
       return

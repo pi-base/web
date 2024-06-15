@@ -1,8 +1,12 @@
 import * as vscode from 'vscode'
 import { EntityStore } from '../models/EntityStore'
+import { Telemetry } from './Telemetry'
 
 export class BaseEntityProvider {
-  constructor(protected readonly entities: EntityStore) {}
+  constructor(
+    protected readonly entities: EntityStore,
+    protected readonly telemetry: Telemetry,
+  ) {}
 
   // Attempt to resolve the word at the given {position} in the {document} to a
   // known entity in the {EntityStore}.

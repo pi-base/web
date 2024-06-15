@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 import { BaseEntityProvider } from './BaseEntityProvider'
-import { debug } from '../logging'
+import { EntityPreviewPresenter } from '../presenters/EntityPreviewPresenter'
 
 // Preview the entitiy description when hovering over an entity ID.
 export class EntityIdHoverProvider
@@ -9,29 +9,18 @@ export class EntityIdHoverProvider
 {
   async provideHover(document: vscode.TextDocument, position: vscode.Position) {
     const entity = await this.entityAtPosition(document, position)
-    debug('EntityIdHoverProvider#provideHover', { entity, position })
+    this.telemetry.trace('EntityIdHoverProvider#provideHover', {
+      path: document.fileName,
+      position,
+      entity,
+    })
 
     if (!entity) {
       return
     }
 
-    const { uri, name, description } = entity
-
-    // Hover text only supports an allow list of schemes (https://github.com/microsoft/vscode/issues/153277), which
-    // doesn't include the `vscode-vfs` scheme used by github.dev, so we instead use a command link to open the file.
-    //
-    // See also
-    // - https://code.visualstudio.com/api/extension-guides/command
-    // - https://code.visualstudio.com/api/references/commands
-    const openCommand = `command:vscode.open?${encodeURIComponent(
-      JSON.stringify([uri]),
-    )}`
-    const nameLink = new vscode.MarkdownString(`# [${name}](${openCommand})`)
-    nameLink.isTrusted = true
-
-    return new vscode.Hover([
-      nameLink,
-      new vscode.MarkdownString(`\n\n${description}`),
-    ])
+    const presenter = new EntityPreviewPresenter(this.telemetry)
+    const markdown = await presenter.render(entity)
+    return new vscode.Hover(markdown)
   }
 }

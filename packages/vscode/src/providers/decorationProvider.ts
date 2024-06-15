@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import { Id } from '@pi-base/core'
 import { EntityStore } from '../models/EntityStore'
 import { matchingRanges } from './BaseEntityProvider'
+import { Telemetry } from './Telemetry'
 
 const decorationType = vscode.window.createTextEditorDecorationType({
   after: {
@@ -13,12 +14,13 @@ const decorationType = vscode.window.createTextEditorDecorationType({
 export function setupDecorationProvider(
   context: vscode.ExtensionContext,
   entities: EntityStore,
+  telemetry: Telemetry,
 ) {
   let activeEditor = vscode.window.activeTextEditor
 
   // Trigger an initial update
   if (activeEditor) {
-    triggerUpdateDecorations(activeEditor, entities)
+    triggerUpdateDecorations(activeEditor, entities, telemetry)
   }
 
   // Update the decorations when the active editor changes
@@ -26,7 +28,7 @@ export function setupDecorationProvider(
     editor => {
       activeEditor = editor
       if (editor) {
-        triggerUpdateDecorations(editor, entities)
+        triggerUpdateDecorations(editor, entities, telemetry)
       }
     },
     null,
@@ -38,7 +40,7 @@ export function setupDecorationProvider(
   vscode.workspace.onDidChangeTextDocument(
     event => {
       if (activeEditor && event.document === activeEditor.document) {
-        triggerUpdateDecorations(activeEditor, entities)
+        triggerUpdateDecorations(activeEditor, entities, telemetry)
       }
 
       entities.memoize(event.document.uri.fsPath, event.document.getText())
@@ -49,10 +51,12 @@ export function setupDecorationProvider(
 }
 
 async function triggerUpdateDecorations(
-  editor: vscode.TextEditor,
+  { document, setDecorations }: vscode.TextEditor,
   entities: EntityStore,
+  telemetry: Telemetry,
 ) {
-  const ranges = matchingRanges(editor.document, Id.idExp)
+  telemetry.trace('triggerUpdateDecorations', { path: document.fileName })
+  const ranges = matchingRanges(document, Id.idExp)
 
   const decorations: vscode.DecorationOptions[] = []
   for (const [range, match] of ranges) {
@@ -71,5 +75,5 @@ async function triggerUpdateDecorations(
     })
   }
 
-  editor.setDecorations(decorationType, decorations)
+  setDecorations(decorationType, decorations)
 }

@@ -18,6 +18,7 @@ export { type Space, SpacePage } from './Space.js'
 export { type Theorem, SerializedTheorem } from './Theorem.js'
 export { type Trait } from './Trait.js'
 export { type Version } from './Bundle.js'
+export { parseDocument } from './Document.js'
 
 export * as bundle from './Bundle.js'
 export * as formula from './Formula.js'

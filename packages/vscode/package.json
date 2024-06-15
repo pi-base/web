@@ -10,7 +10,7 @@
   "homepage": "https://topology.pi-base.org/",
   "license": "ISC",
   "author": "James Dabbs <james.dabbs@gmail.com> (https://jdabbs.com)",
-  "version": "0.0.16",
+  "version": "0.1.18",
   "repository": {
     "type": "git",
     "url": "https://github.com/pi-base/web.git"
@@ -31,12 +31,13 @@
   },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
+    "publish:preview": "vsce publish --no-dependencies --pre-release",
     "publish": "vsce publish --no-dependencies",
-    "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
+    "compile": "webpack",
     "watch": "npm-run-all -p watch:*",
-    "watch:esbuild": "node esbuild.js --watch",
+    "watch:webpack": "webpack --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
-    "package": "pnpm run check-types && pnpm run lint && node esbuild.js --production",
+    "package": "pnpm run check-types && pnpm run lint && webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "pnpm run compile-tests && pnpm run compile && pnpm run lint",
@@ -46,22 +47,23 @@
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
-    "@types/js-yaml": "^4.0.9",
     "@types/mocha": "^10.0.6",
     "@types/vscode": "^1.89.0",
+    "@types/webpack-env": "^1.18.5",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "@vscode/test-cli": "^0.0.9",
     "@vscode/test-electron": "^2.3.9",
-    "esbuild": "^0.20.2",
     "eslint": "^8.57.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "ts-loader": "^9.5.1",
+    "webpack": "^5.92.0",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@pi-base/core": "workspace:*",
     "@vscode/vsce": "^2.27.0",
     "debug": "^4.3.4",
-    "js-yaml": "^4.1.0",
     "zod": "^3.23.8"
   }
 }

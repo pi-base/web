@@ -4,18 +4,30 @@ Utilities for viewing and editing the π-base data repository in VSCode.
 
 ## Publishing
 
-Run `pnpm run publish` to publish. (`prepublish` handles bundling with `pnpm`, which is otherwise unsupported by `vsce`.)
+We follow the [recommended](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#prerelease-extensions) scheme of even minor versions for stable releases and odd minor versions for pre-releases, though this is not (yet) supported by tooling.
+
+```bash
+# == Publish a prerelease ==
+# Bump version and ensure it's at 0.1.x
+pnpm run publish:preview
+
+# == Publish a stable release ==
+# Bump version and ensure it's at 0.2.x
+pnpm run publish
+```
 
 ## TODOs
 
-This is an early release. Before a 1.0-level release, we will need to
+This is an early release. Before a 1.x release, we will need to
 
+- Support a reference provider (dual to definition provider)
+  - This may be a good time to look at the parser async problem; do we already need to scan and load the whole local repo?
 - Smooth out the build process (and in particular, make sure that changes can be published by the org)
-- Add tests
+  - Add tests
 - Unify logic between core, compile, and here
 - Add editing features as discussed in [this issue](https://github.com/pi-base/web/issues/5)
 - Update the README and CHANGELOG for the extension
-- Address inlined TODOs, like error handling
+- Address inlined TODOs
 
 <!--TODO
 ## Features

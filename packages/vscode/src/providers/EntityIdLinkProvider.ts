@@ -1,7 +1,6 @@
 import * as vscode from 'vscode'
 import { BaseEntityProvider, matchingRanges } from './BaseEntityProvider'
 import { Id } from '@pi-base/core'
-import { debug } from '../logging'
 
 // Link entity IDs to their defining files.
 export class EntityIdLinkProvider
@@ -9,6 +8,9 @@ export class EntityIdLinkProvider
   implements vscode.DocumentLinkProvider
 {
   async provideDocumentLinks(document: vscode.TextDocument) {
+    this.telemetry.trace('EntityIdLinkProvider#provideDocumentLinks', {
+      path: document.fileName,
+    })
     const ranges = matchingRanges(document, Id.idExp)
 
     const links: vscode.DocumentLink[] = []
