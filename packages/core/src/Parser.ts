@@ -13,7 +13,7 @@ import { truncate as truncator } from './Parser/truncate.js'
 import { unnest } from './Parser/unnest.js'
 
 export type Options = {
-  link: Linkers
+  link: Partial<Linkers>
   truncate?: boolean
 }
 

@@ -17,9 +17,13 @@
 {#each examples as { label, search } (label)}
   <article>
     <h5>{label}</h5>
-    <pre
-      class="example"
+    <!-- TODO: we shouldn't need an on:click here -->
+    <a
+      href={`?q=${encodeURIComponent(search)}`}
       on:click={() => select(search)}
-      on:keydown={() => select(search)}>{search}</pre>
+      class="example"
+    >
+      {search}
+    </a>
   </article>
 {/each}

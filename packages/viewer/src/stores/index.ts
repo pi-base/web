@@ -1,10 +1,10 @@
+import { type SerializedTheorem } from '@pi-base/core'
 import type * as Gateway from '@/gateway'
 import {
   Collection,
   Theorems,
   Traits,
   type Property,
-  type SerializedTheorem,
   type Space,
   type Trait,
 } from '@/models'

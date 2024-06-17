@@ -1,4 +1,6 @@
 coverage
 dist
+out
 pnpm-lock.yaml
 .svelte-kit
+.vscode-test

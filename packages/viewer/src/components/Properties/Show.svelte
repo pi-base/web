@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Property } from 'src/models'
-  import { Aliases, Link, References, Tabs, Title, Typeset } from '../Shared'
+  import type { Property } from '@/models'
+  import { Aliases, Link, References, Tabs, Typeset } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
@@ -8,12 +8,8 @@
   export let tab: 'spaces' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
 
-  $: title = `P${property.id}: ${property.name}`
-
   const tabs = ['theorems', 'spaces', 'references'] as const
 </script>
-
-<Title {title} />
 
 <h3>Property <Link.Property {property} content="idLong" /></h3>
 

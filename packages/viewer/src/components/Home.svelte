@@ -46,7 +46,7 @@
     </footer>
     <p class="mt-3">
       <small>
-        Dedicated to the memory of our friend and mentor Gary Gruehnage
+        Dedicated to the memory of our friend and mentor Gary Gruenhage
         (1947-2023).
       </small>
     </p>

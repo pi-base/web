@@ -2,6 +2,7 @@
   import { build } from '@/constants'
   import context from '@/context'
   import { state } from '@/stores/sync'
+  import { bundle } from '@pi-base/core'
 
   import Sync from './Sync.svelte'
 
@@ -9,6 +10,10 @@
   const status = state(sync)
 
   $: currentSha = $status?.sha
+  $: dataSource = bundle.bundleUrl({
+    branch: $source.branch,
+    host: $source.host,
+  })
 </script>
 
 <h4>Viewer</h4>
@@ -25,7 +30,7 @@
     <th>SHA</th>
     <td>
       <a href={`https://github.com/pi-base/web/tree/${build.version}`}>
-        {build.version}
+        <code>{build.version}</code>
       </a>
     </td>
   </tr>
@@ -46,17 +51,26 @@
   <tr>
     <th>Branch</th>
     <td>
-      <input
-        class="form-control"
-        value={$source.branch}
-        on:blur={e => source.checkout(e.currentTarget.value)}
-      />
+      <p>
+        <input
+          class="form-control"
+          value={$source.branch}
+          on:blur={e => source.checkout(e.currentTarget.value)}
+        />
+      </p>
+      <p>
+        Using data hosted at <a href={dataSource}><code>{dataSource}</code></a>
+      </p>
     </td>
   </tr>
   <tr>
     <th>SHA</th>
     <td>
-      {#if currentSha}<code>{currentSha}</code>{/if}
+      {#if currentSha}
+        <a href={`https://github.com/pi-base/data/tree/${currentSha}`}>
+          <code>{currentSha}</code>
+        </a>
+      {/if}
     </td>
   </tr>
   <tr>

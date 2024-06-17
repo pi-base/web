@@ -1,7 +1,8 @@
 <script lang="ts">
   export let set: (body: string) => void
 
-  const example = `Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
+  const example = `
+Inline math $2 + 2 = 4$ and display math $$2 + 2 = 4$$.
 
 This is a list of links
 
@@ -13,7 +14,9 @@ This is a list of links
 * {{mr:123}}
 * {{wikipedia:123}}
 * {{mathse:123}}
-* {{mo:123}}`
+* {{mo:123}}
+* {{zb:123}}
+`
 </script>
 
 <table class="table">
@@ -56,7 +59,8 @@ This is a list of links
           <code>mr</code>,
           <code>wikipedia</code>,
           <code>mathse</code>, or
-          <code>mo</code>
+          <code>mo</code>, or
+          <code>zb</code>
         </p>
       </td>
     </tr>

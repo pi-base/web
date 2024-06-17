@@ -30,20 +30,23 @@
   urlSearchParam('text', text)
   urlSearchParam('q', rawFormula, () => ($suggest = false))
 
-  let title: string
-  $: if ($rawFormula.length > 0) {
-    if ($text.length > 0) {
-      title = `π-Base, Search for \`${$rawFormula}\` matching \`${$text}\``
+  function describe(formula: string, text: string) {
+    if (formula.length > 0) {
+      if (text.length > 0) {
+        return `Search for \`${formula}\` matching \`${text}\``
+      } else {
+        return `Search for \`${formula}\``
+      }
     } else {
-      title = `π-Base, Search for \`${$rawFormula}\``
-    }
-  } else {
-    if ($text.length > 0) {
-      title = `π-Base, Search matching \`${$text}\``
-    } else {
-      title = 'π-Base, Explore'
+      if (text.length > 0) {
+        return `Search matching \`${text}\``
+      } else {
+        return 'Explore'
+      }
     }
   }
+
+  $: title = `π-Base, ${describe($rawFormula, $text)}`
 </script>
 
 <div class="row">
@@ -77,5 +80,5 @@
   </div>
 </div>
 <div>
-  {#key [$rawFormula, $text]}<Cite {title} />{/key}
+  <Cite {title} />
 </div>
