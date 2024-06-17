@@ -1,10 +1,10 @@
 ---
-title: 'π-Base: a community database of topological counterexamples'
+title: 'π-Base: Cyberinfrastructure for Formalized Results in Mathematics'
 tags:
   - Typescript
   - Svelte
-  - mathematics
-  - topology
+  - GitHub Actions
+  - Mathematics
 authors:
   - name: Steven Clontz
     orcid: 0000-0002-4938-4274
@@ -18,7 +18,7 @@ affiliations:
    index: 1
  - name: Independent Researcher, USA
    index: 2
-date: 2 April 2024
+date: 16 June 2024
 bibliography: paper.bib
 ---
 
@@ -106,17 +106,23 @@ be respected and of use by active researchers in general topology,
 in the vein of other [mathematical databases](https://mathbases.org/)
 such as the LMFDB [@lmfdb].
 
+## Software Infrastructure
+
 To accomplish this, the π-Base was refactored into the form it exists
 in today. The frontend of the application is a single-page application
 written in SvelteKit. This application ingests a single JSON file that
 contains peer-reviewed data on topological spaces, properties, and
 theorems that have been established in the literature or other moderated
 sources such as MathOverflow or Math.StackExchange. This payload is
-quite small, with the JSON built as of 2024 March taking up less than
-one megabyte of space. The π-Base takes this data and then processes
+quite small, with the JSON built as of 2024 June taking up less than
+one megabyte of space. The π-Base frontend takes this data and then 
+processes
 it in the client in order to deduce any missing space/property pairs.
-For example, if a theorem states that all "compact" and "Hausdorff" spaces
-are "normal", then any space that's marked as both compact and Hausdorff
+For example, if a theorem states that all 
+"[compact](https://topology.pi-base.org/properties/P000016)" and 
+"[Hausdorff](https://topology.pi-base.org/properties/P000003)" spaces are 
+"[normal](https://topology.pi-base.org/properties/P000013)", 
+then any space that's marked as both compact and Hausdorff
 will also be deduced to be normal. Furthermore, any space marked as
 compact and not normal is automatically deduced to be not Hausdorff,
 and so on.
@@ -130,8 +136,8 @@ addresses a security concern: the only way to compromise the application
 is to gain access to its deployment workflows, not via the application
 itself.
 
-However, as a client-side application, there is no way to contribute to the
-π-Base through its website. Instead, its contribution workflow is
+As a client-side application, there is no way to contribute data to the
+π-Base through its web application. Instead, its contribution workflow is
 offloaded to GitHub's infrastructure using the `pi-base/data`
 repository [@pibasedata]. Three directories (`properties`, `spaces`,
 and `theorems`) contain Markdown files with YAML frontmatter. Each
@@ -168,6 +174,8 @@ away from the π-Base team and into the hands of GitHub. And for that subset of
 mathematician users who are already familiar with GitHub, they do arrive
 to the community with an existing knowledge of how to contribute.
 
+## Impact
+
 While frequently used as a resource to aid scholars
 in searching the literature, π-Base is infrequently cited as a primary
 source
@@ -188,6 +196,10 @@ development of problems for student researchers, giving these novice
 mathematicians an opportunity to "contribute" to research infrastrcture by
 way of π-Base, even when results on their own would not be considered "new"
 or "publishable" in the traditional literature.
+
+Finally, a fork of the
+π-Base to model topos theory is in development at
+<https://github.com/pi-base-topos/>.
 
 <!-- # Citations
 
