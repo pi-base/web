@@ -42,7 +42,7 @@ it.todo('handles a missing id', () => {
 })
 
 it('handles an initial tag', () => {
-  expect(parse('{')).resolves.toEqual('{')
+  expect(parse('{')).rejects.toThrow()
 })
 
 it('handles an incomplete internal link', () => {

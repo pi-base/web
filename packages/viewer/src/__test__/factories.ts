@@ -1,10 +1,9 @@
-import { TestUtils } from '@pi-base/core'
+import { type SerializedTheorem, TestUtils } from '@pi-base/core'
 
 import {
   type AssertedTrait,
   Collection,
   type Property,
-  type SerializedTheorem,
   type Space,
   type Trait,
   Traits,

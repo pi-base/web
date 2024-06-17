@@ -10,11 +10,29 @@ import { ExternalLinkNode, InternalLinkNode, Linkers } from './types'
  *
  * See https://github.com/syntax-tree/mdast-util-to-hast#fields-on-nodes
  */
-export function references({ internal, external }: Linkers) {
+export function references({ internal, external }: Partial<Linkers>) {
   return (): Transformer<Root, Root> => {
     return function transformer(tree: Root) {
       visit(tree, 'internalLink', (node: InternalLinkNode) => {
         const { kind, id } = node
+
+        if (!internal) {
+          Object.assign(node, {
+            data: {
+              hName: 'span',
+              hProperties: {
+                className: 'internal-link',
+              },
+              hChildren: [
+                {
+                  type: 'text',
+                  value: `${kind}${id}`,
+                },
+              ],
+            },
+          })
+          return
+        }
 
         const { href, title } = internal([kind, id])
 
@@ -36,26 +54,27 @@ export function references({ internal, external }: Linkers) {
         })
       })
 
-      visit(tree, 'externalLink', (node: ExternalLinkNode) => {
-        const { href, title } = external([node.kind, node.id])
+      external &&
+        visit(tree, 'externalLink', (node: ExternalLinkNode) => {
+          const { href, title } = external([node.kind, node.id])
 
-        Object.assign(node, {
-          data: {
-            hName: 'a',
-            hProperties: {
-              href,
-              title,
-              className: 'external-link',
-            },
-            hChildren: [
-              {
-                type: 'text',
-                value: title,
+          Object.assign(node, {
+            data: {
+              hName: 'a',
+              hProperties: {
+                href,
+                title,
+                className: 'external-link',
               },
-            ],
-          },
+              hChildren: [
+                {
+                  type: 'text',
+                  value: title,
+                },
+              ],
+            },
+          })
         })
-      })
     }
   }
 }

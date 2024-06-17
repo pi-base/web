@@ -23,6 +23,6 @@ export const load: PageLoad = async function ({
       }),
     checked(spaceId),
   ).catch(() => {
-    throw error(404, `Trait not found ${spaceId} / ${propertyId}`)
+    error(404, `Trait not found ${spaceId} / ${propertyId}`)
   })
 }
