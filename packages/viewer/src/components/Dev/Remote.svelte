@@ -44,8 +44,8 @@
 
 <h4>Data</h4>
 <p>
-Using data hosted at <br/>
-<small><a href={dataSource}><code>{dataSource}</code></a></small>
+  Using data hosted at <br />
+  <small><a href={dataSource}><code>{dataSource}</code></a></small>
 </p>
 <table class="table">
   <tr>
