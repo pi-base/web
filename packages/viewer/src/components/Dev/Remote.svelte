@@ -9,6 +9,12 @@
   const { source, sync } = context()
   const status = state(sync)
 
+  let hostInput: HTMLInputElement
+  const updateHost = () => source.setHost(hostInput.value)
+
+  let branchInput: HTMLInputElement
+  const updateBranch = () => source.checkout(branchInput.value)
+
   $: currentSha = $status?.sha
   $: dataSource = bundle.bundleUrl({
     branch: $source.branch,
@@ -37,30 +43,35 @@
 </table>
 
 <h4>Data</h4>
+<p>
+  Using data hosted at <br />
+  <small><a href={dataSource}><code>{dataSource}</code></a></small>
+</p>
 <table class="table">
   <tr>
     <th>Host</th>
     <td>
-      <input
-        class="form-control"
-        value={$source.host}
-        on:blur={e => source.setHost(e.currentTarget.value)}
-      />
+      <form on:submit={updateHost}>
+        <input
+          bind:this={hostInput}
+          class="form-control"
+          value={$source.host}
+          on:blur={updateHost}
+        />
+      </form>
     </td>
   </tr>
   <tr>
     <th>Branch</th>
     <td>
-      <p>
+      <form on:submit={updateBranch}>
         <input
+          bind:this={branchInput}
           class="form-control"
           value={$source.branch}
-          on:blur={e => source.checkout(e.currentTarget.value)}
+          on:blur={updateBranch}
         />
-      </p>
-      <p>
-        Using data hosted at <a href={dataSource}><code>{dataSource}</code></a>
-      </p>
+      </form>
     </td>
   </tr>
   <tr>
