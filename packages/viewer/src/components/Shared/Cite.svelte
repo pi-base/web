@@ -3,7 +3,8 @@
   import CopyButton from './CopyButton.svelte'
   let url = ''
   let markdown = ''
-  export let title: string = "π-Base, a community database of topological counterexamples."
+  export let title: string =
+    'π-Base, a community database of topological counterexamples.'
   onMount(() => {
     url = window.location.href
     markdown = `[${title}](${url})`
