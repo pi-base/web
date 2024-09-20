@@ -4,7 +4,7 @@
 </script>
 
 <button
-  class="btn btn-secondary btn-sm mb-3"
+  class="btn btn-sm mb-3 {showMarkdown ? 'btn-secondary' : 'btn-outline-secondary'}"
   on:click={_ => (showMarkdown = !showMarkdown)}
 >
   {#if showMarkdown}Hide{:else}Show{/if} markdown
