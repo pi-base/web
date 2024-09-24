@@ -12,7 +12,7 @@ function atomSchema<P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> {
   return z.object({
     kind: z.literal('atom'),
     property: p,
-    value: z.enum(["any", "unknown", "true", "false"]),
+    value: z.enum(['any', 'unknown', 'true', 'false']),
   }) as any
 }
 
@@ -34,7 +34,7 @@ export const formulaSchema = <P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> =>
 export interface Atom<P, X = never> {
   kind: 'atom'
   property: P
-  value: "any" | "unknown" | "true" | "false" | X
+  value: 'any' | 'unknown' | 'true' | 'false' | X
 }
 
 export interface And<P, X = never> {
@@ -59,7 +59,7 @@ export function or<P, X = never>(...subs: Formula<P, X>[]): Or<P, X> {
 
 export function atom<P, X = never>(
   property: P,
-  value: "any" | "unknown" | "true" | "false" | X = "true",
+  value: 'any' | 'unknown' | 'true' | 'false' | X = 'true',
 ): Atom<P, X> {
   return { kind: 'atom', property, value }
 }
@@ -90,11 +90,11 @@ export function negate<P>(formula: Formula<P>): Formula<P> {
   switch (formula.kind) {
     case 'atom':
       let newValue = formula.value
-      if (formula.value === "true") {
-        newValue = "false"
+      if (formula.value === 'true') {
+        newValue = 'false'
       }
-      if (formula.value === "false") {
-        newValue = "true"
+      if (formula.value === 'false') {
+        newValue = 'true'
       }
       return atom(formula.property, newValue)
     case 'and':
@@ -218,7 +218,7 @@ export function fromJSON(json: Serialized): Formula<string, null> {
   } else if ('or' in json && typeof json.or === 'object') {
     return or<string, null>(...json.or.map(fromJSON))
   } else if ('property' in json && typeof json.property === 'string') {
-    return atom<string, null>(json.property, json.value ? 'true' : "false")
+    return atom<string, null>(json.property, json.value ? 'true' : 'false')
   }
 
   const entries = Object.entries(json)
@@ -236,7 +236,7 @@ export function fromJSON(json: Serialized): Formula<string, null> {
 export function toJSON(f: Formula<string>): Serialized {
   switch (f.kind) {
     case 'atom':
-      return { [f.property]: f.value === "true"}
+      return { [f.property]: f.value === 'true' }
     case 'and':
       return { and: f.subs.map(toJSON) }
     case 'or':
