@@ -13,11 +13,13 @@ Or = _ "(" _ head:Formula tail:(_ Disjunction _ Formula)+ _ ")" _ {
 Atom = mod:Modifier? _ prop:Property {
   let value;
   if (mod === '?') {
-    value = null
+    value = "unknown"
+  } else if (mod === "*") {
+    value = "any"
   } else if (mod) {
-    value = false
+    value = "false"
   } else {
-    value = true
+    value = "true"
   }
   return { property: prop, value: value }
 }
@@ -25,7 +27,7 @@ Atom = mod:Modifier? _ prop:Property {
 // /!\ Important /!\
 // If you add any new important symbols, make sure that the are also removed
 //   from the character set below for properties
-Modifier    "modifier"      = "~" / "not " / "?"
+Modifier    "modifier"      = "~" / "not " / "?" / "*"
 Conjunction "conjunction"   = "++" / "+" / "&&" / "&"  // N.B. "+" / "++" breaks!
 Disjunction "disjunction"   = "||" / "|"
 Property    "property name" = prop:[^~+&|()]+ {
