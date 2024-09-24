@@ -11,6 +11,7 @@
   })
 </script>
 
+{#key title}
 <div class="text-center p-2">
   <small>
     Cite as:
@@ -25,8 +26,7 @@
 <div class="text-center p-2">
   <small>
     Copy:
-    {#key markdown}
-      <CopyButton text={markdown}>Markdown Link</CopyButton>
-    {/key}
+    <CopyButton text={markdown}>Markdown Link</CopyButton>
   </small>
 </div>
+{/key}
