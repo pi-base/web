@@ -16,7 +16,7 @@
     Cite as:
     <span class="text-muted">
       The pi-Base Community.
-        <cite>{title}.</cite>
+      <cite>{title}.</cite>
       Available at: {url}
       (Accessed: {new Date().toISOString().split('T')[0]}).
     </span>
