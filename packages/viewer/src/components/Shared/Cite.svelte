@@ -16,7 +16,7 @@
     Cite as:
     <span class="text-muted">
       The pi-Base Community.
-      <cite>{title}.</cite>
+        <cite>{title}.</cite>
       Available at: {url}
       (Accessed: {new Date().toISOString().split('T')[0]}).
     </span>
@@ -25,6 +25,8 @@
 <div class="text-center p-2">
   <small>
     Copy:
-    <CopyButton text={markdown}>Markdown Link</CopyButton>
+    {#key markdown}
+      <CopyButton text={markdown}>Markdown Link</CopyButton>
+    {/key}
   </small>
 </div>
