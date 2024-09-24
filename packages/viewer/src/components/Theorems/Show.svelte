@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Theorem } from 'src/models'
-  import { Link, References, Tabs, Title, Typeset } from '../Shared'
+  import { Link, References, Tabs, Source, Typeset } from '../Shared'
   import Name from './Name.svelte'
   import Converse from './Converse.svelte'
 
@@ -19,6 +19,10 @@
 
 <section class="description">
   <Typeset body={theorem.description} />
+</section>
+
+<section class="description-markdown">
+  <Source source={theorem.description} />
 </section>
 
 <Tabs {tabs} {tab} {rel} />
