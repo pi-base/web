@@ -246,7 +246,7 @@ export function trait(input: File) {
       value: Boolean(value),
       counterexamples_id,
       refs,
-      description,
+      description: String(description).trim(),
     })
 
     if (!input.path.endsWith(paths.trait({ space, property }))) {
