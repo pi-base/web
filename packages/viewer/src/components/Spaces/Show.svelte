@@ -1,12 +1,14 @@
 <script lang="ts">
   import type { Space } from 'src/models'
-  import { Aliases, Link, References, Tabs, Typeset } from '../Shared'
+  import { Aliases, Link, References, Source, Tabs, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
 
   export let space: Space
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
+
+  let showMarkdown = false
 
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
@@ -24,6 +26,10 @@
   <Typeset body={space.description} />
 </section>
 
+<section class="description-markdown">
+  <Source source={space.description} />
+</section>
+
 <Tabs {tabs} {tab} {rel} />
 
 {#if tab === 'properties'}
@@ -32,4 +38,6 @@
   <Counterexamples {space} />
 {:else if tab === 'references'}
   <References references={space.refs} />
+{:else if tab === 'markdown'}
+  <pre>{space.description}</pre>
 {/if}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Property } from '@/models'
-  import { Aliases, Link, References, Tabs, Typeset } from '../Shared'
+  import { Aliases, Link, References, Source, Tabs, Typeset } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
@@ -22,6 +22,10 @@
 
 <section class="description">
   <Typeset body={property.description} />
+</section>
+
+<section class="description-markdown">
+  <Source source={property.description} />
 </section>
 
 <Tabs {tabs} {tab} {rel} />
