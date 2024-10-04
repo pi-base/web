@@ -1,6 +1,6 @@
 <script lang="ts">
   import context from '@/context'
-  import { contributingUrl, mainBranch } from '@/constants'
+  import { contributingUrl, mainBranch, helpUrl } from '@/constants'
   import Branch from './Shared/Icons/Branch.svelte'
 
   const { showDev, source } = context()
@@ -29,6 +29,7 @@
         {/if}
       </a>
       <a class="nav-link" href={contributingUrl}>Contribute</a>
+      <a class="nav-link" href={helpUrl}>Help</a>
     </div>
   </div>
 </nav>
