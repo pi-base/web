@@ -8,8 +8,6 @@
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
 
-  let showMarkdown = false
-
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
 
@@ -17,10 +15,11 @@
 
 <h1>
   <Typeset body={space.name} />
-  {#if space?.aliases}
-    <Aliases aliases={space.aliases} />
-  {/if}
 </h1>
+
+{#if space.aliases.length > 0}
+  <h4 class="text-muted lead">Also known as: <Aliases aliases={space.aliases} /></h4>
+{/if}
 
 <section class="description">
   <Typeset body={space.description} />
