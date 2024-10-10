@@ -7,6 +7,12 @@
   export let text: string | undefined
   export let formula: F.Formula<Property> | undefined
   export let results: Space[]
+  const spaces = (r: Space[], t: string | undefined) => {
+    if (t === undefined || t == '') {
+      return r.sort((a, b) => a.id - b.id)
+    }
+    return r
+  }
 </script>
 
 {results.length} spaces
@@ -18,6 +24,6 @@
 {/if}
 
 <Table
-  spaces={results.sort((a, b) => a.id - b.id)}
+  spaces={spaces(results, text)}
   properties={formula ? [...F.properties(formula)] : []}
 />
