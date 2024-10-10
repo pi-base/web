@@ -4,6 +4,7 @@
 
   import { Link } from '../Shared'
   import Value from './Value.svelte'
+  import Typeset from '../Shared/Typeset.svelte'
 
   export let properties: Property[]
   export let spaces: Space[]
@@ -33,7 +34,12 @@
           <div><Link.Space {space} /></div>
           {#if space.aliases.length > 0}
             <div>
-              <small class="text-muted">{space.aliases.join(', ')}</small>
+              <small class="text-muted">
+                {#each space.aliases as alias, i}
+                  {#if i > 0}, {/if}
+                  <Typeset body={alias} />
+                {/each}
+              </small>
             </div>
           {/if}
         </td>
