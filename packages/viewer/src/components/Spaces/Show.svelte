@@ -18,7 +18,9 @@
 </h1>
 
 {#if space.aliases.length > 0}
-  <h4 class="text-muted lead">Also known as: <Aliases aliases={space.aliases} /></h4>
+  <h4 class="text-muted lead">
+    Also known as: <Aliases aliases={space.aliases} />
+  </h4>
 {/if}
 
 <section class="description">
