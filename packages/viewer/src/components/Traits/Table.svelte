@@ -30,7 +30,10 @@
           <Link.Space {space}>S{space.id}</Link.Space>
         </td>
         <td>
-          <Link.Space {space} />
+          <div><Link.Space {space} /></div>
+          {#if space.aliases.length > 0}
+            <div><small class="text-muted">{space.aliases.join(", ")}</small></div>
+          {/if}
         </td>
         {#each properties as property (property.id)}
           <td>
