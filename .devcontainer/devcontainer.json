@@ -10,7 +10,7 @@
     "VITE_PUBLIC_DATA_URL": "https://${localEnv:CODESPACE_NAME}-3141.${localEnv:GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}"
   },
   "onCreateCommand": "pnpm install && pnpm run --filter core build",
-  "postAttachCommand": {
+  "postStartCommand": {
     "compile": "pnpm run --filter compile dev",
     "core": "pnpm run --filter core dev",
     "viewer": "pnpm run --filter viewer dev --host --open",
