@@ -6,26 +6,36 @@
   export let property: Property
   export let trait: Trait | undefined
   export let proof: ProofT | undefined
-  export let meta: {
-    description: string;
-    refs: ({
-        name: string;
-    } & ({
-        doi: string;
-    } | {
-        wikipedia: string;
-    } | {
-        mr: string;
-    } | {
-        mr: number;
-    } | {
-        mathse: number;
-    } | {
-        mo: number;
-    } | {
-        zb: string;
-    }))[];
-  } | undefined
+  export let meta:
+    | {
+        description: string
+        refs: ({
+          name: string
+        } & (
+          | {
+              doi: string
+            }
+          | {
+              wikipedia: string
+            }
+          | {
+              mr: string
+            }
+          | {
+              mr: number
+            }
+          | {
+              mathse: number
+            }
+          | {
+              mo: number
+            }
+          | {
+              zb: string
+            }
+        ))[]
+      }
+    | undefined
   import { contributingUrl } from '@/constants'
 </script>
 
