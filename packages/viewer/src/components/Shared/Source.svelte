@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SeMarkdown from "./SeMarkdown.svelte";
+  import SeMarkdown from './SeMarkdown.svelte'
   export let source: string
   let showMarkdown = false
 </script>
@@ -15,6 +15,6 @@
 {#if showMarkdown}
   <h4>π-Base Markdown</h4>
   <pre>{source}</pre>
-  <hr/>
-  <SeMarkdown {source}/>
+  <hr />
+  <SeMarkdown {source} />
 {/if}
