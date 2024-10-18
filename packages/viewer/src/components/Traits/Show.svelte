@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Space, Property, Trait, Proof as ProofT } from '@/models'
-  import { Icons, Link, References, Typeset } from '@/components/Shared'
+  import { Icons, Link, References, Source, Typeset } from '@/components/Shared'
   import Proof from './Proof.svelte'
   export let space: Space
   export let property: Property
@@ -58,11 +58,12 @@
   <section class="description">
     <Typeset body={meta.description} />
   </section>
+  <section class="description-markdown">
+    <Source source={meta.description} />
+  </section>
   <h3>References</h3>
   <References references={meta.refs} />
 {:else}
   Please consider <a href={contributingUrl}>contributing</a> a proof or disproof
   of this property.
 {/if}
-
-<!-- also, add copy markdown button -->
