@@ -8,8 +8,6 @@
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
 
-  let showMarkdown = false
-
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
 
