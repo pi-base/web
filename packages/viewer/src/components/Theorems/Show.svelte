@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Theorem } from 'src/models'
+  import type { Theorem } from '@/models'
   import { Link, References, Tabs, Source, Typeset } from '../Shared'
   import Name from './Name.svelte'
   import Converse from './Converse.svelte'
