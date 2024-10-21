@@ -15,10 +15,13 @@
 
 <h1>
   <Typeset body={property.name} />
-  {#if property?.aliases}
-    <Aliases aliases={property.aliases} />
-  {/if}
 </h1>
+
+{#if property.aliases.length > 0}
+  <h4 class="text-muted lead">
+    Also known as: <Aliases aliases={property.aliases} />
+  </h4>
+{/if}
 
 <section class="description">
   <Typeset body={property.description} />
