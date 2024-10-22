@@ -15,16 +15,16 @@
     return () => clearInterval(interval)
   })
 
-  let klass:string = ""
+  let klass: string = ''
   const DAY = 1000 * 60 * 60 * 24
   const WEEK = DAY * 7
-  
+
   $: if (Date.now() > new Date(date).getTime() + WEEK) {
-    klass = "text-danger"
+    klass = 'text-danger'
   } else if (Date.now() > new Date(date).getTime() + DAY) {
-    klass = "text-warning"
+    klass = 'text-warning'
   } else {
-    klass = "text-info"
+    klass = 'text-info'
   }
 </script>
 

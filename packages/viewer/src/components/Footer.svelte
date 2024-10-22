@@ -15,6 +15,6 @@
     <a class="text-dark" href="https://github.com/pi-base">GitHub</a>
   </div>
   <div class="p-2">
-    Data last synchonized: <Sync/>
+    Data last synchonized: <Sync />
   </div>
 </footer>
