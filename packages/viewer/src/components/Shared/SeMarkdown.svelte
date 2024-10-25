@@ -17,16 +17,16 @@
     })
 
     // Replace single curly braces
-    /*s = s.replace(singlecurly, (_, type, id) => {
+    s = s.replace(singlecurly, (_, type, id) => {
       // Perform replacement based on type and id
-      if (type.equals("S")) {
-        return `[https://topology.pi-base.org/spaces/${type}${id}]()`
-      } else if (type.equals("P")) {
-        return `[https://topology.pi-base.org/properties/${type}${id}]()`
+      if (type === 'S') {
+        return `[{type}${id}](https://topology.pi-base.org/spaces/$${type}${id})`
+      } else if (type === 'P') {
+        return `[${type}${id}](https://topology.pi-base.org/properties/${type}${id})`
       } else {
-        return `[https://topology.pi-base.org/theorems/${type}${id}]()`
+        return `[${type}${id}](https://topology.pi-base.org/theorems/${type}${id})`
       }
-    })*/
+    })
 
     return s
   }
