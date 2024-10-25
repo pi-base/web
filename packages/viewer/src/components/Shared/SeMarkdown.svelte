@@ -20,11 +20,11 @@
     s = s.replace(singlecurly, (_, type, id) => {
       // Perform replacement based on type and id
       if (type === 'S') {
-        return `[${type}${id}](https://topology.pi-base.org/spaces/${type}${id})`
+        return `[S${id}](https://topology.pi-base.org/spaces/S${id})`
       } else if (type === 'P') {
-        return `[${type}${id}](https://topology.pi-base.org/properties/${type}${id})`
+        return `[P${id}](https://topology.pi-base.org/properties/P${id})`
       } else {
-        return `[${type}${id}](https://topology.pi-base.org/theorems/${type}${id})`
+        return `[T${id}](https://topology.pi-base.org/theorems/T${id})`
       }
     })
 
