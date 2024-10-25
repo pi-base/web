@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Space } from 'src/models'
+  import type { Space } from '@/models'
   import { Aliases, Link, References, Source, Tabs, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
@@ -7,8 +7,6 @@
   export let space: Space
   export let tab: 'properties' | 'theorems' | 'references'
   export let rel: string | undefined = undefined
-
-  let showMarkdown = false
 
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
