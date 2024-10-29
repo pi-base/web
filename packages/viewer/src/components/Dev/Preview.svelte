@@ -38,6 +38,7 @@
   </div>
   <div class="col-sm" data-testid="output">
     <Typeset {body} {truncated} />
+    <hr />
     <section class="description-markdown">
       <Source source={body} />
     </section>
