@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Typeset } from '../Shared'
+  import { Typeset, Source } from '../Shared'
   import Example from './Example.svelte'
 
   let truncated = false
@@ -38,5 +38,9 @@
   </div>
   <div class="col-sm" data-testid="output">
     <Typeset {body} {truncated} />
+    <hr />
+    <section class="description-markdown">
+      <Source source={body} />
+    </section>
   </div>
 </div>

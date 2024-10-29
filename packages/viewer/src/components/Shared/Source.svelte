@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ExtMarkdown from './ExtMarkdown.svelte'
   export let source: string
   let showMarkdown = false
 </script>
@@ -12,5 +13,8 @@
   {#if showMarkdown}Hide{:else}Show{/if} markdown
 </button>
 {#if showMarkdown}
+  <h4>π-Base Markdown</h4>
   <pre>{source}</pre>
+  <hr />
+  <ExtMarkdown {source} />
 {/if}
