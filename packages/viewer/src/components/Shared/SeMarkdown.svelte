@@ -32,7 +32,7 @@
   }
 </script>
 
-<h4>StackExchange Markdown</h4>
+<h4>External Markdown</h4>
 <pre>
 {modify(source)}
 </pre>
