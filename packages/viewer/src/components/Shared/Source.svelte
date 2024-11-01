@@ -18,7 +18,9 @@
   {#if internal}
     <h4>π-Base Markdown</h4>
     <pre>{source}</pre>
-    <hr />
+    {#if external}
+      <hr />
+    {/if}
   {/if}
   {#if external}
     <ExtMarkdown {source} />
