@@ -69,7 +69,7 @@
     <Typeset body={meta.description} />
   </section>
   <section class="description-markdown">
-    <Source source={meta.description} />
+    <Source source={meta.description} internal external />
   </section>
   <h3>References</h3>
   <References references={meta.refs} />

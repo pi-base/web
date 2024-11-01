@@ -25,7 +25,7 @@
 </section>
 
 <section class="description-markdown">
-  <Source source={space.description} />
+  <Source source={space.description} internal external />
 </section>
 
 <Tabs {tabs} {tab} {rel} />
