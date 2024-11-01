@@ -30,7 +30,7 @@ export default function create({
           { name: 'name', weight: 0.7 },
           { name: 'aliases', weight: 0.7 },
         ],
-        threshold: 0.3
+        threshold: 0.3,
       }),
   )
 
