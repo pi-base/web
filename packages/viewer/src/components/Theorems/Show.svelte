@@ -22,7 +22,7 @@
 </section>
 
 <section class="description-markdown">
-  <Source source={theorem.description} />
+  <Source source={theorem.description} internal external />
 </section>
 
 <Tabs {tabs} {tab} {rel} />
