@@ -20,6 +20,15 @@
         on:keydown={() => onClick(i)}
       >
         <Typeset body={property.name} />
+        {#if property.aliases.length > 0}
+          <br />
+          <small class={i === selected ? 'active' : 'text-muted'}>
+            {#each property.aliases as alias, i}
+              {#if i > 0},{' '}{/if}
+              <Typeset body={alias} />
+            {/each}
+          </small>
+        {/if}
       </div>
     </li>
   {/each}
