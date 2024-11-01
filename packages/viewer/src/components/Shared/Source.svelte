@@ -16,11 +16,11 @@
 </button>
 {#if showMarkdown}
   {#if internal}
-  <h4>π-Base Markdown</h4>
-  <pre>{source}</pre>
-  <hr />
+    <h4>π-Base Markdown</h4>
+    <pre>{source}</pre>
+    <hr />
   {/if}
   {#if external}
-  <ExtMarkdown {source} />
+    <ExtMarkdown {source} />
   {/if}
 {/if}
