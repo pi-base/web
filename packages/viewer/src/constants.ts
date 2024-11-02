@@ -22,3 +22,5 @@ export const contributingUrl = `https://github.com/pi-base/data/wiki/Contributin
 export const helpUrl = `https://github.com/pi-base/data/wiki/`
 export const sentryIngest =
   'https://0fa430dd1dc347e2a82c413d8e3acb75@o397472.ingest.sentry.io/5251960'
+
+export const searchThreshold = 0.3
