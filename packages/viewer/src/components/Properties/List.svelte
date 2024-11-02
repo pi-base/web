@@ -2,6 +2,7 @@
   import { Filter, Link, Typeset } from '@/components/Shared'
   import type { Property } from '@/models'
   import type { Store } from '@/stores/list'
+  import Cell from './Cell.svelte'
 
   export let properties: Store<Property>
 </script>
@@ -22,7 +23,7 @@
         <Link.Property {property} content="id" />
       </td>
       <td>
-        <Typeset body={property.name} />
+        <Cell {property} />
       </td>
       <td>
         <Typeset body={property.description} truncated={true} />

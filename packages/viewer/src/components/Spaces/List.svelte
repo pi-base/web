@@ -2,6 +2,7 @@
   import { Filter, Link, Typeset } from '@/components/Shared'
   import type { Space } from '@/models'
   import type { Store } from '@/stores/list'
+  import Cell from './Cell.svelte'
 
   export let spaces: Store<Space>
 </script>
@@ -22,7 +23,7 @@
         <Link.Space {space} content="id" />
       </td>
       <td>
-        <Typeset body={space.name} />
+        <Cell {space} />
       </td>
       <td>
         <Typeset body={space.description} truncated={true} />

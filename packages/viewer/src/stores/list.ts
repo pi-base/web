@@ -1,6 +1,8 @@
 import Fuse from 'fuse.js'
 import { type Readable, type Writable, derived, writable } from 'svelte/store'
 
+import { searchThreshold } from '@/constants'
+
 import * as sort from './sort'
 
 type Options<T> = {
@@ -26,7 +28,7 @@ export default function list<T>(
   }))
   const index = derived(
     collection,
-    $collection => new Fuse($collection, { keys }),
+    $collection => new Fuse($collection, { keys, threshold: searchThreshold }),
   )
 
   const sorter = sort.store<keyof T>()
