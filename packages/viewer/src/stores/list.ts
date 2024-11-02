@@ -26,7 +26,7 @@ export default function list<T>(
   }))
   const index = derived(
     collection,
-    $collection => new Fuse($collection, { keys }),
+    $collection => new Fuse($collection, { keys, threshold: 0.3 }),
   )
 
   const sorter = sort.store<keyof T>()
