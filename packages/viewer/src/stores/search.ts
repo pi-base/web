@@ -31,6 +31,7 @@ export default function create({
         keys: [
           { name: 'name', weight: 0.7 },
           { name: 'aliases', weight: 0.7 },
+          { name: 'description', weight: 0.3 },
         ],
         threshold: searchThreshold,
       }),
