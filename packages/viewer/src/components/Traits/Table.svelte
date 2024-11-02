@@ -32,7 +32,7 @@
           <Link.Space {space}>S{space.id}</Link.Space>
         </td>
         <td>
-          <Cell {space}/>
+          <Cell {space} />
         </td>
         {#each properties as property (property.id)}
           <td>

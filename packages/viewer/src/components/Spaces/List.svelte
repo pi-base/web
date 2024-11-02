@@ -23,7 +23,7 @@
         <Link.Space {space} content="id" />
       </td>
       <td>
-        <Cell {space}/>
+        <Cell {space} />
       </td>
       <td>
         <Typeset body={space.description} truncated={true} />

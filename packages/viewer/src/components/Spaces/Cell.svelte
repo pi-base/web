@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Space } from '@/models'
-    import { Link } from '../Shared'
-    import Typeset from '../Shared/Typeset.svelte'
-    export let space: Space
+  import type { Space } from '@/models'
+  import { Link } from '../Shared'
+  import Typeset from '../Shared/Typeset.svelte'
+  export let space: Space
 </script>
 
 <div><Link.Space {space} /></div>

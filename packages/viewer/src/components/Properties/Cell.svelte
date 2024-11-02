@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Property } from '@/models'
-    import { Link } from '../Shared'
-    import Typeset from '../Shared/Typeset.svelte'
-    export let property: Property
+  import type { Property } from '@/models'
+  import { Link } from '../Shared'
+  import Typeset from '../Shared/Typeset.svelte'
+  export let property: Property
 </script>
 
 <div><Link.Property {property} /></div>
