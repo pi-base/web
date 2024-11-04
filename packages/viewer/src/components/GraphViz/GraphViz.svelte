@@ -5,11 +5,22 @@
   import * as graphviz from 'd3-graphviz'
   export let dot = 'digraph  {a -> b}'
   let graphDiv: HTMLElement
-  onMount(() => {
-    d3.select(graphDiv).graphviz().renderDot(dot)
-  })
+  const renderer = (dot: string) => {
+    return () => {
+      try {
+        d3.select(graphDiv).graphviz().renderDot(dot)
+      } catch {
+        d3.select(graphDiv)
+          .graphviz()
+          .renderDot(
+            `digraph {A[label="Invalid dot code",color=red,fontcolor=red]}`,
+          )
+      }
+    }
+  }
+  onMount(renderer(dot))
   $: if (graphDiv) {
-    d3.select(graphDiv).graphviz().renderDot(dot)
+    renderer(dot)()
   }
 </script>
 
