@@ -8,7 +8,9 @@
   onMount(() => {
     d3.select(graphDiv).graphviz().renderDot(dot)
   })
-  $: if (graphDiv) { d3.select(graphDiv).graphviz().renderDot(dot) }
+  $: if (graphDiv) {
+    d3.select(graphDiv).graphviz().renderDot(dot)
+  }
 </script>
 
 <div bind:this={graphDiv} style="text-align: center;" />
