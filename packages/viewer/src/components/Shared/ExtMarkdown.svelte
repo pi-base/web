@@ -1,5 +1,9 @@
 <script lang="ts">
   import { Ref } from '@pi-base/core'
+  import context from '@/context'
+  const { spaces } = context()
+  const { theorems } = context()
+  const { properties } = context()
 
   export let source: string
   const modify = (s: string) => {
@@ -19,12 +23,16 @@
     // Replace single curly braces
     s = s.replace(singlecurly, (_, type, id) => {
       // Perform replacement based on type and id
+
       if (type === 'S') {
-        return `[S${id}](https://topology.pi-base.org/spaces/S${id})`
+        const name = $spaces.find(`S${id}`)?.name
+        return `[S${id}: ${name}](https://topology.pi-base.org/spaces/S${id})`
       } else if (type === 'P') {
-        return `[P${id}](https://topology.pi-base.org/properties/P${id})`
+        const name = $properties.find(`T${id}`)?.name
+        return `[P${id}: ${name}](https://topology.pi-base.org/properties/P${id})`
       } else {
-        return `[T${id}](https://topology.pi-base.org/theorems/T${id})`
+        const name = $theorems.find(`T${id}`)?.name
+        return `[T${id}: ${name}](https://topology.pi-base.org/theorems/T${id})`
       }
     })
 
