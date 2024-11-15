@@ -47,7 +47,7 @@ export function references({ internal, external }: Partial<Linkers>) {
             hChildren: [
               {
                 type: 'text',
-                value: title,
+                value: `${kind}${id}: ${title}`,
               },
             ],
           },
