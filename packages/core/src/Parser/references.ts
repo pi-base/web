@@ -15,6 +15,7 @@ export function references({ internal, external }: Partial<Linkers>) {
     return function transformer(tree: Root) {
       visit(tree, 'internalLink', (node: InternalLinkNode) => {
         const { kind, id } = node
+        const shortId = `${kind}${id}`
 
         if (!internal) {
           Object.assign(node, {
@@ -38,16 +39,30 @@ export function references({ internal, external }: Partial<Linkers>) {
 
         Object.assign(node, {
           data: {
-            hName: 'a',
+            hName: 'span',
             hProperties: {
-              href,
               title,
-              className: 'internal-link',
             },
             hChildren: [
               {
-                type: 'text',
-                value: `${kind}${id}: ${title}`,
+                type: 'element',
+                tagName: 'a',
+                properties: {
+                  className: ['internal-link', 'badge', 'badge-secondary', 'mx-1'],
+                  href,
+                  title,
+                },
+                children: [{ type: 'text', value: shortId }],
+              },
+              {
+                type: 'element',
+                tagName: 'a',
+                properties: {
+                  className: ['internal-link'],
+                  href,
+                  title,
+                },
+                children: [{ type: 'text', value: title }],
               },
             ],
           },
