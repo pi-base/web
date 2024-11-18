@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Ref } from '@pi-base/core'
   import context from '@/context'
-  const { spaces, theorems, properties } = context()=
+  const { spaces, theorems, properties } = context()
 
   export let source: string
   const modify = (s: string) => {
