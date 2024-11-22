@@ -41,7 +41,7 @@
         const name = $spaces.find(`S${id}`)?.name
         return `[S${id}: ${name}](https://topology.pi-base.org/spaces/S${id})`
       } else if (type === 'P') {
-        const name = $properties.find(`T${id}`)?.name
+        const name = $properties.find(`P${id}`)?.name
         return `[P${id}: ${name}](https://topology.pi-base.org/properties/P${id})`
       } else {
         const name = $theorems.find(`T${id}`)?.name
