@@ -6,6 +6,8 @@ import { formula as F } from '@pi-base/core'
 import type { Collection, Formula, Property } from '@/models'
 import { read } from '@/util'
 
+import { searchThreshold } from '@/constants'
+
 export type State = {
   suggest: boolean
   suggestions: Property[]
@@ -32,8 +34,10 @@ export function create({
   const index = new Fuse<Property>([], {
     keys: [
       { name: 'name', weight: 1 },
-      { name: 'aliases', weight: 1 },
+      { name: 'aliases', weight: 0.7 },
+      { name: 'description', weight: 0.3 },
     ],
+    threshold: searchThreshold,
   })
 
   const initial = { suggest: false, suggestions: [], selected: undefined }

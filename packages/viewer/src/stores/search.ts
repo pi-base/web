@@ -29,7 +29,7 @@ export default function create({
     $spaces =>
       new Fuse($spaces.all, {
         keys: [
-          { name: 'name', weight: 0.7 },
+          { name: 'name', weight: 1 },
           { name: 'aliases', weight: 0.7 },
           { name: 'description', weight: 0.3 },
         ],
