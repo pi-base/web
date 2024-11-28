@@ -3,6 +3,8 @@ import { derived } from 'svelte/store'
 import { list } from '@/stores'
 import type { PageLoad } from './$types'
 
+import { searchWeights } from '@/constants'
+
 export const load: PageLoad = async function ({ parent, url }) {
   const { theorems } = await parent()
 
@@ -10,7 +12,7 @@ export const load: PageLoad = async function ({ parent, url }) {
     theorems: list(
       derived(theorems, ts => ts.all),
       {
-        weights: { name: 0.7, description: 0.3 },
+        weights: searchWeights,
       },
     ),
   }

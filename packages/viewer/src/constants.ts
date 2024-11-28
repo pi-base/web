@@ -23,4 +23,15 @@ export const helpUrl = `https://github.com/pi-base/data/wiki/`
 export const sentryIngest =
   'https://0fa430dd1dc347e2a82c413d8e3acb75@o397472.ingest.sentry.io/5251960'
 
+// Used for Fuse searches
+export const searchWeights = {
+  name: 1,
+  aliases: 0.7,
+  description: 0.3,
+}
+export const searchKeys = [
+  { name: 'name', weight: 1 },
+  { name: 'aliases', weight: 0.7 },
+  { name: 'description', weight: 0.3 },
+]
 export const searchThreshold = 0.3

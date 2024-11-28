@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js'
 import { type Readable, derived, writable } from 'svelte/store'
 
-import { searchThreshold } from '@/constants'
+import { searchThreshold, searchKeys } from '@/constants'
 
 import type { Collection, Formula, Property, Space, Traits } from '@/models'
 import { read } from '@/util'
@@ -28,11 +28,7 @@ export default function create({
     spaces,
     $spaces =>
       new Fuse($spaces.all, {
-        keys: [
-          { name: 'name', weight: 1 },
-          { name: 'aliases', weight: 0.7 },
-          { name: 'description', weight: 0.3 },
-        ],
+        keys: searchKeys,
         threshold: searchThreshold,
       }),
   )
