@@ -30,6 +30,7 @@ export const searchWeights = {
   description: 0.3,
 }
 export const searchKeys = [
+  { name: 'id', weight: 3, getFn: (s: any) => `${s.id}` },
   { name: 'name', weight: 1 },
   { name: 'aliases', weight: 0.7 },
   { name: 'description', weight: 0.3 },
