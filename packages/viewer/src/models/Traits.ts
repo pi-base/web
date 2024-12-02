@@ -53,6 +53,17 @@ export default class Traits {
     return this.traits.get(this.traitId(space.id, property.id))
   }
 
+  findName(sid: string, pid: string) {
+    const space = this.spaces.find(Number(sid))
+    const property = this.properties.find(Number(pid))
+    const trait = space && property && this.find(space, property)
+    const connector =
+      trait?.value === true ? 'is' : trait?.value === false ? 'is not' : '?'
+    return `${space ? space.name : 'S' + sid} ${connector} ${
+      property ? property.name : 'P' + pid
+    }`
+  }
+
   forProperty(property: Property): [Space, Trait][] {
     return this.collect(this.spaces, space => this.find(space, property))
   }

@@ -23,16 +23,10 @@
     // Reuses logic from https://github.com/pi-base/web/blob/0c340a5e5c400047acd21acc1ea7a3f75c06733d/packages/viewer/src/parser/internalLinks.ts
     // TODO: replace duplicate code
     s = s.replace(internal_trait, (_, sid, pid) => {
-      const space = $spaces.find(Number(sid))
-      const property = $properties.find(Number(pid))
-      const trait = space && property && $traits.find(space, property)
-      const connector =
-        trait?.value === true ? 'is' : trait?.value === false ? 'is not' : '?'
-      return `[S${sid}|P${pid}: ${
-        space ? space.name : 'S' + sid
-      } ${connector} ${
-        property ? property.name : 'P' + pid
-      }](https://topology.pi-base.org/spaces/S${sid}/properties/P${pid})`
+      return `[S${sid}|P${pid}: ${$traits.findName(
+        sid,
+        pid,
+      )}](https://topology.pi-base.org/spaces/S${sid}/properties/P${pid})`
     })
     s = s.replace(internal_SPT, (_, type, id) => {
       // Perform replacement based on type and id
