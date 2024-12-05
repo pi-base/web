@@ -3,11 +3,9 @@ import yaml from 'yaml-front-matter'
 
 import {
   type Bundle,
-  Id,
   ImplicationIndex,
   type Property,
   type Space,
-  type Trait,
   deduceTraits,
   formula as Formula,
   schemas,
@@ -26,7 +24,7 @@ function check(bundle: Bundle, space: Space): CheckResult {
   const implications = new ImplicationIndex(
     bundle.theorems.values()
       .map(({ uid, when, then }) => ({ id: uid, when, then }))
-      .toArray(),
+      .toArray()
   )
   const traits = new Map(
     bundle.traits.values()
@@ -37,7 +35,7 @@ function check(bundle: Bundle, space: Space): CheckResult {
 
   const result = deduceTraits(implications, traits)
   if (result.kind === 'contradiction') {
-    return { kind: 'contradiction', contradiction: result.contradiction }
+    return result
   }
   return { kind: 'bundle', bundle }
 }
