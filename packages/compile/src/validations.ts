@@ -2,14 +2,18 @@ import { z } from 'zod'
 import yaml from 'yaml-front-matter'
 
 import {
-  Bundle,
-  Property,
-  Trait,
+  type Bundle,
+  Id,
+  ImplicationIndex,
+  type Property,
+  type Space,
+  type Trait,
+  deduceTraits,
   formula as Formula,
   schemas,
 } from '@pi-base/core'
 
-import { File } from './fs.js'
+import type { File } from './fs.js'
 
 // FIXME
 type CheckResult =
@@ -18,7 +22,23 @@ type CheckResult =
       kind: 'contradiction'
       contradiction: { theorems: unknown[]; properties: unknown[] }
     }
-function check(bundle: Bundle, _: unknown): CheckResult {
+function check(bundle: Bundle, space: Space): CheckResult {
+  const implications = new ImplicationIndex(
+    bundle.theorems.values()
+      .map(({ uid, when, then }) => ({ id: uid, when, then }))
+      .toArray(),
+  )
+  const traits = new Map(
+    bundle.traits.values()
+      .filter(trait => trait.space === space.uid)
+      .map(trait => [trait.property, trait.value])
+      .toArray()
+  )
+
+  const result = deduceTraits(implications, traits)
+  if (result.kind === 'contradiction') {
+    return { kind: 'contradiction', contradiction: result.contradiction }
+  }
   return { kind: 'bundle', bundle }
 }
 
