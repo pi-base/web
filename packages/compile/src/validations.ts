@@ -30,7 +30,6 @@ function check(bundle: Bundle, space: Space): CheckResult {
     bundle.traits.values()
       .filter(trait => trait.space === space.uid)
       .map(trait => [trait.property, trait.value])
-      .toArray()
   )
 
   const result = deduceTraits(implications, traits)
