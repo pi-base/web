@@ -35,10 +35,13 @@
 </script>
 
 <div class="lead text-center my-5">
+  <div class="mb-3">
+    <button type="button" class="btn btn-outline-secondary btn-lg" on:click={()=>rollOpenQuestion()}>Reroll question</button>
+  </div>
   <div class="mb-3" style="font-size:2em">
     <Typeset body={bodyMain} />
   </div>
-  <div>
+  <div class="mb-3">
     <Typeset body={bodySecondary} />
   </div>
 </div>
