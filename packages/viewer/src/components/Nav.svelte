@@ -18,6 +18,7 @@
       <a class="nav-link" href="/spaces/all">Spaces</a>
       <a class="nav-link" href="/properties">Properties</a>
       <a class="nav-link" href="/theorems">Theorems</a>
+      <a class="nav-link" href="/questions">Questions</a>
     </div>
 
     <div class="navbar-nav">
