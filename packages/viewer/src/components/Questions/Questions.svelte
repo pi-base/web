@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Space, Property, Trait } from '@/types'
+  import Typeset from '../Shared/Typeset.svelte'
   import context from '@/context'
   const { spaces, traits } = context()
   let openQuestion:
@@ -29,6 +30,15 @@
     }
   }
   rollOpenQuestion()
+  $: bodyMain = `Does {S${openQuestion?.space.id}} satisfy {P${openQuestion?.property.id}}?`
+  $: bodySecondary = `Trait link: {S${openQuestion?.space.id}|P${openQuestion?.property.id}}`
 </script>
 
-Does {openQuestion?.space.name} satisfy {openQuestion?.property.name}?
+<div class="lead text-center my-5">
+  <div class="mb-3" style="font-size:2em">
+    <Typeset body={bodyMain} />
+  </div>
+  <div>
+    <Typeset body={bodySecondary} />
+  </div>
+</div>
