@@ -1,4 +1,4 @@
-<svg 
+<svg
   fill="currentColor"
   viewBox="0 0 640 512"
   height="1.5em"

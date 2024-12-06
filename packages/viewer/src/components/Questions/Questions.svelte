@@ -52,8 +52,6 @@
     <Typeset body={bodySecondary} />
   </div>
   <p>
-    <small>
-      Disclaimer: some questions cannot be answered in ZFC!
-    </small>
+    <small> Disclaimer: some questions cannot be answered in ZFC! </small>
   </p>
 </div>
