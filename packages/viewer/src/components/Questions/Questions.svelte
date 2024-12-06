@@ -35,7 +35,7 @@
   $: bodySecondary = `Trait link: {S${openQuestion?.space.id}|P${openQuestion?.property.id}}`
 </script>
 
-<div class="lead text-center my-3">
+<div class="text-center my-3">
   <div class="mb-3">
     <button
       type="button"
@@ -45,10 +45,15 @@
       <Dice /> Reroll question
     </button>
   </div>
-  <div class="mb-3" style="font-size:2em">
+  <div class="lead mb-3" style="font-size:2em">
     <Typeset body={bodyMain} />
   </div>
   <div class="mb-3">
     <Typeset body={bodySecondary} />
   </div>
+  <p>
+    <small>
+      Disclaimer: some questions cannot be answered in ZFC!
+    </small>
+  </p>
 </div>
