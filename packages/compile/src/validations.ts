@@ -22,14 +22,14 @@ type CheckResult =
     }
 function check(bundle: Bundle, space: Space): CheckResult {
   const implications = new ImplicationIndex(
-    bundle.theorems
-      .values()
-      .map(({ uid, when, then }) => ({ id: uid, when, then }))
-      .toArray(),
+    Array.from(bundle.theorems.values()).map(({ uid, when, then }) => ({
+      id: uid,
+      when,
+      then,
+    })),
   )
   const traits = new Map(
-    bundle.traits
-      .values()
+    Array.from(bundle.traits.values())
       .filter(trait => trait.space === space.uid)
       .map(trait => [trait.property, trait.value]),
   )
