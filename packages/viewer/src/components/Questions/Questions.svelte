@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Space, Property, Trait } from '@/types'
+  import { Dice } from '../Shared/Icons'
   import Typeset from '../Shared/Typeset.svelte'
   import context from '@/context'
   const { spaces, traits } = context()
@@ -34,9 +35,15 @@
   $: bodySecondary = `Trait link: {S${openQuestion?.space.id}|P${openQuestion?.property.id}}`
 </script>
 
-<div class="lead text-center my-5">
+<div class="lead text-center my-3">
   <div class="mb-3">
-    <button type="button" class="btn btn-outline-secondary btn-lg" on:click={()=>rollOpenQuestion()}>Reroll question</button>
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      on:click={() => rollOpenQuestion()}
+    >
+      <Dice /> Reroll question
+    </button>
   </div>
   <div class="mb-3" style="font-size:2em">
     <Typeset body={bodyMain} />
