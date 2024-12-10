@@ -116,7 +116,7 @@ export default class Prover<
 
     if (this.traits.has(property)) {
       if (this.traits.get(property) !== formula.value) {
-        return this.contradiction(theorem, [property])
+        return this.contradiction(theorem, [...support, property])
       } else {
         return
       }
@@ -182,7 +182,7 @@ export default class Prover<
     )
 
     if (result.falses.length === formula.subs.length) {
-      return this.contradiction(theorem, falseProps)
+      return this.contradiction(theorem, [...support, ...falseProps])
     } else if (result.unknown) {
       return this.force(theorem, result.unknown, [...support, ...falseProps])
     }
