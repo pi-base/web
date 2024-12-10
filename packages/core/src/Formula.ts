@@ -140,7 +140,7 @@ export function evaluate<T, V extends boolean | null = boolean>(
       if (f.value === null) {
         return !known
       }
-      if (!known) {
+      if (!known || traits.get(f.property) === null) {
         return undefined
       }
       return traits.get(f.property) === f.value
