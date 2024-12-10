@@ -95,7 +95,7 @@ describe('bundle', () => {
     ])
   })
 
-  it.skip('checks for counterexamples', () => {
+  it('checks for counterexamples', () => {
     const { errors } = bundle({
       properties: [F.property({ uid: 'P1' }), F.property({ uid: 'P2' })],
       spaces: [F.space({ uid: 'S1' })],
