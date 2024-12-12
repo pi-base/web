@@ -25,7 +25,7 @@ export default function list<T>(
   const keys = Object.entries(weights).map(([name, weight]) => ({
     name,
     weight: (weight as number) || 0,
-    getFn: searchKeys.find(o=>o.name === name)?.getFn
+    getFn: searchKeys.find(o => o.name === name)?.getFn,
   }))
   const index = derived(
     collection,
