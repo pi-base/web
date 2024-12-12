@@ -25,14 +25,15 @@ export const sentryIngest =
 
 // Used for Fuse searches
 export const searchWeights = {
+  id: 3,
   name: 1,
   aliases: 0.7,
   description: 0.3,
 }
 export const searchKeys = [
-  { name: 'id', weight: 3, getFn: (s: any) => `${s.id}` },
-  { name: 'name', weight: 1 },
-  { name: 'aliases', weight: 0.7 },
-  { name: 'description', weight: 0.3 },
+  { name: 'id', weight: searchWeights.id, getFn: (s: any) => `${s.id}` },
+  { name: 'name', weight: searchWeights.name },
+  { name: 'aliases', weight: searchWeights.aliases },
+  { name: 'description', weight: searchWeights.description },
 ]
 export const searchThreshold = 0.3

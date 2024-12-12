@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js'
 import { type Readable, type Writable, derived, writable } from 'svelte/store'
 
-import { searchThreshold } from '@/constants'
+import { searchKeys, searchThreshold } from '@/constants'
 
 import * as sort from './sort'
 
@@ -25,6 +25,7 @@ export default function list<T>(
   const keys = Object.entries(weights).map(([name, weight]) => ({
     name,
     weight: (weight as number) || 0,
+    getFn: searchKeys.find(o => o.name === name)?.getFn,
   }))
   const index = derived(
     collection,
