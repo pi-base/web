@@ -188,3 +188,31 @@ function loadProof(
 
   return result
 }
+
+export function checkIfRedundant(
+  space: Space,
+  property: Property,
+  thms: Theorems,
+  traits: Traits,
+): { redundant: boolean; theorems: Theorem[] } {
+  const assertedTraits = traits.forSpace(space).filter(([_, t]) => t.asserted)
+  const map = new Map(
+    assertedTraits.map(([p, t]) => {
+      if (p === property) {
+        return [p.id, !t.value]
+      } else {
+        return [p.id, t.value]
+      }
+    }),
+  )
+  const result = deduceTraits(indexTheorems(thms), map)
+  const redundant = result.kind === 'contradiction'
+  if (!redundant) {
+    const theorems: Theorem[] = []
+    return { redundant, theorems }
+  }
+  const theorems = result.contradiction.theorems
+    .map(t => thms.find(t))
+    .filter(t => t !== null)
+  return { redundant, theorems }
+}

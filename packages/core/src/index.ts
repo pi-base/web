@@ -14,6 +14,7 @@ export {
   disproveFormula,
   proveTheorem,
 } from './Logic/index.js'
+export { type Result } from './Logic/Prover.js'
 export { type Space, SpacePage } from './Space.js'
 export { type Theorem, SerializedTheorem } from './Theorem.js'
 export { type Trait } from './Trait.js'
