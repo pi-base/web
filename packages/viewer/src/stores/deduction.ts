@@ -18,6 +18,7 @@ import type {
   Traits,
 } from '@/models'
 import { eachTick, read, subscribeUntil } from '@/util'
+import type { Result } from '@pi-base/core'
 
 export type State = {
   checked: Set<number>
@@ -187,4 +188,23 @@ function loadProof(
   }
 
   return result
+}
+
+export function checkNegation(
+  theorems: Theorems,
+  space: Space,
+  traits: Traits,
+  property: Property,
+): Result<number, number> {
+  const assertedTraits = traits.forSpace(space).filter(([_, t]) => t.asserted)
+  const map = new Map(
+    assertedTraits.map(([p, t]) => {
+      if (p === property) {
+        return [p.id, !t.value]
+      } else {
+        return [p.id, t.value]
+      }
+    }),
+  )
+  return deduceTraits(indexTheorems(theorems), map)
 }

@@ -2,6 +2,8 @@
   import type { Space, Property, Trait, Proof as ProofT } from '@/models'
   import { Icons, Link, References, Source, Typeset } from '@/components/Shared'
   import Proof from './Proof.svelte'
+  import Redundancy from './Redundancy.svelte'
+  import { contributingUrl } from '@/constants'
   export let space: Space
   export let property: Property
   export let trait: Trait | undefined
@@ -36,7 +38,6 @@
         ))[]
       }
     | undefined
-  import { contributingUrl } from '@/constants'
 </script>
 
 <h3>Space S{space.id} | Property P{property.id}</h3>
@@ -71,6 +72,7 @@
   <section class="description-markdown">
     <Source source={meta.description} internal external />
   </section>
+  <Redundancy {space} {property} />
   <h3>References</h3>
   <References references={meta.refs} />
 {:else}
