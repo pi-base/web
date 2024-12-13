@@ -72,9 +72,9 @@
   <section class="description-markdown">
     <Source source={meta.description} internal external />
   </section>
-  <Redundancy {space} {property} />
   <h3>References</h3>
   <References references={meta.refs} />
+  <Redundancy {space} {property} />
 {:else}
   Please consider <a href={contributingUrl}>contributing</a> a proof or disproof
   of this property.
