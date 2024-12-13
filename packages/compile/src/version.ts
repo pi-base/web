@@ -1,5 +1,7 @@
-import { Version } from '@pi-base/core'
+import type { Version } from '@pi-base/core'
+import { execFile } from 'node:child_process'
 import { resolve } from 'node:path'
+import { promisify } from 'node:util'
 
 import { readFile } from './fs.js'
 
@@ -30,12 +32,12 @@ async function fromRepo(root = '.'): Promise<Version | undefined> {
 
   const head = refName(contents)
 
-  if (head) {
-    const sha = await readFile(resolve(root, '.git', 'refs', 'heads', head))
-    return {
-      ref: head,
-      sha: sha.trim(),
-    }
+  const { stdout } = await promisify(execFile)('git', ['rev-parse', 'HEAD'], {
+    cwd: root,
+  })
+  return {
+    ref: head,
+    sha: stdout.trim(),
   }
 }
 
