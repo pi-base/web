@@ -1,3 +1,8 @@
+*Looking for pi-Base's data? Head over to [`pi-base/data`](https://github.com/pi-base/data)
+or learn more on our [wiki](https://github.com/pi-base/data/wiki)!*
+
+---
+
 [![test](https://github.com/pi-base/web/actions/workflows/test.yaml/badge.svg)](https://github.com/pi-base/web/actions/workflows/test.yaml)
 [![e2e](https://github.com/pi-base/web/actions/workflows/e2e.yaml/badge.svg)](https://github.com/pi-base/web/actions/workflows/e2e.yaml)
 
