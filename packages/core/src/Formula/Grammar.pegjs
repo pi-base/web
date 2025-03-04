@@ -1,4 +1,4 @@
-Formula "formula" = And / Or / Atom
+Formula "formula" = And / Or / Wrapped / Atom
 
 _ "whitespace" = [ \t\n\r]*
 
@@ -8,6 +8,10 @@ And = _ "(" _ head:Formula tail:(_ Conjunction _ Formula)+ _ ")" _ {
 
 Or = _ "(" _ head:Formula tail:(_ Disjunction _ Formula)+ _ ")" _ {
   return { or: [head].concat(tail.map((item: unknown[]) => item[3])) }
+}
+
+Wrapped = _ "(" _ inner:Formula _ ")" _ {
+  return { inner }
 }
 
 Atom = mod:Modifier? _ prop:Property {

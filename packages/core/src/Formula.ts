@@ -180,28 +180,18 @@ export function evaluate<T, V extends boolean | null = boolean>(
 }
 
 export function parse(q?: string): Formula<string, null> | undefined {
-  if (!q) {
-    return
-  }
-
-  let parsed
   try {
-    // eslint-disable-next-line
-    parsed = _parse(q)
-  } catch {
-    if (q && q.startsWith('(')) {
-      return
-    } else {
-      return parse('(' + q + ')')
+    if (q) {
+      // eslint-disable-next-line
+      return fromJSON(_parse(q) as Serialized)
     }
-  }
-
-  return fromJSON(parsed as any)
+  } catch {}
 }
 
 type Serialized<X = never> =
   | { and: Serialized[] }
   | { or: Serialized[] }
+  | { inner: Serialized }
   | { property: string; value: boolean | X }
   | Record<string, boolean | X>
 
@@ -210,6 +200,8 @@ export function fromJSON(json: Serialized): Formula<string, null> {
     return and<string, null>(...json.and.map(fromJSON))
   } else if ('or' in json && typeof json.or === 'object') {
     return or<string, null>(...json.or.map(fromJSON))
+  } else if ('inner' in json && typeof json.inner === 'object') {
+    return fromJSON(json.inner)
   } else if ('property' in json && typeof json.property === 'string') {
     return atom<string, null>(json.property, json.value)
   }

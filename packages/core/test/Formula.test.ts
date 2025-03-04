@@ -11,7 +11,7 @@ import {
   or,
   map,
   mapProperty,
-  parse,
+  parse as parseRaw,
   properties,
   render,
   toJSON,
@@ -24,6 +24,8 @@ const compound = and<string>(
 )
 
 const render_ = (f: Formula<string>) => render(f, (p: string) => p)
+
+const parse = (q: string) => parseRaw(`(${q})`)
 
 describe('Formula', () => {
   describe('structure', () => {
@@ -187,8 +189,13 @@ describe('parsing', () => {
   })
 
   it('handles empty strings', () => {
-    expect(parse()).toBeUndefined()
     expect(parse('')).toBeUndefined()
+  })
+
+  it('resolves #226', () => {
+    expect(parse('(T1 | T2) & T3')).toEqual(
+      and(or(atom('T1'), atom('T2')), atom('T3')),
+    )
   })
 })
 
