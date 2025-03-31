@@ -1,11 +1,10 @@
 import * as Sentry from '@sentry/browser'
 import { build, sentryIngest } from '@/constants'
+import type { Environment } from './environment'
 
 type Meta = Record<string, unknown>
 
 export type Handler = (error: Error, meta?: Meta) => void
-
-export type Environment = 'production' | 'deploy-preview' | 'dev'
 
 export function log(): Handler {
   return function handle(error: Error, meta: Meta = {}) {
@@ -15,14 +14,14 @@ export function log(): Handler {
 
 export function sentry({
   dsn = sentryIngest,
-  environment,
+  env,
 }: {
   dsn?: string
-  environment: Environment
+  env: Environment
 }): Handler {
   const release = `pi-base@${build.version}`
 
-  Sentry.init({ dsn, release, environment })
+  Sentry.init({ dsn, release, environment: env })
 
   return function handle(error: Error, meta: Meta = {}) {
     Sentry.withScope(scope => {

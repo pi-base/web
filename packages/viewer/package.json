@@ -17,6 +17,8 @@
     "validate": "svelte-check"
   },
   "dependencies": {
+    "@honeycombio/opentelemetry-web": "^0.15.0",
+    "@opentelemetry/auto-instrumentations-web": "^0.46.0",
     "@pi-base/core": "workspace:*",
     "@sentry/browser": "^7.93.0",
     "bootstrap": "^4.6.2",
