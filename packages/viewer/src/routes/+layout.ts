@@ -3,19 +3,13 @@ import { defaultHost } from '@/constants'
 import * as errors from '@/errors'
 import { sync } from '@/gateway'
 import type { LayoutLoad } from './$types'
-import { browser } from '$app/environment'
-import { initializeHoneycomb } from '@/honeycomb'
-import { forHost } from '@/environment'
 
 export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
-  const env = forHost(host)
-  const dev = env === 'dev'
+  const dev = host.match(/(dev(elopment)?[.-]|localhost)/) !== null
 
-  if (browser) {
-    initializeHoneycomb({ env })
-  }
-
-  const errorHandler = dev ? errors.log() : errors.sentry({ env })
+  const errorHandler = dev
+    ? errors.log()
+    : errors.sentry({ environment: errorEnv(host) })
 
   const context = initialize({
     showDev: dev,
@@ -29,4 +23,16 @@ export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
   await context.loaded()
 
   return context
+}
+
+function errorEnv(host: string): errors.Environment {
+  if (['topology.pi-base.org', 'topology.pages.dev'].includes(host)) {
+    return 'production'
+  }
+
+  if (host.includes('pages.dev')) {
+    return 'deploy-preview'
+  }
+
+  return 'dev'
 }
