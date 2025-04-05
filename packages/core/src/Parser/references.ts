@@ -15,6 +15,15 @@ export function references({ internal, external }: Partial<Linkers>) {
     return function transformer(tree: Root) {
       visit(tree, 'internalLink', (node: InternalLinkNode) => {
         const { kind, id } = node
+        const shortId = `${kind}${id}`
+        let badgeType = 'badge-secondary'
+        if (kind === 'P') {
+          badgeType = 'badge-primary'
+        } else if (kind === 'S') {
+          badgeType = 'badge-success'
+        } else if (kind === 'T') {
+          badgeType = 'badge-warning'
+        }
 
         if (!internal) {
           Object.assign(node, {
@@ -38,16 +47,30 @@ export function references({ internal, external }: Partial<Linkers>) {
 
         Object.assign(node, {
           data: {
-            hName: 'a',
+            hName: 'span',
             hProperties: {
-              href,
               title,
-              className: 'internal-link',
             },
             hChildren: [
               {
-                type: 'text',
-                value: title,
+                type: 'element',
+                tagName: 'a',
+                properties: {
+                  className: ['internal-link'],
+                  href,
+                  title,
+                },
+                children: [{ type: 'text', value: title }],
+              },
+              {
+                type: 'element',
+                tagName: 'a',
+                properties: {
+                  className: ['internal-link', 'badge', badgeType, 'ml-1'],
+                  href,
+                  title,
+                },
+                children: [{ type: 'text', value: shortId }],
               },
             ],
           },
