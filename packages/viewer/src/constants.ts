@@ -1,7 +1,5 @@
-import { bundle } from '@pi-base/core'
-
 const {
-  VITE_BUNDLE_HOST = bundle.defaultHost,
+  VITE_BUNDLE_HOST = 'https://pub-65041ca69d744da88ade13abd31ad834.r2.dev', // TODO: push down to @pi-base/core?
   VITE_BUNDLE_SSE = 'false',
   VITE_BRANCH = 'unknown',
   VITE_MAIN_BRANCH = 'main',
