@@ -8,9 +8,9 @@ describe('Loading', () => {
 
     cy.title().should(
       'eq',
-      'T2: Countably compact ⇒ Weakly Countably Compact | π-Base',
+      'T2: Countably compact ⇒ Weakly countably compact | π-Base',
     )
-    cy.contains('Countably compact ⇒ Weakly Countably Compact')
+    cy.contains('Countably compact ⇒ Weakly countably compact')
   })
 })
 

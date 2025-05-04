@@ -29,9 +29,11 @@ The developer panel (at `/dev`) has some utilities that may be helpful for contr
 Other helpful development commands
 
 ```bash
-$ npm run test:watch # run tests on change
-$ npm run test:cov   # run tests with coverage report
-$ npm run cy:open    # starts cypress
+$ npm run test:watch   # run tests on change
+$ npm run test:cov     # run tests with coverage report
+$ npm run cy:open      # start cypress against the local dev server
+$ npm run cy:open:prev # … preview for the current branch (or env.BRANCH, if set)
+$ npm run cy:open:prod # … or production
 ```
 
 ## Deployment
