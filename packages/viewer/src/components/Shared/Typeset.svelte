@@ -28,11 +28,6 @@
       }
     }
 
-    /**
-     * We're adding "real" <a/> tags to the DOM, even for parsed internal
-     * links, but we really want to use the router to navigate. So we manually
-     * bind click handlers to trigger navigation.
-     */
     for (const link of container.getElementsByClassName('internal-link')) {
       /**
        * Unloading a DOM node should remove any bound listeners, but it's
@@ -48,10 +43,6 @@
       })
 
       link.setAttribute('_wired', 'true')
-      link.addEventListener('click', e => {
-        e.preventDefault()
-        goto((e.target as HTMLAnchorElement).href)
-      })
     }
   }
 
