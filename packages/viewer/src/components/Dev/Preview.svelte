@@ -12,10 +12,10 @@ $$x=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}.$$
 
 This is a list of internal links:
 
-* {S000123}
-* {P000123}
-* {T000123}
-* {S000123|P000123}
+* {S123}
+* {P123}
+* {T123}
+* {S123|P123}
 
 This is a list of external references:
 
@@ -72,10 +72,10 @@ This is a list of external references:
           <td>
             <code>{'{uid}'}</code>
             - e.g.
-            <code>{'{S000001}'}</code>
+            <code>{'{S1}'}</code>
             for space 1
             <br />
-            <code>{'{S000001|P000002}'}</code>
+            <code>{'{S1|P2}'}</code>
             for space 1's value of property 2
           </td>
         </tr>
