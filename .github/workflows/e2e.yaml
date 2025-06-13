@@ -7,7 +7,7 @@ jobs:
   # TODO: share setup action between test and e2e
   e2e:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node-20.10.0-chrome-118.0.5993.88-1-ff-118.0.2-edge-118.0.2088.46-1
+    container: cypress/browsers:node-22.16.0-chrome-137.0.7151.68-1-ff-139.0.1-edge-137.0.3296.62-1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -15,7 +15,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       # https://github.com/pnpm/action-setup
       - name: Install pnpm

@@ -71,6 +71,6 @@ describe('with a working remote', () => {
 
     cy.contains('compactifications').click()
 
-    cy.contains('One Point Compactification')
+    cy.contains('One point compactification')
   })
 })
