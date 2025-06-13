@@ -20,10 +20,13 @@ export type Result = {
 
 export function sync(
   fetch: (input: RequestInfo, init?: RequestInit) => Promise<Response>,
+  bundle?: pb.Bundle,
 ): Sync {
   return async (host: string, branch: string, etag?: string) => {
     trace({ event: 'remote_fetch_started', host, branch })
-    const result = await pb.bundle.fetch({ host, branch, etag, fetch })
+    const result = bundle
+      ? { bundle, etag: 'etag' }
+      : await pb.bundle.fetch({ host, branch, etag, fetch })
 
     if (result) {
       trace({ event: 'remote_fetch_complete', result })
