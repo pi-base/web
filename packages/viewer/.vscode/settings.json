@@ -1,0 +1,12 @@
+{
+  "vitest.enable": true,
+  "vitest.workspaceConfig": "./vite.config.js",
+  "vitest.commandLine": "npm run test:watch",
+  "testing.automaticallyOpenPeekView": "failureInVisibleDocument",
+  "testing.defaultGutterClickAction": "run",
+  "testing.followRunningTest": "true",
+  "testing.openTesting": "neverOpen",
+  "files.watcherExclude": {
+    "**/coverage/**": true
+  }
+}

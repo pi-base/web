@@ -1,0 +1,27 @@
+[
+  {
+    "key": "cmd+shift+t",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Run Tests"
+  },
+  {
+    "key": "cmd+shift+w",
+    "command": "workbench.action.tasks.runTask", 
+    "args": "Watch Tests"
+  },
+  {
+    "key": "cmd+shift+c",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Test with Coverage"
+  },
+  {
+    "key": "cmd+shift+v",
+    "command": "workbench.action.tasks.runTask",
+    "args": "View Coverage Report"
+  },
+  {
+    "key": "cmd+shift+y",
+    "command": "workbench.action.tasks.runTask",
+    "args": "Open Cypress"
+  }
+]

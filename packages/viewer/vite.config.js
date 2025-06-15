@@ -17,6 +17,9 @@ export default defineConfig({
   test: {
     include: ['src/**/*.{test,spec}.{js,ts}'],
     coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html', 'lcov', 'clover'],
+      reportsDirectory: './coverage',
       lines: 82.99,
       branches: 85.71,
       statements: 82.99,
