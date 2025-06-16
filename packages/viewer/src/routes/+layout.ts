@@ -4,7 +4,9 @@ import * as errors from '@/errors'
 import { sync } from '@/gateway'
 import type { LayoutLoad } from './$types'
 
-export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
+const bundleHost = import.meta.env.VITE_BUNDLE_HOST
+
+export const load: LayoutLoad = async ({ data, fetch, url: { host } }) => {
   const dev = host.match(/(dev(elopment)?[.-]|localhost)/) !== null
 
   const errorHandler = dev
@@ -14,7 +16,7 @@ export const load: LayoutLoad = async ({ fetch, url: { host } }) => {
   const context = initialize({
     showDev: dev,
     errorHandler,
-    gateway: sync(fetch),
+    gateway: sync(fetch, data ? (data as any) : undefined),
     source: {
       host: defaultHost,
     },

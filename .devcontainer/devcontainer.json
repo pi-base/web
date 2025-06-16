@@ -1,5 +1,5 @@
 {
-  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:20",
+  "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:22",
   "features": {
     "github-cli": "latest"
   },
@@ -28,9 +28,7 @@
   "postCreateCommand": "git clone https://github.com/pi-base/data.git",
   "customizations": {
     "codespaces": {
-      "openFiles": [
-        "doc/codespace/welcome.md"
-      ],
+      "openFiles": ["doc/codespace/welcome.md"],
       "repositories": {
         "pi-base/data": {
           "permissions": {
@@ -40,10 +38,7 @@
       }
     },
     "vscode": {
-      "extensions": [
-        "esbenp.prettier-vscode",
-        "svelte.svelte-vscode"
-      ],
+      "extensions": ["esbenp.prettier-vscode", "svelte.svelte-vscode"],
       "settings": {
         "editor.formatOnSave": true,
         "[typescript]": {

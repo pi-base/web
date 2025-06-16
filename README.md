@@ -71,4 +71,4 @@ Various guides are available in the [`doc`](./doc/) directory.
 
 # Copyright and License
 
-Copyright 2014-2024 James Dabbs, [licensed for free public use](./LICENSE.md).
+Copyright 2014-2025 James Dabbs, [licensed for free public use](./LICENSE.md).
