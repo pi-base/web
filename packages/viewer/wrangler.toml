@@ -1,0 +1,7 @@
+name = "topology"
+pages_build_output_dir = "./packages/viewer/.svelte-kit/cloudflare"
+compatibility_date = "2024-01-01"
+
+[[analytics_engine_datasets]]
+binding = "ANALYTICS_ENGINE"
+dataset = "pi_base_worker_analytics"
