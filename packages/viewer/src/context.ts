@@ -2,7 +2,7 @@ export type { Context } from './context/types'
 
 import { formula as F } from '@pi-base/core'
 import { getContext, setContext } from 'svelte'
-import { derived, get, type Readable } from 'svelte/store'
+import { derived, type Readable } from 'svelte/store'
 
 import type { Context } from '@/context/types'
 import { trace } from '@/debug'

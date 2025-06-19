@@ -74,14 +74,14 @@ export default class Traits {
   lookup({
     spaceId,
     propertyId,
-    spaces,
-    properties,
+    spaces = this.spaces,
+    properties = this.properties,
     theorems,
   }: {
     spaceId: string
     propertyId: string
-    spaces: Collection<Space>
-    properties: Collection<Property>
+    spaces?: Collection<Space>
+    properties?: Collection<Property>
     theorems: Theorems
   }) {
     const space = spaces.find(spaceId)
