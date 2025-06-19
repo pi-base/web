@@ -26,11 +26,12 @@ export type State = {
     properties: number[]
     theorems: number[]
   }
+  checking?: string
 }
 
 export type Store = Readable<State> & {
   checked(spaceId: number): Promise<void>
-  run(reset?: boolean): void
+  run(reset?: boolean): Promise<void>
   prove(theorem: Theorem): Theorem[] | 'tautology' | null
 }
 
@@ -87,7 +88,7 @@ export function create(
     setTimeout(run, 0)
   })
 
-  function run(reset = false) {
+  function run(reset = false): Promise<void> {
     if (reset) {
       store.set(initialize(read(spaces)))
     }
@@ -108,7 +109,7 @@ export function create(
       }
     })
 
-    eachTick(unchecked, (s: Space, halt: () => void) => {
+    return eachTick(unchecked, (s: Space, halt: () => void) => {
       store.update(state => ({ ...state, checking: s.name }))
 
       const map = new Map(

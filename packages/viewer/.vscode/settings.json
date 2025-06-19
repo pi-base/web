@@ -8,5 +8,6 @@
   "testing.openTesting": "neverOpen",
   "files.watcherExclude": {
     "**/coverage/**": true
-  }
+  },
+  "testing.automaticallyOpenTestResults": "neverOpen"
 }

@@ -6,7 +6,7 @@ import type * as Gateway from './gateway'
 import type { Local } from './repositories'
 import { renderer } from './parser'
 import { type Prestore } from './stores'
-import { property, space } from './__test__/factories'
+import { property, space, theorem } from './__test__/factories'
 import { get } from 'svelte/store'
 import type { Result } from './gateway'
 
@@ -131,13 +131,11 @@ describe(initialize, () => {
           },
         ],
         theorems: [
-          {
+          theorem({
             id: 1,
             when: { kind: 'atom', property: 1, value: true },
             then: { kind: 'atom', property: 2, value: true },
-            description: '',
-            refs: [],
-          },
+          }),
         ],
       },
     })
