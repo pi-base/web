@@ -183,7 +183,7 @@ export function parse(q?: string): Formula<string, null> | undefined {
   try {
     if (q) {
       // eslint-disable-next-line
-      return fromJSON(_parse(q) as Serialized)
+      return fromJSON(_parse(`(${q})`) as Serialized)
     }
   } catch {}
 }

@@ -104,7 +104,7 @@ function resolve(
   index: Fuse<Property>,
   str: string,
 ): Formula<Property, null> | undefined {
-  const parsed = F.parse(`(${str})`)
+  const parsed = F.parse(str)
   if (!parsed) {
     return
   }
