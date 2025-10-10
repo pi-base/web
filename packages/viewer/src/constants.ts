@@ -16,7 +16,7 @@ export const build = {
 
 export const bundleSse = VITE_BUNDLE_SSE === 'true'
 
-export const contributingUrl = `https://github.com/orgs/pi-base/discussions/880`
+export const contributingUrl = `https://code4math.zulipchat.com/#narrow/channel/416467-pi-base/topic/Welcome.20new.20and.20potential.20contributors!.20.F0.9F.91.8B/with/544214230`
 export const helpUrl = `https://github.com/pi-base/data/wiki/`
 export const sentryIngest =
   'https://0fa430dd1dc347e2a82c413d8e3acb75@o397472.ingest.sentry.io/5251960'
