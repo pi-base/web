@@ -1,5 +1,5 @@
-export type { Formula } from '@pi-base/core'
-import type { Formula, Ref as R } from '@pi-base/core'
+export type { Formula, TruthValue } from '@pi-base/core'
+import type { Formula, Ref as R, TruthValue } from '@pi-base/core'
 
 export type Ref = R.Ref
 
@@ -23,7 +23,7 @@ export type AssertedTrait = {
   asserted: true
   space: number
   property: number
-  value: boolean
+  value: TruthValue
   description: string
   refs: Ref[]
 }
@@ -32,7 +32,7 @@ export type DeducedTrait = {
   asserted: false
   space: number
   property: number
-  value: boolean
+  value: TruthValue
   proof: {
     properties: number[]
     theorems: number[]

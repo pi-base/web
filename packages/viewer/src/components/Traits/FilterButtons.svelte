@@ -47,6 +47,17 @@
   <Icons.X />
 </button>
 <button
+  class="btn {filterMode === 'undecidable'
+    ? 'btn-secondary'
+    : 'btn-outline-secondary'}"
+  type="button"
+  on:click={() => {
+    filterMode = 'undecidable'
+  }}
+>
+  —
+</button>
+<button
   class="btn {filterMode === 'asserted'
     ? 'btn-secondary'
     : 'btn-outline-secondary'}"

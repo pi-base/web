@@ -262,7 +262,7 @@ export function trait(input: File) {
       uid: String(uid).trim(),
       space: String(space).trim(),
       property: String(property).trim(),
-      value: Boolean(value),
+      value: value === 'undecidable' ? 'undecidable' : Boolean(value),
       counterexamples_id,
       refs,
       description: String(description).trim(),
@@ -275,7 +275,7 @@ export function trait(input: File) {
     required(trait, 'space', error)
     required(trait, 'property', error)
     required(trait, 'value', error)
-    required(trait, 'description', error)
+    // description is optional for traits
     noExtras(rest, error)
 
     return trait

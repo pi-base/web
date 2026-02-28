@@ -5,7 +5,14 @@ import { theoremSchema } from './Theorem.js'
 import { traitSchema } from './Trait.js'
 
 export { type Bundle } from './Bundle.js'
-export { type Formula, type And, type Atom, type Or } from './Formula.js'
+export {
+  type Formula,
+  type And,
+  type Atom,
+  type Or,
+  type TruthValue,
+  hasUndecidable,
+} from './Formula.js'
 export { parser } from './Parser.js'
 export { type Property, PropertyPage } from './Property.js'
 export {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let value: boolean | undefined
+  export let value: boolean | 'undecidable' | undefined
   export let icon: 'check' | 'user' = 'check'
 
   import { Icons } from '../Shared'
@@ -10,6 +10,8 @@
     <Icons.User />
   {:else if value === false}
     <Icons.Robot />
+  {:else if value === 'undecidable'}
+    <span title="Undecidable">—</span>
   {:else}<!-- value === undefined -->
     <Icons.Question />
   {/if}
@@ -18,6 +20,8 @@
     <Icons.Check />
   {:else if value === false}
     <Icons.X />
+  {:else if value === 'undecidable'}
+    <span title="Undecidable">—</span>
   {:else}<!-- value === undefined -->
     <Icons.Question />
   {/if}

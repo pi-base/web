@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Id as BaseId } from './Id.js'
+import { type TruthValue } from './Formula.js'
 import { Record, recordSchema } from './Record.js'
 
 export const proofSchema = <Id>(id: z.ZodSchema<Id>): z.ZodSchema<Proof<Id>> =>
@@ -18,7 +19,7 @@ export const traitSchema = <Id>(id: z.ZodSchema<Id>): z.ZodSchema<Trait<Id>> =>
     z.object({
       space: id,
       property: id,
-      value: z.boolean(),
+      value: z.union([z.boolean(), z.literal('undecidable')]),
       proof: proofSchema(id).optional(),
     }),
     recordSchema,
@@ -27,6 +28,6 @@ export const traitSchema = <Id>(id: z.ZodSchema<Id>): z.ZodSchema<Trait<Id>> =>
 export type Trait<Id = BaseId> = Record & {
   space: Id
   property: Id
-  value: boolean
+  value: TruthValue
   proof?: Proof<Id>
 }

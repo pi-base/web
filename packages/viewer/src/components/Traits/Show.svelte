@@ -51,10 +51,15 @@
     <Icons.Question />
   {/if}
   {#if trait}
-    <Link.Space {space} />
-    is
-    {trait.value ? '' : 'not'}
-    <Link.Property {property} />
+    {#if trait.value === 'undecidable'}
+      "<Link.Space {space} />
+      is <Link.Property {property} />" is logically independent
+    {:else}
+      <Link.Space {space} />
+      is
+      {trait.value ? '' : 'not'}
+      <Link.Property {property} />
+    {/if}
   {:else}
     We have insufficient information to determine whether or not
     <Link.Space {space} />

@@ -17,17 +17,25 @@ export function internal(
           const space = spaces.find(Number(sid))
           const property = properties.find(Number(pid))
           const trait = space && property && traits.find(space, property)
-          const connector =
-            trait?.value === true
-              ? 'is'
-              : trait?.value === false
-              ? 'is not'
-              : '?'
+          let title = undefined
+          if (trait?.value === 'undecidable') {
+            title = `"${space ? space.name : 'S' + sid} is ${
+              property ? property.name : 'P' + pid
+            }" is logically independent`
+          } else {
+            const connector =
+              trait?.value === true
+                ? 'is'
+                : trait?.value === false
+                ? 'is not'
+                : '?'
+            title = `${space ? space.name : 'S' + sid} ${connector} ${
+              property ? property.name : 'P' + pid
+            }`
+          }
           return {
             href: `/spaces/S${sid}/properties/P${pid}`,
-            title: `${space ? space.name : 'S' + sid} ${connector} ${
-              property ? property.name : 'P' + pid
-            }`,
+            title,
           }
         }
 

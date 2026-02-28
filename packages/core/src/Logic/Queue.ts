@@ -18,6 +18,12 @@ export default class Queue<
     this.index.withProperty(property).forEach(i => this.queue.add(i))
   }
 
+  addAll(theorems: Theorem[]): void {
+    for (const t of theorems) {
+      this.queue.add(t)
+    }
+  }
+
   shift(): Theorem | undefined {
     const result = this.queue.values().next()
     if (result.done) {

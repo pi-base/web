@@ -16,7 +16,14 @@
   const filter = writable('')
   urlSearchParam('filter', filter)
 
-  let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
+  let filterMode:
+    | 'all'
+    | 'known'
+    | 'asserted'
+    | 'true'
+    | 'false'
+    | 'undecidable'
+    | 'missing'
   filterMode = 'known'
 
   $: all = related($traits)
@@ -34,9 +41,11 @@
       case 'asserted':
         return t?.asserted
       case 'true':
-        return t?.value
+        return t?.value === true
       case 'false':
-        return t && !t.value
+        return t?.value === false
+      case 'undecidable':
+        return t?.value === 'undecidable'
       case 'missing':
         return !t
     }

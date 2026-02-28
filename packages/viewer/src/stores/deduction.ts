@@ -199,7 +199,7 @@ export function checkIfRedundant(
   const assertedTraits = traits.forSpace(space).filter(([_, t]) => t.asserted)
   const map = new Map(
     assertedTraits.map(([p, t]) => {
-      if (p === property) {
+      if (p === property && t.value !== 'undecidable') {
         return [p.id, !t.value]
       } else {
         return [p.id, t.value]

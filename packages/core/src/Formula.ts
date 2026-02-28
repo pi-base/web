@@ -3,8 +3,10 @@ import { parse as _parse } from './Formula/Grammar.js'
 
 import { union } from './Util.js'
 
+export type TruthValue = boolean | 'undecidable'
+
 type F<P> =
-  | { kind: 'atom'; property: P; value: boolean }
+  | { kind: 'atom'; property: P; value: TruthValue }
   | { kind: 'or'; subs: F<P>[] }
   | { kind: 'and'; subs: F<P>[] }
 
@@ -12,7 +14,7 @@ function atomSchema<P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> {
   return z.object({
     kind: z.literal('atom'),
     property: p,
-    value: z.boolean(),
+    value: z.union([z.boolean(), z.literal('undecidable')]),
   }) as any
 }
 
@@ -34,7 +36,7 @@ export const formulaSchema = <P>(p: z.ZodSchema<P>): z.ZodSchema<F<P>> =>
 export interface Atom<P, X = never> {
   kind: 'atom'
   property: P
-  value: boolean | X
+  value: TruthValue | X
 }
 
 export interface And<P, X = never> {
@@ -59,7 +61,7 @@ export function or<P, X = never>(...subs: Formula<P, X>[]): Or<P, X> {
 
 export function atom<P, X = never>(
   property: P,
-  value: boolean | X = true,
+  value: TruthValue | X = true,
 ): Atom<P, X> {
   return { kind: 'atom', property, value }
 }
@@ -78,6 +80,7 @@ export function render<T>(f: Formula<T>, term: (t: T) => string): string {
     case 'atom':
       // eslint-disable-next-line no-case-declarations
       const name = term(f.property)
+      if (f.value === 'undecidable') return '⊬' + name
       return f.value ? name : '¬' + name
     case 'and':
       return '(' + f.subs.map(sf => render(sf, term)).join(' ∧ ') + ')'
@@ -86,9 +89,21 @@ export function render<T>(f: Formula<T>, term: (t: T) => string): string {
   }
 }
 
+export function hasUndecidable<P, X = never>(f: Formula<P, X>): boolean {
+  switch (f.kind) {
+    case 'atom':
+      return f.value === 'undecidable'
+    default:
+      return f.subs.some(hasUndecidable)
+  }
+}
+
 export function negate<P>(formula: Formula<P>): Formula<P> {
   switch (formula.kind) {
     case 'atom':
+      if (formula.value === 'undecidable') {
+        throw new Error('Cannot negate an undecidable atom')
+      }
       return atom(formula.property, !formula.value)
     case 'and':
       return or(...formula.subs.map(negate))
@@ -130,7 +145,7 @@ export function compact<P, X>(
 
 export function evaluate<T, V extends boolean | null = boolean>(
   f: Formula<T, V>,
-  traits: Map<T, boolean>,
+  traits: Map<T, TruthValue>,
 ): boolean | undefined {
   let result: boolean | undefined
 
@@ -192,8 +207,8 @@ type Serialized<X = never> =
   | { and: Serialized[] }
   | { or: Serialized[] }
   | { inner: Serialized }
-  | { property: string; value: boolean | X }
-  | Record<string, boolean | X>
+  | { property: string; value: TruthValue | X }
+  | Record<string, TruthValue | X>
 
 export function fromJSON(json: Serialized): Formula<string, null> {
   if ('and' in json && typeof json.and === 'object') {
@@ -211,7 +226,7 @@ export function fromJSON(json: Serialized): Formula<string, null> {
     throw `cannot cast object with ${entries.length} keys to atom`
   }
 
-  if (typeof entries[0][1] !== 'boolean') {
+  if (typeof entries[0][1] !== 'boolean' && entries[0][1] !== 'undecidable') {
     throw `cannot cast object with non-boolean value`
   }
 

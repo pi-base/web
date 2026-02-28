@@ -3,12 +3,13 @@
   import { Link, References, Tabs, Source, Typeset } from '../Shared'
   import Name from './Name.svelte'
   import Converse from './Converse.svelte'
+  import hasUndecidable from '@pibase/core' // FIXME not sure where to import this from but I doubt core is best
 
   export let theorem: Theorem
   export let tab: 'converse' | 'references'
   export let rel: string | undefined = undefined
 
-  const tabs = ['converse', 'references'] as const
+  const tabs: readonly ['converse', 'references'] | readonly ['references'] = (hasUndecidable(theorem.when) || hasUndecidable(theorem.then)) ? ['references'] : ['converse', 'references']
 </script>
 
 <h3>Theorem <Link.Theorem {theorem} content="idLong" /></h3>

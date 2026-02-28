@@ -1,10 +1,11 @@
+import { type TruthValue } from '../Formula.js'
 import { Id } from './Types.js'
 
 type Evidence<TheoremId = Id, PropertyId = Id> = [TheoremId, PropertyId[]]
 
 export type Derivation<TheoremId = Id, PropertyId = Id> = {
   property: PropertyId
-  value: boolean
+  value: TruthValue
   proof: Proof<TheoremId, PropertyId>
 }
 
@@ -16,17 +17,17 @@ export type Proof<TheoremId = Id, PropertyId = Id> = {
 export class Derivations<TheoremId = Id, PropertyId = Id> {
   private evidence: Map<PropertyId, Evidence<TheoremId, PropertyId>>
   private given: Set<PropertyId>
-  private traits: Map<PropertyId, boolean>
+  private traits: Map<PropertyId, TruthValue>
 
   constructor(assumptions: PropertyId[] = []) {
     this.given = new Set(assumptions)
     this.evidence = new Map<PropertyId, Evidence<TheoremId, PropertyId>>()
-    this.traits = new Map<PropertyId, boolean>()
+    this.traits = new Map<PropertyId, TruthValue>()
   }
 
   addEvidence(
     property: PropertyId,
-    value: boolean,
+    value: TruthValue,
     theorem: TheoremId,
     support: PropertyId[],
   ): void {
@@ -34,10 +35,14 @@ export class Derivations<TheoremId = Id, PropertyId = Id> {
     this.traits.set(property, value)
   }
 
+  overrideGiven(property: PropertyId): void {
+    this.given.delete(property)
+  }
+
   all(): Derivation<TheoremId, PropertyId>[] {
     const result: Derivation<TheoremId, PropertyId>[] = []
 
-    this.traits.forEach((value: boolean, property: PropertyId) => {
+    this.traits.forEach((value: TruthValue, property: PropertyId) => {
       const proof = this.proof(property)
       if (!proof || proof === 'given') {
         return

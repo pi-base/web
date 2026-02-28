@@ -141,6 +141,9 @@ export default class Traits {
     { when, then }: { when: Formula<Property>; then: Formula<Property> },
     space: Space,
   ): boolean {
+    if (F.hasUndecidable(when) || F.hasUndecidable(then)) {
+      return false
+    }
     return (
       this.evaluate({
         formula: F.and(when, F.negate(then)),
