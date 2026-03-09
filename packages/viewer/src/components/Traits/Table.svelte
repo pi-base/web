@@ -3,8 +3,7 @@
   import type { Property, Space } from '@/models'
 
   import { Link } from '../Shared'
-  import Value from './Value.svelte'
-  import Typeset from '../Shared/Typeset.svelte'
+  import ValueIcon from './ValueIcon.svelte'
   import Cell from '../Spaces/Cell.svelte'
 
   export let properties: Property[]
@@ -37,7 +36,7 @@
         {#each properties as property (property.id)}
           <td>
             <Link.Trait {space} {property}>
-              <Value value={$traits.find(space, property)?.value} />
+              <ValueIcon value={$traits.find(space, property)?.value} />
             </Link.Trait>
           </td>
         {/each}
