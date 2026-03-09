@@ -6,7 +6,13 @@
   export let space: Space
   export let property: Property
   const { theorems, traits } = context()
-  $: result = checkIfRedundant(space, property, $theorems, $traits)
+  let result = checkIfRedundant(space, property, $theorems, $traits)
+  $: emphasizedProperties = new Set(
+    $traits
+      .forSpace(space)
+      .filter(([_, t]) => t.asserted)
+      .map(([p, _]) => p),
+  )
 </script>
 
 {#if result.redundant}
@@ -15,5 +21,5 @@
     This asserted property can be deduced from the other asserted traits for this
     space, due to the following theorems.
   </div>
-  <Table theorems={result.theorems} />
+  <Table theorems={result.theorems} {emphasizedProperties} />
 {/if}
