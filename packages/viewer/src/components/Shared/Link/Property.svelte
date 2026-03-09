@@ -4,9 +4,10 @@
 
   export let property: { id: number; name: string }
   export let content: 'id' | 'idLong' | 'name' = 'name'
+  export let emphasized: boolean = false
 </script>
 
-<a href="/properties/{Id.format('P', property.id)}">
+<a href="/properties/{Id.format('P', property.id)}" class:emphasized>
   <slot>
     {#if content === 'name'}
       <Typeset body={property.name} />
@@ -17,3 +18,10 @@
     {/if}
   </slot>
 </a>
+
+<style>
+  .emphasized {
+    font-weight: bold;
+    color: #b032ff;
+  }
+</style>

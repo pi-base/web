@@ -1,8 +1,9 @@
 <script lang="ts">
-  import type { Theorem } from '@/models'
+  import type { Theorem, Property } from '@/models'
   import { Formula, Link } from '../Shared'
 
   export let theorems: Theorem[] = []
+  export let emphasizedProperties: Set<Property> = new Set()
 </script>
 
 <table class="table">
@@ -20,10 +21,10 @@
           <Link.Theorem {theorem} />
         </td>
         <td>
-          <Formula value={theorem.when} />
+          <Formula value={theorem.when} {emphasizedProperties} />
         </td>
         <td>
-          <Formula value={theorem.then} />
+          <Formula value={theorem.then} {emphasizedProperties} />
         </td>
       </tr>
     {/each}

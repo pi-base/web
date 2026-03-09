@@ -2,6 +2,7 @@
   import { Formula } from '@/components/Shared'
   import { Table as Theorems } from '@/components/Theorems'
   import type { Formula as F, Property, Theorem } from '@/models'
+  import { formula as coreFormula } from '@pi-base/core'
 
   export let formula: F<Property>
   export let proof: Theorem[] | 'tautology'
@@ -14,5 +15,8 @@
   <Formula value={formula} />
   is impossible by
 
-  <Theorems theorems={proof} />
+  <Theorems
+    theorems={proof}
+    emphasizedProperties={coreFormula.properties(formula)}
+  />
 {/if}
