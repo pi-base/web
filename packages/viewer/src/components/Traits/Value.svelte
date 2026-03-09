@@ -1,13 +1,13 @@
 <script lang="ts">
   export let value: boolean | undefined
   export let icon: 'check' | 'user' = 'check'
-
+  export let redundant: boolean = false
   import { Icons } from '../Shared'
 </script>
 
 {#if icon === 'user'}
   {#if value === true}
-    <Icons.User />
+    <Icons.User />{#if redundant}*{/if}
   {:else if value === false}
     <Icons.Robot />
   {:else}<!-- value === undefined -->
