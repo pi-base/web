@@ -7,11 +7,12 @@
   import FilterButtons from './FilterButtons.svelte'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
+  import { checkIfRedundant } from '@/stores/deduction'
 
   export let related: (traits: Traits) => [Space, Property, Trait | undefined][]
   export let mode: 'spaces' | 'properties'
 
-  const { traits } = context()
+  const { theorems, traits } = context()
 
   const filter = writable('')
   urlSearchParam('filter', filter)
@@ -103,7 +104,12 @@
         </td>
         <td style="text-align:center">
           <Link.Trait {space} {property}>
-            <Value value={trait?.asserted} icon="user" />
+            <Value
+              value={trait?.asserted}
+              redundant={checkIfRedundant(space, property, $theorems, $traits)
+                .redundant}
+              icon="user"
+            />
           </Link.Trait>
         </td>
       </tr>
