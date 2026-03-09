@@ -1,7 +1,7 @@
 <script lang="ts">
   import Fuse from 'fuse.js'
   import { Icons, Link } from '../Shared'
-  import { ValueIcon } from '../Traits'
+  import { ValueIcon, SourceIcon } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
   import FilterButtons from './FilterButtons.svelte'
@@ -104,7 +104,7 @@
         </td>
         <td style="text-align:center">
           <Link.Trait {space} {property}>
-            <ValueIcon
+            <SourceIcon
               value={trait?.asserted}
               redundant={checkIfRedundant(space, property, $theorems, $traits)
                 .redundant}
