@@ -7,7 +7,11 @@
   export let emphasized: boolean = false
 </script>
 
-<a href="/properties/{Id.format('P', property.id)}" class:emphasized>
+<a
+  href="/properties/{Id.format('P', property.id)}"
+  class="property-link"
+  class:emphasized
+>
   <slot>
     {#if content === 'name'}
       <Typeset body={property.name} />
@@ -20,17 +24,24 @@
 </a>
 
 <style>
+  .property-link {
+    text-decoration: none;
+    border: 1px solid #ffffff;
+    padding: 0px 5px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  .property-link:hover {
+    background-color: #f6fafe;
+    border-color: #e0edfb;
+  }
   .emphasized {
-    font-weight: bold;
     border: 1px solid #a8d2ff;
     padding: 0px 5px;
-    display: inline-block;
-    border-radius: 5px;
     background-color: #f1f8ff;
   }
   .emphasized:hover {
     background-color: #f6fafe;
     border-color: #e0edfb;
-    text-decoration: none;
   }
 </style>
