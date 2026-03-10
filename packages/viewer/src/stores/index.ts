@@ -42,10 +42,6 @@ export type Store = {
   deduction: Deduction.Store
 }
 
-function isStale(sync: Sync.State<Meta>): boolean {
-  return new Date(sync.at).getTime() < Date.now() - 30 * 24 * 60 * 60 * 1000
-}
-
 export function create(pre: Prestore, gateway: Gateway.Sync): Store {
   const spaces = writable(Collection.empty<Space>())
   const properties = writable(Collection.empty<Property>())
@@ -98,7 +94,10 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
 
   set(pre.properties, pre.spaces, pre.theorems, pre.traits)
 
-  if (!pre.sync || isStale(pre.sync)) {
+  if (
+    !pre.sync ||
+    new Date(pre.sync.at).getTime() < Date.now() - 30 * 24 * 60 * 60 * 1000
+  ) {
     sync.sync()
   }
 
