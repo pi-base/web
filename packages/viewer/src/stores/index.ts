@@ -42,10 +42,8 @@ export type Store = {
   deduction: Deduction.Store
 }
 
-const ONE_MONTH_MS = 30 * 24 * 60 * 60 * 1000
-
 function isStale(sync: Sync.State<Meta>): boolean {
-  return new Date(sync.at).getTime() < Date.now() - ONE_MONTH_MS
+  return new Date(sync.at).getTime() < Date.now() - 30 * 24 * 60 * 60 * 1000
 }
 
 export function create(pre: Prestore, gateway: Gateway.Sync): Store {
