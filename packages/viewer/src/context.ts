@@ -68,7 +68,7 @@ export function initialize({
 
   if (
     !pre.sync ||
-    new Date(pre.sync.at).getTime() < Date.now() - 30 * 24 * 60 * 60 * 1000
+    new Date(pre.sync.at).getTime() < Date.now() - 7 * 24 * 60 * 60 * 1000
   ) {
     store.sync.sync()
   }
