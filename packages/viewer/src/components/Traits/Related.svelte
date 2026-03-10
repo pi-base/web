@@ -1,17 +1,18 @@
 <script lang="ts">
   import Fuse from 'fuse.js'
   import { Icons, Link } from '../Shared'
-  import { Value } from '../Traits'
+  import { ValueIcon, SourceIcon } from '../Traits'
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
   import FilterButtons from './FilterButtons.svelte'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
+  import { checkIfRedundant } from '@/stores/deduction'
 
   export let related: (traits: Traits) => [Space, Property, Trait | undefined][]
   export let mode: 'spaces' | 'properties'
 
-  const { traits } = context()
+  const { theorems, traits } = context()
 
   const filter = writable('')
   urlSearchParam('filter', filter)
@@ -92,7 +93,7 @@
       <tr>
         <td style="text-align:center">
           <Link.Trait {space} {property}>
-            <Value value={trait?.value} />
+            <ValueIcon value={trait?.value} />
           </Link.Trait>
         </td>
         <td style="text-align:center">
@@ -103,7 +104,12 @@
         </td>
         <td style="text-align:center">
           <Link.Trait {space} {property}>
-            <Value value={trait?.asserted} icon="user" />
+            <SourceIcon
+              value={trait?.asserted}
+              redundant={checkIfRedundant(space, property, $theorems, $traits)
+                .redundant}
+              icon="user"
+            />
           </Link.Trait>
         </td>
       </tr>

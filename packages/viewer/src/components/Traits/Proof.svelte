@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Link } from '../Shared'
   import { Table as Theorems } from '../Theorems'
-  import Value from './Value.svelte'
+  import ValueIcon from './ValueIcon.svelte'
   import type { Property, Space, Theorem, Trait } from '@/models'
 
   export let space: Space
@@ -28,7 +28,7 @@ Automatically deduced from the following:
             </td>
             <td>
               <Link.Trait {space} {property}>
-                <Value value={trait.value} />
+                <ValueIcon value={trait.value} />
               </Link.Trait>
             </td>
           </tr>

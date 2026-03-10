@@ -8,6 +8,7 @@
   export let value: And<Property> | Or<Property>
   export let link = true
   export let grouped = true
+  export let emphasizedProperties: Set<Property> = new Set()
 
   $: connector = value.kind === 'and' ? '∧' : '∨'
 </script>
@@ -16,6 +17,7 @@
     value={f}
     {link}
     subformula
+    {emphasizedProperties}
   />{i === value.subs.length - 1
     ? ''
     : ` ${connector} `}{/each}{#if grouped}){/if}

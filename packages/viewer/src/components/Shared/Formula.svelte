@@ -7,10 +7,16 @@
   export let value: Formula<Property>
   export let link = true
   export let subformula = false
+  export let emphasizedProperties: Set<Property> = new Set()
 </script>
 
-{#if value.kind === 'atom'}<Atom {value} {link} />{:else}<Compound
+{#if value.kind === 'atom'}<Atom
+    {value}
+    {link}
+    {emphasizedProperties}
+  />{:else}<Compound
     {value}
     {link}
     grouped={subformula}
+    {emphasizedProperties}
   />{/if}
