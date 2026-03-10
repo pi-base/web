@@ -11,6 +11,7 @@
   href="/properties/{Id.format('P', property.id)}"
   class="property-link"
   class:emphasized
+  role={emphasized ? 'strong' : 'none'}
 >
   <slot>
     {#if content === 'name'}
