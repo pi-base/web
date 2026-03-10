@@ -22,6 +22,15 @@
 <style>
   .emphasized {
     font-weight: bold;
-    color: #b032ff;
+    border: 1px solid #a8d2ff;
+    padding: 0px 5px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #f1f8ff;
+  }
+  .emphasized:hover {
+    background-color: #f6fafe;
+    border-color: #e0edfb;
+    text-decoration: none;
   }
 </style>
