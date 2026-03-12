@@ -28,7 +28,10 @@
     is tautologicially true
   {:else if proof}
     follows from these theorems:
-    <Theorems theorems={proof} />
+    <Theorems
+      theorems={proof}
+      emphasizedProperties={new Set(theorem.properties)}
+    />
   {:else}
     cannot be proven from other theorems or disproven from a counterexample.
   {/if}

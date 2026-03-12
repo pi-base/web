@@ -10,4 +10,4 @@
   $: related = $theorems.forProperty(property)
 </script>
 
-<Theorems theorems={related} />
+<Theorems theorems={related} emphasizedProperties={new Set([property])} />
