@@ -7,37 +7,34 @@
   export let space: Space
   export let theorems: Theorem[]
   export let traits: [Property, Trait][]
+  $: emphasizedProperties = new Set(traits.map(([p, _]) => p))
 </script>
 
 Automatically deduced from the following:
-<div class="row">
-  <div class="col">
-    <h5>Properties</h5>
-    <table class="table">
-      <thead>
+<div style="margin:1em 0">
+  <h5>Properties</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each traits as [property, trait] (property.id)}
         <tr>
-          <th>Property</th>
-          <th>Value</th>
+          <td>
+            <Link.Property {property} />
+          </td>
+          <td>
+            <Link.Trait {space} {property}>
+              <ValueIcon value={trait.value} />
+            </Link.Trait>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        {#each traits as [property, trait] (property.id)}
-          <tr>
-            <td>
-              <Link.Property {property} />
-            </td>
-            <td>
-              <Link.Trait {space} {property}>
-                <ValueIcon value={trait.value} />
-              </Link.Trait>
-            </td>
-          </tr>
-        {/each}
-      </tbody>
-    </table>
-  </div>
-  <div class="col">
-    <h5>Theorems</h5>
-    <Theorems {theorems} />
-  </div>
+      {/each}
+    </tbody>
+  </table>
+  <h5>Theorems</h5>
+  <Theorems {theorems} {emphasizedProperties} />
 </div>
