@@ -7,7 +7,7 @@
   export let value: Atom<Property>
   export let link: boolean = true
   export let emphasizedProperties: Set<Property> = new Set()
-  let emphasized = emphasizedProperties.has(value.property)
+  $: emphasized = emphasizedProperties.has(value.property)
 </script>
 
 {value.value === null ? '?' : value.value ? '' : '¬'}{#if link}<Link.Property
