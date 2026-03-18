@@ -110,7 +110,7 @@
             <SourceIcon
               value={trait?.asserted}
               redundant={
-                showRedundancy &&
+                showRedundancy && trait?.asserted &&
                   checkIfRedundant(space, property, $theorems, $traits)
                   .redundant}
               icon="user"
