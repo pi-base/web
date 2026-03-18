@@ -20,6 +20,8 @@
   let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
   filterMode = 'known'
 
+  let showRedundancy = localStorage.getItem('showRedundancy') != null
+
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
   // we need to index names in different positions depending on which kind we
@@ -106,8 +108,10 @@
           <Link.Trait {space} {property}>
             <SourceIcon
               value={trait?.asserted}
-              redundant={checkIfRedundant(space, property, $theorems, $traits)
-                .redundant}
+              redundant={
+                showRedundancy &&
+                  checkIfRedundant(space, property, $theorems, $traits)
+                  .redundant}
               icon="user"
             />
           </Link.Trait>

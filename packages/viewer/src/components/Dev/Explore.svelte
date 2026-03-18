@@ -4,6 +4,9 @@
   import { reset } from '@/util'
 
   const { spaces, properties, theorems, traits } = context()
+
+  let showRedundancy = localStorage.getItem('showRedundancy') != null
+  $: showRedundancy ? localStorage.setItem('showRedundancy', '') : localStorage.removeItem('showRedundancy')
 </script>
 
 <h4>Entities</h4>
@@ -33,6 +36,14 @@
         </a>
         <button type="button" class="btn btn-outline-dark" on:click={reset}>
           Reset
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          class:btn-info={showRedundancy}
+          on:click={() => showRedundancy = !showRedundancy}
+        >
+          {showRedundancy ? 'Show redundancy' : 'Hide redundancy'}
         </button>
       </td>
     </tr>
