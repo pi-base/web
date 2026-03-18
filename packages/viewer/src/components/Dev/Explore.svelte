@@ -1,12 +1,13 @@
 <script lang="ts">
   import context from '@/context'
   import Log from './Log.svelte'
+  import { defaultStorage } from '@/repositories'
   import { reset } from '@/util'
 
   const { spaces, properties, theorems, traits } = context()
 
-  let showRedundancy = localStorage.getItem('showRedundancy') != null
-  $: showRedundancy ? localStorage.setItem('showRedundancy', '') : localStorage.removeItem('showRedundancy')
+  let showRedundancy = defaultStorage.getItem('showRedundancy') != null
+  $: showRedundancy ? defaultStorage.setItem('showRedundancy', '') : defaultStorage.removeItem('showRedundancy')
 </script>
 
 <h4>Entities</h4>

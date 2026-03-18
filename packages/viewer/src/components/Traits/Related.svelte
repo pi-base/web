@@ -5,6 +5,7 @@
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
   import FilterButtons from './FilterButtons.svelte'
+  import { defaultStorage } from '@/repositories'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
   import { checkIfRedundant } from '@/stores/deduction'
@@ -20,7 +21,7 @@
   let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
   filterMode = 'known'
 
-  let showRedundancy = localStorage.getItem('showRedundancy') != null
+  let showRedundancy = defaultStorage.getItem('showRedundancy') != null
 
   $: all = related($traits)
   // all has type [Space, Property, Trait][]

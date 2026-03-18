@@ -28,7 +28,7 @@ const nullStorage: Storage = {
   removeItem: () => {},
 }
 
-let defaultStorage = nullStorage
+export let defaultStorage = nullStorage
 try {
   localStorage.setItem('__storage_test__', '1')
   localStorage.removeItem('__storage_test__')
