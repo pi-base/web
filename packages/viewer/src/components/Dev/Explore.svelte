@@ -7,7 +7,9 @@
   const { spaces, properties, theorems, traits } = context()
 
   let showRedundancy = defaultStorage.getItem('showRedundancy') != null
-  $: showRedundancy ? defaultStorage.setItem('showRedundancy', '') : defaultStorage.removeItem('showRedundancy')
+  $: showRedundancy
+    ? defaultStorage.setItem('showRedundancy', '')
+    : defaultStorage.removeItem('showRedundancy')
 </script>
 
 <h4>Entities</h4>
@@ -42,7 +44,7 @@
           type="button"
           class="btn btn-outline-dark"
           class:btn-info={showRedundancy}
-          on:click={() => showRedundancy = !showRedundancy}
+          on:click={() => (showRedundancy = !showRedundancy)}
         >
           {showRedundancy ? 'Show redundancy' : 'Hide redundancy'}
         </button>
