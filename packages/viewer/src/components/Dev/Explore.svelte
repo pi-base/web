@@ -6,9 +6,9 @@
 
   const { spaces, properties, theorems, traits } = context()
 
-  let showRedundancy = defaultStorage.getItem('showRedundancy') != null
+  let showRedundancy = defaultStorage.getItem('showRedundancy') !== null
   $: showRedundancy
-    ? defaultStorage.setItem('showRedundancy', '')
+    ? defaultStorage.setItem('showRedundancy', 'show')
     : defaultStorage.removeItem('showRedundancy')
 </script>
 
@@ -40,14 +40,16 @@
         <button type="button" class="btn btn-outline-dark" on:click={reset}>
           Reset
         </button>
-        <button
-          type="button"
-          class="btn btn-outline-dark"
-          class:btn-info={showRedundancy}
-          on:click={() => (showRedundancy = !showRedundancy)}
-        >
-          {showRedundancy ? 'Show redundancy' : 'Hide redundancy'}
-        </button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input
+          id="redundancyCheckbox"
+          type="checkbox"
+          bind:checked={showRedundancy}
+        />
+        <label for="redundancyCheckbox"> Show redundancies in tables </label>
       </td>
     </tr>
   </tbody>
