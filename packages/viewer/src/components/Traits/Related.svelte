@@ -109,10 +109,9 @@
           <Link.Trait {space} {property}>
             <SourceIcon
               value={trait?.asserted}
-              redundant={
-                showRedundancy && trait?.asserted &&
-                  checkIfRedundant(space, property, $theorems, $traits)
-                  .redundant}
+              redundant={showRedundancy &&
+                trait?.asserted &&
+                checkIfRedundant(space, property, $theorems, $traits).redundant}
               icon="user"
             />
           </Link.Trait>
