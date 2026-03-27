@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Theorem } from '@/models'
-  import { Link, References, Tabs, Source, Typeset } from '../Shared'
+  import { LeanLink, Link, References, Tabs, Source, Typeset } from '../Shared'
   import Name from './Name.svelte'
   import Converse from './Converse.svelte'
 
@@ -24,6 +24,8 @@
 <section class="description-markdown">
   <Source source={theorem.description} internal external />
 </section>
+
+<LeanLink kind="theorem" id={theorem.id} />
 
 <Tabs {tabs} {tab} {rel} />
 

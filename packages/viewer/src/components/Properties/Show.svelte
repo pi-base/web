@@ -1,6 +1,14 @@
 <script lang="ts">
   import type { Property } from '@/models'
-  import { Aliases, Link, References, Source, Tabs, Typeset } from '../Shared'
+  import {
+    Aliases,
+    LeanLink,
+    Link,
+    References,
+    Source,
+    Tabs,
+    Typeset,
+  } from '../Shared'
   import Spaces from './Spaces.svelte'
   import Theorems from './Theorems.svelte'
 
@@ -30,6 +38,8 @@
 <section class="description-markdown">
   <Source source={property.description} internal external />
 </section>
+
+<LeanLink kind="property" id={property.id} />
 
 <Tabs {tabs} {tab} {rel} />
 
