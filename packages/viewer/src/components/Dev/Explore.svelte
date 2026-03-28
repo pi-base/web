@@ -1,9 +1,15 @@
 <script lang="ts">
   import context from '@/context'
   import Log from './Log.svelte'
+  import { defaultStorage } from '@/repositories'
   import { reset } from '@/util'
 
   const { spaces, properties, theorems, traits } = context()
+
+  let showRedundancy = defaultStorage.getItem('showRedundancy') !== null
+  $: showRedundancy
+    ? defaultStorage.setItem('showRedundancy', 'show')
+    : defaultStorage.removeItem('showRedundancy')
 </script>
 
 <h4>Entities</h4>
@@ -34,6 +40,16 @@
         <button type="button" class="btn btn-outline-dark" on:click={reset}>
           Reset
         </button>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input
+          id="redundancyCheckbox"
+          type="checkbox"
+          bind:checked={showRedundancy}
+        />
+        <label for="redundancyCheckbox"> Show redundancies in tables </label>
       </td>
     </tr>
   </tbody>

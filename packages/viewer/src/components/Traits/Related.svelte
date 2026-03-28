@@ -5,6 +5,7 @@
   import context from '@/context'
   import type { Property, Space, Trait, Traits } from '@/models'
   import FilterButtons from './FilterButtons.svelte'
+  import { defaultStorage } from '@/repositories'
   import { writable } from 'svelte/store'
   import urlSearchParam from '@/stores/urlSearchParam'
   import { checkIfRedundant } from '@/stores/deduction'
@@ -19,6 +20,8 @@
 
   let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
   filterMode = 'known'
+
+  let showRedundancy = defaultStorage.getItem('showRedundancy') != null
 
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
@@ -106,8 +109,9 @@
           <Link.Trait {space} {property}>
             <SourceIcon
               value={trait?.asserted}
-              redundant={checkIfRedundant(space, property, $theorems, $traits)
-                .redundant}
+              redundant={showRedundancy &&
+                trait?.asserted &&
+                checkIfRedundant(space, property, $theorems, $traits).redundant}
               icon="user"
             />
           </Link.Trait>
