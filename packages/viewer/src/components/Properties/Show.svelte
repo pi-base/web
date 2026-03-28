@@ -19,7 +19,10 @@
   const tabs = ['theorems', 'spaces', 'references'] as const
 </script>
 
-<h3>Property <Link.Property {property} content="idLong" /></h3>
+<h3>
+  Property <Link.Property {property} content="idLong" />
+  <LeanLink kind="property" id={property.id} />
+</h3>
 
 <h1>
   <Typeset body={property.name} />
@@ -38,8 +41,6 @@
 <section class="description-markdown">
   <Source source={property.description} internal external />
 </section>
-
-<LeanLink kind="property" id={property.id} />
 
 <Tabs {tabs} {tab} {rel} />
 

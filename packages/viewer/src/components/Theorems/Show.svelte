@@ -11,7 +11,10 @@
   const tabs = ['converse', 'references'] as const
 </script>
 
-<h3>Theorem <Link.Theorem {theorem} content="idLong" /></h3>
+<h3>
+  Theorem <Link.Theorem {theorem} content="idLong" />
+  <LeanLink kind="theorem" id={theorem.id} />
+</h3>
 
 <h1>
   <Name {theorem} />
@@ -24,8 +27,6 @@
 <section class="description-markdown">
   <Source source={theorem.description} internal external />
 </section>
-
-<LeanLink kind="theorem" id={theorem.id} />
 
 <Tabs {tabs} {tab} {rel} />
 
