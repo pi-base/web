@@ -22,6 +22,7 @@
 
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { Icons } from '@/components/Shared'
 
   export let kind: 'property' | 'theorem'
   export let id: number
@@ -43,13 +44,30 @@
 </script>
 
 {#if loaded}
-  <p>
-    {#if available}
+  {#if available}
+    <div>
       <a {href} target="_blank" rel="noopener noreferrer">
-        Formalisation available.
+        <Icons.Lean />
       </a>
-    {:else}
-      No formalisation available.
-    {/if}
-  </p>
+    </div>
+  {/if}
 {/if}
+
+<style>
+  div {
+    display: inline-block;
+    border: 1px solid white;
+    padding: 2px;
+  }
+  div:hover {
+    background: #f6fafe;
+    border: 1px solid #e0edfb;
+    border-radius: 5px;
+  }
+  a {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
