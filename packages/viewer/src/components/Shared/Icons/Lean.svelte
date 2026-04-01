@@ -3,7 +3,7 @@
   height="20"
   viewBox="0 0 486 169"
   xmlns="http://www.w3.org/2000/svg"
-  stroke="auto"
+  stroke="#007bff"
   fill="transparent"
   stroke-width="10"
   ><path
