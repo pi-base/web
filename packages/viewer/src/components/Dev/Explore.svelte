@@ -10,6 +10,11 @@
   $: showRedundancy
     ? defaultStorage.setItem('showRedundancy', 'show')
     : defaultStorage.removeItem('showRedundancy')
+
+  let showLeanLinks = defaultStorage.getItem('showLeanLinks') !== null
+  $: showLeanLinks
+    ? defaultStorage.setItem('showLeanLinks', 'show')
+    : defaultStorage.removeItem('showLeanLinks')
 </script>
 
 <h4>Entities</h4>
@@ -50,6 +55,18 @@
           bind:checked={showRedundancy}
         />
         <label for="redundancyCheckbox"> Show redundancies in tables </label>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input
+          id="leanLinksCheckbox"
+          type="checkbox"
+          bind:checked={showLeanLinks}
+        />
+        <label for="leanLinksCheckbox">
+          Show Lean formalisation links (experimental)
+        </label>
       </td>
     </tr>
   </tbody>

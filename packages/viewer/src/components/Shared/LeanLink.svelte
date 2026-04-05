@@ -23,10 +23,12 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { Icons } from '@/components/Shared'
+  import { defaultStorage } from '@/repositories'
 
   export let kind: 'property' | 'theorem'
   export let id: number
 
+  let enabled = defaultStorage.getItem('showLeanLinks') !== null
   let loaded = false
   let available = false
 
@@ -37,13 +39,17 @@
   $: href = `https://github.com/${repo}/blob/master/${basePath}/${folderName}/${file}`
 
   onMount(async () => {
+    if (!enabled) {
+      loaded = true
+      return
+    }
     const ids = await directories[kind]
     available = ids.has(folderName)
     loaded = true
   })
 </script>
 
-{#if loaded}
+{#if enabled && loaded}
   {#if available}
     <div>
       <a {href} target="_blank" rel="noopener noreferrer">
