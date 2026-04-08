@@ -2,8 +2,8 @@
   const repo = 'felixpernegger/pibase-lean'
 
   const directories: Record<string, Promise<Set<string>>> = {
-    property: fetchDirectory('PibaseLean/Properties'),
-    theorem: fetchDirectory('PibaseLean/Theorems'),
+    property: fetchDirectory('PiBaseLean/Properties'),
+    theorem: fetchDirectory('PiBaseLean/Theorems'),
   }
 
   async function fetchDirectory(path: string): Promise<Set<string>> {
@@ -35,7 +35,7 @@
   $: folderName = kind === 'property' ? `P${id}` : `T${id}`
   $: file = kind === 'property' ? 'Defs.lean' : 'Theorem.lean'
   $: basePath =
-    kind === 'property' ? 'PibaseLean/Properties' : 'PibaseLean/Theorems'
+    kind === 'property' ? 'PiBaseLean/Properties' : 'PiBaseLean/Theorems'
   $: href = `https://github.com/${repo}/blob/master/${basePath}/${folderName}/${file}`
 
   onMount(async () => {
