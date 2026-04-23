@@ -1,9 +1,15 @@
 <script context="module" lang="ts">
   const repo = 'felixpernegger/pibase-lean'
 
-  const directories: Record<string, Promise<Set<string>>> = {
-    property: fetchDirectory('PiBaseLean/Properties'),
-    theorem: fetchDirectory('PiBaseLean/Theorems'),
+  const cache: Record<string, Promise<Set<string>>> = {}
+
+  function getDirectory(kind: 'property' | 'theorem'): Promise<Set<string>> {
+    const path =
+      kind === 'property' ? 'PiBaseLean/Properties' : 'PiBaseLean/Theorems'
+    if (!cache[kind]) {
+      cache[kind] = fetchDirectory(path)
+    }
+    return cache[kind]
   }
 
   async function fetchDirectory(path: string): Promise<Set<string>> {
@@ -21,14 +27,12 @@
 </script>
 
 <script lang="ts">
-  import { onMount } from 'svelte'
   import { Icons } from '@/components/Shared'
-  import { defaultStorage } from '@/repositories'
+  import { showLeanLinks } from '@/stores/settings'
 
   export let kind: 'property' | 'theorem'
   export let id: number
 
-  let enabled = defaultStorage.getItem('showLeanLinks') !== null
   let loaded = false
   let available = false
 
@@ -38,18 +42,15 @@
     kind === 'property' ? 'PiBaseLean/Properties' : 'PiBaseLean/Theorems'
   $: href = `https://github.com/${repo}/blob/master/${basePath}/${folderName}/${file}`
 
-  onMount(async () => {
-    if (!enabled) {
+  $: if ($showLeanLinks && !loaded) {
+    getDirectory(kind).then(ids => {
+      available = ids.has(folderName)
       loaded = true
-      return
-    }
-    const ids = await directories[kind]
-    available = ids.has(folderName)
-    loaded = true
-  })
+    })
+  }
 </script>
 
-{#if enabled && loaded}
+{#if $showLeanLinks && loaded}
   {#if available}
     <div>
       <a {href} target="_blank" rel="noopener noreferrer">

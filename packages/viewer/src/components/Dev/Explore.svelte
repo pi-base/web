@@ -1,20 +1,10 @@
 <script lang="ts">
   import context from '@/context'
   import Log from './Log.svelte'
-  import { defaultStorage } from '@/repositories'
   import { reset } from '@/util'
+  import { showLeanLinks, showRedundancy } from '@/stores/settings'
 
   const { spaces, properties, theorems, traits } = context()
-
-  let showRedundancy = defaultStorage.getItem('showRedundancy') !== null
-  $: showRedundancy
-    ? defaultStorage.setItem('showRedundancy', 'show')
-    : defaultStorage.removeItem('showRedundancy')
-
-  let showLeanLinks = defaultStorage.getItem('showLeanLinks') !== null
-  $: showLeanLinks
-    ? defaultStorage.setItem('showLeanLinks', 'show')
-    : defaultStorage.removeItem('showLeanLinks')
 </script>
 
 <h4>Entities</h4>
@@ -52,7 +42,7 @@
         <input
           id="redundancyCheckbox"
           type="checkbox"
-          bind:checked={showRedundancy}
+          bind:checked={$showRedundancy}
         />
         <label for="redundancyCheckbox"> Show redundancies in tables </label>
       </td>
@@ -62,7 +52,7 @@
         <input
           id="leanLinksCheckbox"
           type="checkbox"
-          bind:checked={showLeanLinks}
+          bind:checked={$showLeanLinks}
         />
         <label for="leanLinksCheckbox">
           Show Lean formalisation links (experimental)
