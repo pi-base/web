@@ -49,7 +49,7 @@ const topologyConfig: CategoryConfig = {
 
 π-Base's data and software are open-sourced on [GitHub](https://github.com/pi-base/).
 We rely on [volunteers like yourself](https://github.com/pi-base/data/graphs/contributors)
-to [contribute]({contributingUrl}) new spaces, properties, and theorems.
+to [contribute](https://code4math.zulipchat.com/#narrow/channel/416467-pi-base/topic/Welcome.20new.20and.20potential.20contributors!.20.F0.9F.91.8B/with/544214230) new spaces, properties, and theorems.
 
 ### About Us
 
