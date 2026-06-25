@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/browser'
-import { build, sentryIngest } from '@/constants'
+import { build, categoryConfig } from '@/constants'
 
 type Meta = Record<string, unknown>
 
@@ -14,7 +14,7 @@ export function log(): Handler {
 }
 
 export function sentry({
-  dsn = sentryIngest,
+  dsn = categoryConfig.sentryUrl,
   environment,
 }: {
   dsn?: string

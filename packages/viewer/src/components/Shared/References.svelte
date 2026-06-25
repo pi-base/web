@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Ref } from '@pi-base/core'
   import Reference from './Reference.svelte'
-  import { contributingUrl } from '@/constants'
+  import { categoryConfig } from '@/constants'
 
   export let references: Ref.Ref[]
 </script>
@@ -14,7 +14,7 @@
   {:else}
     <li>
       No references available. If appropriate, please consider <a
-        href={contributingUrl}>contributing</a
+        href={categoryConfig.contributingUrl}>contributing</a
       > a reference.
     </li>
   {/each}
