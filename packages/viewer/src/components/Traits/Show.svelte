@@ -3,7 +3,7 @@
   import { Icons, Link, References, Source, Typeset } from '@/components/Shared'
   import Proof from './Proof.svelte'
   import Redundancy from './Redundancy.svelte'
-  import { contributingUrl } from '@/constants'
+  import { categoryConfig } from '@/constants'
   export let space: Space
   export let property: Property
   export let trait: Trait | undefined
@@ -76,6 +76,6 @@
   <References references={meta.refs} />
   <Redundancy {space} {property} />
 {:else}
-  Please consider <a href={contributingUrl}>contributing</a> a proof or disproof
-  of this property.
+  Please consider <a href={categoryConfig.contributingUrl}>contributing</a> a proof
+  or disproof of this property.
 {/if}
