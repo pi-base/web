@@ -1,6 +1,7 @@
 <script lang="ts">
   import context from '@/context'
   import { contributingUrl, mainBranch, helpUrl } from '@/constants'
+  import { site } from '@/site'
   import Branch from './Shared/Icons/Branch.svelte'
 
   const { showDev, source } = context()
@@ -11,7 +12,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-{bg} bg-{bg}">
   <div class="container">
-    <a class="navbar-brand" href="/">π-Base</a>
+    <a class="navbar-brand" href="/">{site.label}</a>
 
     <div class="navbar-nav mr-auto">
       <a class="nav-link" href="/spaces">Explore</a>

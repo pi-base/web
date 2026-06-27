@@ -6,6 +6,10 @@
   "type": "module",
   "scripts": {
     "build": "vite build --logLevel warn",
+    "cf:deploy:topology": "wrangler deploy --env topology",
+    "cf:deploy:graphs": "wrangler deploy --env graphs",
+    "cf:preview:topology": "wrangler versions upload --env topology",
+    "cf:preview:graphs": "wrangler versions upload --env graphs",
     "cy:open": "cypress open",
     "cy:open:prev": "CYPRESS_ENV=preview cypress open",
     "cy:open:prod": "CYPRESS_ENV=production cypress open",
@@ -39,7 +43,7 @@
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
-    "@sveltejs/adapter-cloudflare": "^3.0.0",
+    "@sveltejs/adapter-cloudflare": "^7.2.9",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@tsconfig/svelte": "^3.0.0",
@@ -52,6 +56,7 @@
     "svelte": "^4.2.8",
     "svelte-check": "^3.6.3",
     "svelte-preprocess": "^5.1.3",
-    "tslib": "^2.6.2"
+    "tslib": "^2.6.2",
+    "wrangler": "^4.0.0"
   }
 }
