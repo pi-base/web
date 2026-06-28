@@ -47,9 +47,23 @@ export type ServerEvent =
       // deduction work, since the eager run finishes after the SSR response is
       // sent, so a completion-time count is dropped. `reset` marks a full re-run
       // (e.g. from a refresh) vs an incremental top-up.
+      //
+      // Client-only after the lazy-deduction change: the full run no longer
+      // fires during SSR, so this should disappear from runtime logs entirely
+      // (see `deduce_space`).
       evt: 'deduce_run'
       planned: number
       reset: boolean
+    }
+  | {
+      // One per space deduced on demand. SSR now proves only the single space a
+      // page needs, so a page render should emit exactly one of these instead of
+      // a `deduce_run` over the whole database. `derived` is the trait count
+      // proved (0 on a `contradiction`).
+      evt: 'deduce_space'
+      space: number
+      derived: number
+      contradiction: boolean
     }
 
 // Emit one structured Workers Logs event. We log the *object* (not a JSON
