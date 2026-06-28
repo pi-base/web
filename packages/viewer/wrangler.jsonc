@@ -1,0 +1,28 @@
+{
+  // Cloudflare Workers (Static Assets) configuration for the viewer.
+  //
+  // The same SvelteKit build (`.svelte-kit/cloudflare`) is deployed to two
+  // Workers via named environments. Cloudflare names an environment's Worker
+  // `<name>-<env>`, so these deploy as `pi-base-topology` and `pi-base-graphs`.
+  //
+  // Deploy:  wrangler deploy --env topology   (or --env graphs)
+  // The per-site differences (branding, bundle host) are baked in at build time
+  // via the VITE_SITE env var, not configured here.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "pi-base",
+  "main": ".svelte-kit/cloudflare/_worker.js",
+  "compatibility_date": "2025-06-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".svelte-kit/cloudflare"
+  },
+  "env": {
+    "topology": {
+      // Persist Workers Logs for the production site (queryable in the
+      // dashboard and via the observability API). graphs can opt in later.
+      "observability": { "enabled": true, "head_sampling_rate": 1 }
+    },
+    "graphs": {}
+  }
+}
