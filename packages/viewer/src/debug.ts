@@ -38,12 +38,14 @@ export type ServerEvent =
       ms: number
     }
   | {
-      // One per deduction run. `spaces`/`derived` are exact counts of the work
-      // actually performed — the reliable proxy for deduction CPU.
+      // One per deduction run, logged synchronously at run *start*. `planned` is
+      // the number of spaces the run intends to deduce — the reliable proxy for
+      // deduction work, since the eager run finishes after the SSR response is
+      // sent, so a completion-time count is dropped. `reset` marks a full re-run
+      // (e.g. from a refresh) vs an incremental top-up.
       evt: 'deduce_run'
-      spaces: number
-      derived: number
-      contradiction: boolean
+      planned: number
+      reset: boolean
     }
 
 // Emit one structured Workers Logs event. We log the *object* (not a JSON
