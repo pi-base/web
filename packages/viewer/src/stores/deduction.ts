@@ -214,6 +214,6 @@ export function checkIfRedundant(
   }
   const theorems = result.contradiction.theorems
     .map(t => thms.find(t))
-    .filter(t => t !== null)
+    .filter((t): t is Theorem => t !== null)
   return { redundant, theorems }
 }

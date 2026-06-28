@@ -8,6 +8,7 @@
     "lint:check": "prettier --check '**/*.{ts,js,svelte,yaml}'",
     "test": "pnpm run --recursive test",
     "test:cov": "pnpm run --recursive test:cov",
+    "test:all": "pnpm --filter core --filter compile run build && pnpm lint:check && pnpm --filter core --filter compile --filter viewer run test && pnpm --filter viewer run validate",
     "prepare": "husky"
   },
   "lint-staged": {

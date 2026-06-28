@@ -1,0 +1,32 @@
+name: Setup
+description: Install Node, pnpm, and project dependencies (with pnpm store caching)
+
+runs:
+  using: composite
+  steps:
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    # https://github.com/pnpm/action-setup
+    # Version is read from the "packageManager" field in package.json.
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - name: Setup pnpm cache
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-v2-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-v2-
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile

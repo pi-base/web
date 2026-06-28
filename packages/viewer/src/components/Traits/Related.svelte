@@ -18,8 +18,26 @@
   const filter = writable('')
   urlSearchParam('filter', filter)
 
-  let filterMode: 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
-  filterMode = 'known'
+  type FilterMode = 'all' | 'known' | 'asserted' | 'true' | 'false' | 'missing'
+
+  let filterMode: FilterMode = 'known'
+
+  function matchesFilter(mode: FilterMode, trait: Trait | undefined): boolean {
+    switch (mode) {
+      case 'all':
+        return true
+      case 'known':
+        return Boolean(trait)
+      case 'asserted':
+        return Boolean(trait?.asserted)
+      case 'true':
+        return Boolean(trait?.value)
+      case 'false':
+        return Boolean(trait && !trait.value)
+      case 'missing':
+        return !trait
+    }
+  }
 
   $: all = related($traits)
   // all has type [Space, Property, Trait][]
@@ -27,22 +45,9 @@
   // are displaying
   $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
   $: searched = $filter ? index.search($filter).map(r => r.item) : all
-  $: filtered = searched.filter(([_space, _property, t]) => {
-    switch (filterMode) {
-      case 'all':
-        return true
-      case 'known':
-        return t
-      case 'asserted':
-        return t?.asserted
-      case 'true':
-        return t?.value
-      case 'false':
-        return t && !t.value
-      case 'missing':
-        return !t
-    }
-  })
+  $: filtered = searched.filter(([_space, _property, t]) =>
+    matchesFilter(filterMode, t),
+  )
 </script>
 
 <div class="d-none d-md-block">

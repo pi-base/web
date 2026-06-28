@@ -8,6 +8,7 @@ export { default as Theorems } from './Theorems'
 export { default as Traits } from './Traits'
 
 import type { Property as P, Trait as Tr } from '@/types'
+import type Theorem from './Theorem'
 
 export type Proof = {
   traits: [P, Tr][]

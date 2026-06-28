@@ -4,7 +4,6 @@ on:
   pull_request:
 
 jobs:
-  # TODO: share setup action between test and e2e
   e2e:
     runs-on: ubuntu-latest
     container: cypress/browsers:node-22.16.0-chrome-137.0.7151.68-1-ff-139.0.1-edge-137.0.3296.62-1
@@ -12,31 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+      - name: Setup
+        uses: ./.github/actions/setup
 
-      # https://github.com/pnpm/action-setup
-      # Version is read from the "packageManager" field in package.json.
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v3
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-v1-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-v1-
-
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Setup Cypress cache
         with:
           # Must match the container's CYPRESS_CACHE_FOLDER (/root/.cache/Cypress);
@@ -45,9 +23,6 @@ jobs:
           key: ${{ runner.os }}-cypress-v3-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-cypress-v3-
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
 
       # pnpm records build-script state in the (cached) store, so on a warm
       # store it skips cypress's postinstall and the binary is never fetched
