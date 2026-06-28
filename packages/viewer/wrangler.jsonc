@@ -21,7 +21,14 @@
     "topology": {
       // Persist Workers Logs for the production site (queryable in the
       // dashboard and via the observability API). graphs can opt in later.
-      "observability": { "enabled": true, "head_sampling_rate": 1 }
+      "observability": {
+        "enabled": true,
+        "logs": {
+          "enabled": true,
+          "invocation_logs": true
+        },
+        "traces": { "enabled": true, "head_sampling_rate": 1 }
+      }
     },
     "graphs": {}
   }
