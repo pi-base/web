@@ -14,11 +14,12 @@ export VITE_VERSION="${WORKERS_CI_COMMIT_SHA:-${CF_PAGES_COMMIT_SHA:-$(git rev-p
 export VITE_SITE="${VITE_SITE:-topology}"
 echo "Building site '${VITE_SITE}' (branch=${VITE_BRANCH}, version=${VITE_VERSION})"
 
-# Cloudflare does not include pnpm in their build image, so we need to install
-# it ourselves, and make sure it installs packages somewhere that Cloudflare caches.
+# Pages' build image does not include pnpm, but Workers Builds does (detected
+# from .tool-versions). Only install it when missing, otherwise the global
+# install errors with EEXIST. Install packages somewhere that Cloudflare caches.
 #
 # See https://community.cloudflare.com/t/add-pnpm-to-pre-installed-cloudflare-pages-tools/288514/3
-npm install -g pnpm
+command -v pnpm >/dev/null 2>&1 || npm install -g pnpm
 pnpm install --store=node_modules/.pnpm-store
 
 cd ./packages/core
