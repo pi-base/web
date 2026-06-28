@@ -45,6 +45,7 @@
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "4.20260627.1",
     "@sveltejs/adapter-cloudflare": "^7.2.9",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",

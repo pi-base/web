@@ -218,6 +218,9 @@ importers:
         specifier: ^4.1.2
         version: 4.1.2
     devDependencies:
+      '@cloudflare/workers-types':
+        specifier: 4.20260627.1
+        version: 4.20260627.1
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.2.9
         version: 7.2.9(@sveltejs/kit@2.5.10(@sveltejs/vite-plugin-svelte@3.1.1(svelte@4.2.20)(vite@5.4.21(@types/node@22.15.31)(terser@5.31.1)))(svelte@4.2.20)(vite@5.4.21(@types/node@22.15.31)(terser@5.31.1)))(wrangler@4.105.0(@cloudflare/workers-types@4.20260627.1))
