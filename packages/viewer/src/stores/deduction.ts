@@ -17,6 +17,7 @@ import type {
   Trait,
   Traits,
 } from '@/models'
+import { serverLog } from '@/debug'
 import { eachTick, read, subscribeUntil } from '@/util'
 
 export type State = {
@@ -109,6 +110,14 @@ export function create(
       }
     })
 
+    // Tally the work actually performed. These exact counts are the reliable
+    // proxy for deduction CPU on Workers, where wall-clock timers around the
+    // (CPU-bound) loop are clamped to ~0. Joined to the platform's cpuTimeMs by
+    // requestId, they show how request cost scales with spaces deduced.
+    let deduced = 0
+    let derived = 0
+    let contradiction = false
+
     return eachTick(unchecked, (s: Space, halt: () => void) => {
       store.update(state => ({ ...state, checking: s.name }))
 
@@ -121,6 +130,7 @@ export function create(
 
       if (result.kind === 'contradiction') {
         store.update(s => ({ ...s, contradiction: result.contradiction }))
+        contradiction = true
         halt()
         return
       }
@@ -137,10 +147,15 @@ export function create(
 
       addTraits(newTraits)
 
+      deduced += 1
+      derived += newTraits.length
+
       store.update(state => ({
         ...state,
         checked: new Set([...state.checked, s.id]),
       }))
+    }).then(() => {
+      serverLog({ evt: 'deduce_run', spaces: deduced, derived, contradiction })
     })
   }
 
