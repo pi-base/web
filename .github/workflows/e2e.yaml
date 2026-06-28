@@ -18,10 +18,9 @@ jobs:
           node-version: 22
 
       # https://github.com/pnpm/action-setup
+      # Version is read from the "packageManager" field in package.json.
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8.x.x
+        uses: pnpm/action-setup@v4
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -46,7 +45,7 @@ jobs:
             ${{ runner.os }}-cypress-v2-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build core
         working-directory: packages/core
