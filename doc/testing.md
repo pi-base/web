@@ -78,10 +78,16 @@ against:
 | `graphs`             | `pi-base-graphs.…workers.dev`        | live    |
 | `preview`            | `$PREVIEW_URL`                       | live    |
 
-A handful of specs assert exact, fixture-pinned output (e.g. snapshotted KaTeX
-HTML); these are wrapped in `fixtureOnly(...)` and skip automatically on live
-runs. Set `CYPRESS_MODE=fixture` to force the deterministic fixture against a
-deployed URL while debugging.
+The whole suite runs in both modes; assertions are written to hold against the
+real data (stable IDs, math-free name prefixes, behavioral checks) rather than
+exact HTML snapshots. Set `CYPRESS_MODE=fixture` to force the deterministic
+fixture against a deployed URL while debugging.
+
+The fixture (`cypress/fixtures/main.min.json`) is a hand-curated subset; keep its
+tested entities (e.g. `S000001`, `S000004`, `P000001`) in sync with live data.
+Note it predates a pi-base property-ID reorganization, so its property `uid`s are
+**not** interchangeable with the current bundle's — refresh display fields per
+entity, don't bulk-remap by `uid`.
 
 ## Remote End-to-End Testing
 

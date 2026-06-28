@@ -16,8 +16,3 @@ export function deduce() {
   cy.get('.progress').should('exist')
   cy.get('.progress', { timeout: 10000 }).should('not.exist')
 }
-
-// Wrap specs/blocks that assert exact, fixture-pinned output (e.g. snapshotted
-// KaTeX HTML). They only make sense against deterministic data, so skip them on
-// live deployments where the real bundle would make them brittle.
-export const fixtureOnly = live ? describe.skip : describe
