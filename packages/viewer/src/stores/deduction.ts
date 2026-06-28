@@ -17,6 +17,7 @@ import type {
   Trait,
   Traits,
 } from '@/models'
+import { serverLog } from '@/debug'
 import { eachTick, read, subscribeUntil } from '@/util'
 
 export type State = {
@@ -108,6 +109,13 @@ export function create(
         unchecked.push(s)
       }
     })
+
+    // Log the planned work *synchronously*, before the async loop. On the eager
+    // SSR model the loop finishes after the response is sent (the page resolves
+    // as soon as its space is reached), so a completion-time count is dropped;
+    // `planned` (spaces this run intends to deduce) is captured pre-response and
+    // reliably sizes the deduction work, joinable to platform cpuTimeMs.
+    serverLog({ evt: 'deduce_run', planned: unchecked.length, reset })
 
     return eachTick(unchecked, (s: Space, halt: () => void) => {
       store.update(state => ({ ...state, checking: s.name }))
