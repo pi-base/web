@@ -14,13 +14,18 @@ export VITE_VERSION="${WORKERS_CI_COMMIT_SHA:-${CF_PAGES_COMMIT_SHA:-$(git rev-p
 export VITE_SITE="${VITE_SITE:-topology}"
 echo "Building site '${VITE_SITE}' (branch=${VITE_BRANCH}, version=${VITE_VERSION})"
 
-# Pages' build image does not include pnpm, but Workers Builds does (detected
-# from .tool-versions). Only install it when missing, otherwise the global
-# install errors with EEXIST. Install packages somewhere that Cloudflare caches.
+# Workers Builds (and the GitHub workflows) run `pnpm install` before invoking
+# this script, so only install when dependencies are actually missing — e.g.
+# running this script on a clean local checkout. This skips a redundant second
+# install on CI, which was the bulk of each build's wall time.
 #
-# See https://community.cloudflare.com/t/add-pnpm-to-pre-installed-cloudflare-pages-tools/288514/3
-command -v pnpm >/dev/null 2>&1 || npm install -g pnpm
-pnpm install --store=node_modules/.pnpm-store
+# Don't pass `--store=node_modules/.pnpm-store`: relocating the store forces pnpm
+# to recreate node_modules and fragments it from the CI auto-install's store,
+# defeating the dependency cache (every package re-downloads).
+if [ ! -d node_modules ]; then
+  command -v pnpm >/dev/null 2>&1 || npm install -g pnpm
+  pnpm install --frozen-lockfile
+fi
 
 cd ./packages/core
 pnpm run build

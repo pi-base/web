@@ -1,9 +1,12 @@
 packages:
   - packages/*
+# Only run install/build scripts for dependencies the deploy build needs.
+# Excluded on purpose (kept lean so CI installs don't do unnecessary work):
+#   - cypress: binary download (~20s); only the e2e workflow runs it, and that
+#     workflow installs the binary explicitly via `cypress install`.
+#   - keytar / @vscode/vsce-sign: native builds for the vscode extension's
+#     `vsce publish`; not used by the viewer build, the viewer runtime, or tests.
 allowBuilds:
   '@sveltejs/kit': true
-  '@vscode/vsce-sign': true
-  cypress: true
   esbuild: true
-  keytar: true
   svelte-preprocess: true
