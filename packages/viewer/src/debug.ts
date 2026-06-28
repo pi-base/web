@@ -27,10 +27,14 @@ export type ServerEvent =
     }
   | {
       // One per bundle sync. `changed` is true on a 200 (full parse+transform),
-      // false on a 304. Counts size the parse/transform work; `ms` is the (valid)
-      // network fetch duration.
+      // false on a 304. `cached` is true when the request was served from this
+      // isolate's in-memory bundle cache (a warm isolate revalidating via ETag)
+      // instead of parsing fresh — the signal that the cache is doing its job;
+      // group by it to read the warm-hit rate. Counts size the parse/transform
+      // work; `ms` is the (valid) network fetch duration.
       evt: 'bundle_sync'
       changed: boolean
+      cached: boolean
       spaces: number
       properties: number
       theorems: number
