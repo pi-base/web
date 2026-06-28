@@ -1,1 +1,1 @@
-export { deduce, setup } from './commands'
+export { deduce, fixtureOnly, setup } from './commands'

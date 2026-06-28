@@ -1,30 +1,62 @@
 #!/bin/bash
+#
+# Run the viewer's end-to-end suite against one or more deployed targets.
+#
+#   ./bin/e2e                # default: cross-consistency check (pages + workers)
+#   ./bin/e2e pages          # the live Cloudflare Pages site
+#   ./bin/e2e workers        # the live Cloudflare Workers site
+#   ./bin/e2e graphs         # the graphs companion Worker
+#   ./bin/e2e preview        # a Workers preview (set PREVIEW_URL=...)
+#   ./bin/e2e https://...    # an arbitrary URL (treated as a preview)
+#
+# Targets resolve their base URL + data mode (live) in cypress.config.ts; these
+# runs hit each deployment's real data bundle. Use `pnpm --filter viewer cy:run`
+# (CYPRESS_ENV=local) for the hermetic, fixture-backed suite.
 
-function run() {
-    url=$(getUrl "$1")
-    echo "$url"
+set -euo pipefail
 
-    # wait for up to 5 minutes for the site to be available
-    for i in {1..30}; do
-        status=$(curl --write-out %{http_code} --silent --output /dev/null https://$url)
-        if [ "$status" -eq 200 ]; then
-            break
-        fi
-        sleep 10
-    done
+targets=("$@")
+if [ ${#targets[@]} -eq 0 ]; then
+  targets=(pages workers)
+fi
 
-    pnpm --filter viewer run cy:run --config baseUrl=https://$url
+# Mirror cypress.config.ts so we can health-check a target before running.
+function baseUrl() {
+  case "$1" in
+    pages | production) echo "https://topology.pi-base.org" ;;
+    workers) echo "https://pi-base-topology.fragrant-boat-7068.workers.dev" ;;
+    graphs) echo "https://pi-base-graphs.fragrant-boat-7068.workers.dev" ;;
+    preview) echo "${PREVIEW_URL:-}" ;;
+    *) echo "" ;;
+  esac
 }
 
-function getUrl() {
-    if [ "$1" == "production" ]; then
-        echo "topology.pi-base.org"
-    elif [ -n "$1" ]; then
-        echo "$1.topology.pages.dev"
-    else
-        sha=$(git rev-parse --abbrev-ref HEAD | sed 's/\//-/g')
-        echo "$sha.topology.pages.dev"
+# Wait up to 5 minutes for a URL to return 200 (preview/deploys may be warming).
+function waitFor() {
+  local url="$1"
+  [ -z "$url" ] && return 0
+  for _ in {1..30}; do
+    if [ "$(curl --silent --output /dev/null --write-out '%{http_code}' "$url/")" = "200" ]; then
+      return 0
     fi
+    sleep 10
+  done
+  echo "warning: $url did not return 200 within 5m; running anyway" >&2
 }
 
-run "$@"
+status=0
+for target in "${targets[@]}"; do
+  # A bare URL is run as a preview against that URL.
+  if [[ "$target" == http* ]]; then
+    export PREVIEW_URL="$target"
+    target=preview
+  fi
+
+  url=$(baseUrl "$target")
+  echo "▶ e2e against '$target'${url:+ ($url)}"
+  waitFor "$url"
+
+  CYPRESS_ENV="$target" pnpm --filter viewer run cy:run || status=1
+done
+
+exit $status
