@@ -32,5 +32,8 @@ export default defineConfig({
     experimentalRunAllSpecs: true,
     specPattern: 'cypress/e2e/**/*.{ts,tsx}',
     supportFile: false,
+    // Retry in CI/headless runs to absorb transient flake — network hiccups and
+    // async deduction when pointed at a live (non-intercepted) deployment.
+    retries: { runMode: 2, openMode: 0 },
   },
 })
