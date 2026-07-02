@@ -1,3 +1,4 @@
+import { browser } from '$app/environment'
 import { type SerializedTheorem } from '@pi-base/core'
 import type * as Gateway from '@/gateway'
 import {
@@ -81,7 +82,11 @@ export function create(pre: Prestore, gateway: Gateway.Sync): Store {
     if (result) {
       set(result.properties, result.spaces, result.theorems, result.traits)
 
-      deduction.run(true)
+      // Eager full-database deduction is client-only; during SSR individual
+      // spaces are deduced lazily on demand (see stores/deduction.ts).
+      if (browser) {
+        deduction.run(true)
+      }
 
       return {
         etag: result.etag,
