@@ -9,6 +9,8 @@ export { type Formula, type And, type Atom, type Or } from './Formula.js'
 export { parser } from './Parser.js'
 export { type Property, PropertyPage } from './Property.js'
 export {
+  Derivations,
+  type Derivation,
   ImplicationIndex,
   deduceTraits,
   disproveFormula,
@@ -21,6 +23,7 @@ export { type Trait } from './Trait.js'
 export { type Version } from './Bundle.js'
 export { parseDocument } from './Document.js'
 
+export * as artifacts from './Artifacts.js'
 export * as bundle from './Bundle.js'
 export * as formula from './Formula.js'
 export * as Id from './Id.js'
