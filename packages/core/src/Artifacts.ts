@@ -177,6 +177,11 @@ export function manifest(version: Version): Manifest {
   })
 }
 
+// Resolve the manifest's per-space path template for a given space
+export function spacePath(manifest: Manifest, space: Id): string {
+  return manifest.paths.spaces.replace('{id}', space)
+}
+
 // The zod parses below both validate the shapes and canonicalize the output:
 // object schemas strip fields that don't belong in the artifact (description,
 // refs) and emit keys in schema order, so serialization is deterministic even
