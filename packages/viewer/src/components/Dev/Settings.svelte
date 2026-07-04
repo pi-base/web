@@ -10,7 +10,7 @@
   <div class="col">
     <Explore />
     <hr />
-    <h4>Tools</h4>
+    <h4>Community tools</h4>
     <ul>
       <li>
         <a href="https://observablehq.com/@dinod123/pi-base-tools"
