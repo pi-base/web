@@ -26,12 +26,12 @@ function targetFor(name: string): Target {
       return { baseUrl: 'https://topology.pi-base.org', mode: 'live' }
     case 'workers':
       return {
-        baseUrl: `https://pi-base-topology.${WORKERS_SUBDOMAIN}`,
+        baseUrl: `https://topology.${WORKERS_SUBDOMAIN}`,
         mode: 'live',
       }
     case 'graphs':
       return {
-        baseUrl: `https://pi-base-graphs.${WORKERS_SUBDOMAIN}`,
+        baseUrl: `https://graphs.${WORKERS_SUBDOMAIN}`,
         mode: 'live',
       }
     case 'preview': {

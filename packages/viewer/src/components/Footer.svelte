@@ -1,6 +1,8 @@
 <script lang="ts">
   import { categoryConfig } from '@/constants'
   import markdownit from 'markdown-it'
+
+  // TODO: standardize on one markdown library.
   const md = markdownit()
   import Sync from './Dev/Sync.svelte'
 </script>

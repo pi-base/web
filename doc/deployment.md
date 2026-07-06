@@ -8,10 +8,10 @@ by the `VITE_CATEGORY` flavor flag (see `categoryConfig` in
 `packages/viewer/src/constants.ts`; unset defaults to `topology`, unsupported
 values fail the build):
 
-| Worker             | `VITE_CATEGORY` | wrangler env | Site                       |
-| ------------------ | ----------- | ------------ | -------------------------- |
-| `pi-base-topology` | `topology`  | `topology`   | `topology.pi-base.org`     |
-| `pi-base-graphs`   | `graphs`    | `graphs`     | `graphs.pi-base.org` (TBD) |
+| Worker     | `VITE_CATEGORY` | wrangler env | Site                                                        |
+| ---------- | --------------- | ------------ | ----------------------------------------------------------- |
+| `topology` | `topology`      | `topology`   | `topology.pi-base.org`                                       |
+| `graphs`   | `graphs`        | `graphs`     | `graphs.pi-base.workers.dev` (`graphs.pi-base.org` TBD)      |
 
 Worker config lives in `packages/viewer/wrangler.jsonc` (Static Assets + named
 environments). Builds run through `bin/build`, which reads the `WORKERS_CI_*`
