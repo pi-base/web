@@ -59,18 +59,54 @@ for more details.
 <root>/packages/viewer $ pnpm run cy:run --config baseUrl=<url>
 ```
 
+## Fixture vs. live data
+
+`CYPRESS_ENV` selects which deployment to test _and_ the data the suite runs
+against:
+
+- **`fixture`** (default, used by `local`/CI) intercepts the data bundle with
+  `cypress/fixtures/main.min.json`, so content assertions are deterministic.
+- **`live`** (all deployed targets) lets the app fetch its real R2 bundle, so we
+  exercise the actual deployment end-to-end and confirm the sites stay
+  consistent.
+
+| `CYPRESS_ENV`        | URL                                  | Mode    |
+| -------------------- | ------------------------------------ | ------- |
+| `local` (default)    | `http://localhost:5173`              | fixture |
+| `pages`              | `https://topology.pi-base.org`       | live    |
+| `workers`            | `pi-base-topology.…workers.dev`      | live    |
+| `graphs`             | `pi-base-graphs.…workers.dev`        | live    |
+| `preview`            | `$PREVIEW_URL`                       | live    |
+
+The whole suite runs in both modes; assertions are written to hold against the
+real data (stable IDs, math-free name prefixes, behavioral checks) rather than
+exact HTML snapshots. Set `CYPRESS_MODE=fixture` to force the deterministic
+fixture against a deployed URL while debugging.
+
+The fixture (`cypress/fixtures/main.min.json`) is a hand-curated subset; keep its
+tested entities (e.g. `S000001`, `S000004`, `P000001`) in sync with live data.
+Note it predates a pi-base property-ID reorganization, so its property `uid`s are
+**not** interchangeable with the current bundle's — refresh display fields per
+entity, don't bulk-remap by `uid`.
+
 ## Remote End-to-End Testing
 
-There is a `./bin/e2e` script to facilitate running the end-to-end test suite
-against a few common external URLs:
+The `./bin/e2e` script runs the suite against the deployed targets (live data),
+health-checking each first:
 
 ```bash
-# Run tests against the deployed production URL
-<root> $ ./bin/e2e production
-
-# Run tests against a Cloudflare Pages preview URL for a named branch
-<root> $ ./bin/e2e <branch>
-
-# Run tests against a Cloudflare Pages preview URL for the current branch
+# Cross-consistency check across the live sites (default: pages + workers)
 <root> $ ./bin/e2e
+
+# A single live target
+<root> $ ./bin/e2e pages
+<root> $ ./bin/e2e workers
+<root> $ ./bin/e2e graphs
+
+# A Workers preview ("wrangler versions upload" prints a per-version URL)
+<root> $ PREVIEW_URL=https://<version>-pi-base-topology.<subdomain>.workers.dev ./bin/e2e preview
+<root> $ ./bin/e2e https://<version>-pi-base-topology.<subdomain>.workers.dev
 ```
+
+Equivalently, per-target package scripts: `pnpm --filter viewer run
+cy:run:pages` (or `:workers` / `:preview` / `:graphs`).

@@ -33,7 +33,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "debug": "^4.3.4",
+    "debug": "^4.4.3",
     "js-yaml": "^4.1.0",
     "rehype-katex": "^6.0.3",
     "rehype-stringify": "^9.0.4",
@@ -47,7 +47,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@types/debug": "^4.1.12",
+    "@types/debug": "^4.1.13",
     "@types/hast": "^2.3.9",
     "@types/js-yaml": "^4.0.9",
     "@types/mdast": "^3.0.15",

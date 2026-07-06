@@ -10,33 +10,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      # https://github.com/pnpm/action-setup
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8.x.x
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-v2-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-v2-
-
-      - name: Install dependencies
-        run: pnpm install
+      - name: Setup
+        uses: ./.github/actions/setup
 
       - name: Check linter
         run: pnpm lint:check
@@ -47,6 +22,9 @@ jobs:
 
       - name: Build rest
         run: pnpm --filter compile --filter viewer run build
+
+      - name: Validate viewer types (svelte-check)
+        run: pnpm --filter viewer run validate
 
       - name: Run all tests
         run: pnpm --recursive run test:cov

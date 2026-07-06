@@ -1,3 +1,4 @@
+import { browser } from '$app/environment'
 import { type Readable, writable } from 'svelte/store'
 import {
   ImplicationIndex,
@@ -17,6 +18,7 @@ import type {
   Trait,
   Traits,
 } from '@/models'
+import { serverLog } from '@/debug'
 import { eachTick, read, subscribeUntil } from '@/util'
 
 export type State = {
@@ -84,9 +86,67 @@ export function create(
   theorems.subscribe($theorems => {
     implications = indexTheorems($theorems)
 
-    // Ensure that the trait store is updated before deductions run
-    setTimeout(run, 0)
+    // The eager full-database prover only makes sense for the interactive
+    // client. During SSR it re-derives every space on each request and dominates
+    // Worker CPU, so we deduce individual spaces lazily via `checked` instead.
+    if (browser) {
+      // Ensure that the trait store is updated before deductions run
+      setTimeout(run, 0)
+    }
   })
+
+  // Deduce a single space, deriving its traits from the asserted ones (or
+  // recording a contradiction). Idempotent: already-checked spaces are skipped.
+  function deduceSpace(space: Space): void {
+    const state = read(store)
+    if (state.contradiction || state.checked.has(space.id)) {
+      return
+    }
+
+    store.update(s => ({ ...s, checking: space.name }))
+
+    const map = new Map(
+      read(traits)
+        .forSpace(space)
+        .map(([p, t]) => [p.id, t.value]),
+    )
+    const result = deduceTraits(implications, map)
+
+    if (result.kind === 'contradiction') {
+      store.update(s => ({ ...s, contradiction: result.contradiction }))
+      serverLog({
+        evt: 'deduce_space',
+        space: space.id,
+        derived: 0,
+        contradiction: true,
+      })
+      return
+    }
+
+    const newTraits: DeducedTrait[] = result.derivations
+      .all()
+      .map(({ property, value, proof }) => ({
+        asserted: false,
+        space: space.id,
+        property,
+        value,
+        proof,
+      }))
+
+    addTraits(newTraits)
+
+    store.update(s => ({
+      ...s,
+      checked: new Set([...s.checked, space.id]),
+    }))
+
+    serverLog({
+      evt: 'deduce_space',
+      space: space.id,
+      derived: newTraits.length,
+      contradiction: false,
+    })
+  }
 
   function run(reset = false): Promise<void> {
     if (reset) {
@@ -101,46 +161,20 @@ export function create(
     }))
 
     const checked = read(store).checked
+    const unchecked = allSpaces.filter(s => !checked.has(s.id))
 
-    const unchecked: Space[] = []
-    allSpaces.forEach(s => {
-      if (!checked.has(s.id)) {
-        unchecked.push(s)
-      }
-    })
+    // Log the planned work *synchronously*, before the async loop. On the eager
+    // SSR model the loop finishes after the response is sent (the page resolves
+    // as soon as its space is reached), so a completion-time count is dropped;
+    // `planned` (spaces this run intends to deduce) is captured pre-response and
+    // reliably sizes the deduction work, joinable to platform cpuTimeMs.
+    serverLog({ evt: 'deduce_run', planned: unchecked.length, reset })
 
     return eachTick(unchecked, (s: Space, halt: () => void) => {
-      store.update(state => ({ ...state, checking: s.name }))
-
-      const map = new Map(
-        read(traits)
-          .forSpace(s)
-          .map(([p, t]) => [p.id, t.value]),
-      )
-      const result = deduceTraits(implications, map)
-
-      if (result.kind === 'contradiction') {
-        store.update(s => ({ ...s, contradiction: result.contradiction }))
+      deduceSpace(s)
+      if (read(store).contradiction) {
         halt()
-        return
       }
-
-      const newTraits: DeducedTrait[] = result.derivations
-        .all()
-        .map(({ property, value, proof }) => ({
-          asserted: false,
-          space: s.id,
-          property,
-          value,
-          proof,
-        }))
-
-      addTraits(newTraits)
-
-      store.update(state => ({
-        ...state,
-        checked: new Set([...state.checked, s.id]),
-      }))
     })
   }
 
@@ -148,6 +182,12 @@ export function create(
     subscribe: store.subscribe,
     run,
     checked(spaceId: number) {
+      // Deduce on demand so a single SSR page render only proves the space it
+      // needs, rather than blocking on a full-database background run.
+      const space = read(spaces).find(spaceId)
+      if (space) {
+        deduceSpace(space)
+      }
       return subscribeUntil(
         store,
         state => state.checked.has(spaceId) || !!state.contradiction,
@@ -214,6 +254,6 @@ export function checkIfRedundant(
   }
   const theorems = result.contradiction.theorems
     .map(t => thms.find(t))
-    .filter(t => t !== null)
+    .filter((t): t is Theorem => t !== null)
   return { redundant, theorems }
 }

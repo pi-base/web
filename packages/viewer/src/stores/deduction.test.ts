@@ -97,17 +97,14 @@ describe(Deduction.create, () => {
 
     await store.run()
 
-    // FIXME: this documents the current behavior, but it's surprising that we're
-    // getting duplicated entries.
+    // Each space is deduced exactly once: the store advances to "checking" the
+    // space, then records it as checked, with no duplicate passes.
     expect(stores.map(({ checking, checked }) => [checking, checked])).toEqual([
       [undefined, new Set()],
       [undefined, new Set()],
       ['Space 1', new Set()],
       ['Space 1', new Set([1])],
-      ['Space 1', new Set([1])],
       ['Space 2', new Set([1])],
-      ['Space 2', new Set([1, 2])],
-      ['Space 2', new Set([1, 2])],
       ['Space 2', new Set([1, 2])],
     ])
 
@@ -116,8 +113,6 @@ describe(Deduction.create, () => {
     ).toEqual([
       [1, 2, true],
       [1, 3, true],
-      [2, 2, false],
-      [2, 1, false],
       [2, 2, false],
       [2, 1, false],
     ])

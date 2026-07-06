@@ -1,18 +1,59 @@
 # Deployment
 
-## Viewer
+## Viewer (Cloudflare Workers)
 
-Continuous deployment is handled through Cloudflare Pages.
+The viewer is migrating from Cloudflare Pages to **Cloudflare Workers** (Static
+Assets). Two Workers are produced from this single repo, selected at build time
+by the `VITE_SITE` flavor flag (see `packages/viewer/src/site.ts`):
+
+| Worker             | `VITE_SITE` | wrangler env | Site                       |
+| ------------------ | ----------- | ------------ | -------------------------- |
+| `pi-base-topology` | `topology`  | `topology`   | `topology.pi-base.org`     |
+| `pi-base-graphs`   | `graphs`    | `graphs`     | `graphs.pi-base.org` (TBD) |
+
+Worker config lives in `packages/viewer/wrangler.jsonc` (Static Assets + named
+environments). Builds run through `bin/build`, which reads the `WORKERS_CI_*`
+variables Workers Builds injects for branch/commit metadata.
+
+### Manual deploy
+
+```bash
+pnpm --filter core build
+VITE_SITE=topology pnpm --filter viewer build
+pnpm --filter viewer run cf:deploy:topology   # or cf:deploy:graphs
+```
+
+### Continuous deployment (Workers Builds)
+
+Each Worker is connected to this repo through Cloudflare Workers Builds
+(the Worker's *Settings → Build*). For both Workers:
+
+- **Root directory:** repo root
+- **Build command:** `bin/build`
+- **Build environment variable:** `VITE_SITE=topology` (or `graphs`)
+- **Deploy command:** `pnpm --filter viewer run cf:deploy:topology` (or `:graphs`)
+- **Non-production (preview) deploy command:**
+  `pnpm --filter viewer run cf:preview:topology` (or `:graphs`)
+- **Build watch paths:** `packages/**`, `bin/**`
+
+A push to the production branch deploys both Workers; pushes to other branches
+upload preview versions (`wrangler versions upload`) with their own URLs.
+
+> **The legacy Pages project is unaffected by these changes.** Cloudflare sets
+> `CF_PAGES=1` during Pages builds, and `@sveltejs/adapter-cloudflare` checks
+> that first, so a Pages build keeps emitting Pages output even with
+> `wrangler.jsonc` present. Pages can be decommissioned once the Workers
+> deployment owns `topology.pi-base.org`.
+
+### Viewer (Cloudflare Pages — legacy)
+
+Until the cutover, continuous deployment also runs through Cloudflare Pages.
 
 - [⚙️ Configuration](https://dash.cloudflare.com/78c505984bbdc3e69206eecb9471c4de/pages/view/topology/settings/builds-deployments)
 - [🔗 Cloudflare deployment URL](https://topology.pages.dev)
 
-The deployment process is generally:
-
-- A PR is approved and merged to `main`
-- The Cloudflare app picks up the PR and runs `npm run build`
-- Assuming no errors, the built `/packages/viewer/dist` directory is deployed to
-  the Cloudflare pages URL `topology.pages.dev`
+A merge to `main` triggers a Pages build (`bin/build`); the adapter output in
+`packages/viewer/.svelte-kit/cloudflare` is deployed to `topology.pages.dev`.
 
 Cloudflare Pages is not currently configured to report builds or build failures
 directly (see [this Cloudflare community discussion](https://community.cloudflare.com/t/get-slack-webhook-when-pages-build-finished-cloudflare-pages/311019)).

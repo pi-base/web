@@ -1,17 +1,31 @@
 #!/bin/bash
 
-# This scripts is primarily used during Cloudflare deploys, to generate the 
+# This scripts is primarily used during Cloudflare deploys, to generate the
 # static assets that are served by Cloudflare.
 
-export VITE_BRANCH=$CF_PAGES_BRANCH 
-export VITE_VERSION=$CF_PAGES_COMMIT_SHA
+# Branch/commit metadata is injected by the CI provider. Cloudflare Workers
+# Builds exposes WORKERS_CI_*; Pages exposed CF_PAGES_* (kept as a fallback
+# during the migration); otherwise fall back to local git.
+export VITE_BRANCH="${WORKERS_CI_BRANCH:-${CF_PAGES_BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null)}}"
+export VITE_VERSION="${WORKERS_CI_COMMIT_SHA:-${CF_PAGES_COMMIT_SHA:-$(git rev-parse HEAD 2>/dev/null)}}"
 
-# Cloudflare does not include pnpm in their build image, so we need to install
-# it ourselves, and make sure it installs packages somewhere that Cloudflare caches.
+# VITE_SITE selects the build flavor (branding/data). It is set per-Worker in
+# the Workers Builds environment variables; default to topology if unset.
+export VITE_SITE="${VITE_SITE:-topology}"
+echo "Building site '${VITE_SITE}' (branch=${VITE_BRANCH}, version=${VITE_VERSION})"
+
+# Workers Builds (and the GitHub workflows) run `pnpm install` before invoking
+# this script, so only install when dependencies are actually missing — e.g.
+# running this script on a clean local checkout. This skips a redundant second
+# install on CI, which was the bulk of each build's wall time.
 #
-# See https://community.cloudflare.com/t/add-pnpm-to-pre-installed-cloudflare-pages-tools/288514/3
-npm install -g pnpm
-pnpm install --store=node_modules/.pnpm-store
+# Don't pass `--store=node_modules/.pnpm-store`: relocating the store forces pnpm
+# to recreate node_modules and fragments it from the CI auto-install's store,
+# defeating the dependency cache (every package re-downloads).
+if [ ! -d node_modules ]; then
+  command -v pnpm >/dev/null 2>&1 || npm install -g pnpm
+  pnpm install --frozen-lockfile
+fi
 
 cd ./packages/core
 pnpm run build
