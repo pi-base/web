@@ -19,7 +19,7 @@
   <div class="alert alert-warning">
     <strong>Notice:</strong>
     This asserted property can be deduced from the other asserted traits for this
-    space, due to the following theorems.
+    object, due to the following theorems.
   </div>
   <Table theorems={result.theorems} {emphasizedProperties} />
 {/if}

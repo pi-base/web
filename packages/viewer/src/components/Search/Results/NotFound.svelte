@@ -18,7 +18,7 @@
   <Disprovable {formula} {proof} />
 {:else}
   <p>
-    No spaces found
+    No objects found
     {#if text}matching <code>{text}</code>{/if}
     {#if text && formula}and{/if}
     {#if formula}

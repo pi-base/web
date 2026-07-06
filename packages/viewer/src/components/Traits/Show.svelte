@@ -40,7 +40,7 @@
     | undefined
 </script>
 
-<h3>Space S{space.id} | Property P{property.id}</h3>
+<h3>{categoryConfig.object} S{space.id} | Property P{property.id}</h3>
 
 <h1>
   {#if proof}

@@ -9,6 +9,7 @@ const {
 
 interface CategoryConfig {
   category: string
+  object: string
   objects: string
   subject: string
   slogan: string
@@ -29,6 +30,7 @@ interface CategoryConfig {
 
 const topologyConfig: CategoryConfig = {
   category: 'topology',
+  object: 'Space',
   objects: 'Spaces',
   subject: 'Topology',
   slogan: 'a community database of topological counterexamples',
@@ -100,6 +102,7 @@ Software © ${currentYear} James Dabbs ([MIT License](https://github.com/pi-base
 
 const graphConfig: CategoryConfig = {
   category: 'graph',
+  object: 'Graph',
   objects: 'Graphs',
   subject: 'Graph Theory',
   slogan: 'a community database of graph classes',
