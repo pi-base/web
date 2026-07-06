@@ -24,8 +24,8 @@ fi
 function baseUrl() {
   case "$1" in
     pages | production) echo "https://topology.pi-base.org" ;;
-    workers) echo "https://pi-base-topology.fragrant-boat-7068.workers.dev" ;;
-    graphs) echo "https://pi-base-graphs.fragrant-boat-7068.workers.dev" ;;
+    workers) echo "https://topology.pi-base.workers.dev" ;;
+    graphs) echo "https://graphs.pi-base.workers.dev" ;;
     preview) echo "${PREVIEW_URL:-}" ;;
     *) echo "" ;;
   esac

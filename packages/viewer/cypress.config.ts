@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 // The account's workers.dev subdomain for the viewer Workers (see
 // doc/deployment.md). Used to address the deployed Workers directly.
-const WORKERS_SUBDOMAIN = 'fragrant-boat-7068.workers.dev'
+const WORKERS_SUBDOMAIN = 'pi-base.workers.dev'
 
 type Mode = 'fixture' | 'live'
 type Target = { baseUrl: string; mode: Mode }

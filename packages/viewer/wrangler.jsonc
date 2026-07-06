@@ -22,6 +22,7 @@
     // and via the observability API). invocation_logs gives per-request
     // cpuTimeMs/wallTimeMs; traces give the auto I/O waterfall (bundle fetch).
     "topology": {
+      "name": "topology",
       "observability": {
         "enabled": true,
         "logs": {
@@ -32,6 +33,7 @@
       }
     },
     "graphs": {
+      "name": "graphs",
       "observability": {
         "enabled": true,
         "logs": {
