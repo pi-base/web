@@ -7,28 +7,17 @@
   let openQuestion:
     | { space: Space; property: Property; trait: Trait | undefined }
     | undefined = undefined
+  // Datasets with no undecided (space, property) pairs have no questions to
+  // roll; openQuestion stays undefined and we render the empty state instead
   const rollOpenQuestion = () => {
-    openQuestion = undefined
-    const ss = $spaces.all
-    while (openQuestion == undefined) {
-      const randomSpace = ss[Math.floor(Math.random() * ss.length)]
-      const openQuestions = $traits
-        .forSpaceAll(randomSpace)
-        .map(([p, t]) => {
-          return {
-            space: randomSpace,
-            property: p,
-            trait: t,
-          }
-        })
-        .filter(question => question.trait === undefined)
-      if (openQuestions.length === 0) {
-        openQuestion = undefined
-      } else {
-        openQuestion =
-          openQuestions[Math.floor(Math.random() * openQuestions.length)]
-      }
-    }
+    const openQuestions = $spaces.all.flatMap(space =>
+      $traits
+        .forSpaceAll(space)
+        .filter(([, trait]) => trait === undefined)
+        .map(([property, trait]) => ({ space, property, trait })),
+    )
+    openQuestion =
+      openQuestions[Math.floor(Math.random() * openQuestions.length)]
   }
   rollOpenQuestion()
   $: bodyMain = `Does {S${openQuestion?.space.id}} satisfy {P${openQuestion?.property.id}}?`
@@ -36,22 +25,26 @@
 </script>
 
 <div class="text-center my-3">
-  <div class="mb-3">
-    <button
-      type="button"
-      class="btn btn-outline-secondary"
-      on:click={() => rollOpenQuestion()}
-    >
-      <Dice /> Reroll question
-    </button>
-  </div>
-  <div class="lead mb-3" style="font-size:2em">
-    <Typeset body={bodyMain} />
-  </div>
-  <div class="mb-3">
-    <Typeset body={bodySecondary} />
-  </div>
-  <p>
-    <small> Disclaimer: some questions cannot be answered in ZFC! </small>
-  </p>
+  {#if openQuestion}
+    <div class="mb-3">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        on:click={() => rollOpenQuestion()}
+      >
+        <Dice /> Reroll question
+      </button>
+    </div>
+    <div class="lead mb-3" style="font-size:2em">
+      <Typeset body={bodyMain} />
+    </div>
+    <div class="mb-3">
+      <Typeset body={bodySecondary} />
+    </div>
+    <p>
+      <small> Disclaimer: some questions cannot be answered in ZFC! </small>
+    </p>
+  {:else}
+    <p class="lead">There are no open questions in this database.</p>
+  {/if}
 </div>
