@@ -7,7 +7,7 @@
   //
   // Deploy:  wrangler deploy --env topology   (or --env graphs)
   // The per-site differences (branding, bundle host) are baked in at build time
-  // via the VITE_SITE env var, not configured here.
+  // via the VITE_CATEGORY env var, not configured here.
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "pi-base",
   "main": ".svelte-kit/cloudflare/_worker.js",

@@ -1,6 +1,6 @@
-// Per-deployment ("site") configuration, selected at build time via VITE_SITE.
+// Per-deployment ("site") configuration, selected at build time via VITE_CATEGORY.
 //
-// The viewer is built once per site (e.g. `VITE_SITE=graphs pnpm build`) and
+// The viewer is built once per site (e.g. `VITE_CATEGORY=graphs pnpm build`) and
 // each build is deployed to its own Cloudflare Worker. For now the only
 // difference is a branding label; this is the seam where data-bundle host,
 // tagline, theme, etc. will diverge later.
@@ -17,6 +17,6 @@ const sites: Record<SiteKey, Site> = {
   graphs: { key: 'graphs', label: 'π-Base (graphs)' },
 }
 
-const key = (import.meta.env.VITE_SITE ?? 'topology') as SiteKey
+const key = (import.meta.env.VITE_CATEGORY ?? 'topology') as SiteKey
 
 export const site = sites[key] ?? sites.topology

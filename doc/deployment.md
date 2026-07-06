@@ -4,9 +4,9 @@
 
 The viewer is migrating from Cloudflare Pages to **Cloudflare Workers** (Static
 Assets). Two Workers are produced from this single repo, selected at build time
-by the `VITE_SITE` flavor flag (see `packages/viewer/src/site.ts`):
+by the `VITE_CATEGORY` flavor flag (see `packages/viewer/src/site.ts`):
 
-| Worker             | `VITE_SITE` | wrangler env | Site                       |
+| Worker             | `VITE_CATEGORY` | wrangler env | Site                       |
 | ------------------ | ----------- | ------------ | -------------------------- |
 | `pi-base-topology` | `topology`  | `topology`   | `topology.pi-base.org`     |
 | `pi-base-graphs`   | `graphs`    | `graphs`     | `graphs.pi-base.org` (TBD) |
@@ -19,7 +19,7 @@ variables Workers Builds injects for branch/commit metadata.
 
 ```bash
 pnpm --filter core build
-VITE_SITE=topology pnpm --filter viewer build
+VITE_CATEGORY=topology pnpm --filter viewer build
 pnpm --filter viewer run cf:deploy:topology   # or cf:deploy:graphs
 ```
 
@@ -30,7 +30,7 @@ Each Worker is connected to this repo through Cloudflare Workers Builds
 
 - **Root directory:** repo root
 - **Build command:** `bin/build`
-- **Build environment variable:** `VITE_SITE=topology` (or `graphs`)
+- **Build environment variable:** `VITE_CATEGORY=topology` (or `graphs`)
 - **Deploy command:** `pnpm --filter viewer run cf:deploy:topology` (or `:graphs`)
 - **Non-production (preview) deploy command:**
   `pnpm --filter viewer run cf:preview:topology` (or `:graphs`)
