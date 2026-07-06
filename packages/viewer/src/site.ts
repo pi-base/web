@@ -5,7 +5,7 @@
 // difference is a branding label; this is the seam where data-bundle host,
 // tagline, theme, etc. will diverge later.
 
-type SiteKey = 'topology' | 'graphs'
+type SiteKey = 'topology' | 'graph'
 
 type Site = {
   key: SiteKey
@@ -14,7 +14,7 @@ type Site = {
 
 const sites: Record<SiteKey, Site> = {
   topology: { key: 'topology', label: 'π-Base' },
-  graphs: { key: 'graphs', label: 'π-Base (graphs)' },
+  graph: { key: 'graph', label: 'π-Base (graphs)' },
 }
 
 const key = (import.meta.env.VITE_CATEGORY ?? 'topology') as SiteKey
