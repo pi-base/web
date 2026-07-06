@@ -107,9 +107,13 @@ const graphConfig: CategoryConfig = {
   subject: 'Graph Theory',
   slogan: 'a community database of graph classes',
   citeTitle: 'π-Base Graph Theory',
-  contributingUrl: 'TODO',
+  // TODO: graph-specific contributing docs; must be an absolute URL or the
+  // prerenderer will crawl it as an internal link and 404 the build
+  contributingUrl:
+    'https://code4math.zulipchat.com/#narrow/channel/416467-pi-base',
   helpUrl: 'https://github.com/pi-base/data-graph/wiki/',
-  sentryUrl: 'TODO',
+  // Empty DSN disables Sentry until a graph-specific project exists
+  sentryUrl: '',
   calloutFeatures: ['graphs are neat'],
   homeContent: '# Contributing ...',
   showQuestions: false,
