@@ -1,5 +1,5 @@
 const {
-  VITE_BUNDLE_HOST = 'https://pub-65041ca69d744da88ade13abd31ad834.r2.dev', // TODO: push down to @pi-base/core?
+  VITE_BUNDLE_HOST,
   VITE_BUNDLE_SSE = 'false',
   VITE_BRANCH = 'unknown',
   VITE_MAIN_BRANCH = 'main',
@@ -9,6 +9,9 @@ const {
 
 interface CategoryConfig {
   category: string
+  // Public host serving this category's compiled data bundles (each data repo's
+  // compile workflow publishes to its own R2 bucket)
+  bundleHost: string
   object: string
   objects: string
   subject: string
@@ -30,6 +33,7 @@ interface CategoryConfig {
 
 const topologyConfig: CategoryConfig = {
   category: 'topology',
+  bundleHost: 'https://pub-65041ca69d744da88ade13abd31ad834.r2.dev',
   object: 'Space',
   objects: 'Spaces',
   subject: 'Topology',
@@ -101,7 +105,8 @@ Software © ${currentYear} James Dabbs ([MIT License](https://github.com/pi-base
 }
 
 const graphConfig: CategoryConfig = {
-  category: 'graph',
+  category: 'graphs',
+  bundleHost: 'https://pub-f9343081ef2f4afba3e09cc65216223c.r2.dev',
   object: 'Graph',
   objects: 'Graphs',
   subject: 'Graph Theory',
@@ -120,11 +125,29 @@ const graphConfig: CategoryConfig = {
   footer: () => '',
 }
 
-export const categoryConfig =
-  VITE_CATEGORY === 'graph' ? graphConfig : topologyConfig
+const configs: Record<string, CategoryConfig> = {
+  topology: topologyConfig,
+  graphs: graphConfig,
+}
+
+// Fails the build (during prerendering) rather than silently falling back to
+// topology when VITE_CATEGORY is set but unsupported. Unset defaults above.
+function selectConfig(category: string): CategoryConfig {
+  const config = configs[category]
+  if (!config) {
+    throw new Error(
+      `Unsupported VITE_CATEGORY '${category}'; expected one of: ${Object.keys(
+        configs,
+      ).join(', ')}`,
+    )
+  }
+  return config
+}
+
+export const categoryConfig = selectConfig(VITE_CATEGORY)
 
 export const mainBranch = VITE_MAIN_BRANCH
-export const defaultHost = VITE_BUNDLE_HOST
+export const defaultHost = VITE_BUNDLE_HOST ?? categoryConfig.bundleHost
 
 export const build = {
   branch: VITE_BRANCH,
