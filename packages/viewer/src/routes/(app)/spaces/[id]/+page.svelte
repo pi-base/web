@@ -5,11 +5,10 @@
   import { page } from '$app/stores'
 
   export let data: PageData
-  let rel = $page.url.pathname
 
   $: title = `S${data.space.id}: ${data.space.name}`
 </script>
 
 <Title {title} />
 
-<Show space={data.space} tab="properties" {rel} />
+<Show space={data.space} tab="properties" rel={$page.url.pathname} />
