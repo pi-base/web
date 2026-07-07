@@ -5,9 +5,9 @@
 
   export let space: Space
 
-  function related(traits: Traits): [Space, Property, Trait | undefined][] {
-    return traits.forSpaceAll(space).map(([p, t]) => [space, p, t])
-  }
+  // Reactive so that Related recomputes when navigating between spaces
+  $: related = (traits: Traits): [Space, Property, Trait | undefined][] =>
+    traits.forSpaceAll(space).map(([p, t]) => [space, p, t])
 </script>
 
 <Related mode="properties" {related}>
