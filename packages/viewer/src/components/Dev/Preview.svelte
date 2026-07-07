@@ -73,10 +73,10 @@ This is a list of external references:
             <code>{'{uid}'}</code>
             - e.g.
             <code>{'{S1}'}</code>
-            for space 1
+            for object 1
             <br />
             <code>{'{S1|P2}'}</code>
-            for space 1's value of property 2
+            for object 1's value of property 2
           </td>
         </tr>
         <tr>

@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 // The account's workers.dev subdomain for the viewer Workers (see
 // doc/deployment.md). Used to address the deployed Workers directly.
-const WORKERS_SUBDOMAIN = 'fragrant-boat-7068.workers.dev'
+const WORKERS_SUBDOMAIN = 'pi-base.workers.dev'
 
 type Mode = 'fixture' | 'live'
 type Target = { baseUrl: string; mode: Mode }
@@ -26,12 +26,12 @@ function targetFor(name: string): Target {
       return { baseUrl: 'https://topology.pi-base.org', mode: 'live' }
     case 'workers':
       return {
-        baseUrl: `https://pi-base-topology.${WORKERS_SUBDOMAIN}`,
+        baseUrl: `https://topology.${WORKERS_SUBDOMAIN}`,
         mode: 'live',
       }
     case 'graphs':
       return {
-        baseUrl: `https://pi-base-graphs.${WORKERS_SUBDOMAIN}`,
+        baseUrl: `https://graphs.${WORKERS_SUBDOMAIN}`,
         mode: 'live',
       }
     case 'preview': {

@@ -10,10 +10,27 @@
   import urlSearchParam from '@/stores/urlSearchParam'
   import { checkIfRedundant } from '@/stores/deduction'
 
-  export let related: (traits: Traits) => [Space, Property, Trait | undefined][]
-  export let mode: 'spaces' | 'properties'
+  type Row = [Space, Property, Trait | undefined]
+
+  // The entity whose related traits are listed. Passing the entity itself
+  // (rather than a closure over it) keeps the data dependency visible to
+  // Svelte's reactivity, so the table recomputes when navigating between
+  // entities. See https://github.com/pi-base/web/issues/255.
+  export let anchor:
+    | { mode: 'properties'; space: Space }
+    | { mode: 'spaces'; property: Property }
 
   const { theorems, traits } = context()
+
+  function rows(a: typeof anchor, traits: Traits): Row[] {
+    if (a.mode === 'properties') {
+      const { space } = a
+      return traits.forSpaceAll(space).map(([p, t]) => [space, p, t])
+    } else {
+      const { property } = a
+      return traits.forPropertyAll(property).map(([s, t]) => [s, property, t])
+    }
+  }
 
   const filter = writable('')
   urlSearchParam('filter', filter)
@@ -39,11 +56,12 @@
     }
   }
 
-  $: all = related($traits)
-  // all has type [Space, Property, Trait][]
+  $: all = rows(anchor, $traits)
   // we need to index names in different positions depending on which kind we
   // are displaying
-  $: index = new Fuse(all, { keys: [`${mode === 'spaces' ? 0 : 1}.name`] })
+  $: index = new Fuse(all, {
+    keys: [`${anchor.mode === 'spaces' ? 0 : 1}.name`],
+  })
   $: searched = $filter ? index.search($filter).map(r => r.item) : all
   $: filtered = searched.filter(([_space, _property, t]) =>
     matchesFilter(filterMode, t),

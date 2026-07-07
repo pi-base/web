@@ -2,12 +2,13 @@
   // Cloudflare Workers (Static Assets) configuration for the viewer.
   //
   // The same SvelteKit build (`.svelte-kit/cloudflare`) is deployed to two
-  // Workers via named environments. Cloudflare names an environment's Worker
-  // `<name>-<env>`, so these deploy as `pi-base-topology` and `pi-base-graphs`.
+  // Workers via named environments. Each environment sets an explicit `name`,
+  // so these deploy as `topology` and `graphs`, served at
+  // `(topology|graphs).pi-base.workers.dev`.
   //
   // Deploy:  wrangler deploy --env topology   (or --env graphs)
   // The per-site differences (branding, bundle host) are baked in at build time
-  // via the VITE_SITE env var, not configured here.
+  // via the VITE_CATEGORY env var, not configured here.
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "pi-base",
   "main": ".svelte-kit/cloudflare/_worker.js",
@@ -22,6 +23,7 @@
     // and via the observability API). invocation_logs gives per-request
     // cpuTimeMs/wallTimeMs; traces give the auto I/O waterfall (bundle fetch).
     "topology": {
+      "name": "topology",
       "observability": {
         "enabled": true,
         "logs": {
@@ -32,6 +34,7 @@
       }
     },
     "graphs": {
+      "name": "graphs",
       "observability": {
         "enabled": true,
         "logs": {

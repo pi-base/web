@@ -2,6 +2,7 @@
   import context from '@/context'
   import Log from './Log.svelte'
   import { reset } from '@/util'
+  import { categoryConfig } from '@/constants'
   import { showLeanLinks, showRedundancy } from '@/stores/settings'
 
   const { spaces, properties, theorems, traits } = context()
@@ -11,7 +12,7 @@
 <table class="table">
   <tbody>
     <tr>
-      <th>Spaces</th>
+      <th>{categoryConfig.objects}</th>
       <td>{$spaces.all.length}</td>
     </tr>
     <tr>
