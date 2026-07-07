@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Space } from '@/models'
+  import { categoryConfig } from '@/constants'
   import { Aliases, Link, References, Source, Tabs, Typeset } from '../Shared'
   import Counterexamples from './Counterexamples.svelte'
   import Properties from './Properties.svelte'
@@ -11,7 +12,7 @@
   const tabs = ['properties', 'theorems', 'references'] as const
 </script>
 
-<h3>Space <Link.Space {space} content="idLong" /></h3>
+<h3>{categoryConfig.object} <Link.Space {space} content="idLong" /></h3>
 
 <h1>
   <Typeset body={space.name} />

@@ -4,12 +4,14 @@
 
 The viewer is migrating from Cloudflare Pages to **Cloudflare Workers** (Static
 Assets). Two Workers are produced from this single repo, selected at build time
-by the `VITE_SITE` flavor flag (see `packages/viewer/src/site.ts`):
+by the `VITE_CATEGORY` flavor flag (see `categoryConfig` in
+`packages/viewer/src/constants.ts`; unset defaults to `topology`, unsupported
+values fail the build):
 
-| Worker             | `VITE_SITE` | wrangler env | Site                       |
-| ------------------ | ----------- | ------------ | -------------------------- |
-| `pi-base-topology` | `topology`  | `topology`   | `topology.pi-base.org`     |
-| `pi-base-graphs`   | `graphs`    | `graphs`     | `graphs.pi-base.org` (TBD) |
+| Worker     | `VITE_CATEGORY` | wrangler env | Site                                                        |
+| ---------- | --------------- | ------------ | ----------------------------------------------------------- |
+| `topology` | `topology`      | `topology`   | `topology.pi-base.org`                                       |
+| `graphs`   | `graphs`        | `graphs`     | `graphs.pi-base.workers.dev` (`graphs.pi-base.org` TBD)      |
 
 Worker config lives in `packages/viewer/wrangler.jsonc` (Static Assets + named
 environments). Builds run through `bin/build`, which reads the `WORKERS_CI_*`
@@ -19,7 +21,7 @@ variables Workers Builds injects for branch/commit metadata.
 
 ```bash
 pnpm --filter core build
-VITE_SITE=topology pnpm --filter viewer build
+VITE_CATEGORY=topology pnpm --filter viewer build
 pnpm --filter viewer run cf:deploy:topology   # or cf:deploy:graphs
 ```
 
@@ -30,7 +32,7 @@ Each Worker is connected to this repo through Cloudflare Workers Builds
 
 - **Root directory:** repo root
 - **Build command:** `bin/build`
-- **Build environment variable:** `VITE_SITE=topology` (or `graphs`)
+- **Build environment variable:** `VITE_CATEGORY=topology` (or `graphs`)
 - **Deploy command:** `pnpm --filter viewer run cf:deploy:topology` (or `:graphs`)
 - **Non-production (preview) deploy command:**
   `pnpm --filter viewer run cf:preview:topology` (or `:graphs`)
@@ -69,5 +71,9 @@ Add a semver tag to trigger the [Publish Images CI step](https://github.com/pi-b
 
 ## Data
 
-Changes to the data repo invoke the released [compile action](https://github.com/pi-base/data/blob/6cc73f720751910ad4ede8a320c1eeff975ee5c3/.github/workflows/compile.yml#L12),
-and upload the compiled bundles to the `pi-base-bundles` S3 bucket.
+Changes to a data repo ([pi-base/data](https://github.com/pi-base/data),
+[pi-base/data-graphs](https://github.com/pi-base/data-graphs)) invoke that
+repo's compile workflow, which uploads the compiled bundle to the
+corresponding category's public R2 bucket — the `bundleHost` values in
+`packages/viewer/src/constants.ts`. (`pi-base/data` also uploads to the legacy
+`pi-base-bundles` S3 bucket.)

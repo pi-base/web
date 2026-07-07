@@ -1,6 +1,6 @@
 <script lang="ts">
   import context from '@/context'
-  import { contributingUrl } from '@/constants'
+  import { categoryConfig } from '@/constants'
   import type { Space, Theorem } from '@/models'
   import { Table as Traits } from '../Traits'
   import Name from './Name.svelte'
@@ -38,7 +38,7 @@
 </p>
 {#if counterexamples.length === 0 && !proof}
   <p>
-    <a href={contributingUrl}
+    <a href={categoryConfig.contributingUrl}
       >You can learn how to contribute a theorem or counterexample here.</a
     >
   </p>

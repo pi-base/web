@@ -74,8 +74,8 @@ against:
 | -------------------- | ------------------------------------ | ------- |
 | `local` (default)    | `http://localhost:5173`              | fixture |
 | `pages`              | `https://topology.pi-base.org`       | live    |
-| `workers`            | `pi-base-topology.…workers.dev`      | live    |
-| `graphs`             | `pi-base-graphs.…workers.dev`        | live    |
+| `workers`            | `topology.pi-base.workers.dev`       | live    |
+| `graphs`             | `graphs.pi-base.workers.dev`         | live    |
 | `preview`            | `$PREVIEW_URL`                       | live    |
 
 The whole suite runs in both modes; assertions are written to hold against the
@@ -104,8 +104,8 @@ health-checking each first:
 <root> $ ./bin/e2e graphs
 
 # A Workers preview ("wrangler versions upload" prints a per-version URL)
-<root> $ PREVIEW_URL=https://<version>-pi-base-topology.<subdomain>.workers.dev ./bin/e2e preview
-<root> $ ./bin/e2e https://<version>-pi-base-topology.<subdomain>.workers.dev
+<root> $ PREVIEW_URL=https://<version>-topology.pi-base.workers.dev ./bin/e2e preview
+<root> $ ./bin/e2e https://<version>-topology.pi-base.workers.dev
 ```
 
 Equivalently, per-target package scripts: `pnpm --filter viewer run

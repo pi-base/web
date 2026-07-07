@@ -80,5 +80,5 @@
   </div>
 </div>
 <div>
-  <Cite {title} />
+  <Cite />
 </div>

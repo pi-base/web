@@ -1,6 +1,6 @@
 <script lang="ts">
   import context from '@/context'
-  import { contributingUrl } from '@/constants'
+  import { categoryConfig } from '@/constants'
   import { Formula } from '@/components/Shared'
   import type { Formula as F, Property } from '@/models'
   import { disprove } from '@/stores/deduction'
@@ -18,7 +18,7 @@
   <Disprovable {formula} {proof} />
 {:else}
   <p>
-    No spaces found
+    No objects found
     {#if text}matching <code>{text}</code>{/if}
     {#if text && formula}and{/if}
     {#if formula}
@@ -28,7 +28,7 @@
   </p>
   {#if !text}
     <p>
-      <a href={contributingUrl}>
+      <a href={categoryConfig.contributingUrl}>
         Contribute an example or theorem that answers this search.
       </a>
     </p>

@@ -1,17 +1,16 @@
 <script lang="ts">
+  import { categoryConfig } from '@/constants'
   import { page } from '$app/stores'
   import CopyButton from './CopyButton.svelte'
-  export let title: string =
-    'π-Base, a community database of topological counterexamples.'
-  $: markdown = `[${title}](${$page.url})`
+  $: markdown = `[${categoryConfig.citeTitle}](${$page.url})`
 </script>
 
 <div class="text-center p-2">
   <small>
     Cite as:
     <span class="text-muted">
-      The pi-Base Community.
-      <cite>{title}.</cite>
+      The π-Base Community.
+      <cite>{categoryConfig.citeTitle}.</cite>
       Available at: {$page.url}
       (Accessed: {new Date().toISOString().split('T')[0]}).
     </span>
