@@ -10,11 +10,20 @@
   <div class="col">
     <Explore />
     <hr />
-    <h4>@danflapjax Pi-Base Tools</h4>
-    <p>
-      <a href="https://observablehq.com/@dinod123/pi-base-tools">
-        observablehq.com/@dinod123/pi-base-tools
-      </a>
-    </p>
+    <h4>Community tools</h4>
+    <ul>
+      <li>
+        <a href="https://observablehq.com/@dinod123/pi-base-tools"
+          >Pi-Base tools</a
+        >
+        by @danflapjax to check and visualize dependencies between properties.
+      </li>
+      <li>
+        <a href="https://felixpernegger.github.io/pibase-data/"
+          >pi-base open implications</a
+        >
+        by Felix Pernegger to resolve unknown implications.
+      </li>
+    </ul>
   </div>
 </div>
