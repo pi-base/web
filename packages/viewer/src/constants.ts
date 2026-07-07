@@ -111,18 +111,45 @@ const graphConfig: CategoryConfig = {
   objects: 'Graphs',
   subject: 'Graph Theory',
   slogan: 'a community database of graph classes',
-  citeTitle: 'π-Base Graph Theory',
+  citeTitle: 'π-Base Graph Theory: a community database of graph classes',
   // TODO: graph-specific contributing docs; must be an absolute URL or the
   // prerenderer will crawl it as an internal link and 404 the build
   contributingUrl:
     'https://code4math.zulipchat.com/#narrow/channel/416467-pi-base',
-  helpUrl: 'https://github.com/pi-base/data-graph/wiki/',
+  helpUrl: 'https://github.com/pi-base/data-graphs/wiki/',
   // Empty DSN disables Sentry until a graph-specific project exists
   sentryUrl: '',
-  calloutFeatures: ['graphs are neat'],
-  homeContent: '# Contributing ...',
+  // Relative links so they resolve against whatever host serves the graph
+  // site; each points at a real route, so the prerenderer won't 404 them.
+  calloutFeatures: [
+    'Search graphs by name/description: [the Petersen graph](/spaces?text=petersen)',
+    'Search graphs by properties: [regular vertex-transitive graphs](/spaces?q=regular%20%2B%20vertex-transitive)',
+    'Explore theorems: [vertex-transitive graphs are regular](/theorems/T000001)',
+  ],
+  homeContent: `
+### Contributing
+
+π-Base Graph Theory's data and software are open-sourced on [GitHub](https://github.com/pi-base/).
+We rely on [volunteers like yourself](https://github.com/pi-base/data-graphs/graphs/contributors)
+to [contribute](https://code4math.zulipchat.com/#narrow/channel/416467-pi-base) new graphs, graph classes, and theorems.
+
+### About
+
+π-Base Graph Theory is a companion to the [topological π-Base](https://topology.pi-base.org),
+applying the same object-property-theorem model, with automated deduction, to graphs and the classes they belong to.
+
+In 2026, [the π-Base project](https://pi-base.org) officially expanded to serve disciplines beyond topology.
+
+### Community
+
+The π-Base is part of the [code4math](https://code4math.org) community.
+Join the conversation on our [code4math Zulip channel](https://code4math.zulipchat.com/#narrow/channel/416467-pi-base).
+
+More databases may be discovered at the [Index of Mathematical DataBases](https://mathbases.org/).`,
   showQuestions: false,
-  footer: () => '',
+  footer: currentYear => `
+Software © ${currentYear} James Dabbs ([MIT License](https://github.com/pi-base/web/blob/main/LICENSE.md)) |
+[GitHub](https://github.com/pi-base/data-graphs)`,
 }
 
 const configs: Record<string, CategoryConfig> = {
