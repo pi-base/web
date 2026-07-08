@@ -127,8 +127,8 @@ describe('bundle', () => {
     ])
   })
 
-  it('adds deductions', () => {
-    const { value: b, errors } = bundle({
+  it('returns the derivations for each space', () => {
+    const { value, errors } = bundle({
       properties: [
         F.property({ uid: 'P1' }),
         F.property({ uid: 'P2' }),
@@ -157,15 +157,17 @@ describe('bundle', () => {
 
     expect(errors).toEqual([])
 
-    // TODO
-    // const { value, proof } = b!.traits.get(
-    //   traitId({ space: 'S1', property: 'P3' }),
-    // )!
-
-    // expect(value).toEqual(true)
-    // expect(proof).toEqual({
-    //   properties: ['P1'],
-    //   theorems: ['T1', 'T2'],
-    // })
+    expect(value!.deductions.get('S1')!.all()).toEqual([
+      {
+        property: 'P2',
+        value: true,
+        proof: { theorems: ['T1'], properties: ['P1'] },
+      },
+      {
+        property: 'P3',
+        value: true,
+        proof: { theorems: ['T1', 'T2'], properties: ['P1'] },
+      },
+    ])
   })
 })

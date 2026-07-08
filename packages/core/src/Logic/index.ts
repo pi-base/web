@@ -1,5 +1,5 @@
 export { default as ImplicationIndex } from './ImplicationIndex.js'
-export { Derivations } from './Derivations.js'
+export { Derivations, type Derivation } from './Derivations.js'
 export { Contradiction, Proof } from './Prover.js'
 
 import { Formula, negate } from '../Formula.js'

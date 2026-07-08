@@ -13,6 +13,7 @@ export default async function load(
   version?: Version,
 ): Promise<{
   bundle?: B.Bundle
+  deductions?: Validations.Deductions
   errors?: Map<string, string[]>
 }> {
   return validate({
@@ -51,7 +52,10 @@ export function validate({
     return format(Validations.bundle(bundle))
   } catch (e) {
     if (e instanceof ValidationError) {
-      return format({ value: bundle, errors: e.messages })
+      return format({
+        value: bundle && { bundle, deductions: new Map() },
+        errors: e.messages,
+      })
     } else {
       throw e
     }
@@ -82,8 +86,9 @@ function checkAll<I, O>(
   return result.value
 }
 
-function format({ value, errors }: Validations.Result<B.Bundle>): {
+function format({ value, errors }: Validations.Result<Validations.Deduced>): {
   bundle?: B.Bundle
+  deductions?: Validations.Deductions
   errors?: Map<string, string[]>
 } {
   if (errors.length > 0) {
@@ -95,8 +100,8 @@ function format({ value, errors }: Validations.Result<B.Bundle>): {
       grouped.get(path).push(message)
     })
 
-    return { bundle: value, errors: grouped }
+    return { ...value, errors: grouped }
   } else {
-    return { bundle: value }
+    return { ...value }
   }
 }

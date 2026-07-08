@@ -3,42 +3,21 @@ import yaml from 'yaml-front-matter'
 
 import {
   type Bundle,
-  ImplicationIndex,
+  type Derivations,
   type Property,
-  type Space,
-  deduceTraits,
+  artifacts,
   formula as Formula,
   schemas,
 } from '@pi-base/core'
 
 import type { File } from './fs.js'
 
-// FIXME
-type CheckResult =
-  | { kind: 'bundle'; bundle: Bundle }
-  | {
-      kind: 'contradiction'
-      contradiction: { theorems: unknown[]; properties: unknown[] }
-    }
-function check(bundle: Bundle, space: Space): CheckResult {
-  const implications = new ImplicationIndex(
-    Array.from(bundle.theorems.values()).map(({ uid, when, then }) => ({
-      id: uid,
-      when,
-      then,
-    })),
-  )
-  const traits = new Map(
-    Array.from(bundle.traits.values())
-      .filter(trait => trait.space === space.uid)
-      .map(trait => [trait.property, trait.value]),
-  )
+// Traits derivable from each space's asserted traits, keyed by space uid
+export type Deductions = Map<string, Derivations<string, string>>
 
-  const result = deduceTraits(implications, traits)
-  if (result.kind === 'contradiction') {
-    return result
-  }
-  return { kind: 'bundle', bundle }
+export type Deduced = {
+  bundle: Bundle
+  deductions: Deductions
 }
 
 export type Message = {
@@ -282,7 +261,7 @@ export function trait(input: File) {
   })
 }
 
-export function bundle(bundle: Bundle): Result<Bundle> {
+export function bundle(bundle: Bundle): Result<Deduced> {
   return validate('', error => {
     const duplicatePropertyNames = duplicated(
       Array.from(bundle.properties.values()).map(s => s.name),
@@ -333,24 +312,25 @@ export function bundle(bundle: Bundle): Result<Bundle> {
       }
     })
 
-    let result = bundle
+    const deductions: Deductions = new Map()
+    const implications = artifacts.implications(bundle)
 
-    for (const space of result.spaces.values()) {
+    for (const space of bundle.spaces.values()) {
       const key = paths.space(space.uid)
-      const checked = check(bundle, space)
-      switch (checked.kind) {
-        case 'bundle':
-          result = checked.bundle
+      const result = artifacts.deduceSpace(bundle, space.uid, implications)
+      switch (result.kind) {
+        case 'derivations':
+          deductions.set(space.uid, result.derivations)
           break
         case 'contradiction':
           error(
-            `properties=${checked.contradiction.properties} contradict theorems=${checked.contradiction.theorems}`,
+            `properties=${result.contradiction.properties} contradict theorems=${result.contradiction.theorems}`,
             key,
           )
           break
       }
     }
 
-    return result
+    return { bundle, deductions }
   })
 }
